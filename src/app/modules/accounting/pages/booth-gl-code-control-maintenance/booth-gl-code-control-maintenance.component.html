@@ -1,0 +1,48 @@
+<app-accounting-wrapper>
+  <form
+    [formGroup]="boothGlCodeForm"
+    class="mx-auto  border col-md-12 pb-3"
+  >
+    <div class="row mx-auto">
+      <div class="col-md-6 border ml-2 set-height" *ngIf="dataList.length != 0">
+        <p class="bg-dark title mt-1">Booth GL Code Control Maintenance</p>
+        <table id="Data">
+          <tr>
+            <th>Select</th>
+            <th>GLAccNo</th>
+            <th>GLAccDesc</th>
+            <th>BoothFlag</th>
+          </tr>
+          <tr *ngFor="let item of dataList; let i = index;">
+            <td *ngIf="item.selected == true"  (change)="changeCheck(i)"><input checked type="checkbox" /></td>
+            <td *ngIf="item.selected == false" (change)="changeCheck(i)"><input type="checkbox"></td>
+            <td>{{ item.GLAccNo }}</td>
+            <td>{{ item.GLAccDesc }}</td>
+            <td>{{ item.BoothFlag }}</td>
+          </tr>
+        </table>
+      </div>
+      <div
+        class="col-md-5 ml-1 border set-height mx-auto"
+        *ngIf="selectedList.length != 0"
+      >
+        <p class="bg-dark title mt-1">Selected Items</p>
+        <table id="Data">
+          <tr>
+            <th>GLAccNo</th>
+            <th>GLAccDesc</th>
+          </tr>
+          <tr *ngFor="let item of selectedList">
+            <td>{{ item.GLAccNo }}</td>
+            <td>{{ item.GLAccDesc }}</td>
+          </tr>
+        </table>
+      </div>
+    </div>
+    <div class="col-md-2 mx-auto mt-2 ml-5">
+      <button type="button" class="btn mt-3" (click)="SubmitData()">
+        Save
+      </button>
+    </div>
+  </form>
+</app-accounting-wrapper>

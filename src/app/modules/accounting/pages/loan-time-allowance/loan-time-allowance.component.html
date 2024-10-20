@@ -1,0 +1,200 @@
+<app-accounting-wrapper>
+    
+    <form [formGroup]="timeAllowenceForm">
+        <div class="mx-auto border col-md-8">
+            <p class="mt-1 bg-dark title">
+                Time Allotment</p>
+            <div class="form-row ml-0 mt-2 mx-auto">
+                <span class="col-md-2"></span>
+                <label class="col-md-2 ml-3 pl-5 pr-0">Member No:<span class="text-danger">*</span></label>
+                <div class="form-group ml-3 pl-3 col-md-3 mt-0 pt-0">
+                    <input type="text" formControlName="MemberNo"  class="form-control mt-0 pt-0" id="TrnCode" (change)="memberNoChange()"
+                        name="TrnCode">
+                </div>
+                <div class="form-group col-md-4">
+                    <label > {{memberName}} </label>
+                </div>
+            </div>
+            <div class="buttons col-md-3 mt-3 mx-auto mb-2">
+                <!-- (click)="submitData()" -->
+                <button type="button" class="btn btn_1" (click)="submitButtonClick()">Submit</button>
+                <!-- <button type="button"  class="btn ml-5">Exit</button> -->
+            </div>
+        </div>
+        <div class="mx-auto mt-2 border col-md-11 main-container">
+            <div class="mx-auto mt-0 col-md-12 m-0 p-0">
+                <table id="Data" class="col-md-12 mx-auto mt-0">
+                    <tr *ngIf="showListData.length>0">
+                        <th>Select</th>
+                        <th>Account Type</th>
+                        <th>Account No</th>
+                        <th>Account Balance</th>
+                        <th>Mem No</th>
+                        <th>Acc Type</th>
+                        <th>ID</th>
+                    </tr>
+                    <tr *ngFor="let item of showListData">
+                        <td class="text-center">
+                            <button class="btn-verify" (click)="accountInfoGet(item.AccNo)">Select</button>
+                        </td>
+                        <td class="text-center">{{item.AccTypeDescription}}</td>
+                        <td class="text-center">{{item.AccNo}}</td>
+                        <td class="text-center">{{item.AccBalance}}</td>
+                        <td class="text-center">{{item.MemNo}}</td>
+                        <td class="text-center">{{item.AccType}}</td>
+                        <td class="text-center">{{item.Id}}</td>
+                    </tr>
+                    <tr *ngIf="showListData.length==0">
+                        <td class="text-center">
+                            No loan account found for this member.
+                        </td>
+                    </tr>
+                </table>
+                
+            </div>
+            <table id="Data" class="mt-2">
+                <tr>
+                    <td>Loan Disburse Date:</td>
+                    <td>
+                        <input type="text" formControlName="LoanDisburseDate" readonly class="form-control mt-0 pt-0">
+                    </td>
+                    <td>Actual No. of Installment:</td>
+                    <td>
+                        <input type="text" formControlName="ActualNoOfInstallment" readonly class="form-control mt-0 pt-0">
+                    </td>
+                    <td>Due Principal Amount:</td>
+                    <td>
+                        <input type="text" formControlName="DuePricAmt" readonly class="form-control mt-0 pt-0">
+                    </td>
+                </tr>
+                <tr>
+                    <td>Loan Expire Date:</td>
+                    <td>
+                        <input type="text" formControlName="LoanExpireDate" readonly class="form-control mt-0 pt-0">
+                    </td>
+                    <td>Installment Amount:</td>
+                    <td>
+                        <input type="text" formControlName="InstallmentAmt" readonly class="form-control mt-0 pt-0">
+                    </td>
+                    <td>Due Interest Amount:</td>
+                    <td>
+                        <input type="text" formControlName="DueInterestAmt" readonly class="form-control mt-0 pt-0">
+                    </td>
+                </tr>
+                <tr>
+                    <td>Current Balance:</td>
+                    <td>
+                        <input type="text" formControlName="CurrentBalance" readonly class="form-control mt-0 pt-0">
+                    </td>
+                    <td>Last Installment Amount:</td>
+                    <td>
+                        <input type="text" formControlName="LastInstallmentAmt" readonly  class="form-control mt-0 pt-0">
+                    </td>
+                    <td>Remaining No. of Installment:</td>
+                    <td>
+                        <input type="text" formControlName="RemNoOfInstallment" readonly class="form-control mt-0 pt-0">
+                    </td>
+                </tr>
+                <tr>
+                    <td>Monthly Interest Paid?</td>
+                    <td>
+                        <input type="radio"  value="1" name="MonthlyInterestPaid" Checked="true" formControlName="MonthlyInterestPaid" >
+                        <label class="ml-2">Yes</label>
+                    </td>
+                    <td>
+                        <input type="radio" value="0" name="MonthlyInterestPaid" formControlName="MonthlyInterestPaid" >
+                        <label class="ml-2">No</label><br>
+                    </td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>From:</td>
+                    <td>
+                        <input type="text" formControlName="FromDate" readonly class="form-control mt-0 pt-0">
+                    </td>
+                    <td>Till:</td>
+                    <td>
+                        <input
+                            id="dateFormat"
+                            type="text"
+                            placeholder="DD/MM/YYYY"
+                            class="form-control"
+                            bsDatepicker
+                            formControlName="TillDate"
+                            [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY' }"
+                            autocomplete="off"
+                            (ngModelChange)="tillDateChange()"
+                        />
+                    </td>
+                    <td>Time Allowance Period:</td>
+                    <td>
+                        <input type="text" formControlName="TimeAllowancePeriod" readonly class="form-control mt-0 pt-0">
+                    </td>
+                </tr>
+                <tr>
+                    <td>New No. of Installment:</td>
+                    <td>
+                        <input type="text" formControlName="NewNoOfInstallment" readonly class="form-control mt-0 pt-0">
+                    </td>
+                    <td>New Installment Amount:</td>
+                    <td>
+                        <input type="text" formControlName="NewInstallmentAmount" readonly class="form-control mt-0 pt-0">
+                    </td>
+                    <td>Loan Calculation Method:</td>
+                    <td>
+                        <select formControlName="LoanCalMethod" disabled class="form-control  mt-0 pt-0">
+                            <option value="0" class="mt-0 pt-0">-Select-</option>
+                            <option *ngFor="let item of loanCalMethodList" [value]="item.Id"  class="mt-0 pt-0"> {{item.Description}}
+                            </option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Interest Rate:</td>
+                    <td>
+                        <input type="text" formControlName="InterestRate" readonly class="form-control mt-0 pt-0">
+                    </td>
+                    <td>New Last Installment Amount:</td>
+                    <td>
+                        <input type="text" formControlName="NewLastInstallmentAmount" readonly class="form-control mt-0 pt-0">
+                    </td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                
+            </table>
+            <div class="buttons col-md-4 mt-3 mx-auto">
+                <!-- (click)="submitData()" -->
+                <button type="button" class="btn btn_1 ml-5" (click)="updateData()">Update</button>
+                <button type="button" class="btn ml-5">Return Schedule</button>
+            </div>
+
+            <div class="mx-auto mt-5 col-md-12 m-0 p-0">
+                <table id="Data" class="col-md-12 mx-auto mt-0">
+                    <tr>
+                        <th>Srl#</th>
+                        <th>From Date</th>
+                        <th>To Date</th>
+                        <th>No. of Month</th>
+                        <th>No. of Installment</th>
+                        <th>Installment Amount</th>
+                    </tr>
+                    <tr *ngFor="let item of prevTimeAllowenceList; let i=index">
+                        <td class="text-center">{{i + 1}}</td>
+                        <td class="text-center">{{item.FromDate}}</td>
+                        <td class="text-center">{{item.ToDate}}</td>
+                        <td class="text-center">{{item.NoOfMonth}}</td>
+                        <td class="text-center">{{item.NoOfInstl}}</td>
+                        <td class="text-center">{{item.InstlAmt}}</td>
+                    </tr>
+                </table>
+                
+            </div>
+        </div>
+
+
+        
+    </form>
+</app-accounting-wrapper>

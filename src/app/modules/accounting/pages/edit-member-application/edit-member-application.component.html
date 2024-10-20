@@ -1,0 +1,748 @@
+<app-main-wrapper [module]="module">
+  <form [formGroup]="memberApplicationForm" class="form-horizontal">
+    <p class="bg-primary text-center text-light bg-secondary title">Edit Member Application</p>
+    <div class="card">
+      <div class="row card-body">
+        <div class="col-xl-6 col-md-7">
+          <div class="form-group row">
+            <label class="col-md-3 col-form-label">Application No:<span class="text-danger">*</span></label>
+            <div class="col-md-3">
+              <input type="text" class="form-control" formControlName="ApplicationNo" (change)="onApplicationNoChange()"
+                (keypress)="keyPress($event)" />
+            </div>
+            <label class="col-md-4 col-form-label">Last Application No.:
+              {{ inputHelpData.LastApplicationNo }}</label>
+          </div>
+
+          <div class="form-group row">
+            <label class="col-md-3 col-form-label">Application Date:<span class="text-danger">*</span></label>
+            <div class="col-md-3">
+              <input type="text" class="form-control" formControlName="MemApplicationDate" readonly />
+            </div>
+          </div>
+          <div class="form-group row">
+            <label class="col-md-3 col-form-label">Member Type:</label>
+            <div class="col-md-3">
+              <input type="text" class="form-control" formControlName="MemTypeCode" (change)="
+                  onMemberTypeChange(memberApplicationForm.value.MemTypeCode)
+                " />
+            </div>
+            <div class="col-md-5">
+              <select class="form-control pt-0" formControlName="MemType" (change)="
+                  onMemberTypeChange(memberApplicationForm.value.MemType)
+                ">
+                <option value="0">-Select-</option>
+                <option *ngFor="let item of inputHelpData.MemberType" [value]="item.Id">
+                  {{ item.Description }}
+                </option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-group row">
+            <label class="col-md-3 col-form-label">Member Name:<span class="text-danger">*</span></label>
+            <div class="col-md-8">
+              <input id="MemberName" type="text" class="form-control" formControlName="MemberName" required
+                (keydown)="onEnterMemNameHandler($event)" />
+            </div>
+          </div>
+
+          <!-- <div class="form-group row">
+            <label class="col-md-3 col-form-label">Member Name - Bangla:</label>
+            <div class="col-md-8">
+              <input
+                type="text"
+                class="form-control"
+                formControlName="MemberNameBang"
+              />
+            </div>
+          </div> -->
+
+          <div class="form-group row">
+            <label class="col-md-3 col-form-label">Father's Name:<span class="text-danger">*</span></label>
+            <div class="col-md-8">
+              <input id="FatherName" type="text" class="form-control" formControlName="FatherName" required
+                (keydown)="onEnterFNameHandler($event)" />
+            </div>
+          </div>
+
+          <div class="form-group row">
+            <label class="col-md-3 col-form-label">Mother's Name:<span class="text-danger">*</span></label>
+            <div class="col-md-8">
+              <input id="MotherName" type="text" class="form-control" formControlName="MotherName" required
+                (keydown)="onEnterMNameHandler($event)" />
+            </div>
+          </div>
+
+          <div class="form-group row">
+            <label class="col-md-3 col-form-label">Spouse's Name:<span class="text-danger">*</span></label>
+            <div class="col-md-8">
+              <input id="SpouseName" type="text" class="form-control" formControlName="SpouseName" required
+                (keydown)="onEnterSNameHandler($event)" />
+            </div>
+          </div>
+
+          <div class="form-group row">
+            <label class="col-md-3 col-form-label">Date of Birth:</label>
+            <div class="col-md-3">
+              <input id="dateFormat" type="text" placeholder="DD/MM/YYYY" class="form-control" bsDatepicker
+                formControlName="DateOfBirth" (ngModelChange)="
+                  onBirthDateChange(memberApplicationForm.value.DateOfBirth)
+                " autocomplete="off" [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY' }" />
+            </div>
+            <label class="col-md-2 col-form-label">Age:</label>
+            <div class="col-md-3">
+              <input type="text" class="form-control" formControlName="Age"
+                (change)="onBirthDateChange(memberApplicationForm.value.Age)" disabled />
+            </div>
+          </div>
+
+          <div *ngIf="CommonData?.MemCollectorFlag" class="form-group row">
+            <label class="col-md-3 col-form-label">Collector:<span class="text-danger">*</span></label>
+            <div class="col-md-3">
+              <input id="MemColNo" type="text" class="form-control" formControlName="MemColNo" (change)="
+              onCollectorChange(memberApplicationForm.value.MemColNo)
+                " required (keydown)="onEnterGHandler($event)" />
+            </div>
+            <div class="col-md-5">
+              <select class="form-control pt-0" formControlName="MemColCode"
+                (change)="onCollectorChange(memberApplicationForm.value.MemColCode)">
+                <option value="0">-Select-</option>
+                <option *ngFor="let item of inputHelpData.Collector" [value]="item.CollectorNo">
+                  {{ item.CollectorName }}
+                </option>
+              </select>
+            </div>
+          </div>
+
+          <div *ngIf="CommonData?.MemGroupFlag" class="form-group row">
+            <label class="col-md-3 col-form-label">Group:<span class="text-danger">*</span></label>
+            <div class="col-md-3">
+              <input id="MemRegNoCode" type="text" class="form-control" formControlName="MemRegNoCode" (change)="
+                  onGroupChange(memberApplicationForm.value.MemRegNoCode)
+                " required (keydown)="onEnterGHandler($event)" />
+            </div>
+            <div class="col-md-5">
+              <select class="form-control pt-0" formControlName="MemRegNo"
+                (change)="onGroupChange(memberApplicationForm.value.MemRegNo)">
+                <option value="0">-Select-</option>
+                <option *ngFor="let item of inputHelpData.Regions" [value]="item.Id">
+                  {{ item.Description }}
+                </option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-xl-6 col-md-5">
+          <div class="form-group row">
+            <label class="col-md-4 col-form-label">Gender:<span class="text-danger">*</span></label>
+            <div class="col-md-4">
+              <input id="GenderCode" type="text" class="form-control" formControlName="GenderCode" (change)="
+                  onGenderChange(memberApplicationForm.value.GenderCode)
+                " required (keydown)="onEnterGenderHandler($event)" />
+            </div>
+            <div class="col-md-3 pl-0 pr-1">
+              <select class="form-control pt-0" formControlName="Gender"
+                (change)="onGenderChange(memberApplicationForm.value.Gender)">
+                <option value="0">-Select-</option>
+                <option *ngFor="let item of inputHelpData.Gender" [value]="item.Id">
+                  {{ item.Description }}
+                </option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-group row">
+            <label class="col-md-4 col-form-label">Religion:<span class="text-danger">*</span></label>
+            <div class="col-md-4">
+              <input id="ReligionCode" type="text" class="form-control" formControlName="ReligionCode" (change)="
+                  onReligionChange(memberApplicationForm.value.ReligionCode)
+                " required (keydown)="onEnterReligionHandler($event)" />
+            </div>
+            <div class="col-md-3 pl-0 pr-1">
+              <select class="form-control pt-0" formControlName="Religion" (change)="
+                  onReligionChange(memberApplicationForm.value.Religion)
+                ">
+                <option *ngFor="let item of inputHelpData.Religion" [value]="item.Id">
+                  {{ item.Description }}
+                </option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-group row">
+            <label class="col-md-4 col-form-label">Marital Status:<span class="text-danger">*</span></label>
+            <div class="col-md-4">
+              <input id="MaritalStatusCode" type="text" class="form-control" formControlName="MaritalStatusCode"
+                (change)="
+                  onMaritalStatusChange(
+                    memberApplicationForm.value.MaritalStatusCode
+                  )
+                " required (keydown)="onEnterMaritalHandler($event)" />
+            </div>
+            <div class="col-md-3 pl-0 pr-1">
+              <select class="form-control pt-0" formControlName="MaritalStatus" (change)="
+                  onMaritalStatusChange(
+                    memberApplicationForm.value.MaritalStatus
+                  )
+                ">
+                <option value="0">-Select-</option>
+                <option *ngFor="let item of inputHelpData.MaritalStatus" [value]="item.Id">
+                  {{ item.Description }}
+                </option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-group row">
+            <label class="col-md-4 col-form-label">Place of Birth:</label>
+            <div class="col-md-4">
+              <select class="form-control pt-0" id="PlaceofBirth" formControlName="PlaceofBirth" (change)="
+              onPOBChange()">
+                <option value="0">-Select-</option>
+                <option *ngFor="let item of inputHelpData.BirthPlace" [value]="item.Id">
+                  {{ item.Description }}
+                </option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-group row">
+            <label class="col-md-4 col-form-label">
+              Introduce Mem. No. - 1:</label>
+            <div class="col-md-4">
+              <input type="text" class="form-control" formControlName="MemIntroMemNo" (change)="
+                  getOldMemberInfo1(memberApplicationForm.value.MemIntroMemNo)
+                " />
+            </div>
+            <label class="col-md-4 col-from-label">{{ memberName1 }}</label>
+          </div>
+
+          <div class="form-group row">
+            <label class="col-md-4 col-form-label">Introduce Mem. No. - 2:</label>
+            <div class="col-md-4">
+              <input type="text" class="form-control" formControlName="MemIntroMemNo2" (change)="
+                  getOldMemberInfo2(memberApplicationForm.value.MemIntroMemNo2)
+                " />
+            </div>
+            <label class="col-md-4 col-from-label">{{ memberName2 }}</label>
+          </div>
+          <div class="form-group row">
+            <label class="col-md-4 col-form-label">National Id No / Birth Cert. No:</label>
+            <div class="col-md-4">
+              <input id="NationalIdNo" type="text" class="form-control" formControlName="NationalIdNo"
+                (keydown)="onEnterIDNoHandler($event)" />
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-xl-11">
+      <div class="card-body">
+        <ul class="nav nav-pills navtab-bg nav-justified">
+          <li class="nav-item">
+            <a href="#present-address-b1" data-toggle="tab" aria-expanded="false" class="nav-link active">
+              <span class="d-block d-sm-none"><i class="mdi mdi-home-variant-outline font-18"></i></span>
+              <span class="d-none d-sm-block">Present Address</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="#permanent-address-b1" data-toggle="tab" aria-expanded="true" class="nav-link">
+              <span class="d-block d-sm-none"><i class="mdi mdi-account-outline font-18"></i></span>
+              <span class="d-none d-sm-block">Permanent Address</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="#other-information-b1" data-toggle="tab" aria-expanded="false" class="nav-link">
+              <span class="d-block d-sm-none"><i class="mdi mdi-email-outline font-18"></i></span>
+              <span class="d-none d-sm-block">Other Information</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="#bangla-information" data-toggle="tab" aria-expanded="false" class="nav-link">
+              <span class="d-block d-sm-none"><i class="mdi mdi-email-outline font-18"></i></span>
+              <span class="d-none d-sm-block">Bangla Information</span>
+            </a>
+          </li>
+        </ul>
+
+        <div class="tab-content" style="margin-top: 20px">
+          <div class="tab-pane active" id="present-address-b1">
+            <div class="col-md-12 row">
+              <div class="col-md-6">
+                <div class="form-group row">
+                  <label class="col-md-3 col-form-label">Address Line:</label>
+                  <div class="col-md-8">
+                    <input id="PreAddressLine1" type="text" class="form-control" formControlName="PreAddressLine1"
+                      (keydown)="onEnterPreAddressLinelHandler($event)" />
+                  </div>
+                </div>
+
+                <div class="form-group row">
+                  <label class="col-md-3 col-form-label">Village/Native:</label>
+                  <div class="col-md-2">
+                    <input id="PreVillageCode" type="text" class="form-control" formControlName="PreVillageCode"
+                      (change)="
+                      onPreVillage(memberApplicationForm.value.PreVillageCode)
+                    " />
+                  </div>
+                  <div class="col-md-6">
+                    <select class="form-control pt-0" formControlName="PreVillage" (change)="
+                      onPreVillage(memberApplicationForm.value.PreVillage)
+                    ">
+                      <option value="0">-Select-</option>
+                      <option *ngFor="let item of inputHelpData.VillageList" [value]="item.Id">
+                        {{ item.Description }}
+                      </option>
+                    </select>
+                  </div>
+                </div>
+
+                <div class="form-group row ">
+                  <label class="col-md-3 col-form-label">Post Office:</label>
+                  <div class="col-md-8">
+                    <div class="form-control pt-0">
+                      {{ presentVillage.PostOfficeName }}
+                    </div>
+                  </div>
+                </div>
+
+                <div class="form-group row">
+                  <label class="col-md-3 col-form-label">Division:</label>
+                  <div class="col-md-8">
+                    <div class="form-control pt-0">
+                      {{ presentVillage.DivisionName }}
+                    </div>
+                  </div>
+                </div>
+
+                <div class="form-group row">
+                  <label class="col-md-3 col-form-label">District:</label>
+                  <div class="col-md-3">
+                    <div class="form-control pt-0">
+                      {{ presentVillage.DistrictName }}
+                    </div>
+                  </div>
+                  <label class="col-md-2 col-form-label">Telephone:</label>
+                  <div class="col-md-3">
+                    <input id="PreTelephone" type="text" class="form-control" formControlName="PreTelephone"
+                      (keypress)="keyPress($event)" (keydown)="onEnterPreTelephoneHandler($event)" />
+                  </div>
+                </div>
+
+                <div class="form-group row">
+                  <label class="col-md-3 col-form-label">Upazila:</label>
+                  <div class="col-md-3">
+                    <div class="form-control pt-0">
+                      {{ presentVillage.UpzilaName }}
+                    </div>
+                  </div>
+                  <label class="col-md-2 col-form-label">Mobile No:<span class="text-danger">*</span></label>
+                  <div class="col-md-3">
+                    <input id="PreMobile" type="text" class="form-control" formControlName="PreMobile"
+                      (keypress)="keyPress($event)" (focusout)="validation()" maxlength="11"
+                      (keydown)="onEnterPreMobileHandler($event)" />
+                  </div>
+                </div>
+
+                <div class="form-group row">
+                  <label class="col-md-3 col-form-label">Thana:</label>
+                  <div class="col-md-3">
+                    <div class="form-control pt-0">
+                      {{ presentVillage.ThanaName }}
+                    </div>
+                  </div>
+                  <label class="col-md-2 col-form-label">Email:</label>
+                  <div class="col-md-3">
+                    <input id="PreEmail" type="text" class="form-control" formControlName="PreEmail" />
+                  </div>
+                </div>
+              </div>
+              <!-- right side start -->
+              <div class="col-md-6">
+                <p class="text-danger">Bangla Address : -</p>
+                <div class="form-group row">
+                  <label class="col-md-3 col-form-label">Village/Native:</label>
+                  <div class="col-md-8">
+                    <div class="form-control pt-0">
+                      {{ presentVillage.VillageNameBang }}
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <label class="col-md-3 col-form-label">Post Office:</label>
+                  <div class="col-md-8">
+                    <div class="form-control pt-0">
+                      {{ presentVillage.PostOfficeNameBang }}
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <label class="col-md-3 col-form-label">Division:</label>
+                  <div class="col-md-8">
+                    <div class="form-control pt-0">
+                      {{ presentVillage.DiviDescriptionBang }}
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <label class="col-md-3 col-form-label">District:</label>
+                  <div class="col-md-8">
+                    <div class="form-control pt-0">
+                      {{ presentVillage.DistDescriptionBang }}
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <label class="col-md-3 col-form-label">Upazila:</label>
+                  <div class="col-md-8">
+                    <div class="form-control pt-0">
+                      {{ presentVillage.UpzilaDescriptionBang }}
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <label class="col-md-3 col-form-label">Thana:</label>
+                  <div class="col-md-8">
+                    <div class="form-control pt-0">
+                      {{ presentVillage.ThanaDescriptionBang }}
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!-- right side end -->
+            </div>
+          </div>
+
+          <!-- bangla start -->
+          <div class="tab-pane" id="bangla-information">
+            <div class="form-group row">
+              <label class="col-md-2 col-form-label">Member Name:</label>
+              <div class="col-md-6">
+                <input id="MemberNameBang" type="text" class="form-control" formControlName="MemberNameBang"
+                  (keydown)="onEnterMemberNameBangHandler($event)" />
+              </div>
+            </div>
+
+            <div class="form-group row">
+              <label class="col-md-2 col-form-label">Father's Name:</label>
+              <div class="col-md-6">
+                <input id="MemFNameBang" type="text" class="form-control" formControlName="MemFNameBang"
+                  (keydown)="onEnterMemFNameBangHandler($event)" />
+              </div>
+            </div>
+
+            <div class="form-group row">
+              <label class="col-md-2 col-form-label">Monther's Name:</label>
+              <div class="col-md-6">
+                <input id="MemMNameBang" type="text" class="form-control" formControlName="MemMNameBang"
+                  (keydown)="onEnterMemMNameBangHandler($event)" />
+              </div>
+            </div>
+
+            <div class="form-group row">
+              <label class="col-md-2 col-form-label">Spouse's Name</label>
+              <div class="col-md-6">
+                <input id="MemSpouseNameBang" type="text" class="form-control" formControlName="MemSpouseNameBang" />
+              </div>
+            </div>
+          </div>
+          <!-- bangla end -->
+          <div class="tab-pane" id="permanent-address-b1">
+            <div class="col-md-12 row">
+              <div class="col-md-6">
+                <div class="form-group row">
+                  <label class="col-md-2 col-form-label">Address Line:</label>
+                  <div class="col-md-6">
+                    <input type="text" class="form-control" formControlName="PerAddressLine1"
+                      (keydown)="onEnterPerAddressLine1Handler($event)" />
+                  </div>
+                </div>
+
+                <div class="form-group row">
+                  <label class="col-md-2 col-form-label">Village/Native:</label>
+                  <div class="col-md-2">
+                    <input id="PerVillageCode" type="text" class="form-control" formControlName="PerVillageCode"
+                      (change)="
+                        onPerVillage(memberApplicationForm.value.PerVillageCode)
+                      " />
+                  </div>
+                  <div class="col-md-4">
+                    <select class="form-control pt-0" formControlName="PerVillage" (change)="
+                        onPerVillage(memberApplicationForm.value.PerVillage)
+                      ">
+                      <option value="0">-Select-</option>
+                      <option *ngFor="let item of inputHelpData.VillageList" [value]="item.Id">
+                        {{ item.Description }}
+                      </option>
+                    </select>
+                  </div>
+                </div>
+
+                <div class="form-group row">
+                  <label class="col-md-2 col-form-label">Post Office:</label>
+                  <div class="col-md-4">
+                    <div class="form-control ">
+                      {{ permanentVillage.PostOfficeName }}
+                    </div>
+                  </div>
+                </div>
+
+                <div class="form-group row">
+                  <label class="col-md-2 col-form-label">Division:</label>
+                  <div class="col-md-4">
+                    <div class="form-control ">{{ permanentVillage.DivisionName }}</div>
+                  </div>
+                  <div class="col-md-4">
+                    <button type="button" class="btn btn-danger" (click)="FillParmanentAddress()">
+                      Same as Present Address
+                    </button>
+                  </div>
+                </div>
+
+
+                <div class="form-group row">
+                  <label class="col-md-2 col-form-label">District:</label>
+                  <div class="col-md-4">
+                    <div class="form-control ">{{ permanentVillage.DistrictName }}</div>
+                  </div>
+                </div>
+
+                <div class="form-group row">
+                  <label class="col-md-2 col-form-label">Upazila:</label>
+                  <div class="col-md-4">
+                    <div class="form-control ">{{ permanentVillage.UpzilaName }}</div>
+                  </div>
+                </div>
+
+                <div class="form-group row">
+                  <label class="col-md-2 col-form-label">Thana:</label>
+                  <div class="col-md-4">
+                    <div class="form-control ">{{ permanentVillage.ThanaName }}</div>
+                  </div>
+                </div>
+              </div>
+              <!-- right side start -->
+              <div class="col-md-6">
+                <p class="text-danger">Bangla Address : -</p>
+                <div class="form-group row">
+                  <label class="col-md-3 col-form-label">Village/Native:</label>
+                  <div class="col-md-8">
+                    <div class="form-control pt-0">
+                      {{ permanentVillage.VillageNameBang }}
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <label class="col-md-3 col-form-label">Post Office:</label>
+                  <div class="col-md-8">
+                    <div class="form-control pt-0">
+                      {{ permanentVillage.PostOfficeNameBang }}
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <label class="col-md-3 col-form-label">Division:</label>
+                  <div class="col-md-8">
+                    <div class="form-control pt-0">
+                      {{ permanentVillage.DiviDescriptionBang }}
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <label class="col-md-3 col-form-label">District:</label>
+                  <div class="col-md-8">
+                    <div class="form-control pt-0">
+                      {{ permanentVillage.DistDescriptionBang }}
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <label class="col-md-3 col-form-label">Upazila:</label>
+                  <div class="col-md-8">
+                    <div class="form-control pt-0">
+                      {{ permanentVillage.UpzilaDescriptionBang }}
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <label class="col-md-3 col-form-label">Thana:</label>
+                  <div class="col-md-8">
+                    <div class="form-control pt-0">
+                      {{ permanentVillage.ThanaDescriptionBang }}
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!-- right side end -->
+            </div>
+          </div>
+          <div class="tab-pane" id="other-information-b1">
+            <div class="row">
+              <div class="col-xl-4">
+                <!-- <div class="form-group row">
+                  <label class="col-md-5 col-form-label">National Id No:</label>
+                  <div class="col-md-7">
+                    <input id="NationalIdNo" type="text" class="form-control" formControlName="NationalIdNo"
+                      (keydown)="onEnterIDNoHandler($event)" />
+                  </div>
+                </div> -->
+
+                <div class="form-group row">
+                  <label class="col-md-5 col-form-label">Passport No:</label>
+                  <div class="col-md-7">
+                    <input id="PassportNo" type="text" class="form-control" formControlName="PassportNo"
+                      (keydown)="onEnterPassHandler($event)" />
+                  </div>
+                </div>
+
+                <div class="form-group row">
+                  <label class="col-md-5 col-form-label">Passport Issue Place:</label>
+                  <div class="col-md-7">
+                    <input id="PassportIssuePlace" type="text" class="form-control" formControlName="PassportIssuePlace"
+                      (keydown)="onEnterPassIssPHandler($event)" />
+                  </div>
+                </div>
+
+                <div class="form-group row">
+                  <label class="col-md-5 col-form-label">TIN:</label>
+                  <div class="col-md-7">
+                    <input id="TIN" type="text" class="form-control" formControlName="TIN"
+                      (keydown)="onEnterTINHandler($event)" />
+                  </div>
+                </div>
+
+                <div class="form-group row">
+                  <label class="col-md-5 col-form-label">Blood Group:</label>
+                  <div class="col-md-7">
+                    <select class="form-control pt-0" formControlName="MemBloodGroup">
+                      <option value="0">-Select-</option>
+                      <option *ngFor="let item of inputHelpData.BloodGroup" [value]="item.Id">
+                        {{ item.Description }}
+                      </option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+              <div class="col-xl-4">
+                <div class="form-group row">
+                  <label class="col-md-5 col-form-label">ID Card Issue Date:</label>
+                  <div class="col-md-7">
+                    <input id="dateFormat" type="text" placeholder="DD/MM/YYYY" class="form-control" bsDatepicker
+                      formControlName="IDIssueDt" autocomplete="off" [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY' }" />
+                  </div>
+                </div>
+
+                <div class="form-group row">
+                  <label class="col-md-5 col-form-label">Passport Issue Date:</label>
+                  <div class="col-md-7">
+                    <input id="dateFormat" type="text" placeholder="DD/MM/YYYY" class="form-control" bsDatepicker
+                      formControlName="PassportIssueDate" autocomplete="off"
+                      [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY' }" (click)="dateChecker($event)"/>
+                  </div>
+                </div>
+
+                <div class="form-group row">
+                  <label class="col-md-5 col-form-label">Passport Exp.Date:</label>
+                  <div class="col-md-7">
+                    <input id="dateFormat" type="text" placeholder="DD/MM/YYYY" class="form-control" bsDatepicker
+                      formControlName="PassportExpiryDate" autocomplete="off"
+                      [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY' }" />
+                  </div>
+                </div>
+
+                <div class="form-group row">
+                  <label class="col-md-5 col-form-label">Last Tax Pay Date:</label>
+                  <div class="col-md-7">
+                    <input id="dateFormat" type="text" placeholder="DD/MM/YYYY" class="form-control" bsDatepicker
+                      formControlName="LastTaxPayDate" autocomplete="off"
+                      [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY' }" />
+                  </div>
+                </div>
+
+                <div class="form-group row">
+                  <label class="col-md-5 col-form-label">
+                    Date of Anniversary:</label>
+                  <div class="col-md-7">
+                    <input id="dateFormat" type="text" placeholder="DD/MM/YYYY" class="form-control" bsDatepicker
+                      formControlName="MemAnniversaryDate" autocomplete="off"
+                      [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY' }" (ngModelChange)="
+                      onAnniversaryDateChange()
+                    " />
+                  </div>
+                </div>
+              </div>
+              <div class="col-xl-4">
+                <div class="form-group row">
+                  <label class="col-md-5 col-form-label">Employer:</label>
+                  <div class="col-md-7">
+                    <input id="EmployerName" type="text" class="form-control" formControlName="EmployerName"
+                      (keydown)="onEnterEmpHandler($event)" />
+                  </div>
+                </div>
+
+                <div class="form-group row">
+                  <label class="col-md-5 col-form-label">Address:</label>
+                  <div class="col-md-7">
+                    <input id="EmployerAddress" type="text" class="form-control" formControlName="EmployerAddress"
+                      (keydown)="onEnterEmpAddHandler($event)" />
+                  </div>
+                </div>
+
+                <div class="form-group row">
+                  <label class="col-md-5 col-form-label">Occupation:</label>
+                  <div class="col-md-7">
+                    <select class="form-control pt-0" formControlName="Occupation">
+                      <option *ngFor="let item of inputHelpData.Occupation" [value]="item.Id">
+                        {{ item.Description }}
+                      </option>
+                    </select>
+                  </div>
+                </div>
+
+                <div class="form-group row">
+                  <label class="col-md-5 col-form-label">Nationality:</label>
+                  <div class="col-md-7">
+                    <select class="form-control pt-0" formControlName="Nationality" (change)="onNationalityChange()">
+                      <option *ngFor="let item of inputHelpData.Nationality" [value]="item.Id">
+                        {{ item.Description }}
+                      </option>
+                    </select>
+                  </div>
+                </div>
+
+                <div class="form-group row">
+                  <label class="col-md-5 col-form-label">Educational Qualification:</label>
+                  <div class="col-md-7">
+                    <input id="MemEduQualification" type="text" class="form-control"
+                      formControlName="MemEduQualification" />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group row">
+        <div class="col-md-8"></div>
+        <div class="col-md-12 mx-auto text-center">
+          <button type="button" class="btn btn-success" (click)="onCreate()">
+            Update
+          </button>
+        </div>
+      </div>
+      <div class="col-md-3 modal_toogle" *ngIf="toogle">
+        <p class="text-center pt-4 pb-2">Your Passport Expired Year Limit?</p>
+        <div class="ml-5">
+            <input type="radio" id="f_years" name="limit" value="5" (click)="dateChecker($event)" />  
+          <label for="f_years"> 5 Years </label><br />
+            <input type="radio" id="t_years" name="limit" value="10" (click)="dateChecker($event)" />  
+          <label for="t_years">10 Years </label><br />
+        </div>
+      </div>
+    </div>
+  </form>
+</app-main-wrapper>

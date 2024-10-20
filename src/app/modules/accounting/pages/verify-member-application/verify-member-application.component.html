@@ -1,0 +1,72 @@
+<app-accounting-wrapper [formGroup]='memberVerifyForm'>
+    <div>
+        <h1 *ngIf="applicationList.length == 0" class="text-center no__data align-middle">No More Data For Verify!!</h1>
+    </div>
+    <h4 *ngIf="applicationList.length != 0" class="border p-3 text-center">Verify Member Application</h4>
+    <form *ngIf="applicationList.length != 0" class="mx-auto mt-1 mt-5 border col-md-12 main-container">
+        <h5 class="text-center p-1">Verify - Spooler</h5>
+        <div  class="mx-auto   mb-2 col-md-12 infoTable">
+            <table id="Data">
+                <tr>
+                    <th>Action</th>
+                    <th>Action</th>
+                    <th>View</th>
+                    <th>Application No.</th>
+                    <th>Application Date</th>
+                    <th>Member Name</th>
+                    <th>Member Type</th>
+                    <th>Module</th>
+                    <th>User Id.</th>
+                </tr>
+                <tr *ngFor="let item of applicationList">
+                    <td><button value="{{item.MemApplicationNo}}" class="btn-verify" (click)="displayVerifyOption($event)" >Select</button></td>
+                    <td><button value="{{item.MemApplicationNo}}" class="btn-reject" (click)="displayRejectOption($event)">Reject</button></td>
+                    <td><button class="btn-print" (click)="getReportToken(item)">Print</button></td>
+                    <td>{{item.MemApplicationNo}}</td>
+                    <td>{{item.MemApplicationDate}}</td>
+                    <td>{{item.MemName}}</td>
+                    <td>{{item.MemTypeDesc}}</td>
+                    <td>{{item.Module}}</td>
+                    <td>{{item.UserId}}</td>
+                </tr>
+            </table>
+        </div>
+    </form>
+
+    <!-- Member Verify Screeen  -->
+    <div *ngIf="displayVerifyData" class="border border-success mt-5">
+        <div class="form-group row  mx-auto col-md-12 main-container p-2">
+            <label for="select" class="col-md-2 col-form-label">Verify Note :</label>
+            <div class="col-md-8 mt-1">
+                <select formControlName="selectedVerifyCode" id="select" class="form-control pt-0">
+                    <option value="0">-Select-</option>
+                    <option *ngFor="let item of dataList" [value]="item.MVerifyCode">{{item.MVerifyDescription}}
+                    </option>
+                </select>
+            </div>
+        </div>
+        <div class="col-md-6 mb-3 mx-auto  buttons">
+            <button class="btn" (click)="verifyInfo()" type="button">Verify</button>
+            <button (click)="closeVerifyOption()" class="ml-5 btn">Cancel</button>
+        </div>
+    </div>
+
+    <!-- Member Reject Screen  -->
+    <div *ngIf="displayRejectData" class="border border-danger mt-5">
+        <div class="form-group row  mx-auto col-md-12 main-container p-2">
+            <label for="select" class="col-md-2 col-form-label">Reject Note :</label>
+            <div class="col-md-8 mt-1">
+                <select formControlName="selectedRejectCode" class="form-control pt-0">
+                    <option value="0">-Select-</option>
+                    <option *ngFor="let item of RdataList" [value]="item.MRejectCode">{{item.MRejectDescription}}
+                    </option>
+                </select>
+            </div>
+        </div>
+        <div class="col-md-6 mb-3 mx-auto  buttons">
+            <button class="btn" (click)="rejectInfo()">Reject</button>
+            <button (click)="closeRejectOption()" class="ml-5 btn">Cancel</button>
+        </div>
+    </div>
+
+</app-accounting-wrapper>

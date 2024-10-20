@@ -1,0 +1,11 @@
+.title{
+    margin: 0px !important;
+}
+.card{
+    border-top: none !important;
+}
+.btn{
+    /* background: #6DAD4F; */
+    color: white;
+    padding: 4px 30px !important;
+}

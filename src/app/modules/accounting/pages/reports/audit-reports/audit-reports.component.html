@@ -1,0 +1,325 @@
+<app-accounting-wrapper>
+  <form [formGroup]="AuditReportsForm" class="mx-auto border col-md-8 pb-2">
+    <p class="bg-dark title">Audit Information Reports</p>
+    <div class="form-group row">
+      <label class="col-md-4 col-form-label">From date:</label>
+      <div class="col-md-3">
+        <input
+          id="dateFormat"
+          type="text"
+          class="form-control"
+          bsDatepicker
+          formControlName="IssueFromDate"
+          [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY' }"
+          autocomplete="off"
+          (ngModelChange)="applicationDateChange()"
+        />
+      </div>
+      <label class="col-md-2 col-form-label">To date:</label>
+      <div class="col-md-3">
+        <input
+          id="dateFormat"
+          type="text"
+          class="form-control"
+          bsDatepicker
+          formControlName="IssueToDate"
+          [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY' }"
+          autocomplete="off"
+          (ngModelChange)="applicationDateChange2()"
+        />
+      </div>
+    </div>
+
+    <div class="form-group row">
+      <div class="col-md-1">
+        <input
+          type="radio"
+          class="form-check-input position-static ml-1 checkbox"
+          value="1"
+          name="rbReportName1"
+          id="rbReportName1"
+          formControlName="rbReportName1"
+          (ngModelChange)="RadioButtonValue($event)"
+        />
+      </div>
+      <label class="col-md-2 col-form-label" for="rbReportName1" >All Audit Reports</label>
+
+      <div class="col-md-1">
+        <input
+          type="radio"
+          class="form-check-input position-static ml-1 checkbox"
+          value="2"
+          id="rbReportName2"
+          name="rbReportName1"
+          formControlName="rbReportName1"
+          (ngModelChange)="RadioButtonValue($event)"
+        />
+      </div>
+      <label class="col-md-2 col-form-label" for="rbReportName2" >CS Audit Reports</label>
+
+      <div class="col-md-1">
+        <input
+          type="radio"
+          class="form-check-input position-static ml-1 checkbox"
+          value="3"
+          id="rbReportName3"
+          name="rbReportName1"
+          formControlName="rbReportName1"
+          (ngModelChange)="RadioButtonValue($event)"
+        />
+      </div>
+      <label class="col-md-2 col-form-label" for="rbReportName3" >GL Audit Reports</label>
+
+      <div class="col-md-1">
+        <input
+          type="radio"
+          class="form-check-input position-static ml-1 checkbox"
+          value="4"
+          id="rbReportName4"
+          name="rbReportName1"
+          formControlName="rbReportName1"
+          (ngModelChange)="RadioButtonValue($event)"
+        />
+      </div>
+      <label class="col-md-2 col-form-label" for="rbReportName4" >HK Audit Reports</label>
+    </div>
+
+    <div class="form-group row">
+      <div class="col-md-1" *ngIf="AllInfo">
+        <input
+          type="radio"
+          class="form-check-input position-static ml-1 checkbox"
+          value="1"
+          id="csAuditReportrbReportName1"
+          name="rbReportName2"
+          formControlName="rbReportName2"
+          (ngModelChange)="RadioButtonValue2($event)"
+        />
+      </div>
+      <label *ngIf="AllInfo" class="col-md-2 col-form-label" for="csAuditReportrbReportName1"
+        >All Informations</label
+      >
+
+      <div class="col-md-1" *ngIf="AllMember">
+        <input
+          type="radio"
+          class="form-check-input position-static ml-1 checkbox"
+          value="2"
+          id="csAuditReportrbReportName2"
+          name="rbReportName2"
+          formControlName="rbReportName2"
+          (ngModelChange)="RadioButtonValue2($event)"
+        />
+      </div>
+      <label *ngIf="AllMember" class="col-md-2 col-form-label" for="csAuditReportrbReportName2"
+        >Member Informations</label
+      >
+
+      <div class="col-md-1" *ngIf="AllAccountInfo">
+        <input
+          type="radio"
+          class="form-check-input position-static ml-1 checkbox"
+          value="3"
+          id="csAuditReportrbReportName3"
+          name="rbReportName2"
+          formControlName="rbReportName2"
+          (ngModelChange)="RadioButtonValue2($event)"
+        />
+      </div>
+      <label *ngIf="AllAccountInfo" class="col-md-2 col-form-label" for="csAuditReportrbReportName3"
+        >Account Informations</label
+      >
+
+      <div class="col-md-1" *ngIf="OtherInfo">
+        <input
+          type="radio"
+          class="form-check-input position-static ml-1 checkbox"
+          value="4"
+          id="csAuditReportrbReportName4"
+          name="rbReportName2"
+          formControlName="rbReportName2"
+          (ngModelChange)="RadioButtonValue2($event)"
+        />
+      </div>
+      <label *ngIf="OtherInfo" class="col-md-2 col-form-label" for="csAuditReportrbReportName4"
+        >Others Informations</label
+      >
+    </div>
+
+    <div class="form-group row" *ngIf="AllUserShowHide">
+      <div class="col-md-1">
+        <input
+          class="form-check-input ml-1 checkbox"
+          style="margin: 0.8rem"
+          type="checkbox"
+          id="IsAllUser"
+          [(ngModel)]="chbIsAllUserTypeStatus"
+          (ngModelChange)="checkIsAllUserTypeValue($event)"
+          value="0"
+          formControlName="IsAllUser"
+        />
+      </div>
+      <label class="col-md-3 col-form-label" for="IsAllUser" > All User Id</label>
+      <div class="col-md-3">
+        <input
+          appOnlyNumber
+          type="text"
+          class="form-control"
+          id="AllUserTypeCode"
+          formControlName="AllUserTypeCode"
+          name="AllUserTypeCode"
+          (change)="UserCodeInputField()"
+          [attr.disabled]="AuditReportsForm.value.IsAllUser ? '' : null"
+        />
+      </div>
+
+      <div class="col-md-5">
+        <select
+          disabled="IsAllUserTypeDisabled"
+          class="form-control pt-0"
+          formControlName="AllUserTypeDDL"
+          (change)="UserCodeDropDown()"
+        >
+          <option value="0">-Select-</option>
+          <option
+            *ngFor="let item of GetInputHelpData.AllUserIdDropdown"
+            [value]="item.Id"
+          >
+            {{ item.Description }}
+          </option>
+        </select>
+      </div>
+    </div>
+
+    <div class="form-group row" *ngIf="AllFieldShowHide">
+      <div class="col-md-1">
+        <input
+          class="form-check-input ml-1 checkbox"
+          style="margin: 0.8rem"
+          type="checkbox"
+          id="IsAllFieldTypeChb"
+          [(ngModel)]="chbIsAllFieldTypeStatus"
+          (ngModelChange)="checkIsAllFieldTypeValue($event)"
+          value="0"
+          formControlName="IsAllFieldTypeChb"
+        />
+      </div>
+
+      <label class="col-md-3 col-form-label" for="IsAllFieldTypeChb" >All Fields</label>
+
+      <div class="col-md-5">
+        <select
+          class="form-control"
+          formControlName="FieldTypeDDL"
+          disabled="IsAllFieldTypeDisabled"
+          (change)="FieldDropDown()"
+        >
+          <option value="0">-Select-</option>
+          <option
+            *ngFor="let item of GetInputHelpData.AllFieldsDropdown"
+            [value]="item.Id"
+          >
+            {{ item.Description }}
+          </option>
+        </select>
+      </div>
+    </div>
+
+    <div class="form-group row" *ngIf="AllMemberShowHide">
+      <div class="col-md-1">
+        <input
+          class="form-check-input ml-1 checkbox"
+          style="margin: 0.8rem"
+          type="checkbox"
+          id="IsAllMemberTypeChb"
+          [(ngModel)]="chbIsAllMemberTypeStatus"
+          (ngModelChange)="checkIsAllMemberTypeValue($event)"
+          value="0"
+          formControlName="IsAllMemberTypeChb"
+        />
+      </div>
+
+      <label class="col-md-3 col-form-label" for="IsAllMemberTypeChb" >All Members</label>
+      <div class="col-md-3">
+        <input
+          type="text"
+          class="form-control"
+          id="AccTypeCode"
+          formControlName="AllMemberCode"
+          name="AllMemberCode"
+          [attr.disabled]="AuditReportsForm.value.IsAllMemberTypeChb ? '' : null"
+        />
+      </div>
+
+      <div class="col-md-5">
+        <select
+          class="form-control pt-0"
+          formControlName="AllMemberTypeDDL"
+          disabled="IsAllMemberTypeDisabled"
+          (change)="AllMemberDropDownList()"
+        >
+          <option value="0">-Select-</option>
+          <option
+            *ngFor="let item of GetInputHelpData.AllMemberDropdown"
+            [value]="item.Id"
+          >
+            {{ item.Description }}
+          </option>
+        </select>
+      </div>
+    </div>
+
+    <div class="form-group row" *ngIf="AllAccShowHide">
+      <div class="col-md-1">
+        <input
+          class="form-check-input ml-1 checkbox"
+          style="margin: 0.8rem"
+          type="checkbox"
+          id="IsAllAccTypeCheckbox"
+          [(ngModel)]="chbIsAllAccTypeStatus"
+          (ngModelChange)="checkIsAllAccTypeValue($event)"
+          value="0"
+          formControlName="IsAllAccTypeChb"
+        />
+      </div>
+
+      <label class="col-md-3 col-form-label" for="IsAllAccTypeCheckbox" >All Account Type</label>
+      <div class="col-md-3">
+        <input
+          type="text"
+          class="form-control"
+          id="AccTypeCode"
+          formControlName="AccTypeCode"
+          name="AccTypeCode"
+          [attr.disabled]="AuditReportsForm.value.IsAllAccTypeChb ? '' : null"
+        />
+      </div>
+
+      <div class="col-md-5">
+        <select
+          class="form-control"
+          formControlName="AccType"
+          disabled="IsAllAccTypeDisabled"
+          (change)="AllAccDropDownList()"
+        >
+          <option value="0">-Select-</option>
+          <option
+            *ngFor="let item of GetInputHelpData.AllAccTypeDropdown"
+            [value]="item.Id"
+          >
+            {{ item.Description }}
+          </option>
+        </select>
+      </div>
+    </div>
+
+    <div class="buttons">
+      <button type="button" class="btn btn-info ml-2" (click)="getReportToken('CRV')">
+        Preview
+      </button>
+      <button type="button" class="btn btn-success ml-2" (click)="getReportToken('PDF')">
+        Print
+      </button>
+    </div>
+  </form>
+</app-accounting-wrapper>

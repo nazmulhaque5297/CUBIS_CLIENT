@@ -1,0 +1,232 @@
+<div class="card-body">
+  <div class="form-group row">
+    <label class="col-md-6 col-form-label">Ledger Balance :</label>
+    <div class="col-md-6">
+      <div class="col-form-label">{{ accInfo.LadgerBalance }}</div>
+    </div>
+  </div>
+  <div class="form-group row" *ngIf="!accInfo.AccRenwlDate">
+    <label class="col-md-6 col-form-label">Open Date :</label>
+    <div class="col-md-6">
+      <div class="col-form-label">{{ accInfo.OpenDate }}</div>
+    </div>
+  </div>
+  <div class="form-group row" *ngIf="accInfo.AccRenwlDate">
+    <label class="col-md-6 col-form-label">Renewal Date :</label>
+    <div class="col-md-6">
+      <div class="col-form-label">{{ accInfo.AccRenwlDate }}</div>
+    </div>
+  </div>
+  <div class="form-group row" *ngIf="accView?.AccTypeClass == 2">
+    <label class="col-md-6 col-form-label">Last Transaction Date :</label>
+    <div class="col-md-6">
+      <div class="col-form-label">{{ accInfo.LastTrnDate }}</div>
+    </div>
+  </div>
+  <div class="form-group row">
+    <label class="col-md-6 col-form-label">Maturity Date :</label>
+    <div class="col-md-6">
+      <div class="col-form-label">{{ accInfo.MatruityDate }}</div>
+    </div>
+  </div>
+
+  <div class="form-group row" *ngIf="accView?.AccTypeClass == 2">
+    <label class="col-md-6 col-form-label">Maturity Amt :</label>
+    <div class="col-md-6">
+      <div class="col-form-label">{{ accInfo.MatruityAmount }}</div>
+    </div>
+  </div>
+  <div class="form-group row" *ngIf="accView?.AccTypeClass == 5">
+    <label class="col-md-6 col-form-label">Benefit Date :</label>
+    <div class="col-md-6">
+      <div class="col-form-label">{{ accInfo.AccBenefitDate }}</div>
+    </div>
+  </div>
+  <div class="form-group row" *ngIf="accView?.AccTypeClass != 5">
+    <label class="col-md-6 col-form-label">Period(Month) :</label>
+    <div class="col-md-6">
+      <div class="col-form-label">{{ accInfo.Period }}</div>
+    </div>
+  </div>
+  <div class="form-group row" *ngIf="accView?.AccTypeClass == 2">
+    <label class="col-md-6 col-form-label">Deposit Amt. :</label>
+    <div class="col-md-6">
+      <div class="col-form-label">{{ accInfo.DepositAmount }}</div>
+    </div>
+  </div>
+  <div class="form-group row" *ngIf="accView?.AccTypeClass == 2">
+    <label class="col-md-6 col-form-label">Total Deposit Amt. :</label>
+    <div class="col-md-6">
+      <div class="col-form-label">{{ accInfo.TotalDeposit }}</div>
+    </div>
+  </div>
+  <div class="form-group row" *ngIf="accView?.AccTypeClass == 2">
+    <label class="col-md-6 col-form-label">Upto Deposit Date :</label>
+    <div class="col-md-6">
+      <div class="col-form-label">{{ accInfo.UptoDate }}</div>
+    </div>
+  </div>
+  <div class="form-group row" *ngIf="accView?.AccTypeClass == 2">
+    <label class="col-md-6 col-form-label">Upto Deposit Period :</label>
+    <div class="col-md-6">
+      <div class="col-form-label">{{ accInfo.UptoPaidNo }}</div>
+    </div>
+  </div>
+  <div
+    class="form-group row"
+    *ngIf="accView?.AccTypeClass == 2 && accInfo.DueDepositAmt != '00.00'"
+  >
+    <label class="col-md-6 col-form-label">Due Deposit Amt.:</label>
+    <div class="col-md-6">
+      <div class="col-form-label">{{ accInfo.DueDepositAmt }}</div>
+    </div>
+  </div>
+  <div
+    class="form-group row"
+    *ngIf="accView?.AccTypeClass == 2 && accInfo.DueDepositAmt != '00.00'"
+  >
+    <label class="col-md-6 col-form-label">No. of Due Period :</label>
+    <div class="col-md-6">
+      <div class="col-form-label">{{ accInfo.DuePeriod }}</div>
+    </div>
+  </div>
+  <div
+    class="form-group row"
+    *ngIf="accView?.AccTypeClass == 3 || accView?.AccTypeClass == 4"
+  >
+    <label class="col-md-6 col-form-label">Orginal Amount :</label>
+    <div class="col-md-6">
+      <div class="col-form-label">{{ accInfo.AccOrgAmt }}</div>
+    </div>
+  </div>
+  <div
+    class="form-group row"
+    *ngIf="accView?.AccTypeClass == 3 || accView?.AccTypeClass == 4"
+  >
+    <label class="col-md-6 col-form-label">Orginal Int. Rate :</label>
+    <div class="col-md-6">
+      <div class="col-form-label">{{ accInfo.IntRate }}</div>
+    </div>
+  </div>
+  <div
+    class="form-group row"
+    *ngIf="accView?.AccTypeClass == 3 || accView?.AccTypeClass == 4"
+  >
+    <label class="col-md-6 col-form-label">Certificate No. :</label>
+    <div class="col-md-6">
+      <div class="col-form-label">{{ accInfo.CertNo }}</div>
+    </div>
+  </div>
+  <div
+    class="form-group row"
+    *ngIf="accView?.AccTypeClass == 3 || accView?.AccTypeClass == 4"
+  >
+    <label class="col-md-6 col-form-label">Cal.FD Amount :</label>
+    <div class="col-md-6">
+      <div class="col-form-label">{{ accInfo.CalFDAmount }}</div>
+    </div>
+  </div>
+  <div
+    class="form-group row"
+    *ngIf="accView?.AccTypeClass == 3 || accView?.AccTypeClass == 4"
+  >
+    <label class="col-md-6 col-form-label">Cal.Int.Rate :</label>
+    <div class="col-md-6">
+      <div class="col-form-label">{{ accInfo.CalIntRate }}</div>
+    </div>
+  </div>
+  <div
+    class="form-group row"
+    *ngIf="accView?.AccTypeClass == 3 || accView?.AccTypeClass == 4"
+  >
+    <label class="col-md-6 col-form-label">Cal.Int.Amount :</label>
+    <div class="col-md-6">
+      <div class="col-form-label">{{ accInfo.CalOrgInt }}</div>
+    </div>
+  </div>
+  <div
+    class="form-group row"
+    *ngIf="accView?.AccTypeClass == 3 || accView?.AccTypeClass == 4"
+  >
+    <label class="col-md-6 col-form-label">Cal.From Date :</label>
+    <div class="col-md-6">
+      <div class="col-form-label">{{ accInfo.CalFromDate }}</div>
+    </div>
+  </div>
+  <div
+    class="form-group row"
+    *ngIf="accView?.AccTypeClass == 3 || accView?.AccTypeClass == 4"
+  >
+    <label class="col-md-6 col-form-label">Cal.Period(Month) :</label>
+    <div class="col-md-6">
+      <div class="col-form-label">{{ accInfo.CalPeriod }}</div>
+    </div>
+  </div>
+  <div class="form-group row" *ngIf="accView?.AccTypeClass == 5">
+    <label class="col-md-6 col-form-label">Fixed Deposit Amount :</label>
+    <div class="col-md-6">
+      <div class="col-form-label">{{ accInfo.FixedDepositAmount }}</div>
+    </div>
+  </div>
+
+  <div class="form-group row" *ngIf="accView?.AccTypeClass == 5">
+    <label class="col-md-6 col-form-label">Monthly Benefit :</label>
+    <div class="col-md-6">
+      <div class="col-form-label">{{ accInfo.MonthlyBenefit }}</div>
+    </div>
+  </div>
+  <div class="form-group row" *ngIf="accView?.AccTypeClass == 5">
+    <label class="col-md-6 col-form-label">Calculated Benefit :</label>
+    <div class="col-md-6">
+      <div class="col-form-label">{{ accInfo.CalOrgInt }}</div>
+    </div>
+  </div>
+  <div class="form-group row" *ngIf="accView?.AccTypeClass == 5">
+    <label class="col-md-6 col-form-label">Paid Benefit :</label>
+    <div class="col-md-6">
+      <div class="col-form-label">{{ accInfo.CalPaidInt }}</div>
+    </div>
+  </div>
+  <div class="form-group row" *ngIf="accView?.AccTypeClass == 5">
+    <label class="col-md-6 col-form-label">Available Benefit :</label>
+    <div class="col-md-6">
+      <div class="col-form-label">{{ accInfo.AvailBenefit }}</div>
+    </div>
+  </div>
+  <div class="form-group row" *ngIf="accView?.AccTypeClass == 5">
+    <label class="col-md-6 col-form-label">Available Prov.Benefit :</label>
+    <div class="col-md-6">
+      <div class="col-form-label">{{ accInfo.AvailableBenefit }}</div>
+    </div>
+  </div>
+  <div class="form-group row" *ngIf="accView?.AccTypeClass == 5">
+    <label class="col-md-6 col-form-label">Adj.Prov.Benefit :</label>
+    <div class="col-md-6">
+      <div class="col-form-label">{{ accInfo.AvailableBenefit }}</div>
+    </div>
+  </div>
+  <div class="form-group row">
+    <label class="col-md-6 col-form-label">Corr. Account No. :</label>
+    <div class="col-md-6">
+      <div class="col-form-label">{{ accInfo.CorrAccountNo }}</div>
+    </div>
+  </div>
+  <div class="form-group row">
+    <label class="col-md-6 col-form-label">Corr. Account Balance :</label>
+    <div class="col-md-6">
+      <div class="col-form-label">{{ accInfo.CorrAccountBalance }}</div>
+    </div>
+  </div>
+  <div class="form-group row">
+    <label class="col-md-6 col-form-label">&nbsp;</label>
+    <div class="col-md-6">
+      <div class="col-form-label"></div>
+    </div>
+  </div>
+  <div class="form-group row">
+    <label class="col-md-6 col-form-label">&nbsp;</label>
+    <div class="col-md-6">
+      <div class="col-form-label"></div>
+    </div>
+  </div>
+</div>

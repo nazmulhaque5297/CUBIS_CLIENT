@@ -1,0 +1,82 @@
+<div class="card-body">
+    <div class="form-group row">
+        <label class="col-md-6 col-form-label">Account No. :</label>
+        <div class="col-md-6">
+           <div class="col-form-label">{{aData.AccountNo}}</div>
+        </div>
+    </div>
+    <div class="form-group row">
+        <label class="col-md-6 col-form-label">Ledger Balance :</label>
+        <div class="col-md-6">
+           <div class="col-form-label">{{aData.LadgerBalance}}</div>
+        </div>
+    </div>
+    <div class="form-group row" >
+        <label class="col-md-6 col-form-label">Renewal Date :</label>
+        <div class="col-md-6">
+           <div class="col-form-label">{{aData.AccRenwlDate}}</div>
+        </div>
+    </div>
+    <div class="form-group row">
+        <label class="col-md-6 col-form-label">Maturity Date :</label>
+        <div class="col-md-6">
+           <div class="col-form-label">{{aData.MatruityDate}}</div>
+        </div>
+    </div>
+    <div class="form-group row">
+        <label class="col-md-6 col-form-label">Period(Month) :</label>
+        <div class="col-md-6">
+           <div class="col-form-label">{{aData.Period}}</div>
+        </div>
+    </div>
+    <div class="form-group row">
+        <label class="col-md-6 col-form-label">Orginal Amount :</label>
+        <div class="col-md-6">
+           <div class="col-form-label">{{aData.AccOrgAmt}}</div>
+        </div>
+    </div>
+    <div class="form-group row">
+        <label class="col-md-6 col-form-label">Orginal Int. Rate :</label>
+        <div class="col-md-6">
+           <div class="col-form-label">{{aData.IntRate}}</div>
+        </div>
+    </div>
+    <div class="form-group row">
+        <label class="col-md-6 col-form-label">Certificate No. :</label>
+        <div class="col-md-6">
+           <div class="col-form-label">{{aData.CertNo}}</div>
+        </div>
+    </div>
+
+    <div class="form-group row" *ngIf="aData.Module!=3">
+        <label class="col-md-6 col-form-label">Corr. Account No. :</label>
+        <div class="col-md-6">
+           <div class="col-form-label">{{aData.CorrAccountNo}}</div>
+        </div>
+    </div>
+    <div class="form-group row" *ngIf="aData.Module!=3">
+        <label class="col-md-6 col-form-label">Corr. Account Balance :</label>
+        <div class="col-md-6">
+           <div class="col-form-label">{{aData.CorrAccountBalance}}</div>
+        </div>
+    </div>
+    <div class="form-group row" *ngIf="aData.Module!=3">
+        <label class="col-md-6 col-form-label">Corr. A/C Lien Amount :</label>
+        <div class="col-md-6">
+           <div class="col-form-label">{{aData.CorrAccountLienAmount}}</div>
+        </div>
+    </div>
+    <div class="form-group row">
+        <label class="col-md-6 col-form-label">&nbsp;</label>
+        <div class="col-md-6">
+           <div class="col-form-label"></div>
+        </div>
+    </div>
+    <div class="form-group row">
+        <label class="col-md-6 col-form-label">&nbsp;</label>
+        <div class="col-md-6">
+           <div class="col-form-label"></div>
+        </div>
+    </div>
+
+</div>

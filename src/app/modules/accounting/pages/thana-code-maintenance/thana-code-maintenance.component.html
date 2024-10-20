@@ -1,0 +1,144 @@
+<app-accounting-wrapper>
+  <form [formGroup]="ThanaCodeForm" class="mx-auto border col-md-6 pb-3">
+    <p class="bg-dark title">Thana Code Maintenance</p>
+    <div class="form-row">
+      <label class="col-md-3">Division Code:</label>
+      <div class="form-group col-md-4">
+        <input
+          type="text"
+          class="form-control"
+          id="DivisionCode"
+          formControlName="DivisionCode"
+          name="DivisionCode"
+          (change)="changeSelectValue($event)"
+        />
+      </div>
+      <div class="form-group col-md-4">
+        <select
+          formControlName="DivisionDescription"
+          class="form-control pt-0"
+          (change)="selectChangeHandler($event)"
+        >
+          <option *ngFor="let item of divisionList" [value]="item.DivisionCode">
+            {{ item.DivisionDescription }}
+          </option>
+        </select>
+      </div>
+    </div>
+    <div class="form-row">
+      <label class="col-md-3">District Code:</label>
+      <div class="form-group col-md-4">
+        <input
+          type="text"
+          class="form-control"
+          id="DistrictCode"
+          formControlName="DistrictCode"
+          name="DistrictCode"
+          (change)="changedistValue($event)"
+        />
+      </div>
+      <div class="form-group col-md-4">
+        <select
+          formControlName="DistDescription"
+          class="form-control pt-0"
+          (change)="distChangeHandler($event)"
+        >
+          <option value="0">-Select-</option>
+          <option *ngFor="let item of districtList" [value]="item.DistrictCode">
+            {{ item.DestrictDiscription }}
+          </option>
+        </select>
+      </div>
+    </div>
+    <div class="form-row">
+      <label class="col-md-3">Upzila Code:</label>
+      <div class="form-group col-md-4">
+        <input
+          type="text"
+          class="form-control"
+          id="UpzilaCode"
+          formControlName="UpzilaCode"
+          name="UpzilaCode"
+          (change)="changeUpizilaValue($event)"
+        />
+      </div>
+      <div class="form-group col-md-4">
+        <select
+          formControlName="UpzilaDist"
+          class="form-control pt-0"
+          (change)="upizilaChangeHandler($event)"
+        >
+          <option value="0">Select</option>
+          <option *ngFor="let item of upzilaList" [value]="item.UpzilaCode">
+            {{ item.UpzilaDescription }}
+          </option>
+        </select>
+      </div>
+    </div>
+
+    <div class="form-row">
+      <label class="col-md-3">Thana Code:</label>
+      <div class="form-group col-md-8">
+        <select
+          formControlName="ThanaCode"
+          id="ThanaCode"
+          class="form-control pt-0"
+          (change)="viewDescription()"
+        >
+          <option value="0">Select</option>
+          <option *ngFor="let item of thanaList" [value]="item.ThanaCode">
+            {{ item.ThanaDescription }}
+          </option>
+        </select>
+      </div>
+    </div>
+    <div class="form-row">
+      <label class="col-md-3">Description:</label>
+      <div class="form-group col-md-8">
+        <input
+          type="text"
+          class="form-control"
+          id="Discription"
+          formControlName="ThanaDescription"
+          name="ThanaDescription"
+        />
+      </div>
+    </div>
+    <div class="form-row">
+      <label class="col-md-3">Description - Bangla:</label>
+      <div class="form-group col-md-8">
+        <input
+          type="text"
+          class="form-control"
+          id="Discription"
+          formControlName="ThanaDescriptionBang"
+          name="ThanaDescriptionBang"
+        />
+      </div>
+    </div>
+    <div class="buttons">
+      <button type="button" class="btn_1 btn ml-4" (click)="saveOrUpdate()">
+        {{ submitButtonText }}
+      </button>
+      <button class="ml-5 btn" (click)="viewTabularData()">View</button>
+    </div>
+  </form>
+  <div *ngIf="viewTableData.length != 0" class="mx-auto set-height col-md-6">
+    <table id="Data">
+      <tr>
+        <th>Divi Code</th>
+        <th>Dist Code</th>
+        <th>Thana Code</th>
+        <th>Description</th>
+        <th>Description-Bangla</th>
+      </tr>
+      <tr *ngFor="let item of viewTableData">
+        <td>{{ item.DivisionCode }}</td>
+        <td>{{ item.DistrictCode }}</td>
+        <td>{{ item.ThanaCode }}</td>
+        <td>{{ item.ThanaDescription }}</td>
+        <td>{{ item.ThanaDescriptionBang }}</td>
+      </tr>
+    </table>
+  </div>
+</app-accounting-wrapper>

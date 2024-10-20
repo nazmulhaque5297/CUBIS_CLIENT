@@ -1,0 +1,207 @@
+<app-accounting-wrapper>
+  <form [formGroup]='monthlyMonitoringReportForm'>
+      <div class="mx-auto border col-md-6">
+          <p class="bg-dark title">
+            Monthly Monitoring Report</p>
+          <div class="form-row ml-0 mt-2 col-md-12">
+            <span class="ml-3 pl-3" ></span>
+            <label class="col-md-3 pr-0">For Month:</label>
+            <div class="form-group col-md-8 d-flex mt-0 pt-0 pl-0 mr-2 pr-4">
+                <select class="form-control pt-0 col-md-5" formControlName="Month">
+                  <option *ngFor="let item of calanderList" [value]="item.Id">{{item.Description}}
+                  </option>
+                </select>
+                <label class="col-md-2 pr-0 pr-2 mr-3">Year:</label>
+                <select class="form-control pt-0 col-md-5" formControlName="Year">
+                  <option *ngFor="let item of yearList" [value]="item.Id">{{item.Description}}
+                  </option>
+                </select>
+            </div>
+          </div>
+          <div class="form-row ml-0 mt-2 col-md-12">
+              <input type="checkbox" id="CollectorCode" class="ml-3 pl-5 mt-1" checked (change)="changeCheckCollector()">
+              <label class="col-md-3 pr-0" for="CollectorCode" >Collector Code:</label>
+              <div class="form-group col-md-8 d-flex mt-0 pt-0">
+                  <input appOnlyNumber type="text" formControlName="CollectorCode" (change)="collectorCodeChange()"  appOnlyNumberWithoutDecimal class="form-control mt-0 pt-0">
+                  <select class="form-control pt-0 ml-2 col-md-7" (change)="collectorCodeChange()"  formControlName="CollectorCode">
+                    <option value="0">-Select-</option>
+                    <option *ngFor="let item of collectorCodeList" [value]="item.Id">{{item.Description}}
+                    </option>
+                  </select>
+              </div>
+          </div>
+          <div class="form-row ml-0 mt-2 col-md-12">
+              <input type="checkbox" id="GroupName" class="ml-3 pl-5 mt-1" checked (change)="changeCheckGroup()">
+              <label class="col-md-3 pr-0" for="GroupName" >Group Name:</label>
+              <div class="form-group  col-md-8 d-flex mt-0 pt-0">
+                  <input appOnlyNumber type="text" formControlName="GroupName" (change)="groupCodeChange()" appOnlyNumberWithoutDecimal class="form-control mt-0 pt-0">
+                  <select class="form-control pt-0 ml-2 col-md-7" (change)="groupCodeChange()" formControlName="GroupName">
+                    <option value="0">-Select-</option>
+                    <option *ngFor="let item of groupNameList" [value]="item.Id">{{item.Description}}
+                    </option>
+                  </select>
+              </div>
+        </div>
+        <div class="button d-flex ml-2 col-md-8">
+          <button type="button" *ngIf="previewDataList.length==0" class="btn btn-success mb-2" (click)="btnProcessClick()" style="margin-left: 222px;"> Process </button>
+          <button type="button" *ngIf="previewDataList.length>0 && previewSubHeadList.length==0" class="btn btn-success mb-2" (click)="btnPrint1()" style="margin-left: 222px;"> Print </button>
+          <!-- <button *ngIf="previewSubHeadList.length==0" class="ml-2 btn btn-success mb-2" > Exit </button> -->
+          <button type="button" *ngIf="viewSortBtn==false && previewSubHeadList.length>0" class="btn btn-success mb-2" (click)="btnPrint2()" style="margin-left: 222px;"> Print </button>
+          <button type="button" class="btn btn-success mb-2" *ngIf="viewSortBtn==false && previewSubHeadList.length>0" (click)="backBtn1()" style="margin-left: 222px;"> Back </button>
+          <button type="button" *ngIf="viewSortBtn" class="btn btn-success mb-2" (click)="btnPrint3()" style="margin-left: 222px;"> Print </button>
+          <button type="button" class="btn btn-success mb-2" *ngIf="viewSortBtn" (click)="backBtn2()" style="margin-left: 222px;"> Back </button>
+          <button type="button" class="btn btn-success mb-2" *ngIf="viewSortBtn" (click)="sortBtnClick()" style="margin-left: 110px;"> Sort </button>
+        </div>
+        <div *ngIf="previewDataList.length>0 " class="set-height col-md-12">
+          <table id="Data" class="col-md-12">
+            <tr>
+                <th>SL.</th>
+                <th>Perticulars</th>
+                <th>No.(s)</th>
+                <th>Amount</th>
+                <th  *ngIf="previewSubHeadList.length==0">Action</th>
+            </tr>
+            <tr *ngFor="let item of previewDataList">
+                <td class="text-center">{{item.Id}}</td>
+                <td class="text-center">{{item.Perticulars}}</td>
+                <td class="text-center">{{item.Numbers}}</td>
+                <td class="text-center">{{item.Amount.toLocaleString('en-US', { minimumFractionDigits: 2 })}}</td>
+                <td class="text-center" *ngIf="previewSubHeadList.length==0">
+                  <button class="mt-2 btn btn-success mb-2" (click)="getSubHeadData(item.SLNO)"> Select </button>
+                </td>
+            </tr>
+          </table>
+        </div>
+
+
+        <div *ngIf="previewSubHeadList.length>0" class="mt-0 pt-0 set-height col-md-12 mt-3">
+          <table id="Data" class="col-md-12">
+            <tr>
+                <th>SL.</th>
+                <th>AccType</th>
+                <th>Perticulars</th>
+                <th>No.(s)</th>
+                <th>Amount</th>
+                <th *ngIf="finalSubModelData.GvDtlHeader.length==0 && finalSubModelData.GvDtlHeader1.length==0 && finalSubModelData.GvDtlHeader2.length==0 && finalSubModelData.GvDtlHeader3.length==0 && finalSubModelData.GvDtlHeader4.length==0">
+                  Action</th>
+            </tr>
+            <tr *ngFor="let item of previewSubHeadList">
+                <td class="text-center">{{item.Id}}</td>
+                <td class="text-center">{{item.AccType}}</td>
+                <td class="text-center">{{item.Perticulars}}</td>
+                <td class="text-center">{{item.Numbers}}</td>
+                <td class="text-center">{{item.Amount.toLocaleString('en-US', { minimumFractionDigits: 2 })}}</td>
+                <td class="text-center" *ngIf="finalSubModelData.GvDtlHeader.length==0 && finalSubModelData.GvDtlHeader1.length==0 && finalSubModelData.GvDtlHeader2.length==0 && finalSubModelData.GvDtlHeader3.length==0 && finalSubModelData.GvDtlHeader4.length==0">
+                  <button class="mt-2 btn btn-success mb-2" (click)="setFullHeadData(item)"> Select </button>
+                </td>
+            </tr>
+          </table>
+        </div>
+
+        <div *ngIf="finalSubModelData.GvDtlHeader.length>0" class="mt-0 pt-0 set-height col-md-12 mt-3">
+          <table id="Data" class="col-md-12">
+            <tr>
+                <th>SL.</th>
+                <th>Member No</th>
+                <th>Member Name</th>
+                <th>AccNo</th>
+                <th>Amount</th>
+            </tr>
+            <tr *ngFor="let item of finalSubModelData.GvDtlHeader">
+                <td class="text-center">{{item.Id}}</td>
+                <td class="text-center">{{item.MemNo}}</td>
+                <td class="text-center">{{item.MemName}}</td>
+                <td class="text-center">{{item.AccNo}}</td>
+                <td class="text-center">{{item.Amount.toLocaleString('en-US', { minimumFractionDigits: 2 })}}</td>
+            </tr>
+          </table>
+        </div>
+
+        <div *ngIf="finalSubModelData.GvDtlHeader1.length>0" class="mt-0 pt-0 set-height col-md-12 mt-3">
+          <table id="Data" class="col-md-12">
+            <tr>
+                <th>SL.</th>
+                <th>GLAccNo</th>
+                <th>GLAccName</th>
+                <th>VchNo</th>
+                <th>TrnDate</th>
+                <th>Amount</th>
+            </tr>
+            <tr *ngFor="let item of finalSubModelData.GvDtlHeader1">
+                <td class="text-center">{{item.Id}}</td>
+                <td class="text-center">{{item.GLAccNo}}</td>
+                <td>{{item.GLAccName}}</td>
+                <td class="text-center">{{item.VchNo}}</td>
+                <td class="text-center">{{item.TrnDate}}</td>
+                <td class="text-center">{{item.Amount.toLocaleString('en-US', { minimumFractionDigits: 2 })}}</td>
+            </tr>
+          </table>
+        </div>
+
+        <div *ngIf="finalSubModelData.GvDtlHeader2.length>0" class="mt-0 pt-0 set-height col-md-12 mt-3">
+          <table id="Data" class="col-md-12">
+            <tr>
+                <th>SL.</th>
+                <th>Member No</th>
+                <th>Member Name</th>
+                <th>AccNo</th>
+                <th>Dr.Amount</th>
+                <th>Cr.Amount</th>
+            </tr>
+            <tr *ngFor="let item of finalSubModelData.GvDtlHeader2">
+                <td class="text-center">{{item.Id}}</td>
+                <td class="text-center">{{item.MemNo}}</td>
+                <td class="text-center">{{item.MemName}}</td>
+                <td class="text-center">{{item.AccNo}}</td>
+                <td class="text-center">{{item.Amount.toLocaleString('en-US', { minimumFractionDigits: 2 })}}</td>
+                <td class="text-center">{{item.Amount1.toLocaleString('en-US', { minimumFractionDigits: 2 })}}</td>
+            </tr>
+          </table>
+        </div>
+
+        <div *ngIf="finalSubModelData.GvDtlHeader3.length>0" class="mt-0 pt-0 set-height col-md-12 mt-3">
+          <table id="Data" class="col-md-12">
+            <tr>
+              <th>SL.</th>
+              <th>Member No</th>
+              <th>Member Name</th>
+              <th>AccNo</th>
+              <th>Amount</th>
+            </tr>
+            <tr *ngFor="let item of finalSubModelData.GvDtlHeader3">
+                <td class="text-center">{{item.Id}}</td>
+                <td class="text-center">{{item.MemNo}}</td>
+                <td class="text-center">{{item.MemName}}</td>
+                <td class="text-center">{{item.AccNo}}</td>
+                <td class="text-center">{{item.Amount.toLocaleString('en-US', { minimumFractionDigits: 2 })}}</td>
+            </tr>
+          </table>
+        </div>
+
+        <div *ngIf="finalSubModelData.GvDtlHeader4.length>0" class="mt-0 pt-0 set-height col-md-12 mt-3">
+          <table id="Data" class="col-md-12">
+            <tr>
+              <th>SL.</th>
+              <th>Member No</th>
+              <th>Member Name</th>
+              <th>AccNo</th>
+              <th>Last Trn. Date</th>
+              <th>No. of Due</th>
+              <th>Amount</th>
+            </tr>
+            <tr *ngFor="let item of finalSubModelData.GvDtlHeader4">
+              <td class="text-center">{{item.Id}}</td>
+              <td class="text-center">{{item.MemNo}}</td>
+              <td class="text-center">{{item.MemName}}</td>
+              <td class="text-center">{{item.AccNo}}</td>
+              <td class="text-center">{{item.TrnDate}}</td>
+              <td class="text-center">{{item.DueNos}}</td>
+              <td class="text-center">{{item.Amount.toLocaleString('en-US', { minimumFractionDigits: 2 })}}</td>
+            </tr>
+          </table>
+        </div>
+
+      </div>
+
+  </form>
+</app-accounting-wrapper>

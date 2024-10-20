@@ -1,0 +1,67 @@
+<app-house-keeping-wrapper>
+    <form [formGroup]='SmsDdlForm' novalidate class="mx-auto border col-md-6 main-container">
+        <p class="bg-dark title">Voucher Signature Maintenance Control </p>
+        <div class="form-group row">
+            <label for="select" class="col-sm-3 col-form-label">Report Function :</label>
+            <div class="col-sm-7">
+                <!-- <select formControlName="selectedOptionCode" id="select" class="form-control pt-1" [(ngModel)]="selectedUser"
+                (change)="onChangeAccType()">
+                    <option value="0">-Select-</option>
+                    <option *ngFor="let item of dataList" [value]="item.Id">{{item.Description}}
+                    </option>
+                </select> -->
+                <select
+        
+                class="form-control pt-0"
+                formControlName="SelectedOptionCode"
+                (change)="onChangeFunctionName()"
+              >
+                <option value="0">-Select-</option>
+                <option
+                  *ngFor="let item of GetInputHelpData.FunctionOptionDropDown"
+                  [value]="item.Id"
+                >
+                  {{ item.Description }}
+                </option>
+              </select>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="lblMsg1" class="col-sm-3 col-form-label">Signature-1 :</label>
+            <div class="col-sm-7">
+                <input type="text" class="form-control" id="textMessage1" formControlName="Signature1" >
+              
+            </div>
+
+        </div>
+
+        <div class="form-group row">
+            <label for="lblMsg4" class="col-sm-3 col-form-label">Signature-2 :</label>
+            <div class="col-sm-7">
+                <input type="text" class="form-control" id="textMessage2" formControlName="Signature2">
+            </div>
+
+        </div>
+        <div class="form-group row" *ngIf="text3Status">
+            <label for="lblMsg5" class="col-sm-3 col-form-label">Signature-3 :</label>
+            <div class="col-sm-7">
+                <input type="text" class="form-control" id="textMessage3" formControlName="Signature3">
+            </div>
+
+        </div>
+        <div class="form-group row" *ngIf="text4Status" >
+            <label for="lblMsg5" class="col-sm-3 col-form-label">Signature-4 :</label>
+            <div class="col-sm-7">
+                <input type="text" class="form-control" id="textMessage3" formControlName="Signature4">
+            </div>
+
+        </div>
+       
+        <div class="buttons col-md-6 mx-auto">
+            <button type="button" class="btn btn-success" (click)="updateData()">Update</button>
+            <!-- <button type="button"  class="btn ml-3" (click)="exitPage()">Exit</button> -->
+        </div>
+
+    </form>
+</app-house-keeping-wrapper>
+

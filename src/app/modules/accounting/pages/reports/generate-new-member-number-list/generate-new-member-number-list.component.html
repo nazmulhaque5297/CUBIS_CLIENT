@@ -1,0 +1,92 @@
+<app-main-wrapper [module]="module">
+  <form
+    [formGroup]="MemberNumberGenerateReportForm"
+    class="mx-auto border col-md-7"
+  >
+    <p class="bg-dark title">Generate New Member No. List</p>
+
+    <div class="form-group row">
+      <label class="col-md-3 col-form-label">Member Type :</label>
+      <div class="col-md-4">
+        <input
+          (keydown)="onEnterMemberTypeHandler($event)"
+          type="text"
+          class="form-control"
+          id="CodeNumber"
+          formControlName="Code"
+          name="CodeNumber"
+        />
+      </div>
+      <div class="col-md-5">
+        <select
+          class="form-control pt-0"
+          formControlName="MemberType"
+          (change)="onChangeMemberType($event)"
+        >
+          <option value="0">-Select-</option>
+          <option
+            *ngFor="let item of inputHelpData.MemberTypeList"
+            [value]="item.Id"
+          >
+            {{ item.Description }}
+          </option>
+        </select>
+      </div>
+    </div>
+
+    <div class="form-group row">
+      <label class="col-md-3 col-form-label">Member No.From:</label>
+      <div class="col-md-4">
+        <input
+          (keydown)="onEnterMemberNoFromHandler($event)"
+          type="text"
+          class="form-control"
+          id="MemberNoFrom"
+          formControlName="MemberNoFrom"
+          name="MemberNoFrom"
+        />
+      </div>
+      <label class="col-md-1 col-form-label">To :</label>
+      <div class="col-md-4">
+        <input
+          type="text"
+          class="form-control"
+          id="MemberNoTo"
+          formControlName="MemberNoTo"
+          name="MemberNoTo"
+        />
+      </div>
+    </div>
+
+    <!-- hidden="true" -->
+    <div class="form-group row">
+      <label for="blankCheckbox" class="col-sm-3 col-form-label"
+        >Only New Member</label
+      >
+      <div class="col-md-3">
+        <input
+          class="form-check-input position-static ml-1 checkbox"
+          type="checkbox"
+          id="blankCheckbox"
+          formControlName="IsOnlyNewMember"
+        />
+      </div>
+    </div>
+    <div class="buttons">
+      <button
+        type="button"
+        class="btn btn-info ml-2"
+        (click)="getReportToken('CRV')"
+      >
+        Preview
+      </button>
+      <button
+        type="button"
+        class="btn btn-success ml-2"
+        (click)="getReportToken('PDF')"
+      >
+        Print
+      </button>
+    </div>
+  </form>
+</app-main-wrapper>

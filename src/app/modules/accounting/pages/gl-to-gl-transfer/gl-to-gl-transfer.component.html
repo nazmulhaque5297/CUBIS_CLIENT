@@ -1,0 +1,343 @@
+<app-accounting-wrapper>
+  <form [formGroup]="GlToGlTransferForm" novalidate class="form-horizontal">
+    <div class="row">
+      <div class="col-xl-8 col-md-8 mx-auto">
+        <p class="bg-primary text-center text-light bg-secondary title">
+          GL Balance Transfer From..........
+        </p>
+        <div class="card">
+          <div class="card-body">
+            <!-- <div class="form-group row">
+                    <div class="col-md-1">
+                      <input
+                        class="form-check-input ml-1 checkbox"
+                        style="margin: 0.8rem"
+                        type="checkbox"
+                        id="IsMiscAccTypeFrom"
+                        formControlName="IsMiscAccTypeFrom"
+                        [(ngModel)]="IsMiscAccTypeFromstatus"
+                      />
+                    </div>
+                    
+                    <label class="col-md-3 col-form-label" for="IsMiscAccTypeFrom">Misc Account</label>
+                </div> -->
+
+            <div class="form-row ml-0 mt-2 mx-auto">
+              <label class="col-md-3"
+                >Wrong Transaction Date:<span class="text-danger"
+                  >*</span
+                ></label
+              >
+              <div class="form-group col-md-2">
+                <!-- (change)="suretyMemberNoChange()" -->
+                <input
+                  id="dateFormat"
+                  type="text"
+                  placeholder="DD/MM/YYYY"
+                  class="form-control"
+                  bsDatepicker
+                  formControlName="TransactionDate"
+                  [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY' }"
+                  autocomplete="off"
+                />
+              </div>
+            </div>
+            <div class="form-row ml-0 mt-2 mx-auto">
+              <label class="col-md-3"
+                >Vch.No.: <span class="text-danger">*</span></label
+              >
+              <div class="form-group col-md-2">
+                <!-- (change)="loanMemberNoChange()" -->
+                <input
+                  type="text"
+                  formControlName="VoucherNo"
+                  class="form-control mt-0 pt-0"
+                  required
+                />
+              </div>
+            </div>
+
+            <!-- <div class="form-group row" *ngIf="!IsMiscAccTypeFromstatus">
+                  <label class="col-md-3 col-form-label"
+                    >Member No:<span class="text-danger">*</span></label
+                  >
+                  <div class="form-group col-md-2">
+                    <input
+                      type="text"
+                      class="form-control"
+                      formControlName="FromMemberNo"
+                      (change)="onFromMemberChange(GlToGlTransferForm.value.FromMemberNo)"
+                     
+                    />
+                  </div>
+    
+                  <div class="col-md-3 ml-3">
+                    {{ fromMemberDetails.Member?.MemberName }}
+                  </div>
+                </div> -->
+
+            <!-- <div class="form-group row" *ngIf="!IsMiscAccTypeFromstatus">
+                  <label class="col-md-3 col-form-label"
+                    >A/C Type:<span class="text-danger">*</span></label
+                  >
+                  <div class="form-group col-md-2">
+                    <input
+                      type="text"
+                      class="form-control"
+                      disabled
+                      formControlName="FromAccountTypeCode"
+                    />
+                  </div>
+                  <div class="col-md-3">
+                    <select
+                      id="FromAccountTypeId"
+                      formControlName="FromAccountTypeId"
+                      class="form-control pt-0"
+                      (change)="onFromTypeChange(GlToGlTransferForm.value.FromAccountTypeId)"
+                
+                    >
+                      <option value="">-Select-</option>
+                      <option
+                      *ngFor="let item of fromAccountTypeList"
+                      [value]="item.Id"
+                    >
+                      {{ item.Description }}
+                    </option>
+                       
+                     
+                    </select>
+                  </div>
+                </div> -->
+
+            <!-- <div class="form-group row"*ngIf="!IsMiscAccTypeFromstatus">
+                  <label class="col-md-3 col-form-label">Account No:</label>
+                  <div class="form-group col-md-5">
+                    <div class="form-control mt-0 pt-0">
+                      {{fromMemberDetails.AccountNo}}
+                    </div>
+                  </div>
+                </div> -->
+
+            <div class="form-group row">
+              <label class="col-md-3 col-form-label"
+                >From GLCode:<span class="text-danger">*</span></label
+              >
+              <div class="form-group col-md-3">
+                <input
+                  type="text"
+                  class="form-control"
+                  formControlName="FromGlCode"
+                />
+              </div>
+
+              <div class="col-md-3 ml-3"></div>
+            </div>
+
+            <!-- <div class="form-group row">
+                  <label class="col-md-3 col-form-label">Balance:</label>
+                  <div class="form-group col-md-5">
+                    <div  class="form-control mt-0 pt-0">
+                     {{fromMemberDetails.Balance}}
+                    </div>
+                   
+                  </div>
+                </div> -->
+            <!-- 
+                <div class="form-group row" *ngIf="!IsMiscAccTypeFromstatus">
+                  <label class="col-md-3 col-form-label"
+                    >From GLCode:<span class="text-danger">**</span></label
+                  >
+                  <div class="form-group col-md-5">
+                    <input
+                      type="text"
+                      class="form-control"
+                      formControlName="FromGlCodeNon"
+                      
+                    />
+                  </div>
+    
+                  <div class="col-md-3 ml-3">
+                    
+                  </div>
+                </div> -->
+          </div>
+        </div>
+      </div>
+
+      <div class="col-xl-8 col-md-8 mx-auto">
+        <p class="bg-primary text-center text-light bg-secondary title">
+          GL Balance Transfer To..............
+        </p>
+        <div class="card">
+          <div class="card-body">
+            <!-- <div class="form-group row">
+                    <div class="col-md-1">
+                      <input
+                        class="form-check-input ml-1 checkbox"
+                        style="margin: 0.8rem"
+                        type="checkbox"
+                        id="IsMiscAccTypeTo"
+                        formControlName="IsMiscAccTypeTo"
+                        [(ngModel)]="IsMiscAccTypeTostatus"
+                      />
+                    </div>
+                    
+                    <label class="col-md-3 col-form-label" for="IsMiscAccTypeTo">Misc Account</label>
+                </div> -->
+
+            <!--   
+                <div class="form-group row" *ngIf="!IsMiscAccTypeTostatus">
+                  <label class="col-md-3 col-form-label"
+                    >Member No:<span class="text-danger">*</span></label
+                  >
+                  <div class="form-group col-md-2">
+                    <input
+                      type="text"
+                      class="form-control"
+                      formControlName="ToMemberNo"
+                      id="ToMemberNo"
+                      (change)="onToMemberChange(GlToGlTransferForm.value.ToMemberNo)"
+                    />
+                  </div>
+                  <div class="col-md-3 mt-0 pt-0">
+                    {{ toMemberDetails.Member?.MemberName }}
+                    
+                  </div>
+                </div> -->
+
+            <!-- <div class="form-group row" *ngIf="!IsMiscAccTypeTostatus">
+                  <label class="col-md-3 col-form-label"
+                    >A/C Type:<span class="text-danger">*</span></label
+                  >
+                  <div class="form-group col-md-2">
+                    <input
+                      type="text"
+                      class="form-control"
+                      disabled
+                      formControlName="ToAccountTypeCode"
+                      
+                    />
+                  </div>
+                  <div class="col-md-3">
+                    <select
+                      formControlName="ToAccountTypeId"
+                      id="ToAccountTypeId"
+                      class="form-control pt-0"
+                      (change)="onToTypeChange(GlToGlTransferForm.value.ToAccountTypeId)"
+                      
+                    >
+                      <option value="">-Select-</option>
+                      <option
+                      *ngFor="let item of fromAccountTypeList"
+                      [value]="item.Id"
+                    >
+                      {{ item.Description }}
+                    </option>
+                    </select>
+                  </div>
+                </div> -->
+
+            <!-- <div class="form-group row" *ngIf="!IsMiscAccTypeTostatus">
+                  <label class="col-md-3 col-form-label">Account No:</label>
+                  <div class="form-group col-md-5">
+                    <div class="form-control mt-0 pt-0">
+                      {{toMemberDetails.AccountNo}}
+                    </div>
+                  </div>
+                </div> -->
+
+            <div class="form-group row">
+              <label class="col-md-3 col-form-label"
+                >To GLCode:<span class="text-danger">*</span></label
+              >
+              <div class="form-group col-md-3">
+                <input
+                  type="text"
+                  class="form-control"
+                  formControlName="ToGlCode"
+                />
+              </div>
+
+              <div class="col-md-3 ml-3"></div>
+            </div>
+
+            <div class="form-group row">
+              <label class="col-md-3 col-form-label"
+                >To AccNo: (If product)</label
+              >
+              <div class="form-group col-md-3">
+                <input
+                  type="text"
+                  class="form-control"
+                  formControlName="ToAccNo"
+                />
+              </div>
+
+              <div class="col-md-3 ml-3"></div>
+            </div>
+
+            <!--     
+                <div class="form-group row">
+                  <label class="col-md-3 col-form-label">Balance:</label>
+                  <div class="form-group col-md-5">
+                    <div class="form-control mt-0 pt-0">
+                      {{toMemberDetails.Balance}}
+                    </div>
+                  </div>
+                </div> -->
+
+            <!-- 
+
+
+                <div class="form-group row" *ngIf="!IsMiscAccTypeTostatus" >
+                  <label class="col-md-3 col-form-label"
+                    >To GLCode :<span class="text-danger">**</span></label
+                  >
+                  <div class="form-group col-md-5">
+                    <input
+                      type="text"
+                      class="form-control"
+                      formControlName="ToGlCodeNotMisc"
+                      
+                      
+                    />
+                  </div>
+    
+                  <div class="col-md-3 ml-3">
+                    
+                  </div>
+                </div> -->
+
+            <!--     
+                <div class="form-group row">
+                  <label class="col-md-3 col-form-label"
+                    >Transaction Amount :<span class="text-danger">*</span></label
+                  >
+                  <div class="form-group col-md-5">
+                    <input
+                    appOnlyNumber
+                      type="text"
+                      class="form-control"
+                      formControlName="TransactionAmount"
+                      id="TransactionAmount"
+                      
+                     
+                    />
+                  </div>
+                </div> -->
+
+            <div class="col-md-6 mx-auto">
+              <button
+                type="button"
+                class="btn btn-success"
+                (click)="Transfer()"
+              >
+                Transfer
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+</app-accounting-wrapper>

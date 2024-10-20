@@ -1,0 +1,253 @@
+<app-house-keeping-wrapper>
+    <form [formGroup]='InterestCalculationForm'>
+        <div class="mx-auto border col-md-7 main-container pb-2">
+            <p class="bg-dark title">
+                Standard Account - Interest Calculation Parameter</p>
+            <div class="form-row ml-0 mt-2">
+                <label class="col-md-3" class="col-md-3 mr-1 pr-0">Account Type:<span
+                        style="color: red;">*</span></label>
+                <div class="form-group ml-3 pl-3 col-md-3 mt-0 pt-0">
+                    <input type="text" formControlName="AccTypeCode" class="form-control mt-0 pt-0" id="TrnCode"
+                        name="TrnCode" readonly>
+                </div>
+                <div class="form-group col-md-4">
+                    <select (change)="selectChangeHandler($event)" class="form-control  mt-0 pt-0">
+                        <option value="0" class="mt-0 pt-0">-Select-</option>
+                        <option *ngFor="let item of dataList" [value]="item.AccTypeCode" class="mt-0 pt-0">
+                            {{item.AccTypeDescription}}
+                        </option>
+                    </select>
+                </div>
+            </div>
+            <!-- <div class="buttons col-md-6 mx-auto">
+                <button type="button" (click)="exitPage()" class="btn ml-4">Exit</button>
+            </div> -->
+        </div>
+        <div *ngIf="showAll" class="mx-auto border col-md-7 main-container">
+            <table id="Data">
+                <tr>
+                    <td>1.Interest Calculation Period</td>
+                    <td>
+                        <input type="radio" value="1" name="rbIntCalPeriod" formControlName="rbIntCalPeriod">
+                        <label class="ml-2">Half Yearly</label>
+                    </td>
+                    <td>
+                        <input type="radio" value="2" name="rbIntCalPeriod" formControlName="rbIntCalPeriod">
+                        <label class="ml-2">Yearly</label><br>
+                    </td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>2.Interest Calculation Method</td>
+                    <td>
+                        <input type="radio" value="1" name="rbIntCalMethod" formControlName="rbIntCalMethod">
+                        <label class="ml-2">Minimum Balance</label>
+                    </td>
+                    <td>
+                        <input type="radio" value="3" name="rbIntCalMethod" formControlName="rbIntCalMethod">
+                        <label class="ml-2">Opening Balance</label><br>
+                    </td>
+                    <td>
+                        <input type="radio" value="4" name="rbIntCalMethod" formControlName="rbIntCalMethod">
+                        <label class="ml-2">Closing Balance</label><br>
+                    </td>
+                </tr>
+                <tr>
+                    <td>3.Interest will be Calculated on the Balance from Day</td>
+                    <td>
+                        <input appOnlyNumberWithoutDecimal maxlength="2" type="text" (keydown)="onEnterPrmCalStartDayHandler($event)"  formControlName="PrmCalStartDay" class="form-control mt-0 pt-0">
+                    </td>
+                    <td>To</td>
+                    <td>
+                        <input appOnlyNumberWithoutDecimal maxlength="2" type="text" (keydown)="onEnterPrmCalEndDayHandler($event)" formControlName="PrmCalEndDay" id="PrmCalEndDay" class="form-control mt-0 pt-0">
+                    </td>
+                </tr>
+                <tr>
+                    <td>4.Check Consolidate Withdrawal Over 25% of Balance?</td>
+                    <td>
+                        <input type="radio" value="1" name="rbConWithdraw" formControlName="rbConWithdraw"
+                            (change)="checkOver25()">
+                        <label class="ml-2">No</label>
+                    </td>
+                    <td>
+                        <input type="radio" value="2" name="rbConWithdraw" formControlName="rbConWithdraw"
+                            (change)="checkOver25()">
+                        <label class="ml-2">Yes</label><br>
+                    </td>
+                    <td></td>
+                </tr>
+                <tr *ngIf="showOver25">
+                    <td>5.Need Seven Day's Notice?</td>
+                    <td>
+                        <input type="radio" value="1" name="rbSevenDay" formControlName="rbSevenDay"
+                            (change)="sevenDayNotice()">
+                        <label class="ml-2">No</label>
+                    </td>
+                    <td>
+                        <input type="radio" value="2" name="rbSevenDay" formControlName="rbSevenDay"
+                            (change)="sevenDayNotice()">
+                        <label class="ml-2">Yes</label><br>
+                    </td>
+                    <td></td>
+                </tr>
+                <tr *ngIf="showSeven&&showOver25">
+                    <td>6.Minimum Withdrawal Amount for 7 day's Notice</td>
+                    <td>
+                        <input type="text" formControlName="PrmNoticeAmt" class="form-control mt-0 pt-0">
+                    </td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr *ngIf="showOver25">
+                    <td>7.If any Withdrawal Over 25% of Balance, Give Interest?</td>
+                    <td>
+                        <input type="radio" value="1" name="rbGiveInt" formControlName="rbGiveInt">
+                        <label class="ml-2">No</label>
+                    </td>
+                    <td>
+                        <input type="radio" value="2" name="rbGiveInt" formControlName="rbGiveInt">
+                        <label class="ml-2">Yes</label><br>
+                    </td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>8.Special Interest Calculation?</td>
+                    <td>
+                        <input type="radio" value="1" name="rbSpeInt" formControlName="rbSpeInt"
+                            (change)="specialInterest()">
+                        <label class="ml-2">No</label>
+                    </td>
+                    <td>
+                        <input type="radio" value="2" name="rbSpeInt" formControlName="rbSpeInt"
+                            (change)="specialInterest()">
+                        <label class="ml-2">Yes</label><br>
+                    </td>
+                    <td></td>
+                </tr>
+
+                <tr *ngIf="showSpecialInterest">
+                    <td>If A/C Has Not Debit Transaction WithIn Fin.Year (Int.Rate)</td>
+                    <td>
+                        <input type="text" formControlName="PrmSpeIntRate1" class="form-control mt-0 pt-0">
+                    </td>
+                    <td>If A/C Has Debit Transaction WithIn Fin.Year (Int.Rate)</td>
+                    <td>
+                        <input type="text" formControlName="PrmSpeIntRate2" class="form-control mt-0 pt-0">
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>9.Minimum Balance for Interest</td>
+                    <td>
+                        <input onfocus="this.select()" appOnlyNumber maxlength="5" type="text" (keydown)="onEnterPrmMinBalForIntHandler($event)"  formControlName="PrmMinBalForInt" id="PrmMinBalForInt" class="form-control mt-0 pt-0">
+                    </td>
+                    <td>Minimum Interest Amount</td>
+                    <td>
+                        <input onfocus="this.select()" appOnlyNumber maxlength="5" type="text" (keydown)="onEnterPrmMinIntAmtHandler($event)" formControlName="PrmMinIntAmt" id="PrmMinIntAmt" class="form-control mt-0 pt-0">
+                    </td>
+                </tr>
+                <tr>
+                    <td>10.Maximum Balance for Interest</td>
+                    <td>
+                        <input onfocus="this.select()" appOnlyNumber maxlength="8" type="text" (keydown)="onEnterPrmMaxBalForIntHandler($event)" formControlName="PrmMaxBalForInt" id="PrmMaxBalForInt" class="form-control mt-0 pt-0">
+                    </td>
+                    <td>Maximum Interest Amount </td>
+                    <td>
+                        <input onfocus="this.select()" appOnlyNumber maxlength="6" type="text" (keydown)="onEnterPrmMaxIntAmtHandler($event)" formControlName="PrmMaxIntAmt" id="PrmMaxIntAmt" class="form-control mt-0 pt-0">
+                    </td>
+                </tr>
+                <tr>
+                    <td>11.Interest Credit Account Type</td>
+                    <td>
+
+                        <input type="text" formControlName="TargetAccType" class="form-control mt-0 pt-0" readonly>
+                    </td>
+                    <td>
+                        <select (change)="selectChangeHandlerTarget($event)" formControlName="TargetAccType"
+                            class="form-control  mt-0 pt-0">
+                            <option value="0" class="mt-0 pt-0">-Select-</option>
+                            <option *ngFor="let item of targetDataList" [value]="item.AccTypeCode" class="mt-0 pt-0">
+                                {{item.AccTypeDescription}}
+                            </option>
+                        </select>
+                    </td>
+                    <td></td>
+                </tr>
+            </table>
+            <p *ngIf="!showSpecialInterest" class="mt-4 bg-dark title">
+                Interest Rate</p>
+            <table id="Data" *ngIf="!showSpecialInterest">
+                <tr>
+                    <td>July</td>
+                    <td>
+
+                        <input appOnlyNumber maxlength="5" type="text" (keydown)="onEnterIntRateJulHandler($event)"  id="IntRateJul" formControlName="IntRateJul" class="form-control mt-0 pt-0">
+                    </td>
+                    <td>October</td>
+                    <td>
+
+                        <input appOnlyNumber maxlength="5" type="text" (keydown)="onEnterIntRateOctHandler($event)" id="IntRateOct" formControlName="IntRateOct" class="form-control mt-0 pt-0">
+                    </td>
+                    <td>January</td>
+                    <td>
+
+                        <input appOnlyNumber maxlength="5" type="text" (keydown)="onEnterIntRateJanHandler($event)" id="IntRateJan" formControlName="IntRateJan" class="form-control mt-0 pt-0">
+                    </td>
+                    <td>April</td>
+                    <td>
+
+                        <input appOnlyNumber maxlength="5" type="text" id="IntRateApr" (keydown)="onEnterIntRateAprHandler($event)" formControlName="IntRateApr" class="form-control mt-0 pt-0">
+                    </td>
+                </tr>
+                <tr>
+                    <td>August</td>
+                    <td>
+
+                        <input appOnlyNumber maxlength="5" type="text" id="IntRateAug" (keydown)="onEnterIntRateAugHandler($event)" formControlName="IntRateAug" class="form-control mt-0 pt-0">
+                    </td>
+                    <td>November</td>
+                    <td>
+
+                        <input appOnlyNumber maxlength="5" type="text" id="IntRateNov" (keydown)="onEnterIntRateNovHandler($event)" formControlName="IntRateNov" class="form-control mt-0 pt-0">
+                    </td>
+                    <td>February</td>
+                    <td>
+
+                        <input appOnlyNumber maxlength="5" type="text" id="IntRateFeb" (keydown)="onEnterIntRateFebHandler($event)" formControlName="IntRateFeb" class="form-control mt-0 pt-0">
+                    </td>
+                    <td>May</td>
+                    <td>
+
+                        <input appOnlyNumber maxlength="5" type="text" id="IntRateMay" (keydown)="onEnterIntRateMayHandler($event)"  formControlName="IntRateMay" class="form-control mt-0 pt-0">
+                    </td>
+                </tr>
+                <tr>
+                    <td>September</td>
+                    <td>
+
+                        <input appOnlyNumber maxlength="5" type="text" id="IntRateSep" (keydown)="onEnterIntRateSepHandler($event)" formControlName="IntRateSep" class="form-control mt-0 pt-0">
+                    </td>
+                    <td>December</td>
+                    <td>
+
+                        <input appOnlyNumber maxlength="5" type="text" id="IntRateDec" (keydown)="onEnterIntRateDecHandler($event)" formControlName="IntRateDec" class="form-control mt-0 pt-0">
+                    </td>
+                    <td>March</td>
+                    <td>
+
+                        <input appOnlyNumber maxlength="5" type="text" id="IntRateMar" (keydown)="onEnterIntRateMarHandler($event)" formControlName="IntRateMar" class="form-control mt-0 pt-0">
+                    </td>
+                    <td>June</td>
+                    <td>
+
+                        <input appOnlyNumber maxlength="5" type="text" id="IntRateJun" formControlName="IntRateJun" class="form-control mt-0 pt-0">
+                    </td>
+                </tr>
+            </table>
+            <div class="buttons mt-2 mb-2">
+                <button *ngIf="ShowSubmit" type="button" (click)="submitData()" class="btn btn-success">Submit</button>
+                <button *ngIf="!ShowSubmit" type="button" (click)="updateData()" class="btn btn-success">Update</button>
+            </div>
+        </div>
+    </form>
+</app-house-keeping-wrapper>

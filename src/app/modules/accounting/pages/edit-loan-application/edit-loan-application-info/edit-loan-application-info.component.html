@@ -1,0 +1,341 @@
+<form [formGroup]="loanInfoForm" class="form-horizontal">
+  <div class="form-group row">
+    <label class="col-md-3 col-form-label"
+      >Application No:<span class="text-danger">*</span></label
+    >
+    <div class="col-md-3">
+      <input
+        type="text"
+        class="form-control"
+        (change)="onApplicationNoChange()"
+        formControlName="ApplicationNo"
+      />
+    </div>
+    <label class="col-md-4 col-form-label"
+      >Last Application No.: {{ inputHelpData.LastApplicationNo }}</label
+    >
+  </div>
+
+  <div class="form-group row">
+    <label class="col-md-3 col-form-label"
+      >Application Date:<span class="text-danger">*</span></label
+    >
+    <div class="col-md-3">
+      <input
+        id="dateFormat"
+        type="text"
+        placeholder="DD/MM/YYYY"
+        class="form-control"
+        bsDatepicker
+        formControlName="ApplicationDate"
+        (ngModelChange)="applicationDateChange()"
+        [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY' }"
+        autocomplete="off"
+      />
+    </div>
+  </div>
+
+  <div class="form-group row">
+    <label class="col-md-3 col-form-label"
+      >Loan A/C Type:<span class="text-danger">*</span></label
+    >
+    <div class="col-md-4">
+      <select
+        class="form-control pt-0"
+        formControlName="LoanAccountType"
+        disabled
+        (change)="onAccountTypeChange(loanInfoForm.value.LoanAccountType)"
+      >
+        <option value="0">-Select-</option>
+        <option
+          *ngFor="let item of inputHelpData.AccountTypeList"
+          [value]="item.Id"
+        >
+          {{ item.Description }}
+        </option>
+      </select>
+    </div>
+    <div class="col-md-2" *ngIf="accountTypeDetails.AccDepositMode > 0">
+      <label>{{ accountTypeDetails.AccDepositModeDesc }}</label>
+    </div>
+  </div>
+
+  <div class="form-group row">
+    <label class="col-md-3 col-form-label"
+      >Member No.:<span class="text-danger">*</span></label
+    >
+    <div class="col-md-4">
+      <input
+        type="text"
+        class="form-control"
+        (change)="onMemberNoChange()"
+        readonly
+        formControlName="LoanMemberNo"
+        required
+      />
+    </div>
+    <div class="col-md-5">
+      <input
+        type="text"
+        class="form-control"
+        disabled
+        formControlName="LoanMemberName"
+      />
+    </div>
+  </div>
+
+  <div class="form-group row">
+    <label class="col-md-3 col-form-label"
+      >Application Amount:<span class="text-danger">*</span></label
+    >
+    <div class="col-md-4">
+      <input
+        type="text"
+        class="form-control"
+        (change)="onLoanAmountEvent()"
+        (keydown)="onLoanAmountEventkeydown($event)"
+        id="LoanApplicationAmount"
+        formControlName="LoanApplicationAmount"
+        required
+      />
+    </div>
+  </div>
+
+  <div class="form-group row">
+    <label class="col-md-3 col-form-label">Interest Rate:</label>
+    <div class="col-md-4">
+      <input
+        type="text"
+        class="form-control"
+        id="LoanInterestRate"
+        formControlName="LoanInterestRate"
+        (change)="onLoanInterestRateEvent()"
+        (keydown)="onLoanInterestRateEventkeydown($event)"
+      />
+    </div>
+    <label class="col-md-3 col-form-label" *ngIf="hideShowModel.ShowInstallment"
+      >No Of Installment:</label
+    >
+    <div class="col-md-2" *ngIf="hideShowModel.ShowInstallment">
+      <input
+        type="text"
+        class="form-control"
+        id="LoanNoInstallment"
+        formControlName="LoanNoInstallment"
+        (change)="onLoanNoEvent()"
+        (keydown)="onLoanNoEventkeydown($event)"
+      />
+    </div>
+  </div>
+
+  <div class="form-group row">
+    <label class="col-md-3 col-form-label">Loan Category:</label>
+    <div class="col-md-2">
+      <input
+        type="text"
+        class="form-control"
+        id="LoanCategoryCode"
+        formControlName="LoanCategoryCode"
+        (change)="loanCatagoryCodeChange()"
+        (keydown)="loanCatagoryCodeChangekeydown($event)"
+      />
+    </div>
+    <div class="col-md-2">
+      <select
+        class="form-control pt-0"
+        formControlName="LoanCategory"
+        (change)="loanCatagoryChange()"
+      >
+        <option value="0">-Select-</option>
+        <option
+          *ngFor="let item of inputHelpData.LoanCategoryList"
+          [value]="item.Id"
+        >
+          {{ item.Description }}
+        </option>
+      </select>
+    </div>
+    <label class="col-md-3 col-form-label" *ngIf="hideShowModel.ShowInstallment"
+      >Installment Amount:</label
+    >
+    <div class="col-md-2" *ngIf="hideShowModel.ShowInstallment">
+      <input
+        type="text"
+        class="form-control"
+        id="LoanInstallmentAmount"
+        formControlName="LoanInstallmentAmount"
+        (change)="onLoanAmountEvent()"
+        (keydown)="onLoanAmountEventInstkeydown($event)"
+      />
+    </div>
+  </div>
+
+  <div class="form-group row">
+    <label class="col-md-3 col-form-label">Loan Expire Date:</label>
+    <div class="col-md-4">
+      <input
+        id="dateFormat"
+        type="text"
+        placeholder="DD/MM/YYYY"
+        class="form-control"
+        bsDatepicker
+        formControlName="LoanExpDate"
+        (ngModelChange)="loanExpDateChange()"
+        [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY' }"
+        autocomplete="off"
+      />
+    </div>
+    <label class="col-md-3 col-form-label" *ngIf="hideShowModel.ShowInstallment"
+      >Last Installment Amount:</label
+    >
+    <div class="col-md-2" *ngIf="hideShowModel.ShowInstallment">
+      <input
+        type="text"
+        class="form-control"
+        id="LoanLastInstallmentAmount"
+        formControlName="LoanLastInstallmentAmount"
+      />
+    </div>
+  </div>
+
+  <div class="form-group row">
+    <label class="col-md-3 col-form-label">Loan Purpose:</label>
+    <div class="col-md-2">
+      <input
+        type="text"
+        class="form-control"
+        id="LoanPurposeCode"
+        formControlName="LoanPurposeCode"
+        (change)="onLoanPurposeChange(loanInfoForm.value.LoanPurposeCode)"
+        (keydown)="onLoanPurposeChangekeydown($event)"
+      />
+    </div>
+    <div class="col-md-3">
+      <select
+        class="form-control pt-0"
+        formControlName="LoanPurpose"
+        (change)="onLoanPurposeChange(loanInfoForm.value.LoanPurpose)"
+      >
+        <option
+          *ngFor="let item of inputHelpData.LoanPurposeList"
+          [value]="item.Id"
+        >
+          {{ item.Description }}
+        </option>
+      </select>
+    </div>
+  </div>
+
+  <div class="form-group row">
+    <label class="col-md-3 col-form-label"> Loan Cal. Method:</label>
+    <div class="col-md-2">
+      <input
+        type="text"
+        class="form-control"
+        id="LoanInterestCalMethodCode"
+        formControlName="LoanInterestCalMethodCode"
+        (change)="
+          onLoanCalMethodChange(loanInfoForm.value.LoanInterestCalMethodCode)
+        "
+        (keydown)="onLoanCalMethodChangekeydown($event)"
+      />
+    </div>
+    <div class="col-md-3">
+      <select
+        class="form-control pt-0"
+        formControlName="LoanInterestCalMethod"
+        (change)="
+          onLoanCalMethodChange(loanInfoForm.value.LoanInterestCalMethod)
+        "
+      >
+        <option value="0">-Select-</option>
+        <option
+          *ngFor="let item of inputHelpData.LoanCalculationMethodList"
+          [value]="item.Id"
+        >
+          {{ item.Description }}
+        </option>
+      </select>
+    </div>
+  </div>
+
+  <div class="form-group row">
+    <label class="col-md-3 col-form-label">Loan Surety Member No:</label>
+    <div class="col-md-3">
+      <input
+        type="text"
+        class="form-control"
+        id="LoanSuretyMemNo"
+        formControlName="LoanSuretyMemNo"
+        (change)="onSuretyMemberNo()"
+        (keydown)="onSuretyMemberNokeydown($event)"
+      />
+    </div>
+    <div class="col-md-3 d-flex">
+      <input
+        type="checkbox"
+        class="form-control col-md-2"
+        formControlName="OldMemberCheckBox"
+      />
+      <div>
+        <label class="form-group mt-1 ml-2">Old Member </label>
+      </div>
+    </div>
+  </div>
+
+  <div class="form-group row" *ngIf="hideShowModel.ShowInstallment">
+    <label class="col-md-3 col-form-label">1st Installment Date:</label>
+    <div class="col-md-3">
+      <input
+        id="dateFormat"
+        type="text"
+        placeholder="DD/MM/YYYY"
+        class="form-control"
+        bsDatepicker
+        formControlName="LoanFirstInstallmentdate"
+        (ngModelChange)="loanFirstInstallmentdate()"
+        [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY' }"
+        autocomplete="off"
+      />
+    </div>
+  </div>
+
+  <div class="form-group row" *ngIf="hideShowModel.ShowPeriod">
+    <label class="col-md-3 col-form-label">OD Period:</label>
+    <div class="col-md-3">
+      <input type="text" class="form-control" formControlName="AccPeriod" />
+    </div>
+  </div>
+
+  <div class="form-group row" *ngIf="hideShowModel.ShowCorrAccNo">
+    <label class="col-md-3 col-form-label">Corr. Account No.:</label>
+    <div class="col-md-3">
+      <input
+        type="text"
+        disabled
+        class="form-control"
+        readonly
+        formControlName="CorrAccountNo"
+      />
+    </div>
+    <div class="col-md-3">
+      <input
+        type="text"
+        disabled
+        class="form-control"
+        formControlName="CorrAccountTitle"
+      />
+    </div>
+  </div>
+
+  <div class="form-group row" *ngIf="hideShowModel.ShowCorrAccNo">
+    <label class="col-md-3 col-form-label">Auto Trf. Corr. A/c:</label>
+    <div class="col-md-1">
+      <input
+        type="checkbox"
+        class="form-control"
+        formControlName="IsAutoTrfCorrAccount"
+      />
+    </div>
+  </div>
+</form>

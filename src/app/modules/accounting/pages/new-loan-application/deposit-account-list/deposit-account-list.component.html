@@ -1,0 +1,40 @@
+<div class="modal-content">
+    <div class="modal-header">
+      <h4 class="modal-title">Deposit Accounts</h4>
+      <button type="button" class="close" (click)="activeModal.dismiss()" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+  
+    <div class="modal-body">
+        <div class="table-responsive table_height">
+            <table class="table">
+              <thead class="text-primary">
+                <tr>
+                  <th>A/c Type</th>
+                  <th>A/c Title</th>
+                  <th>A/c No.</th>
+                  <th>Old A/c</th>
+                  <th>Ledger Balance</th>
+                  <th>Status</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let x of itemList; let i = index">
+                  <td>{{x.AccType}}</td>
+                  <td>{{x.TrnCodeDesc}}</td>
+                  <td>{{x.AccNo}}</td>
+                  <td>{{x.AccOldNumber}}</td>
+                  <td>{{x.AccBalance}}</td>
+                  <td>{{x.AccStatusDesc}}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+    </div>
+   
+    <div class="modal-footer">
+     
+       
+    </div>
+  </div>

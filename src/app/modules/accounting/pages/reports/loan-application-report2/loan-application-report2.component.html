@@ -1,0 +1,308 @@
+<app-accounting-wrapper>
+  <form
+    [formGroup]="CsLoanApplicationForm"
+    class="mx-auto border col-md-7 pb-2"
+  >
+    <p class="bg-dark title">Loan Application List</p>
+
+    <div class="form-group row">
+      <div class="col-md-1">
+        <input
+          [(ngModel)]="chbIsAllAccTypeStatus"
+          (ngModelChange)="checkIsshowHideTypeValue($event)"
+          class="form-check-input ml-1 checkbox"
+          style="margin: 0.8rem"
+          type="checkbox"
+          id="IsAllAccTypeCheckbox"
+          formControlName="IsAllAccType"
+        />
+      </div>
+
+      <label class="col-md-3 col-form-label" for="IsAllAccTypeCheckbox" >All Account Type</label>
+      <div class="col-md-3">
+        <input
+          appOnlyNumber
+          type="text"
+          class="form-control"
+          id="AccTypeCode"
+          formControlName="AccTypeCode"
+          name="AccTypeCode"
+          (focusout)="AccCode()"
+          [attr.disabled]="CsLoanApplicationForm.value.IsAllAccType ? '' : null"
+        />
+      </div>
+
+      <div class="col-md-5">
+        <select
+          disabled="IsAccTypeDisabled"
+          class="form-control"
+          formControlName="AccDDL"
+          (change)="AccCodeDDL()"
+        >
+          <option value="0">-Select-</option>
+          <option
+            *ngFor="let item of GetInputHelpData.AllAccDropdown"
+            [value]="item.Id"
+          >
+            {{ item.Description }}
+          </option>
+        </select>
+      </div>
+    </div>
+
+    <div class="form-group row">
+      <div class="col-md-1">
+        <input
+          [(ngModel)]="chbIsAllMemberTypeStatus"
+          (ngModelChange)="checkIsshowHideTypeValue($event)"
+          class="form-check-input ml-1 checkbox"
+          style="margin: 0.8rem"
+          type="checkbox"
+          id="IsAllMemberType"
+          formControlName="IsAllMemberType"
+        />
+      </div>
+
+      <label class="col-md-3 col-form-label" for="IsAllMemberType" >All Member No</label>
+      <div class="col-md-3">
+        <input
+          appOnlyNumber
+          disabled="IsMemberTypeDisabled"
+          type="text"
+          class="form-control"
+          id="MemTypeCodeFrom"
+          formControlName="MemTypeCodeFrom"
+          name="MemTypeCodeFrom"
+          [attr.disabled]="CsLoanApplicationForm.value.IsAllMemberType ? '' : null"
+        />
+      </div>
+
+      <label class="col-md-2 col-form-label"> To </label>
+      <div class="col-md-3">
+        <input
+          appOnlyNumber
+          disabled="IsMemberTypeDisabled"
+          type="text"
+          class="form-control"
+          id="MemTypeCodeTo"
+          formControlName="MemTypeCodeTo"
+          name="MemTypeCodeTo"
+        />
+      </div>
+    </div>
+
+    <div class="form-group row">
+      <div class="col-md-1">
+        <input
+          [(ngModel)]="chbIsAllCollectorTypeStatus"
+          (ngModelChange)="checkIsshowHideTypeValue($event)"
+          class="form-check-input ml-1 checkbox"
+          style="margin: 0.8rem"
+          type="checkbox"
+          formControlName="IsAllCollectorType"
+          id="IsAllCollectorType"
+        />
+      </div>
+
+      <label class="col-md-3 col-form-label" for="IsAllCollectorType" >All Collector Code</label>
+      <div class="col-md-3">
+        <input
+          appOnlyNumber
+          type="text"
+          class="form-control"
+          formControlName="CollectorTypeCode"
+          name="CollectorTypeCode"
+          (change)="CollectorCode()"
+          [attr.disabled]="CsLoanApplicationForm.value.IsAllCollectorType ? '' : null"
+        />
+      </div>
+
+      <div class="col-md-5">
+        <select
+          disabled="IsCollectorTypeDisabled"
+          class="form-control"
+          formControlName="CollectorDDL"
+          (change)="CollectorDDL()"
+        >
+          <option value="0">-Select-</option>
+          <option
+            *ngFor="let item of GetInputHelpData.AllCollectorDropdown"
+            [value]="item.Id"
+          >
+            {{ item.Description }}
+          </option>
+        </select>
+      </div>
+    </div>
+
+    <div class="form-group row">
+      <div class="col-md-1">
+        <input
+          [(ngModel)]="chbIsAllGroupTypeStatus"
+          (ngModelChange)="checkIsshowHideTypeValue($event)"
+          class="form-check-input ml-1 checkbox"
+          style="margin: 0.8rem"
+          type="checkbox"
+          id="IsAllGroupType"
+          formControlName="IsAllGroupType"
+        />
+      </div>
+
+      <label class="col-md-3 col-form-label" for="IsAllGroupType" >All Group No</label>
+      <div class="col-md-3">
+        <input
+          appOnlyNumber
+          type="text"
+          class="form-control"
+          formControlName="GroupTypeCode"
+          name="GroupTypeCode"
+          (change)="GroupCode()"
+          [attr.disabled]="CsLoanApplicationForm.value.IsAllGroupType ? '' : null"
+        />
+      </div>
+
+      <div class="col-md-5">
+        <select
+          disabled="IsGroupTypeDisabled"
+          class="form-control"
+          formControlName="GroupDDL"
+          (change)="GroupCodeDDL()"
+        >
+          <option value="0">-Select-</option>
+          <option
+            *ngFor="let item of GetInputHelpData.AllGroupDropdown"
+            [value]="item.Id"
+          >
+            {{ item.Description }}
+          </option>
+        </select>
+      </div>
+    </div>
+
+    <div class="form-group row">
+      <div class="col-md-1">
+        <input
+          [(ngModel)]="chbIsAllUserTypeStatus"
+          (ngModelChange)="checkIsshowHideTypeValue($event)"
+          class="form-check-input ml-1 checkbox"
+          style="margin: 0.8rem"
+          type="checkbox"
+          formControlName="IsAllUserType"
+          id="IsAllUserType"
+        />
+      </div>
+
+      <label class="col-md-3 col-form-label" for="IsAllUserType" >All User Id No</label>
+      <div class="col-md-3">
+        <input
+          appOnlyNumber
+          type="text"
+          class="form-control"
+          formControlName="UserTypeCode"
+          name="UserTypeCode"
+          (change)="UserCode()"
+          [attr.disabled]="CsLoanApplicationForm.value.IsAllUserType ? '' : null"
+        />
+      </div>
+
+      <div class="col-md-5">
+        <select
+          disabled="IsUserTypeDisabled"
+          class="form-control"
+          formControlName="UserDDL"
+          (change)="UserCodeDDL()"
+        >
+          <option value="0">-Select-</option>
+          <option
+            *ngFor="let item of GetInputHelpData.AllUserDropdown"
+            [value]="item.Id"
+          >
+            {{ item.Description }}
+          </option>
+        </select>
+      </div>
+    </div>
+
+    <div class="form-group row">
+      <div class="col-md-1">
+        <input
+          [(ngModel)]="chbIsAllLoanTypeStatus"
+          (ngModelChange)="checkIsshowHideTypeValue($event)"
+          class="form-check-input ml-1 checkbox"
+          style="margin: 0.8rem"
+          type="checkbox"
+          formControlName="IsAllLoanType"
+          id="IsAllLoanType"
+        />
+      </div>
+
+      <label class="col-md-3 col-form-label" for="IsAllLoanType" >All Loan Purpose</label>
+      <div class="col-md-3">
+        <input
+          appOnlyNumber
+          type="text"
+          class="form-control"
+          formControlName="LoanTypeCode"
+          name="AccTypeCode"
+          (change)="LoanCode()"
+          [attr.disabled]="CsLoanApplicationForm.value.IsAllLoanType ? '' : null"
+        />
+      </div>
+
+      <div class="col-md-5">
+        <select
+          disabled="IsLoanTypeDisabled"
+          class="form-control"
+          formControlName="LoanDDL"
+          (change)="LoanCodeDDL()"
+        >
+          <option value="0">-Select-</option>
+          <option
+            *ngFor="let item of GetInputHelpData.AllLoanDropdown"
+            [value]="item.Id"
+          >
+            {{ item.Description }}
+          </option>
+        </select>
+      </div>
+    </div>
+
+    <div class="form-group row">
+      <label class="col-md-4 col-form-label">From date:</label>
+      <div class="col-md-3">
+        <input
+          id="dateFormat"
+          type="text"
+          class="form-control"
+          bsDatepicker
+          formControlName="IssueFromDate"
+          [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY' }"
+          autocomplete="off"
+          (ngModelChange)="applicationDateChange()"
+        />
+      </div>
+      <label class="col-md-2 col-form-label">To date:</label>
+      <div class="col-md-3">
+        <input
+          id="dateFormat"
+          type="text"
+          class="form-control"
+          bsDatepicker
+          formControlName="IssueToDate"
+          [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY' }"
+          autocomplete="off"
+          (ngModelChange)="applicationDateChange2()"
+        />
+      </div>
+    </div>
+
+    <div class="buttons">
+      <button type="button" class="btn btn-info ml-2" (click)="getReportToken('CRV')">
+        Preview
+      </button>
+      <button type="button" class="btn btn-success ml-2" (click)="getReportToken('PDF')">
+        Print
+      </button>
+    </div>
+  </form>
+</app-accounting-wrapper>

@@ -1,0 +1,410 @@
+<app-accounting-wrapper>
+  <form
+    [formGroup]="csLoanReScheduleForm"
+    class="d-flex ml-0 pl-0"
+  >
+    <div class="mx-auto border col-md-9">
+      <div class="bg-dark title row-md-12 d-flex m-0 p-0">
+        <div class="col-md-9 ml-0 pl-0">Loan Schedule Transaction</div>
+      </div>
+
+      <div class="form-group row mt-2">
+        <label class="col-md-3 col-form-label"
+          >Member No.:<span class="text-danger">*</span></label
+        >
+        <div class="col-md-2">
+          <input
+            type="text"
+            class="form-control"
+            formControlName="MemberNo"
+            (change)="memberNoChange()"
+          />
+        </div>
+        <label class="col-md-4 col-form-label">{{ memName }}</label>
+      </div>
+
+      <div *ngIf="showModal" class="modal_alert py-5 mb-3">
+        <p class="text-center">Re-Schedule Successfully Done</p>
+        <p class="text-center">
+          New Application No: {{ NewLoanApplicationNo }}
+        </p>
+        <p class="text-center">New Loan Account No: {{ NewLoanAccountNo }}</p>
+        <div class="col-md-6 mx-auto d-flex justify-content-between buttons">
+          <button class="btn btn-primary" (click)="buttonOkClick()">
+            Okay
+          </button>
+        </div>
+      </div>
+
+      <div class="form-group row">
+        <label class="col-md-3 col-form-label"
+          >A/C Type:<span class="text-danger">*</span></label
+        >
+        <div class="col-md-2">
+          <input
+            type="text"
+            appOnlyNumber
+            class="form-control"
+            (change)="accTypeChange()"
+            (keydown)="onEnterAccTypeHandler($event)"
+            formControlName="AccType"
+            id="AccType"
+          />
+        </div>
+        <div class="col-md-5">
+          <select
+            class="form-control pt-0"
+            formControlName="AccType"
+            (change)="accTypeChange()"
+            
+          >
+            <option value="0">-Select-</option>
+            <option *ngFor="let item of accTypeList" [value]="item.AccTypeCode">
+              {{ item.AccTypeDescription }}
+            </option>
+          </select>
+        </div>
+        <!-- <label class="col-md-2 col-form-label">work type</label> -->
+        <label class="col-md-2 col-form-label">{{workType}}</label>
+      </div>
+      <div class="form-group row">
+        <label class="col-md-3 col-form-label"
+          >Account No.:<span class="text-danger">*</span></label
+        >
+        <div class="col-md-2">
+          <input
+            appOnlyNumber
+            type="text"
+            class="form-control"
+            formControlName="AccountNo"
+            readonly
+            required
+          />
+        </div>
+      </div>
+      <div class="form-group row">
+        <label class="col-md-3 col-form-label"
+          >Current Loan App. No:<span class="text-danger">*</span></label
+        >
+        <div class="col-md-2">
+          <input
+            appOnlyNumber
+            type="text"
+            class="form-control"
+            formControlName="LoanAppNo"
+            readonly
+          />
+        </div>
+        <label class="col-md-3 col-form-label"> Loan Cal. Method:</label>
+        <div class="col-md-2">
+          <input
+            type="text"
+            class="form-control"
+            formControlName="LoanCalMethod"
+            disabled
+          />
+        </div>
+        <div class="col-md-2">
+          <select
+            class="form-control pt-0"
+            formControlName="LoanCalMethod"
+            disabled
+          >
+            <option value="0">-Select-</option>
+            <option *ngFor="let item of loanCalMethodList" [value]="item.Id">
+              {{ item.Description }}
+            </option>
+          </select>
+        </div>
+      </div>
+      <div class="form-group row">
+        <label class="col-md-3 col-form-label">Loan Balance Amount:</label>
+        <div class="col-md-2">
+          <input
+            type="text"
+            class="form-control"
+            formControlName="LoanBalanceAmount"
+            readonly
+          />
+        </div>
+        <label class="col-md-3 col-form-label">Installment Amount:</label>
+        <div class="col-md-2">
+          <input
+            type="text"
+            class="form-control"
+            formControlName="InstallmentAmount"
+            readonly
+          />
+        </div>
+      </div>
+      <div class="form-group row d-flex">
+        <label class="col-md-3 col-form-label">Due Interest Amount:</label>
+        <div class="col-md-2">
+          <input
+            type="text"
+            class="form-control"
+            formControlName="DueInterestAmount"
+            (change)="dueInterestAmtChange()"
+          />
+        </div>
+        <label class="col-md-3 col-form-label">Last Installment Amt.:</label>
+        <div class="col-md-2">
+          <input
+            type="text"
+            class="form-control"
+            formControlName="LastInstallmentAmt"
+            readonly
+          />
+        </div>
+      </div>
+      <div class="form-group row">
+        <label class="col-md-3 col-form-label">Due Penalty Amount:</label>
+        <div class="col-md-2">
+          <input
+            type="text"
+            class="form-control"
+            formControlName="DuePenaltyAmount"
+            (change)="dueInterestAmtChange()"
+          />
+        </div>
+        <label class="col-md-3 col-form-label">No. of Installment:</label>
+        <div class="col-md-2">
+          <input
+            type="text"
+            class="form-control"
+            formControlName="NoOfInstallment"
+            readonly
+          />
+        </div>
+      </div>
+      <div class="form-group row">
+        <label class="col-md-3 col-form-label">Total Re-Schedule Amount:</label>
+        <div class="col-md-2">
+          <input
+            type="text"
+            class="form-control"
+            formControlName="TotalReScheduleAmount"
+            readonly
+          />
+        </div>
+        <label class="col-md-3 col-form-label">Interest Rate:</label>
+        <div class="col-md-2">
+          <input
+            type="text"
+            class="form-control"
+            formControlName="InterestRate"
+          />
+        </div>
+      </div>
+      <div class="form-group row">
+        <label class="col-md-3 col-form-label">New No. of Installment:</label>
+        <div class="col-md-2">
+          <input
+            type="text"
+            class="form-control"
+            formControlName="NewNoOfInstallment"
+            (change)="newNoOfInstlChng()"
+          />
+        </div>
+        <label class="col-md-3 col-form-label">New Installment Amt.:</label>
+        <div class="col-md-2">
+          <input
+            type="text"
+            class="form-control"
+            formControlName="NewInstallmentAmt"
+            (change)="newInstlAmtChange()"
+          />
+        </div>
+      </div>
+      <div class="form-group row">
+        <label class="col-md-3 col-form-label">New Interest Rate:</label>
+        <div class="col-md-2">
+          <input
+            type="text"
+            class="form-control"
+            formControlName="NewInterestRate"
+          />
+        </div>
+        <label class="col-md-3 col-form-label"
+          >New Last Installment Amt.:</label
+        >
+        <div class="col-md-2">
+          <input
+            type="text"
+            class="form-control"
+            formControlName="NewLastInstallmentAmt"
+          />
+        </div>
+      </div>
+      <div class="form-group row">
+        <label class="col-md-3 col-form-label">Re-Schedule Date:</label>
+        <div class="col-md-2">
+          <input
+            type="text"
+            class="form-control"
+            formControlName="ReScheduleDate"
+            readonly
+          />
+        </div>
+        <label class="col-md-3 col-form-label">Loan Expire Date:</label>
+        <div class="col-md-2">
+          <input
+            type="text"
+            class="form-control"
+            formControlName="LoanExpireDate"
+            readonly
+          />
+        </div>
+      </div>
+      <div class="form-group row">
+        <label class="col-md-3 col-form-label">1st Pay Date(Upto):</label>
+        <div class="col-md-2">
+          <input
+            type="text"
+            class="form-control"
+            formControlName="FirstPayDate"
+            readonly
+          />
+        </div>
+        <label class="col-md-3 col-form-label"> Loan Cal. Method:</label>
+        <div class="col-md-2">
+          <input
+            type="text"
+            class="form-control"
+            formControlName="LoanCalMethod"
+            readonly
+          />
+        </div>
+        <div class="col-md-2">
+          <select
+            class="form-control pt-0"
+            disabled
+            formControlName="LoanCalMethod"
+          >
+            <option value="0">-Select-</option>
+            <option *ngFor="let item of loanCalMethodList" [value]="item.Id">
+              {{ item.Description }}
+            </option>
+          </select>
+        </div>
+      </div>
+      <div class="form-group row">
+        <label class="col-md-3 col-form-label"
+          >Input Voucher No: <span style="color: red">*</span></label
+        >
+        <div class="col-md-2">
+          <input
+            type="text"
+            class="form-control"
+            formControlName="InputVoucherNo"
+            id="InputVoucherNo"
+            (change)="voucherNoChange()"
+          />
+        </div>
+      </div>
+
+      <div class="buttons" style="font-size: 12px">
+        <button
+          type="button"
+          class="btn button btn-success mr-4 col-md-2 pr-2"
+          (click)="reScheduleApply()"
+        >
+          Re-Schedule
+        </button>
+        <button
+          type="button"
+          class="btn button btn-info mr-4 col-md-2 pr-2"
+          (click)="onReturnSchedule()"
+        >
+          Return Schedule
+        </button>
+        <button
+          type="button"
+          class="btn button btn-primary mr-4 col-md-2 pr-2"
+          (click)="ngOnInit()"
+        >
+          Cancel
+        </button>
+        <!-- <button
+          type="button"
+          class="btn button btn-success mr-4 col-md-2 pr-2"
+          (click)="exitPage()"
+        >
+          Exit
+        </button> -->
+      </div>
+    </div>
+    <div class="mx-auto mt-1 mt-2 col-md-4 ml-2 main-container">
+      <div class="mt-1 bg-success  row-md-12 d-flex m-0 p-2 text-light">
+        <div class="col-md-9 ml-0 pl-0">Loanee Member's Share Guarantor</div>
+      </div>
+      <div
+        *ngIf="shareGuarantorData.length > 0"
+        class="mx-auto mt-0 col-md-12 m-0 p-0"
+      >
+        <table id="Data" class="col-md-12 mx-auto mt-0">
+          <tr class="">
+            <th>Member No</th>
+            <th>A/C Type</th>
+            <th>Acc No</th>
+            <th>Amount</th>
+          </tr>
+          <tr *ngFor="let item of shareGuarantorData">
+            <td class="text-center">{{ item.MemNo }}</td>
+            <td class="text-center">{{ item.AccType }}</td>
+            <td class="text-center">{{ item.AccNo }}</td>
+            <td class="text-center">{{ item.AccAmount }}</td>
+          </tr>
+        </table>
+      </div>
+      <div class="mt-1  bg-success row-md-12 d-flex m-0 p-2 text-light">
+        <div class="col-md-9 ml-0 pl-0">
+          Loanee Member's Other A/C Type Guarantor
+        </div>
+      </div>
+      <div
+        *ngIf="depositGuarantorData.length > 0"
+        class="mx-auto mt-0 col-md-12 m-0 p-0"
+      >
+        <table id="Data" class="col-md-12 mx-auto mt-0">
+          <tr class="">
+            <th>Member No</th>
+            <th>A/C Type</th>
+            <th>Acc No</th>
+            <th>Amount</th>
+          </tr>
+          <tr *ngFor="let item of depositGuarantorData">
+            <td class="text-center">{{ item.MemNo }}</td>
+            <td class="text-center">{{ item.AccType }}</td>
+            <td class="text-center">{{ item.AccNo }}</td>
+            <td class="text-center">{{ item.AccAmount }}</td>
+          </tr>
+        </table>
+      </div>
+      <div class="mt-1 bg-success row-md-12 d-flex m-0 p-2 text-light">
+        <div class="col-md-9 ml-0 pl-0">Loanee Member's Property Guarantor</div>
+      </div>
+      <div
+        *ngIf="propertyGuarantorData.length > 0"
+        class="mx-auto mt-0 col-md-12 m-0 p-0"
+      >
+        <table id="Data" class="col-md-12 mx-auto mt-0">
+          <tr class="">
+            <th>Srl.No</th>
+            <th>Property Name</th>
+            <th>File No</th>
+            <th>Description</th>
+            <th>Amount</th>
+          </tr>
+          <tr *ngFor="let item of propertyGuarantorData">
+            <td class="text-center">{{ item.PrSRL }}</td>
+            <td class="text-center">{{ item.PrName }}</td>
+            <td class="text-center">{{ item.FileNo }}</td>
+            <td class="text-center">{{ item.PrName }}</td>
+            <td class="text-center">{{ item.PrAmount }}</td>
+          </tr>
+        </table>
+      </div>
+    </div>
+  </form>
+</app-accounting-wrapper>

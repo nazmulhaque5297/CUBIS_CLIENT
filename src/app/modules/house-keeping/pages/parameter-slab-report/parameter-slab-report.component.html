@@ -1,0 +1,62 @@
+<app-house-keeping-wrapper>
+  <form
+    [formGroup]="ParameterSlabReportForm"
+    class="mx-auto border col-md-6 main-container pb-3"
+  >
+    <p class="bg-dark title">Parameter Report</p>
+    <div class="form-row">
+      <label class="lblClass1" for="inputProCode"
+        >A/C Type :<span class="text-danger">*</span></label
+      >
+      <div class="form-group col-md-4">
+        <input
+          (change)="onChangeAccTypeCode($event)"
+          type="text"
+          class="form-control"
+          id="CodeNumber"
+          formControlName="AccTypeCode"
+          name="CodeNumber"
+        />
+      </div>
+
+      <div class="form-group col-md-6">
+        <select
+          class="form-control pt-0"
+          formControlName="AccType"
+          (change)="onChangeAccType($event)"
+        >
+          <option value="0">-Select-</option>
+          <option
+            *ngFor="let item of inputHelpData.pmSlabAccountTypeList"
+            [value]="item.Id"
+          >
+            {{ item.Description }}
+          </option>
+        </select>
+      </div>
+    </div>
+
+    <div class="buttons">
+      <button
+        type="button"
+        class="btn btn-success ml-1"
+        (click)="getReportToken()"
+      >
+        Preview
+      </button>
+    </div>
+  </form>
+  <iframe
+    [src]="iFrameUrl"
+    *ngIf="displayIFrame"
+    class="iframeStyle"
+    id="reportIFrame"
+    scrolling="no"
+  >
+    >
+  </iframe>
+  <!-- onload="resizeIframe(this);" -->
+  <!-- height: 65%; -->
+  <!-- onload="resizeIframe(this);" -->
+  <!-- onload="this.style.height=(this.contentWindow.document.body.scrollHeight+20)+'px';" -->
+</app-house-keeping-wrapper>

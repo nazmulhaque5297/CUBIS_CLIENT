@@ -1,0 +1,102 @@
+<app-main-wrapper [module]="module">
+  <form [formGroup]="VoucherReportForm" class="mx-auto border col-md-7 pb-2">
+    <p class="bg-dark title">Voucher Search Report</p>
+    <div class="form-group row">
+      <div class="col-md-1">
+        <input
+          checked
+          type="radio"
+          value="0"
+          id="CustomerServiceRb0"
+          name="CustomerServiceRb"
+          formControlName="CustomerServiceRb"
+        />
+      </div>
+
+      <label class="col-md-3 col-form-label" for="CustomerServiceRb0"
+        >Customer Service</label
+      >
+
+      <div class="col-md-1">
+        <input
+          type="radio"
+          value="1"
+          name="CustomerServiceRb"
+          id="CustomerServiceRb1"
+          formControlName="CustomerServiceRb"
+        />
+      </div>
+
+      <label class="col-md-3 col-form-label" for="CustomerServiceRb1"
+        >General Ledger</label
+      >
+    </div>
+
+    <div class="form-row">
+      <label class="col-md-3">Voucher date:</label>
+      <div class="form-group col-md-8 d-flex">
+        <input
+          id="dateFormat"
+          type="text"
+          class="form-control col-md-6"
+          bsDatepicker
+          formControlName="VoucherDate"
+          [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY' }"
+          autocomplete="off"
+          (ngModelChange)="applicationDateChange()"
+        />
+
+        <button
+          type="button"
+          class="btn btn-success ml-2"
+          (click)="searchButtonClick()"
+        >
+          Search
+        </button>
+      </div>
+    </div>
+
+    <div class="form-row">
+      <label for="MemNo" class="col-md-3">Voucher No:</label>
+      <div class="form-group col-md-4">
+        <!-- <input
+        type="text"
+        formControlName="MemNo"
+        class="form-control"
+        id="MemNo"
+
+      /> -->
+        <select class="form-control" formControlName="VoucherNo">
+          <option value="0">-Select-</option>
+          <option *ngFor="let item of voucherList" [value]="item.VoucherNo">
+            {{ item.VoucherNo }}
+          </option>
+        </select>
+      </div>
+      <label *ngFor="let item of memInfo">{{ item.MemName }}</label>
+    </div>
+
+    <div class="col-md-8 mx-auto mt-2">
+      <div class="buttons">
+        <!-- <button type="button" class="btn btn-success" (click)="printButtonClick()">
+          Print
+        </button> -->
+
+        <button
+          type="button"
+          class="btn btn-info ml-2"
+          (click)="getReportToken('CRV')"
+        >
+          Preview
+        </button>
+        <button
+          type="button"
+          class="btn btn-success ml-2"
+          (click)="getReportToken('PDF')"
+        >
+          Print
+        </button>
+      </div>
+    </div>
+  </form>
+</app-main-wrapper>

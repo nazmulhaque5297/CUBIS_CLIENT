@@ -1,0 +1,122 @@
+<app-accounting-wrapper>
+  <form
+    [formGroup]="ReceivedAndPaymentForm"
+    class="mx-auto mt-1 mt-5 border col-md-7 main-container"
+  >
+    <p class="mt-1 bg-dark title">Received and Payment Report</p>
+    <div class="form-group row">
+      <label class="col-md-2 col-form-label">From Date :</label>
+      <div class="col-md-2">
+        <input
+          id="dateFormat"
+          type="text"
+          class="form-control"
+          bsDatepicker
+          formControlName="IssueFromDate"
+          [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY' }"
+          autocomplete="off"
+          (ngModelChange)="applicationDateChange()"
+        />
+      </div>
+      <label class="col-md-2 col-form-label">To Date :</label>
+      <div class="col-md-2">
+        <input
+          id="dateFormat"
+          type="text"
+          class="form-control"
+          bsDatepicker
+          formControlName="IssueToDate"
+          [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY' }"
+          autocomplete="off"
+          (ngModelChange)="applicationDateChange2()"
+        />
+      </div>
+    </div>
+
+    <div class="form-group row">
+      <div class="col-md-1"></div>
+      <div class="col-md-1">
+        <input
+          class="form-check-input checkbox"
+          type="checkbox"
+          id="IsZeroCheckbox"
+          value="0"
+          formControlName="IsZero"
+          [(ngModel)]="chbIsZeroStatus"
+        />
+      </div>
+      <!-- style="margin-left: 0.6rem" -->
+      <label class="col-md-3 col-form-label" for="IsZeroCheckbox"
+        >Show Zero ?</label
+      >
+    </div>
+
+    <div class="form-group row">
+      <div class="col-md-1"></div>
+
+      <div class="col-md-1">
+        <input
+          checked
+          type="radio"
+          value="0"
+          id="LanguageModeRb0"
+          name="LanguageModeRb"
+          formControlName="LanguageModeRb"
+        />
+      </div>
+
+      <label class="col-md-2 col-form-label" for="LanguageModeRb0"
+        >English Mode</label
+      >
+
+      <div class="col-md-1">
+        <input
+          type="radio"
+          value="1"
+          name="LanguageModeRb"
+          formControlName="LanguageModeRb"
+          id="LanguageModeRb1"
+        />
+      </div>
+
+      <label class="col-md-2 col-form-label" for="LanguageModeRb1"
+        >Bangla Mode</label
+      >
+    </div>
+
+    <div class="form-group row">
+      <div class="col-md-1"></div>
+      <div class="col-md-1">
+        <input
+          class="form-check-input checkbox"
+          type="checkbox"
+          id="OnlyCashInHandAndBankCheckBox"
+          value="0"
+          formControlName="CashAndHandControl"
+          [(ngModel)]="chbIsBankypeStatus"
+        />
+      </div>
+      <!-- style="margin-left: 0.6rem" -->
+      <label class="col-md-3 col-form-label" for="OnlyCashInHandAndBankCheckBox"
+        >Only Cash In Hand & Bank</label
+      >
+    </div>
+
+    <div class="buttons">
+      <button
+        type="button"
+        class="btn btn-info ml-2"
+        (click)="getReportToken('CRV')"
+      >
+        Preview
+      </button>
+      <button
+        type="button"
+        class="btn btn-success ml-2"
+        (click)="getReportToken('PDF')"
+      >
+        Print
+      </button>
+    </div>
+  </form>
+</app-accounting-wrapper>

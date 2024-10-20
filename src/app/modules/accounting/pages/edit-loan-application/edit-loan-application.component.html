@@ -1,0 +1,131 @@
+<app-main-wrapper [module]="module">
+  <ng-container [formGroup]="loanApplicationForm">
+    <p class="bg-primary text-center text-light bg-secondary title">Edit Loan Application Maintenance</p>
+    <div class="card">
+      <!-- <div class="card-header bg-primary">
+        <h3 class="card-title text-white mb-0">
+          Edit Loan Application Maintenance
+        </h3>
+      </div> -->
+      <div class="row card-body">
+        <div class="col-md-12 col-xl-12">
+          <ul class="nav nav-pills navtab-bg nav-justified col-md-8">
+            <li class="nav-item col-md-3">
+              <a
+                href="#loan-application-b1"
+                data-toggle="tab"
+                aria-expanded="false"
+                class="nav-link active"
+              >
+                <span class="d-block d-sm-none"
+                  ><i class="mdi mdi-home-variant-outline font-18"></i
+                ></span>
+                <span class="d-none d-sm-block">Edit Loan Application</span>
+              </a>
+            </li>
+            <li class="nav-item" *ngIf="showOtherComponent">
+              <a
+                href="#share-guarantor-b1"
+                data-toggle="tab"
+                aria-expanded="true"
+                class="nav-link"
+              >
+                <span class="d-block d-sm-none"
+                  ><i class="mdi mdi-account-outline font-18"></i
+                ></span>
+                <span class="d-none d-sm-block">Share Guarantor</span>
+              </a>
+            </li>
+            <li class="nav-item" *ngIf="showOtherComponent">
+              <a
+                href="#deposit-guarantor-b1"
+                data-toggle="tab"
+                aria-expanded="false"
+                class="nav-link"
+              >
+                <span class="d-block d-sm-none"
+                  ><i class="mdi mdi-email-outline font-18"></i
+                ></span>
+                <span class="d-none d-sm-block">Deposit Guarantor</span>
+              </a>
+            </li>
+            <li class="nav-item" *ngIf="showOtherComponent">
+              <a
+                href="#property-guarantor-b1"
+                data-toggle="tab"
+                aria-expanded="false"
+                class="nav-link"
+              >
+                <span class="d-block d-sm-none"
+                  ><i class="mdi mdi-email-outline font-18"></i
+                ></span>
+                <span class="d-none d-sm-block">Property Guarantor</span>
+              </a>
+            </li>
+          </ul>
+
+          <div class="tab-content" style="margin-top: 20px">
+            <div class="tab-pane active col-md-8" id="loan-application-b1">
+              <app-edit-loan-application-info
+                formGroupName="loanInfo"
+                (callParentFunction)="parentFunction($event)"
+              ></app-edit-loan-application-info>
+            </div>
+            <div
+              *ngIf="showOtherComponent"
+              class="tab-pane"
+              id="share-guarantor-b1"
+            >
+              <app-edit-loan-acc-share-guarantor
+                formGroupName="shareGuarantorInfo"
+                (callParentFunction)="parentFunction($event)"
+              ></app-edit-loan-acc-share-guarantor>
+            </div>
+            <div
+              *ngIf="showOtherComponent"
+              class="tab-pane"
+              id="deposit-guarantor-b1"
+            >
+              <app-edit-loan-acc-deposit-guarantor
+                formGroupName="depositGuarantorInfo"
+                (callParentFunction)="parentFunction($event)"
+              ></app-edit-loan-acc-deposit-guarantor>
+            </div>
+            <div
+              *ngIf="showOtherComponent"
+              class="tab-pane"
+              id="property-guarantor-b1"
+            >
+              <app-edit-loan-acc-property-guarantor
+                formGroupName="propertyGuarantorInfo"
+                (callParentFunction)="parentFunction($event)"
+              ></app-edit-loan-acc-property-guarantor>
+            </div>
+          </div>
+
+            <div class="col-md-8 pt-4 mx-auto">
+              <button
+                type="button"
+                class="btn btn-success"
+                (click)="onCreate()"
+              >
+                Update
+              </button>
+              <button
+                type="button"
+                class="btn btn-primary ml-2"
+                (click)="onReturnSchedule()"
+              >
+                Return Schedule
+              </button>
+              <!-- <button type="button" class="btn btn-success mr-4 pr-2" (click)="exitPage()">Exit</button> -->
+            </div>
+
+          <div class="row m-3">
+            <div class="h3 mx-auto">Total Gauranty: {{ totalGuaranty }}</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </ng-container>
+</app-main-wrapper>

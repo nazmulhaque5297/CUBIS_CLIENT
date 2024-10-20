@@ -1,0 +1,129 @@
+<app-accounting-wrapper>
+  <form
+    [formGroup]="VillageCodeForm"
+    class="mx-auto  border col-md-6 pb-3"
+  >
+    <p class="bg-dark title">Village/Area Code Maintenance</p>
+    <div class="form-row">
+      <label class="col-md-3">Village/Area Code:</label>
+      <div class="form-group col-md-2">
+        <input
+          type="text"
+          class="form-control"
+          id="VillageCode"
+          formControlName="VillageCode"
+          name="VillageCode"
+          (change)="sentVillageCode($event)"
+        />
+      </div>
+      <div class="form-group col-md-4">
+        <select formControlName="Village" class="form-control" (change)="sentVillageCode($event)">
+          <option value="0">Select</option>
+          <option *ngFor="let item of villageList" [value]="item.VillageCode">
+            {{ item.VillageName }}
+          </option>
+        </select>
+      </div>
+    </div>
+    <div class="form-row">
+      <label class="col-md-3" for="inputDesc">Description:</label>
+      <div class="form-group col-md-6">
+        <input
+          type="text"
+          formControlName="VillageDescription"
+          class="form-control"
+          id="inputDesc"
+        />
+      </div>
+    </div>
+    <div class="form-row">
+      <label class="col-md-3" for="inputDesc">Description-Bangla:</label>
+      <div class="form-group col-md-6">
+        <input
+          type="text"
+          formControlName="VillageDescriptionBeng"
+          class="form-control"
+          id="inputDesc"
+        />
+      </div>
+    </div>
+    <div class="form-row">
+      <label class="col-md-3">Post Office :</label>
+      <div class="form-group col-md-6">
+        <select formControlName="PostOfficeName" class="form-control">
+          <option value="0">Select</option>
+          <option
+            *ngFor="let item of postOfficeList"
+            [value]="item.PostOfficeCode"
+          >
+            {{ item.PostOfficeName }}
+          </option>
+        </select>
+      </div>
+    </div>
+    <div class="form-row">
+      <label class="col-md-3">Thana Code:</label>
+      <div class="form-group col-md-6">
+        <select formControlName="ThanaName" class="form-control pt-0" >
+          <option value="0">Select</option>
+          <option *ngFor="let item of thanaList" [value]="item.ThanaOrgCode">
+            {{ item.ThanaDescription }}
+          </option>
+        </select>
+      </div>
+    </div>
+    <div class="form-row">
+      <label class="col-md-3">Upzila Code:</label>
+      <div class="form-group col-md-6">
+        <select formControlName="UpzilaDescription" class="form-control pt-0" (change)="getThana($event)">
+          <option value="0">Select</option>
+          <option *ngFor="let item of upzilaList" [value]="item.UpzilaOrgCode">
+            {{ item.UpzilaDescription }}
+          </option>
+        </select>
+      </div>
+    </div>
+    <div class="form-row">
+      <label class="col-md-3">District Code:</label>
+      <div class="form-group col-md-6">
+        <select formControlName="DistDescription" class="form-control pt-0" (change)="getUpz($event)">
+          <option value="0">Select</option>
+          <option *ngFor="let item of distList" [value]="item.DistOrgCode" >
+            {{ item.DistDescription }}
+          </option>
+        </select>
+      </div>
+    </div>
+    <div class="form-row">
+      <label class="col-md-3">Division Code:</label>
+      <div class="form-group col-md-6">
+        <select formControlName="DivisionDescription" class="form-control pt-0" (change)="getDist($event)">
+          <option *ngFor="let item of divisionList" [value]="item.DivisionOrgCode">
+            {{ item.DivisionDescription }}
+          </option>
+        </select>
+      </div>
+    </div>
+    <div class="buttons col-md-7 mx-auto d-flex">
+      <button type="button" class="btn_1 btn  ml-4" (click)="saveOrUpdate()">{{submitButtonText}}</button>
+      <button class="ml-5 btn" (click)="getTableReportData()">View</button>
+    </div>
+  </form>
+  <div
+    *ngIf="villageList.length != 0 && displayTabularData"
+    class="mx-auto col-md-6 set-height"
+  >
+    <table id="Data">
+      <tr>
+        <th>Code</th>
+        <th>Description</th>
+        <th>Description-Bangla</th>
+      </tr>
+      <tr *ngFor="let item of villageList">
+        <td class="text-center">{{ item.VillageCode }}</td>
+        <td>{{ item.VillageName }}</td>
+        <td>{{ item.VillageNameBang }}</td>
+      </tr>
+    </table>
+  </div>
+</app-accounting-wrapper>

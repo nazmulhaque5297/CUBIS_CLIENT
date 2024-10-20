@@ -1,0 +1,267 @@
+<app-accounting-wrapper>
+  <form [formGroup]="DetailListReportForm" class="mx-auto border col-md-7 pb-2">
+    <p class="bg-dark title">Detail List Report</p>
+
+    <div class="form-group row">
+      <label class="col-md-4 col-form-label">From date:</label>
+      <div class="col-md-3">
+        <input
+          id="dateFormat"
+          type="text"
+          class="form-control"
+          bsDatepicker
+          formControlName="IssueFromDate1"
+          [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY' }"
+          autocomplete="off"
+          (ngModelChange)="applicationDateChange()"
+        />
+      </div>
+      <label class="col-md-2 col-form-label">To date:</label>
+      <div class="col-md-3">
+        <input
+          id="dateFormat"
+          type="text"
+          class="form-control"
+          bsDatepicker
+          formControlName="IssueToDate1"
+          [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY' }"
+          autocomplete="off"
+          (ngModelChange)="applicationDateChange2()"
+        />
+      </div>
+    </div>
+
+    <div class="form-group row">
+      <div class="col-md-1">
+        <input
+          [(ngModel)]="chbIsAllCollectorStatus"
+          (ngModelChange)="checkIsAllCollectorValue($event)"
+          class="form-check-input ml-1 checkbox"
+          style="margin: 0.8rem"
+          type="checkbox"
+          id="IsAllCollector"
+          formControlName="IsAllCollector"
+        />
+      </div>
+
+      <label class="col-md-3 col-form-label" for="IsAllCollector"
+        >All Collector Code</label
+      >
+      <div class="col-md-3">
+        <input
+          appOnlyNumber
+          (focusout)="onChangeCollectorCode($event)"
+          type="text"
+          class="form-control"
+          id="CollectorCode"
+          formControlName="CollectorCode"
+          name="CollectorCode"
+          [attr.disabled]="
+            DetailListReportForm.value.IsAllCollector ? '' : null
+          "
+        />
+      </div>
+
+      <div class="col-md-5">
+        <select
+          [attr.disabled]="
+            DetailListReportForm.value.IsAllCollector ? '' : null
+          "
+          class="form-control pt-0"
+          formControlName="Collector"
+          (change)="onChangeCollector($event)"
+        >
+          <option value="0">-Select-</option>
+          <option
+            *ngFor="let item of inputHelpData.CollectorList"
+            [value]="item.Id"
+          >
+            {{ item.Description }}
+          </option>
+        </select>
+      </div>
+    </div>
+
+    <div class="form-group row">
+      <div class="col-md-1">
+        <input
+          [(ngModel)]="chbIsAllGroupStatus"
+          (ngModelChange)="checkIsAllGroupValue($event)"
+          class="form-check-input ml-1 checkbox"
+          style="margin: 0.8rem"
+          type="checkbox"
+          id="IsAllGroup"
+          formControlName="IsAllGroup"
+        />
+      </div>
+
+      <label class="col-md-3 col-form-label" for="IsAllGroup"
+        >All Group Name</label
+      >
+      <div class="col-md-3">
+        <input
+          appOnlyNumber
+          (focusout)="onChangeGroupCode($event)"
+          type="text"
+          class="form-control"
+          id="GroupCode"
+          formControlName="GroupCode"
+          name="GroupCode"
+          [attr.disabled]="DetailListReportForm.value.IsAllGroup ? '' : null"
+        />
+      </div>
+
+      <div class="col-md-5">
+        <select
+          [attr.disabled]="DetailListReportForm.value.IsAllGroup ? '' : null"
+          class="form-control pt-0"
+          formControlName="Group"
+          (change)="onChangeGroup($event)"
+        >
+          <option value="0">-Select-</option>
+          <option
+            *ngFor="let item of inputHelpData.GroupList"
+            [value]="item.Id"
+          >
+            {{ item.Description }}
+          </option>
+        </select>
+      </div>
+    </div>
+
+    <div class="form-group row">
+      <div class="col-md-1">
+        <input
+          type="checkbox"
+          class="form-check-input ml-1 checkbox"
+          style="margin: 0.8rem"
+          name="chbCloseAC"
+          id="chbCloseAC"
+          formControlName="chbCloseAC"
+        />
+      </div>
+
+      <label class="col-md-4 col-form-label" for="chbCloseAC"
+        >With Close A/C (Financial Year)</label
+      >
+
+      <div class="col-md-1">
+        <input
+          [(ngModel)]="chbIsMiscAccStatus"
+          (ngModelChange)="isMiscAccClick($event)"
+          type="checkbox"
+          class="form-check-input ml-1 checkbox"
+          style="margin: 0.8rem"
+          name="chbMiscAC"
+          id="chbMiscAC"
+          formControlName="chbMiscAC"
+        />
+      </div>
+
+      <label class="col-md-4 col-form-label" for="chbMiscAC"
+        >Misc. Account Report</label
+      >
+    </div>
+
+    <div *ngIf="showByOldAC" class="form-group row">
+      <div class="col-md-1">
+        <input
+          type="checkbox"
+          class="form-check-input ml-1 checkbox"
+          style="margin: 0.8rem"
+          name="chbByOldAC"
+          id="chbByOldAC"
+          formControlName="chbByOldAC"
+        />
+      </div>
+
+      <label class="col-md-4 col-form-label" for="chbByOldAC"
+        >By Old Account No.</label
+      >
+    </div>
+
+    <div class="form-group row">
+      <div class="col-md-1">
+        <input
+          checked
+          type="radio"
+          value="0"
+          name="rbLanguage"
+          id="rbLanguage0"
+          formControlName="rbLanguage"
+        />
+      </div>
+
+      <label class="col-md-3 col-form-label" for="rbLanguage0"
+        >English Mode</label
+      >
+
+      <div class="col-md-1">
+        <input
+          type="radio"
+          value="1"
+          name="rbLanguage"
+          id="rbLanguage1"
+          formControlName="rbLanguage"
+        />
+      </div>
+
+      <label class="col-md-3 col-form-label" for="rbLanguage1"
+        >Bangla Mode</label
+      >
+    </div>
+
+    <div class="buttons">
+      <button
+        type="button"
+        class="btn btn-info ml-2"
+        (click)="getReportToken('CRV')"
+      >
+        Preview
+      </button>
+      <button
+        type="button"
+        class="btn btn-success ml-2"
+        (click)="getReportToken('PDF')"
+      >
+        Print
+      </button>
+    </div>
+  </form>
+  <!-- grid table start *ngIf="AccTypeGridInfo.length != 0 && gridCheck" -->
+  <div *ngIf="showAccTypeGridInfo" class="mx-auto col-md-5 set-height">
+    <table id="Data">
+      <tr>
+        <th>Select</th>
+        <th>A/c Type</th>
+        <th>A/c Title</th>
+      </tr>
+      <tr *ngFor="let item of inputHelpData.accTransferAccountTypeList">
+        <td><input type="checkbox" (change)="selectedItemList(item)" /></td>
+        <td>{{ item.Id }}</td>
+        <td>{{ item.Description }}</td>
+      </tr>
+    </table>
+  </div>
+  <!-- grid table end -->
+
+  <!-- Misc Acc grid table start *ngIf="AccTypeGridInfo.length != 0 && gridCheck" -->
+  <div
+    *ngIf="Grid1DataList.length != 0 && showMiscAccTypeGridInfo"
+    class="mx-auto col-md-7 set-height"
+  >
+    <table id="Data">
+      <tr>
+        <th>Select</th>
+        <th>A/c No.</th>
+        <th>A/c Title</th>
+      </tr>
+      <tr *ngFor="let item of Grid1DataList">
+        <td><input type="checkbox" (change)="selectedItemList(item)" /></td>
+        <td>{{ item.Id }}</td>
+        <td>{{ item.Description }}</td>
+      </tr>
+    </table>
+  </div>
+  <!--Misc Acc grid table end -->
+</app-accounting-wrapper>

@@ -1,0 +1,194 @@
+<app-accounting-wrapper>
+  <form [formGroup]="LoanScheduleForm">
+    <div class="mx-auto border col-md-7">
+      <p class="bg-dark title">Loan Payment Schedule</p>
+      <div class="form-row">
+        <table id="Data2">
+          <tr>
+            <td>Loan Amount: <span style="color: red">*</span></td>
+            <td>
+              <input
+                appOnlyNumber
+                type="text"
+                (keydown)="onEnterLoanAmountHandler($event)"
+                class="form-control mt-0 pt-0"
+                formControlName="LoanAmount"
+              />
+            </td>
+            <td>Installment Amount:<span style="color: red">*</span></td>
+            <td>
+              <input
+                appOnlyNumber
+                type="text"
+                class="form-control mt-0 pt-0"
+                (change)="installmentAmountChange()"
+                (keydown)="installmentAmountChangekeydown($event)"
+                id="InstallmentAmount"
+                formControlName="InstallmentAmount"
+              />
+            </td>
+          </tr>
+          <tr>
+            <td>No of Installment:</td>
+            <td>
+              <input
+                appOnlyNumber
+                type="text"
+                class="form-control mt-0 pt-0"
+                (change)="noOfInstallmentChange()"
+                (keydown)="noOfInstallmentChangekeydown($event)"
+                id="NoOfInstallment"
+                formControlName="NoOfInstallment"
+              />
+            </td>
+            <td>Last Installment Amount:</td>
+            <td>
+              <input
+                appOnlyNumber
+                type="text"
+                class="form-control mt-0 pt-0"
+                readonly
+                formControlName="LastInstallmentAmount"
+              />
+            </td>
+          </tr>
+          <tr>
+            <td>Interest Rate:<span style="color: red">*</span></td>
+            <td>
+              <input
+                appOnlyNumber
+                type="text"
+                class="form-control mt-0 pt-0"
+                id="InterestRate"
+                formControlName="InterestRate"
+                (keydown)="InterestRatekeydown($event)"
+              />
+            </td>
+            <td>Total Interest Amount:</td>
+            <td>
+              <input
+                appOnlyNumber
+                type="text"
+                class="form-control mt-0 pt-0"
+                readonly
+                formControlName="TotalInterestAmount"
+              />
+            </td>
+          </tr>
+          <tr>
+            <td></td>
+            <td></td>
+            <td>Net Payable Amount:</td>
+            <td>
+              <input
+                appOnlyNumber
+                type="text"
+                class="form-control mt-0 pt-0"
+                readonly
+                formControlName="NetPayableAmount"
+              />
+            </td>
+          </tr>
+          <tr>
+            <td>Payment Type:<span style="color: red">*</span></td>
+            <td>
+              <select
+                id="PaymentType"
+                formControlName="PaymentType"
+                (change)="PaymentTypeChange()"
+                class="form-control pt-0"
+              >
+                <option value="0">-Select-</option>
+                <option *ngFor="let item of paymentList" [value]="item.Id">
+                  {{ item.Description }}
+                </option>
+              </select>
+            </td>
+            <td>
+              <select
+                formControlName="PaymentSubType"
+                *ngIf="LoanScheduleForm.value.PaymentType == 2"
+                class="form-control pt-0"
+              >
+                <option value="0">-Select-</option>
+                <option *ngFor="let item of paymentSubList" [value]="item.Id">
+                  {{ item.Description }}
+                </option>
+              </select>
+            </td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>1st Installment Date:</td>
+            <td>
+              <input
+                id="dateFormat"
+                type="text"
+                placeholder="DD/MM/YYYY"
+                class="form-control"
+                bsDatepicker
+                (keydown)="FirstInstallmentDateChange($event)"
+                formControlName="FirstInstallmentDate"
+                [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY' }"
+                autocomplete="off"
+              />
+            </td>
+
+            <td></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>Loan Cal. Method:<span style="color: red">*</span></td>
+            <td>
+              <select
+                id="LoanCalculationMethod"
+                formControlName="LoanCalculationMethod"
+                class="form-control pt-0"
+              >
+                <option value="0">-Select-</option>
+                <option
+                  *ngFor="let item of loanCalMethodList"
+                  [value]="item.Id"
+                >
+                  {{ item.Description }}
+                </option>
+              </select>
+            </td>
+            <td></td>
+            <td></td>
+          </tr>
+        </table>
+
+        <div class="buttons mt-3 mb-2">
+          <button type="button" (click)="calculateSchedule()" class="btn btn_1">
+            Calculate
+          </button>
+          <button type="button" class="btn ml-2" (click)="getReportToken()">
+            Print
+          </button>
+          <!-- <button type="button" (click)="exitPage()" class="btn ml-5">Exit</button> -->
+        </div>
+      </div>
+    </div>
+  </form>
+  <div *ngIf="dataList.length != 0" class="mx-auto col-md-7 set-height">
+    <table id="Data" class="col-md-12">
+      <tr>
+        <th>Sl. No.</th>
+        <th>Date</th>
+        <th>Installment Amount</th>
+        <th>Loan Amount</th>
+        <th>Interest Amount</th>
+        <th>Loan Payable Amount</th>
+      </tr>
+      <tr *ngFor="let item of dataList">
+        <td class="text-center">{{ item.LoanMth }}</td>
+        <td class="text-center">{{ item.LoanMthDate }}</td>
+        <td class="text-center">{{ item.InstlAmt }}</td>
+        <td class="text-center">{{ item.LoanAmt }}</td>
+        <td class="text-center">{{ item.IntAmt }}</td>
+        <td class="text-center">{{ item.LoanPayable }}</td>
+      </tr>
+    </table>
+  </div>
+</app-accounting-wrapper>

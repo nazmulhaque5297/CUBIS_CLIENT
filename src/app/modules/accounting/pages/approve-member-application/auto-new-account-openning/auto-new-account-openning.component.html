@@ -1,0 +1,136 @@
+<app-main-wrapper [module]="module">
+  <h4 class="border p-3 text-center">Approve Member Application</h4>
+  <div class="mx-auto mt-1 mt-5 border col-md-12 main-container" [formGroup]='autoAccForm'>
+    <p class="text-center">Select Auto New Account Opening</p>
+    <div class="mx-auto mb-3 col-md-12 infoTable">
+      <table *ngIf="accTypeMemberInfo.length != 0 && !updateCLick" id="Data">
+        <tr>
+          <th>Check/Uncheck</th>
+          <th>A/c Type</th>
+          <th>A/c Title</th>
+          <th>Int.Calculation</th>
+          <th>SMS Service</th>
+          <th>Old A/c No.</th>
+          <th>New Account No.</th>
+          <th>Select</th>
+        </tr>
+        <tr *ngFor="let item of accTypeMemberInfo">
+          <td><input type="checkbox" (change)="postAcctype(item)" /></td>
+          <td>{{ item.AccType }}</td>
+          <td>{{ item.Description }}</td>
+          <td>
+            <select formControlName="intFlag">
+              <option value="1">Give Interest</option>
+              <option value="2">Not Interest</option>
+            </select>
+          </td>
+          <td>
+            <select formControlName="smsFlag">
+              <option value="0">No</option>
+              <option value="1">Yes</option>
+            </select>
+          </td>
+          <td><input  formControlName="oldAcc" type="text" /></td>
+          <td></td>
+          <td></td>
+        </tr>
+      </table>
+      <!-- Non Member  -->
+      <table *ngIf="accTypeNonMemberInfo.length != 0 && !updateCLick" id="Data">
+        <tr>
+          <th>Check/Uncheck</th>
+          <th>A/c Type</th>
+          <th>A/c Title</th>
+          <th>Int.Calculation</th>
+          <th>SMS Service</th>
+          <th>Old A/c No.</th>
+          <th>New Account No.</th>
+          <th>Select</th>
+        </tr>
+        <tr *ngFor="let item of accTypeNonMemberInfo">
+          <td><input type="checkbox" (change)="postAcctype(item)" /></td>
+          <td>{{ item.AccType }}</td>
+          <td>{{ item.Description }}</td>
+          <td>
+            <select formControlName="intFlag">
+              <option value="1">Give Interest</option>
+              <option value="2">Not Interest</option>
+            </select>
+          </td>
+          <td>
+            <select formControlName="smsFlag">
+              <option value="0">No</option>
+              <option value="1">Yes</option>
+            </select>
+          </td>
+          <td><input type="text" /></td>
+          <td></td>
+          <td></td>
+        </tr>
+      </table>
+      <!-- New table -->
+
+      <table *ngIf="newAccTypeMemberInfo.length != 0 && updateCLick" id="Data">
+        <tr>
+          <th>Check/Uncheck</th>
+          <th>A/c Type</th>
+          <th>A/c Title</th>
+          <th>Int.Calculation</th>
+          <th>SMS Service</th>
+          <th>Old A/c No.</th>
+          <th>New Account No.</th>
+          <th>Select</th>
+        </tr>
+        <tr *ngFor="let item of newAccTypeMemberInfo">
+          <td *ngIf="item.NewAccNo != ''">
+            <input
+              type="checkbox"
+              checked
+              [disabled]="newAccTypeMemberInfo.length != 0"
+            />
+          </td>
+          <td *ngIf="item.NewAccNo == ''"><input type="checkbox" /></td>
+          <td>{{ item.AccType }}</td>
+          <td>{{ item.Description }}</td>
+          <td>
+            <select disabled>
+              <option value="1">Give Interest</option>
+              <option value="2">Not Interest</option>
+            </select>
+          </td>
+          <td>
+            <select disabled>
+              <option selected value="0">No</option>
+              <option value="1">Yes</option>
+            </select>
+          </td>
+          <td><input type="text" disabled /></td>
+          <td>{{ item.NewAccNo }}</td>
+          <td>
+            <button
+              *ngIf="item.NewAccNo != 0"
+              class="btn nominee__btn"
+              type="button"
+              value="{{ item.NewAccNo }}"
+              (click)="callNomineeModal(item)"
+            >
+              Nominee
+            </button>
+          </td>
+        </tr>
+      </table>
+    </div>
+
+    <button
+      *ngIf="accTypeDataList.length != 0"
+      (click)="postAllMeminfo()"
+      class="btn my-3 ml-3 update__btn"
+      [disabled]="newAccTypeMemberInfo.length != 0 && updateCLick"
+    >
+      Update
+    </button>
+  </div>
+
+  <!-- Modal -->
+
+</app-main-wrapper>

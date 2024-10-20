@@ -1,0 +1,254 @@
+<app-house-keeping-wrapper>
+  <div class="row">
+    <form
+      [formGroup]="EditUserForm"
+      class="mx-auto border col-md-8 main-container"
+    >
+      <p class="bg-dark title">Edit User Id</p>
+      <div class="form-row">
+        <label for="IdsNo" class="col-sm-5 col-form-label"
+          >Ids No:<span class="text-danger">*</span></label
+        >
+        <div class="form-group col-sm-6">
+          <input
+            appOnlyNumberWithoutDecimal
+            type="text"
+            class="form-control ml-2"
+            id="IDNumber"
+            formControlName="IdsNo"
+            name="IDNumber"
+            (change)="changeSelectValue($event)"
+            maxlength="4"
+          />
+        </div>
+      </div>
+      <div class="form-group row">
+        <label for="select" class="col-sm-5 col-form-label">ID Level:</label>
+        <div class="col-sm-7">
+          <select
+            formControlName="IdsLevel"
+            id="select"
+            class="form-control pt-0"
+            (change)="changeIdsLevel()"
+          >
+            <option value="0">-Select-</option>
+            <option *ngFor="let item of dataList" [value]="item.Id">
+              {{ item.Description }}
+            </option>
+          </select>
+        </div>
+      </div>
+      <div class="form-group row">
+        <label for="transactionamount" class="col-sm-5 col-form-label"
+          >User Name :</label
+        >
+        <div class="col-sm-7">
+          <input
+            type="text"
+            class="form-control"
+            id="IdsName"
+            formControlName="IdsName"
+            (keydown)="onEnterIdsNameHandler($event)"
+          />
+        </div>
+      </div>
+      <div class="form-group row">
+        <label for="usernumber" class="col-sm-5 col-form-label"
+          >User Mobile No. :</label
+        >
+        <div class="col-sm-7">
+          <input
+            type="text"
+            (change)="validation()"
+            class="form-control"
+            id="UserPhoneNo"
+            formControlName="IdsMobileNo"
+            (keydown)="onEnterUserPhoneNoHandler($event)"
+          />
+        </div>
+      </div>
+      <div class="form-row">
+        <label for="glcashcode" class="col-sm-5 col-form-label"
+          >GL Cash Code :</label
+        >
+        <div class="form-group col-sm-4">
+          <input
+            type="text"
+            class="form-control ml-2"
+            id="glcashcode"
+            formControlName="GLCashCode"
+            name="glcashcodeId"
+            (keydown)="onEnterGLCashCodeHandler($event)"
+          />
+        </div>
+        <div class="form-group col-sm-3">
+          <select
+            formControlName="GLCashCodeDescription"
+            id="select"
+            class="form-control pt-0"
+          >
+            <option value="0">-Select-</option>
+            <option *ngFor="let item of glcashcodelist" [value]="item.Id">
+              {{ item.Description }}
+            </option>
+          </select>
+        </div>
+      </div>
+      <div class="form-group row" *ngIf="sodStatus">
+        <label for="blankCheckbox" class="col-sm-5 col-form-label"
+          >SOD Permission :</label
+        >
+        <div class="col-sm-7">
+          <input
+            class="form-check-input position-static ml-1 checkbox"
+            type="checkbox"
+            id="blankCheckbox"
+            formControlName="SODflag"
+          />
+        </div>
+      </div>
+      <div class="form-group row" *ngIf="csVoucherStatus">
+        <label for="blankCheckbox" class="col-sm-5 col-form-label"
+          >CS Voucher Print :</label
+        >
+        <div class="col-sm-7">
+          <input
+            class="form-check-input position-static ml-1 checkbox"
+            type="checkbox"
+            id="blankCheckbox"
+            formControlName="CSVPrintflag"
+          />
+        </div>
+      </div>
+      <div class="form-group row" *ngIf="glVoucherStatus">
+        <label for="blankCheckbox" class="col-sm-5 col-form-label"
+          >GL Voucher Print :</label
+        >
+        <div class="col-sm-7">
+          <input
+            class="form-check-input position-static ml-1 checkbox"
+            type="checkbox"
+            id="blankCheckbox"
+            formControlName="GLVPrintflag"
+          />
+        </div>
+      </div>
+      <div class="form-group row">
+        <label for="blankCheckbox" class="col-sm-5 col-form-label"
+          >Generate Auto Voucher No. :</label
+        >
+        <div class="col-sm-7">
+          <input
+            class="form-check-input position-static ml-1 checkbox"
+            type="checkbox"
+            id="blankCheckbox"
+            formControlName="AutoVchflag"
+          />
+        </div>
+      </div>
+      <div class="form-group row" *ngIf="smsStatus">
+        <label for="blankCheckbox" class="col-sm-5 col-form-label"
+          >SMS Permission :</label
+        >
+        <div class="col-sm-7">
+          <input
+            class="form-check-input position-static ml-1 checkbox"
+            type="checkbox"
+            id="blankCheckbox"
+            formControlName="SMSflag"
+          />
+        </div>
+      </div>
+      <p class="transaction-limit">
+        Transaction Limit Accessibility ...........
+      </p>
+      <div class="form-group row">
+        <label for="transactionamount" class="col-sm-5 col-form-label"
+          >Limit Cash Credit Transaction Amt. :</label
+        >
+        <div class="col-sm-7">
+          <input
+            appOnlyNumber
+            maxlength="14"
+            type="text"
+            class="form-control"
+            id="LIdsCashCredit"
+            formControlName="LIdsCashCredit"
+            (keydown)="onEnterLIdsCashCreditHandler($event)"
+          />
+        </div>
+      </div>
+      <div class="form-group row">
+        <label for="transactionamount" class="col-sm-5 col-form-label"
+          >Limit Cash Debit Transaction Amt. :</label
+        >
+        <div class="col-sm-7">
+          <input
+            appOnlyNumber
+            maxlength="14"
+            type="text"
+            class="form-control"
+            id="LIdsCashDebit"
+            formControlName="LIdsCashDebit"
+            (keydown)="onEnterLIdsCashDebitHandler($event)"
+          />
+        </div>
+      </div>
+      <div class="form-group row">
+        <label for="transactionamount" class="col-sm-5 col-form-label"
+          >Limit Transfer Credit Transaction Amt. :</label
+        >
+        <div class="col-sm-7">
+          <input
+            appOnlyNumber
+            maxlength="14"
+            type="text"
+            class="form-control"
+            id="LIdsTrfCredit"
+            formControlName="LIdsTrfCredit"
+            (keydown)="onEnterLIdsTrfCreditHandler($event)"
+          />
+        </div>
+      </div>
+      <div class="form-group row">
+        <label for="transactionamount" class="col-sm-5 col-form-label"
+          >Limit Transfer Debit Transaction Amt. :</label
+        >
+        <div class="col-sm-7">
+          <input
+            appOnlyNumber
+            maxlength="14"
+            type="text"
+            class="form-control"
+            id="LIdsTrfDebit"
+            formControlName="LIdsTrfDebit"
+          />
+        </div>
+      </div>
+      <div class="buttons col-md-7 ml-auto">
+        <button
+          type="button"
+          (click)="UpdateUserInfo()"
+          class="btn btn-success"
+        >
+          Update Info <i class="fa fa-spinner fa-spin" *ngIf="loading"></i>
+        </button>
+        <button type="button" (click)="moduleList()" class="btn btn_1 ml-3">
+          Show Id Info
+        </button>
+      </div>
+    </form>
+  </div>
+  <div *ngIf="modulelist.length != 0" class="mx-auto set-height col-md-8">
+    <table id="Data">
+      <tr>
+        <th>Code</th>
+        <th>Description</th>
+      </tr>
+      <tr *ngFor="let item of modulelist">
+        <td class="text-center">{{ item.ModuleNo }}</td>
+        <td>{{ item.ModuleName }}</td>
+      </tr>
+    </table>
+  </div>
+</app-house-keeping-wrapper>

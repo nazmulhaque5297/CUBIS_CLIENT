@@ -1,0 +1,70 @@
+<form [formGroup]='propertyGuarantorInfoForm'  class="mx-auto  border col-md-12">
+    <div class="mt-3 row pt-3 pr-0 mr-0 mx-auto">
+        <div class="col-md-2 mt-2">
+            <label class="h6">SL No</label>
+        </div>
+        <div class="col-md-2 mt-2">
+            <label class="h6">Name of Property</label>
+        </div>
+        <div class="col-md-2 mt-2">
+            <label class="h6">File No</label>
+        </div>
+        <div class="col-md-2 mt-2">
+            <label class="h6">Description</label>
+        </div>
+        <div class="col-md-2 mt-2">
+            <label class="h6">Amount</label>
+        </div>
+        <div class="col-md-1 pt-0">
+            <button (click)="addPropertyData()" class="btn btn-primary pt-1">Add</button>
+        </div>
+        <div class="col-md-1 mt-1">
+            <button (click)="clearForm()">&#10060;</button>
+        </div>
+    </div>
+    <div class="row mb-3 pb-3 mx-auto">
+        <div class="col-md-2 mt-2">
+            <input appOnlyNumber type="text" class="form-control desc-input" formControlName="SerialNo">
+        </div>
+        <div class="col-md-2 mt-2">
+            <input type="text" class="form-control desc-input" formControlName="NameOfProperty">
+        </div>
+        <div class="col-md-2 mt-2 ml-1">
+            <input appOnlyNumber type="text" class="form-control desc-input" formControlName="FileNo">
+        </div>
+        <div class="col-md-2 mt-2 ml-1">
+            <input type="text" class="form-control desc-input" formControlName="Description">
+        </div>
+        <div class="col-md-2 mt-2 ml-1">
+            <input appOnlyNumber type="text" class="form-control desc-input" formControlName="Amount">
+        </div>
+    </div>
+    
+    <div *ngIf="dataList.length != 0" class="mx-auto mt-1 mt-5 col-md-10 set-height">
+        <table id="Data" class="col-md-12">
+            <tr>
+                <th>Srl. No</th>
+                <th>Property Name</th>
+                <th>File No</th>
+                <th>Description</th>
+                <th>Amount</th>
+                <th>Action</th>
+            </tr>
+            
+            <tr *ngFor="let item of dataList">
+                <td class="text-center">{{item.PrSRL}}</td>
+                <td class="text-center">{{item.PrName}}</td>
+                <td class="text-center">{{item.FileNo}}</td>
+                <td class="text-center">{{item.PrDesc}}</td>
+                <td class="text-center">{{item.PrAmount}}</td>
+                <td class="text-center"> <button (click)="deleteData(item)"   value="{{item.MemberNo}}"  class="btn btn-primary pt-1">Delete</button> </td>
+            </tr>
+        </table>
+    </div>
+    <div class="mx-auto row" *ngIf="dataList.length != 0">
+        <div class="col-md-4"></div>
+        <div class="col-md-8">
+            <label class="h2 ml-5 pl-4">Total Property: {{totalProperty}}</label>
+        </div>
+    </div>
+</form>

@@ -1,0 +1,31 @@
+<app-house-keeping-wrapper>
+  <form
+    [formGroup]="ResetUnitDayEndForm"
+    class="mx-auto border col-md-6 main-container pb-3"
+  >
+    <p class="bg-dark title">Reset Unit Day End Confirmation</p>
+    <!-- (change)="onChangeBranch($event)" -->
+
+    <div class="form-group row">
+      <label class="col-md-2 col-form-label">Unit Code :</label>
+
+      <div class="col-md-10">
+        <select class="form-control pt-0" formControlName="BranchDdl">
+          <option value="0">-Select-</option>
+          <option
+            *ngFor="let item of inputHelpData.BranchDdlList"
+            [value]="item.Id"
+          >
+            {{ item.Description }}
+          </option>
+        </select>
+      </div>
+    </div>
+
+    <div class="buttons">
+      <button class="btn btn-success ml-2" id="btn2" (click)="SaveOrUpdate()">
+        Reset Unit Code
+      </button>
+    </div>
+  </form>
+</app-house-keeping-wrapper>

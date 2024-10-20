@@ -1,0 +1,62 @@
+<form [formGroup]='shareGuarantorInfoForm'  class="mx-auto  border col-md-11">
+    <div class="row">
+        <div class="col-md-2 mt-2 ml-3">
+            <label class="h6">Member No</label>
+        </div>
+        <div class="col-md-4 mt-2">
+            <label class="h6"> Member Name</label>
+        </div>
+        <div class="col-md-2 mt-2">
+            <label class="h6">Share Amount</label>
+        </div>
+        <div class="col-md-2 mt-2">
+            <label class="h6">No of Guarantor</label>
+        </div>
+
+    </div>
+    <div class=" row mb-3 pb-3 mx-auto">
+        <div class="col-md-2 mt-2">
+            <input appOnlyNumber type="text" class="form-control" (change)="onMemberNoChange()" formControlName="MemberNo">
+        </div>
+        <div class="col-md-4 mt-2">
+            <input type="text" class="form-control " formControlName="MemberName" readonly>
+        </div>
+        <div class="col-md-2 mt-2">
+            <input appOnlyNumber type="text" class="form-control " formControlName="ShareAmount" (input)="shareAmountChange()">
+        </div>
+        <div class="col-md-2 mt-2">
+            <input appOnlyNumber type="text" class="form-control " formControlName="NoOfGuarantor" readonly>
+        </div>
+            <div class="col-md-2 pt-0 row">
+                <button (click)="addShareData()" value="MemberNo" class="btn">Add</button>
+                <button (click)="removeShareData()" class="ml-2">&#10060;</button>
+            </div>
+
+    </div>
+    <div *ngIf="dataList.length != 0" class="mx-auto mt-1 mt-5 col-md-10 set-height">
+        <table id="Data" class="col-md-12">
+            <tr>
+                <th>Member No</th>
+                <th>A/C Type</th>
+                <th>Acc No</th>
+                <th>Amount</th>
+                <th>No. Guarantor</th>
+                <th>Action</th>
+            </tr>
+            <tr *ngFor="let item of dataList">
+                <td class="text-center">{{item.MemberNo}}</td>
+                <td class="text-center">{{item.AccountType}}</td>
+                <td class="text-center">{{item.AccountNo}}</td>
+                <td class="text-center">{{item.ShareAmount}}</td>
+                <td class="text-center">{{item.NoOfGuarantor}}</td>
+                <td class="text-center"> <button (click)="deleteData(item)" value="{{item.MemberNo}}" class="btn btn-primary pt-1">Delete</button> </td>
+            </tr>
+        </table>
+    </div>
+    <div class="mx-auto row" *ngIf="dataList.length != 0">
+        <div class="col-md-4"></div>
+        <div class="col-md-8">
+            <label class="h2 ml-5 pl-4">Total Share: {{totalShare}}</label>
+        </div>
+    </div>
+</form>

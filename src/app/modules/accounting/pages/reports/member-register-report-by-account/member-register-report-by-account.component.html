@@ -1,0 +1,391 @@
+<app-main-wrapper [module]="module">
+  <form
+    [formGroup]="MemberRegisterReportByAccountForm"
+    class="mx-auto mt-1 mt-5 border col-md-7 main-container"
+  >
+    <p class="mt-1 bg-dark title">Member Register Report by Account</p>
+
+    <div class="form-group row">
+      <div class="col-md-1"></div>
+      <label class="col-md-3 col-form-label">Account Type :</label>
+      <div class="col-md-7">
+        <select class="form-control pt-0" formControlName="AccType">
+          <option value="0">-Select-</option>
+          <option
+            *ngFor="let item of inputHelpData.AccountTypeList"
+            [value]="item.Id"
+          >
+            {{ item.Description }}
+          </option>
+        </select>
+      </div>
+    </div>
+
+    <div class="form-group row">
+      <div class="col-md-1">
+        <input
+          [(ngModel)]="chbIsAllCollectorStatus"
+          (ngModelChange)="checkIsAllCollectorValue($event)"
+          class="form-check-input ml-1 checkbox"
+          style="margin: 0.8rem"
+          type="checkbox"
+          id="IsAllCollectorCheckbox"
+          formControlName="IsAllCollector"
+        />
+      </div>
+
+      <label class="col-md-3 col-form-label" for="IsAllCollectorCheckbox" >All -- Collector :</label>
+
+      <div class="col-md-7">
+        <select
+          [attr.disabled]="
+            MemberRegisterReportByAccountForm.value.IsAllCollector ? '' : null
+          "
+          class="form-control pt-0"
+          formControlName="Collector"
+        >
+          <option value="0">-Select-</option>
+          <option
+            *ngFor="let item of inputHelpData.CollectorList"
+            [value]="item.Id"
+          >
+            {{ item.Description }}
+          </option>
+        </select>
+      </div>
+    </div>
+
+    <div class="form-group row">
+      <div class="col-md-1">
+        <input
+          [(ngModel)]="chbIsAllGroupStatus"
+          (ngModelChange)="checkIsAllGroupValue($event)"
+          class="form-check-input ml-1 checkbox"
+          style="margin: 0.8rem"
+          type="checkbox"
+          id="IsAllGroup"
+          formControlName="IsAllGroup"
+        />
+      </div>
+
+      <label class="col-md-3 col-form-label" for="IsAllGroup" >All -- Group :</label>
+      <div class="col-md-7">
+        <select
+          [attr.disabled]="
+            MemberRegisterReportByAccountForm.value.IsAllGroup ? '' : null
+          "
+          class="form-control pt-0"
+          formControlName="Group"
+        >
+          <option value="0">-Select-</option>
+          <option
+            *ngFor="let item of inputHelpData.GroupList"
+            [value]="item.Id"
+          >
+            {{ item.Description }}
+          </option>
+        </select>
+      </div>
+    </div>
+
+    <div class="form-group row">
+      <div class="col-md-1">
+        <input
+          [(ngModel)]="chbIsAllGenderStatus"
+          (ngModelChange)="checkIsAllGenderValue($event)"
+          class="form-check-input ml-1 checkbox"
+          style="margin: 0.8rem"
+          type="checkbox"
+          id="IsAllGender"
+          formControlName="IsAllGender"
+        />
+      </div>
+
+      <label class="col-md-3 col-form-label" for="IsAllGender" >All -- Gender :</label>
+      <div class="col-md-7">
+        <select
+          [attr.disabled]="
+            MemberRegisterReportByAccountForm.value.IsAllGender ? '' : null
+          "
+          class="form-control pt-0"
+          formControlName="Gender"
+        >
+          <option value="0">-Select-</option>
+          <option
+            *ngFor="let item of inputHelpData.GenderList"
+            [value]="item.Id"
+          >
+            {{ item.Description }}
+          </option>
+        </select>
+      </div>
+    </div>
+
+    <div class="form-group row">
+      <div class="col-md-1">
+        <input
+          [(ngModel)]="chbIsAllReligionStatus"
+          (ngModelChange)="checkIsAllReligionValue($event)"
+          class="form-check-input ml-1 checkbox"
+          style="margin: 0.8rem"
+          type="checkbox"
+          id="IsAllReligion"
+          formControlName="IsAllReligion"
+        />
+      </div>
+
+      <label class="col-md-3 col-form-label" for="IsAllReligion" >All -- Religion :</label>
+      <div class="col-md-7">
+        <select
+          [attr.disabled]="
+            MemberRegisterReportByAccountForm.value.IsAllReligion ? '' : null
+          "
+          class="form-control pt-0"
+          formControlName="Religion"
+        >
+          <option value="0">-Select-</option>
+          <option
+            *ngFor="let item of inputHelpData.ReligionList"
+            [value]="item.Id"
+          >
+            {{ item.Description }}
+          </option>
+        </select>
+      </div>
+    </div>
+
+    <div class="form-group row">
+      <div class="col-md-1">
+        <input
+          [(ngModel)]="chbIsAllBloodGroupStatus"
+          (ngModelChange)="checkIsAllBloodGroupValue($event)"
+          class="form-check-input ml-1 checkbox"
+          style="margin: 0.8rem"
+          type="checkbox"
+          id="IsAllBloodGroup"
+          formControlName="IsAllBloodGroup"
+        />
+      </div>
+
+      <label class="col-md-3 col-form-label" for="IsAllBloodGroup" >All -- Blood Group :</label>
+      <div class="col-md-7">
+        <select
+          [attr.disabled]="
+            MemberRegisterReportByAccountForm.value.IsAllBloodGroup ? '' : null
+          "
+          class="form-control pt-0"
+          formControlName="BloodGroup"
+        >
+          <option value="0">-Select-</option>
+          <option
+            *ngFor="let item of inputHelpData.BloodGroupList"
+            [value]="item.Id"
+          >
+            {{ item.Description }}
+          </option>
+        </select>
+      </div>
+    </div>
+
+    <div class="form-group row">
+      <div class="col-md-1">
+        <input
+          [(ngModel)]="chbIsAllStatusStatus"
+          (ngModelChange)="checkIsAllStatusValue($event)"
+          class="form-check-input ml-1 checkbox"
+          style="margin: 0.8rem"
+          type="checkbox"
+          id="IsAllStatus"
+          formControlName="IsAllStatus"
+        />
+      </div>
+
+      <label class="col-md-3 col-form-label" for="IsAllStatus" >All -- Status :</label>
+      <div class="col-md-7">
+        <select
+          [attr.disabled]="
+            MemberRegisterReportByAccountForm.value.IsAllStatus ? '' : null
+          "
+          class="form-control pt-0"
+          formControlName="Status"
+        >
+          <option value="0">-Select-</option>
+          <option value="1">Active</option>
+          <option value="2">Transfered</option>
+          <option value="3">Close</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="form-group row">
+      <div class="col-md-1">
+        <input
+          [(ngModel)]="chbIsAllDateStatus"
+          (ngModelChange)="checkIsAllDateValue($event)"
+          class="form-check-input ml-1 checkbox"
+          style="margin: 0.8rem"
+          type="checkbox"
+          id="IsAllDate"
+          formControlName="IsAllDate"
+        />
+      </div>
+
+      <label class="col-md-3 col-form-label" for="IsAllDate" >From Open Date :</label>
+      <div class="col-md-7">
+        <input
+          id="dateFormat"
+          type="text"
+          placeholder="DD/MM/YYYY"
+          class="form-control"
+          bsDatepicker
+          formControlName="FormOpenDate"
+          autocomplete="off"
+          [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY' }"
+          (ngModelChange)="applicationDateChange()"
+        />
+      </div>
+    </div>
+
+    <div class="form-group row">
+      <div class="col-md-1">
+        <input
+          [(ngModel)]="chbIsAllAgeStatus"
+          (ngModelChange)="checkIsAllAgeValue($event)"
+          class="form-check-input ml-1 checkbox"
+          style="margin: 0.8rem"
+          type="checkbox"
+          id="IsAllAge"
+          formControlName="IsAllAge"
+        />
+      </div>
+
+      <label class="col-md-3 col-form-label" for="IsAllAge" >All -- Age :</label>
+      <div class="col-md-4">
+        <input
+          type="text"
+          class="form-control"
+          id="Age"
+          formControlName="Age"
+          name="Age"
+        />
+      </div>
+      <div class="col-md-3">
+        <select class="form-control pt-0" formControlName="AgeEqual">
+          <option value="0">-Select-</option>
+          <option value="1">Equal Age</option>
+          <option value="2">Less Age</option>
+          <option value="3">Greater Age</option>
+        </select>
+      </div>
+    </div>
+
+    <!-- <div class="form-group row">
+    <label for="blankCheckbox" class="col-md-3 col-form-label"
+      >All Member :</label
+    >
+    <div class="col-md-3">
+      <input
+        [(ngModel)]="chbIsAllMemberStatus"
+        (ngModelChange)="checkIsAllMemberValue($event)"
+        class="form-check-input position-static ml-1 checkbox"
+        type="checkbox"
+        id="IsAllMemberCheckbox"
+        formControlName="IsAllMember"
+      />
+    </div>
+  </div>
+
+  <div class="form-group row">
+    <label class="col-md-3 col-form-label">Member No :</label>
+    <div class="col-md-3">
+      <input
+        type="text"
+        class="form-control"
+        id="MemNo"
+        formControlName="MemNo"
+        name="MemNo"
+      />
+    </div>
+  </div>
+  <div class="form-group row">
+    <label class="col-md-3 col-form-label">Account Type:</label>
+    <div class="col-md-3">
+      <input
+        type="text"
+        class="form-control"
+        id="CodeNumber"
+        formControlName="AccTypeCode"
+        name="CodeNumber"
+        (focusout)="onChangeAccTypeCode($event)"
+      />
+    </div>
+    <div class="col-md-6">
+      <select
+        class="form-control"
+        formControlName="AccType"
+        (change)="onChangeAccType($event)"
+      >
+        <option value="0">-Select-</option>
+        <option
+          *ngFor="let item of inputHelpData.AccountTypeList"
+          [value]="item.Id"
+        >
+          {{ item.Description }}
+        </option>
+      </select>
+    </div>
+  </div>
+
+  <div class="form-group row">
+    <label for="blankCheckbox" class="col-md-3 col-form-label"
+      >All Date :</label
+    >
+    <div class="col-md-3">
+      <input
+        [(ngModel)]="chbIsAllDateStatus"
+        (ngModelChange)="checkIsAllDateValue($event)"
+        class="form-check-input position-static ml-1 checkbox"
+        type="checkbox"
+        id="IsAllDateCheckbox"
+        formControlName="IsAllDate"
+      />
+    </div>
+  </div>
+
+  <div class="form-group row">
+    <label class="col-md-3 col-form-label">Issue From date:</label>
+    <div class="col-md-3">
+      <input
+        id="dateFormat"
+        type="text"
+        class="form-control"
+        bsDatepicker
+        formControlName="IssueFromDate"
+        [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY' }"
+        autocomplete="off"
+      />
+    </div>
+    <label class="col-md-3 col-form-label">Issue To date:</label>
+    <div class="col-md-3">
+      <input
+        id="dateFormat"
+        type="text"
+        class="form-control"
+        bsDatepicker
+        formControlName="IssueToDate"
+        [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY' }"
+        autocomplete="off"
+      />
+    </div>
+  </div> -->
+
+  <div class="buttons">
+    <button type="button" class="btn btn-info ml-2" (click)="getReportToken('CRV')">
+      Preview
+    </button>
+    <button type="button" class="btn btn-success ml-2" (click)="getReportToken('PDF')">
+      Print
+    </button>
+  </div>
+  </form>
+</app-main-wrapper>

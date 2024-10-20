@@ -1,0 +1,220 @@
+<app-house-keeping-wrapper>
+  <!-- [formGroup]='TransactionCodeForm' -->
+  <form novalidate class="mx-auto border col-md-7 main-container pb-2">
+    <p class="bg-dark mx-auto title col-md-11">SMS Control Information</p>
+    <div *ngIf="dataList.length != 0" class="mx-auto col-md-11 set_height">
+      <table id="Data">
+        <tr>
+          <th>Select</th>
+          <th>FuncOpt</th>
+          <th>Flag</th>
+          <th>FuncOptDesc</th>
+          <th>AccType</th>
+          <th>AccTypeDesc</th>
+          <th>RowFlag</th>
+        </tr>
+        <tr *ngFor="let item of dataList; let i = index">
+          <td
+            class="text-center evenNoSelect"
+            *ngIf="item.RowFlag % 2 == 0 && item.CheckBox == true"
+          >
+            <input
+              type="checkbox"
+              [checked]="item.CheckBox"
+              (change)="changeCheck(i)"
+            />
+          </td>
+          <td
+            class="text-center evenNoSelect"
+            *ngIf="item.RowFlag % 2 == 0 && item.CheckBox == true"
+          >
+            {{ item.FuncOpt }}
+          </td>
+          <td
+            class="text-center evenNoSelect"
+            *ngIf="item.RowFlag % 2 == 0 && item.CheckBox == true"
+          >
+            {{ item.Flag }}
+          </td>
+          <td
+            class="text-center evenNoSelect"
+            *ngIf="item.RowFlag % 2 == 0 && item.CheckBox == true"
+          >
+            {{ item.FuncOptDesc }}
+          </td>
+          <td
+            class="text-center evenNoSelect"
+            *ngIf="item.RowFlag % 2 == 0 && item.CheckBox == true"
+          >
+            {{ item.AccType }}
+          </td>
+          <td
+            class="text-center evenNoSelect"
+            *ngIf="item.RowFlag % 2 == 0 && item.CheckBox == true"
+          >
+            {{ item.AccTypeDesc }}
+          </td>
+          <td
+            class="text-center evenNoSelect"
+            *ngIf="item.RowFlag % 2 == 0 && item.CheckBox == true"
+          >
+            {{ item.RowFlag }}
+          </td>
+
+          <td
+            class="text-center evenNoNot"
+            *ngIf="item.RowFlag % 2 == 0 && item.CheckBox == false"
+          >
+            <input
+              type="checkbox"
+              [checked]="item.CheckBox"
+              (change)="changeCheck(i)"
+            />
+          </td>
+          <td
+            class="text-center evenNoNot"
+            *ngIf="item.RowFlag % 2 == 0 && item.CheckBox == false"
+          >
+            {{ item.FuncOpt }}
+          </td>
+          <td
+            class="text-center evenNoNot"
+            *ngIf="item.RowFlag % 2 == 0 && item.CheckBox == false"
+          >
+            {{ item.Flag }}
+          </td>
+          <td
+            class="text-center evenNoNot"
+            *ngIf="item.RowFlag % 2 == 0 && item.CheckBox == false"
+          >
+            {{ item.FuncOptDesc }}
+          </td>
+          <td
+            class="text-center evenNoNot"
+            *ngIf="item.RowFlag % 2 == 0 && item.CheckBox == false"
+          >
+            {{ item.AccType }}
+          </td>
+          <td
+            class="text-center evenNoNot"
+            *ngIf="item.RowFlag % 2 == 0 && item.CheckBox == false"
+          >
+            {{ item.AccTypeDesc }}
+          </td>
+          <td
+            class="text-center evenNoNot"
+            *ngIf="item.RowFlag % 2 == 0 && item.CheckBox == false"
+          >
+            {{ item.RowFlag }}
+          </td>
+
+          <td
+            class="text-center oddNoSelect"
+            *ngIf="item.RowFlag % 2 == 1 && item.CheckBox == true"
+          >
+            <input
+              type="checkbox"
+              [checked]="item.CheckBox"
+              (change)="changeCheck(i)"
+            />
+          </td>
+          <td
+            class="text-center oddNoSelect"
+            *ngIf="item.RowFlag % 2 == 1 && item.CheckBox == true"
+          >
+            {{ item.FuncOpt }}
+          </td>
+          <td
+            class="text-center oddNoSelect"
+            *ngIf="item.RowFlag % 2 == 1 && item.CheckBox == true"
+          >
+            {{ item.Flag }}
+          </td>
+          <td
+            class="text-center oddNoSelect"
+            *ngIf="item.RowFlag % 2 == 1 && item.CheckBox == true"
+          >
+            {{ item.FuncOptDesc }}
+          </td>
+          <td
+            class="text-center oddNoSelect"
+            *ngIf="item.RowFlag % 2 == 1 && item.CheckBox == true"
+          >
+            {{ item.AccType }}
+          </td>
+          <td
+            class="text-center oddNoSelect"
+            *ngIf="item.RowFlag % 2 == 1 && item.CheckBox == true"
+          >
+            {{ item.AccTypeDesc }}
+          </td>
+          <td
+            class="text-center oddNoSelect"
+            *ngIf="item.RowFlag % 2 == 1 && item.CheckBox == true"
+          >
+            {{ item.RowFlag }}
+          </td>
+
+          <td
+            class="text-center oddNoNot"
+            *ngIf="item.RowFlag % 2 == 1 && item.CheckBox == false"
+          >
+            <input
+              type="checkbox"
+              [checked]="item.CheckBox"
+              (change)="changeCheck(i)"
+            />
+          </td>
+          <td
+            class="text-center oddNoNot"
+            *ngIf="item.RowFlag % 2 == 1 && item.CheckBox == false"
+          >
+            {{ item.FuncOpt }}
+          </td>
+          <td
+            class="text-center oddNoNot"
+            *ngIf="item.RowFlag % 2 == 1 && item.CheckBox == false"
+          >
+            {{ item.Flag }}
+          </td>
+          <td
+            class="text-center oddNoNot"
+            *ngIf="item.RowFlag % 2 == 1 && item.CheckBox == false"
+          >
+            {{ item.FuncOptDesc }}
+          </td>
+          <td
+            class="text-center oddNoNot"
+            *ngIf="item.RowFlag % 2 == 1 && item.CheckBox == false"
+          >
+            {{ item.AccType }}
+          </td>
+          <td
+            class="text-center oddNoNot"
+            *ngIf="item.RowFlag % 2 == 1 && item.CheckBox == false"
+          >
+            {{ item.AccTypeDesc }}
+          </td>
+          <td
+            class="text-center oddNoNot"
+            *ngIf="item.RowFlag % 2 == 1 && item.CheckBox == false"
+          >
+            {{ item.RowFlag }}
+          </td>
+        </tr>
+      </table>
+    </div>
+    <div class="buttons">
+      <button type="button" (click)="insertData()" class="btn btn-success">
+        Save
+      </button>
+      <button type="button" (click)="allMark()" class="ml-5 btn btn-info">
+        All Mark
+      </button>
+      <button type="button" (click)="allUnMark()" class="ml-5 btn btn-primary">
+        All Un-Mark
+      </button>
+      <!-- <button type="button" (click)="exitPage()" class="ml-5 btn">Exit</button> -->
+    </div>
+  </form>
+</app-house-keeping-wrapper>

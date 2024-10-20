@@ -1,0 +1,84 @@
+<app-house-keeping-wrapper>
+  <form
+    [formGroup]="BankCodeForm"
+    novalidate
+    class="mx-auto border col-md-6 main-container pb-2"
+  >
+    <p class="bg-dark title">Bank Code Maintenance</p>
+    <div class="form-row">
+      <label for="inputProCode" class="col-md-2">Bank Code:</label>
+      <div class="form-group col-md-3">
+        <input
+          type="text"
+          (change)="changeSelectValue($event)"
+          class="form-control"
+          id="BankCode"
+          formControlName="BankCode"
+          name="BankCode"
+        />
+      </div>
+      <div class="form-group col-md-4">
+        <select
+          formControlName="selectedOptionCode"
+          (change)="selectChangeHandler($event)"
+          class="form-control pt-0"
+        >
+          <option value="0">-Select-</option>
+          <option *ngFor="let item of dataList" [value]="item.BankCode">
+            {{ item.BankName }}
+          </option>
+        </select>
+      </div>
+    </div>
+    <div class="form-row">
+      <label for="inputDesc" class="col-md-2"
+        >Description:<span class="text-danger">*</span></label
+      >
+      <div class="form-group col-md-7">
+        <input
+          type="text"
+          formControlName="BankName"
+          class="form-control"
+          id="BankName"
+        />
+        <div
+          *ngIf="
+            BankCodeForm.controls['BankName'].invalid &&
+            BankCodeForm.controls['BankName'].touched
+          "
+          class="text-danger ml-4"
+        >
+          Required*
+        </div>
+      </div>
+    </div>
+    <div class="buttons">
+      <button type="button" (click)="saveOrUpdate()" class="btn btn-success">
+        {{ submitButtonText }}
+      </button>
+      <button
+        type="button"
+        (click)="getTableReportData()"
+        class="ml-5 btn btn_1"
+      >
+        View
+      </button>
+    </div>
+  </form>
+
+  <div
+    *ngIf="dataList.length != 0 && displayTabularData"
+    class="mx-auto set-height col-md-6"
+  >
+    <table id="Data">
+      <tr>
+        <th>Code</th>
+        <th>Description</th>
+      </tr>
+      <tr *ngFor="let item of dataList">
+        <td class="text-center">{{ item.BankCode }}</td>
+        <td>{{ item.BankName }}</td>
+      </tr>
+    </table>
+  </div>
+</app-house-keeping-wrapper>

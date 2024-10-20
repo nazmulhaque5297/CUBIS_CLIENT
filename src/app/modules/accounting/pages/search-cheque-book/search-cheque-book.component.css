@@ -1,0 +1,16 @@
+.title {
+  background: #6c757d !important;
+  color: #fff;
+  font-weight: 600;
+  padding: 2px;
+}
+
+.btn {
+  padding: 4px 35px !important;
+  transition: 0.7s ease-in;
+  background: #28A745;
+  color: #fff;
+}
+.buttons{
+  margin-left: 230px;
+}

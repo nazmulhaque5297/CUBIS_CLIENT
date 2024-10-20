@@ -1,0 +1,474 @@
+<app-main-wrapper [module]="module">
+  <form [formGroup]="cashDepositForm" class="form-horizontal" >
+    <div class="row">
+      <div class="col-xl-8 col-md-8">
+        <p class="bg-primary text-center text-light bg-secondary title">
+          Cash Transaction - DEPOSIT
+        </p>
+        <div class="card first__part">
+          <!-- <div class="card-header bg-primary">
+            <h4 class="card-title text-white mb-0">
+              Cash Transaction - DEPOSIT
+            </h4>
+          </div> -->
+          <div class="card-body">
+            <div class="form-group row">
+              <label class="col-md-3 col-form-label">A/C Type:</label>
+              <div class="col-md-2">
+                <input id="AccountTypeCode" type="text" class="form-control"  formControlName="AccountTypeCode" (change)="
+                    onAccountTypeChange(cashDepositForm.value.AccountTypeCode)
+                  " appOnlyNumber  (keydown)="onEnterAccTypeHandler($event)"/>
+              </div>
+              <div class="col-md-4">
+                <select class="form-control pt-0" formControlName="AccountType" (change)="
+                    onAccountTypeChange(cashDepositForm.value.AccountType)
+                  ">
+                  <option value="0">-Select-</option>
+                  <option *ngFor="let item of inputHelpData.AccountTypeList" [value]="item.Id">
+                    {{ item.Description }}
+                  </option>
+                </select>
+              </div>
+            </div>
+            <div *ngIf="inputHelpData.ShowOldAccNo" class="form-group row">
+              <label class="col-md-3 col-form-label">Old A/c No.:</label>
+              <div class="col-md-2">
+                <input id="OldAccountNo" type="text" class="form-control" formControlName="OldAccountNo"
+                  (change)="onOldAccNoChange()" (keydown)="onEnterOldAccHandler($event)" appOnlyNumberWithoutDecimal/>
+              </div>
+            </div>
+            <div class="form-group row"  *ngIf="ManualAccFlag">
+              <label class="col-md-3 col-form-label">Manual A/c No.:</label>
+              <div class="col-md-2">
+                <input id="ManualAccountNo" type="text" class="form-control" formControlName="ManualAccountNo"
+                  (keydown)="onEnterManualAccHandler($event)" appOnlyNumberWithoutDecimal/>
+              </div>
+            </div>
+
+
+
+            <div class="form-group row" >
+              <label class="col-md-3 col-form-label">Member No. :<span class="text-danger">*</span></label>
+              <div class="col-md-2">
+                <input id="MemberNo" type="text" class="form-control" formControlName="MemberNo"
+                  (change)="onMemberChange()" appOnlyNumber  (keydown)="onMemberEnterEvent($event)" />
+              </div>
+              <label class="col-md-4 col-form-label">{{
+                detailsData.MemberName
+                }}</label>
+                <div>
+                  <!-- <button class="btn btn-success mr-2" type="button" (click)="showAllMember()">
+                    Search
+                  </button> -->
+                  <button class="btn btn-success" type="button" (click)="getReportToken()">
+                      View Transactions
+                    </button>
+                </div>
+
+            </div>
+
+            <!-- <div class="form-group row">
+              <div>
+                <button class="btn btn-success" (click)="getReportToken()">
+                    View Transactions
+                  </button>
+              </div>
+              </div> -->
+
+            <div class="form-group row">
+              <label *ngIf="!UserData?.AutoVchflag" class="col-md-3 col-form-label">Voucher No. :<span
+                  class="text-danger">*</span></label>
+              <div *ngIf="!UserData?.AutoVchflag" class="col-md-2">
+                <input id="VoucherNo" type="text" class="form-control" formControlName="VoucherNo"
+                  (change)="onVchNoChange()" />
+              </div>
+              <div class="checkbox">
+                <input id="checkbox0" type="checkbox" formControlName="GLCodeHelp" />
+                <label for="checkbox0"> GL Code Help </label>
+              </div>
+
+              <label class="col-md-3 col-form-label">User Cash Code :{{ inputHelpData.UserCashCode }}</label>
+            </div>
+
+            <div *ngIf="!cashDepositForm.value.GLCodeHelp" class="row d-block topSection f-ss-14px">
+              <div class="d-flex deposit-account-list-header">
+                <div class="col-md-2">GL Code</div>
+                <div class="col-md-3">Description</div>
+                <div class="col-md-2">Amount</div>
+                <div class="col-md-1">A/c Type</div>
+                <div class="col-md-2">A/C No.</div>
+                <div class="col-md-2">A/C Balance</div>
+              </div>
+
+              <div style="margin-bottom: 10px" formArrayName="DepositedAccountList" *ngFor="
+                  let item of cashDepositForm.get('DepositedAccountList')[
+                    'controls'
+                  ];
+                  let i = index
+                ">
+                <div class="row" [formGroupName]="i" id="{{ 'myDepositList' + i }}">
+                  <div class="col-md-2">
+                    <input id="{{ 'GLAccNo' + i }}" class="form-control" formControlName="GLAccNo"
+                       (keydown)="onGLAccNoEnterHandler($event,i,item)"
+                       onfocus="this.select()"
+                      onClick="this.setSelectionRange(0, this.value.length)" appOnlyNumber/>
+                  </div>
+                  <div class="col-md-3">
+                    <input class="form-control" readonly formControlName="GLAccDesc" />
+                  </div>
+                  <div class="col-md-2">
+                    <input id="{{ 'TrnAmount' + i }}" class="form-control" type="text" formControlName="TrnAmount"
+                      (change)="onAmountChange(i, item)" (keydown)="onAmountEnterHandler($event,i,item)"
+                      onClick="this.setSelectionRange(0, this.value.length);" onfocus="this.select()" appOnlyNumber/>
+                  </div>
+                  <div class="col-md-1">
+                    <input class="form-control" readonly type="text" formControlName="AccType" />
+                  </div>
+                  <div class="col-md-2">
+                    <input class="form-control" readonly type="text" formControlName="AccNo" />
+                  </div>
+                  <div class="col-md-2">
+                    <input class="form-control" style="width: 80%; float: left" readonly type="text"
+                      formControlName="AccBalance" />
+                    <i class="mdi mdi-delete-alert-outline" style="cursor: pointer" (click)="deleteItem(i, item)"></i>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <table class="table" *ngIf="cashDepositForm.value.GLCodeHelp">
+              <tr style="background-color: YellowGreen">
+                <td>A/c Type</td>
+                <td>A/c Title</td>
+                <td>A/c No.</td>
+                <td>Old A/c</td>
+                <td>Manual A/c</td>
+                <td>GL Code</td>
+                <td></td>
+              </tr>
+              <tr *ngFor="let item of detailsData.AccountGroupList; let i = index">
+                <td>{{ item.AccType }}</td>
+                <td>{{ item.GLAccDesc }}</td>
+                <td>{{ item.AccNo }}</td>
+                <td>{{ item.AccOldNumber }}</td>
+                <td>{{ item.AccPrevNumber }}</td>
+                <td>{{ item.GLAccNo }}</td>
+                <td class="gl-help-list-link" (click)="setFromGlHelp(item)">
+                  Select
+                </td>
+              </tr>
+            </table>
+          </div>
+        </div>
+        <div class="card" style="margin-top: 30px">
+          <div class="card-body">
+            <div class="form-group row">
+              <label class="col-md-3 col-form-label">Special Instruction :</label>
+              <div class="col-md-8">
+                <div class="col-form-label">
+                  <input type="text" class="form-control" formControlName="SpecialInstruction" />
+                </div>
+              </div>
+            </div>
+            <div class="form-group row">
+              <label class="col-md-3 col-form-label">Total Amount :</label>
+              <div class="col-md-2">
+                <div class="col-form-label">
+                  <input type="text" class="form-control" disabled formControlName="TotalAmount" />
+                </div>
+              </div>
+            </div>
+            <div class="form-group row">
+              <label class="col-md-3 col-form-label">Amount Received :</label>
+              <div class="col-md-2">
+                <div class="col-form-label">
+                  <input type="text" class="form-control" formControlName="AmountReceived"
+                    (change)="onAmountReceived()" (keydown)="onAmountReceivedEnterHandler($event)" onfocus="this.select()" id="amount_received" appOnlyNumber/>
+                </div>
+              </div>
+              <label class="col-md-2 col-form-label">Refund :</label>
+              <div class="col-md-2">
+                <div class="col-form-label">
+                  <input type="text" class="form-control" disabled formControlName="RefundAmount" />
+                </div>
+              </div>
+
+            </div>
+            <div class="col-md-6 mx-auto mb-2">
+              <button id ="update" type="button" class="btn btn-success btn_1" (click)="onCreate()">
+                Update
+              </button>
+              <button
+              type="button"
+              class="btn btn-info ml-2"
+              (click)="refresh()"
+            >
+              Refresh
+            </button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-xl-4 col-md-4">
+        <p class="bg-primary text-center text-light bg-secondary title">
+          A/C Information
+        </p>
+        <div class="card">
+          <!-- <div class="card-header bg-primary">
+            <h4 class="card-title text-white mb-0">A/C Information</h4>
+          </div> -->
+          <div class="card-body">
+            <div class="form-group row">
+              <label class="col-md-6 col-form-label">Account No. :</label>
+              <div class="col-md-6">
+                <div class="col-form-label">
+                  {{ accountDetailsData.AccountNo }}
+                </div>
+              </div>
+            </div>
+            <div class="form-group row" *ngIf="atyclass1">
+              <label class="col-md-6 col-form-label">Ledger Balance :</label>
+              <div class="col-md-6">
+                <div class="col-form-label">
+                  {{ accountDetailsData.LadgerBalance.toLocaleString('en-US', { minimumFractionDigits: 2 }) }}
+                </div>
+              </div>
+            </div>
+            <div class="form-group row">
+              <label class="col-md-6 col-form-label" *ngIf="atyclass1">Hold Balance Dr. :</label>
+              <div class="col-md-6">
+                <div class="col-form-label">
+                  {{ accountDetailsData.HoldBalanceDr }}
+                </div>
+              </div>
+            </div>
+            <div class="form-group row">
+              <label class="col-md-6 col-form-label" *ngIf="atyclass1">Hold Balance Cr. :</label>
+              <div class="col-md-6">
+                <div class="col-form-label">
+                  {{ accountDetailsData.HoldBalanceCr }}
+                </div>
+              </div>
+            </div>
+            <div class="form-group row">
+              <label class="col-md-6 col-form-label" *ngIf="atyclass1">Open Date :</label>
+              <div class="col-md-6">
+                <div class="col-form-label">
+                  {{ accountDetailsData.OpenDate }}
+                </div>
+              </div>
+            </div>
+            <div class="form-group row" *ngIf="atyclass3 || atyclass4">
+              <label class="col-md-6 col-form-label">Loan Expiry Date : </label>
+              <div class="col-md-6">
+                <div class="col-form-label">
+                  {{ accountDetailsData.AccLoanExpiryDate }}
+                </div>
+              </div>
+            </div>
+            <div class="form-group row" *ngIf="atyclass1">
+              <label class="col-md-6 col-form-label">Last Transaction Date :</label>
+              <div class="col-md-6">
+                <div class="col-form-label">
+                  {{ accountDetailsData.LastTrnDate }}
+                </div>
+              </div>
+            </div>
+            <!-- <div class="form-group row" >
+              <label class="col-md-6 col-form-label">Lien Amount :</label>
+              <div class="col-md-6">
+                <div class="col-form-label">
+                  {{ accountDetailsData.LienAmt }}
+                </div>
+              </div>
+            </div> -->
+            <div class="form-group row" *ngIf="atyclass2">
+              <label class="col-md-6 col-form-label">Maturity Date :</label>
+              <div class="col-md-6">
+                <div class="col-form-label">
+                  {{ accountDetailsData.MatruityDate }}
+                </div>
+              </div>
+            </div>
+            <div class="form-group row" *ngIf="atyclass2">
+              <label class="col-md-6 col-form-label">Period(Month) :</label>
+              <div class="col-md-6">
+                <div class="col-form-label">
+                  {{ accountDetailsData.Period }}
+                </div>
+              </div>
+            </div>
+            <div class="form-group row" *ngIf="atyclass2">
+              <label class="col-md-6 col-form-label">Deposit Amt. :</label>
+              <div class="col-md-6">
+                <div class="col-form-label">
+                  {{ accountDetailsData.DepositAmount.toLocaleString('en-US', { minimumFractionDigits: 2 }) }}
+                </div>
+              </div>
+            </div>
+            <div class="form-group row" *ngIf="atyclass2">
+              <label class="col-md-6 col-form-label">Total Deposit Amt. :</label>
+              <div class="col-md-6">
+                <div class="col-form-label">
+                  {{ accountDetailsData.TotalDeposit.toLocaleString('en-US', { minimumFractionDigits: 2 }) }}
+                </div>
+              </div>
+            </div>
+            <div class="form-group row" *ngIf="atyclass2">
+              <label class="col-md-6 col-form-label">Upto Deposit Date :</label>
+              <div class="col-md-6">
+                <div class="col-form-label">
+                  {{ accountDetailsData.UptoDepositDate }}
+                </div>
+              </div>
+            </div>
+            <div class="form-group row" *ngIf="atyclass2">
+              <label class="col-md-6 col-form-label">Upto Deposit Period :</label>
+              <div class="col-md-6">
+                <div class="col-form-label">
+                  {{ accountDetailsData.UptoDepositPeriod }}
+                </div>
+              </div>
+            </div>
+            <div class="form-group row" *ngIf="atyclass2 && accountDetailsData.DueDepositAmt != '00.00' && accountDetailsData.DueDepositAmt">
+              <label class="col-md-6 col-form-label">Due Deposit Amt. :</label>
+              <div class="col-md-6">
+                <div class="col-form-label">
+                  {{ accountDetailsData.DueDepositAmt.toLocaleString('en-US', { minimumFractionDigits: 2 }) }}
+                </div>
+              </div>
+            </div>
+            <div class="form-group row" *ngIf="atyclass2 && accountDetailsData.DueDepositAmt != '00.00' && accountDetailsData.DueDepositAmt">
+              <label class="col-md-6 col-form-label">No. of Due Period :</label>
+              <div class="col-md-6">
+                <div class="col-form-label">
+                  {{ accountDetailsData.DuePeriod }}
+                </div>
+              </div>
+            </div>
+            <div class="form-group row" *ngIf="atyclass3 || atyclass4">
+              <label class="col-md-6 col-form-label">Sanction Amount :</label>
+              <div class="col-md-6">
+                <div class="col-form-label">
+                  {{ accountDetailsData.SancAmount.toLocaleString('en-US', { minimumFractionDigits: 2 }) }}
+                </div>
+              </div>
+            </div>
+            <div class="form-group row" *ngIf="atyclass4">
+              <label class="col-md-6 col-form-label">Disbursement Amount :</label>
+              <div class="col-md-6">
+                <div class="col-form-label">
+                  {{ accountDetailsData.DisbAmt.toLocaleString('en-US', { minimumFractionDigits: 2 }) }}
+                </div>
+              </div>
+            </div>
+            <div class="form-group row" *ngIf="atyclass3 || atyclass4">
+              <label class="col-md-6 col-form-label">Interest Rate :</label>
+              <div class="col-md-6">
+                <div class="col-form-label">
+                  {{ accountDetailsData.IntRate }}
+                </div>
+              </div>
+            </div>
+            <div class="form-group row" *ngIf="atyclass3">
+              <label class="col-md-6 col-form-label">Last Int. Post Date :</label>
+              <div class="col-md-6">
+                <div class="col-form-label">
+                  {{accountDetailsData.LastIntDate}}
+                </div>
+              </div>
+            </div>
+            <div class="form-group row" *ngIf="atyclass4">
+              <label class="col-md-6 col-form-label">Installment Amt. :</label>
+              <div class="col-md-6">
+                <div class="col-form-label">
+                  {{ accountDetailsData.InstlAmt.toLocaleString('en-US', { minimumFractionDigits: 2 }) }}
+                </div>
+              </div>
+            </div>
+            <div class="form-group row" *ngIf="atyclass4">
+              <label class="col-md-6 col-form-label">No. of Installment :</label>
+              <div class="col-md-6">
+                <div class="col-form-label">
+                  {{ accountDetailsData.NoInstl }}
+                </div>
+              </div>
+            </div>
+            <div class="form-group row" *ngIf="atyclass4">
+              <label class="col-md-6 col-form-label">Due Principal Amt. :</label>
+              <div class="col-md-6">
+                <div class="col-form-label">
+                  {{ accountDetailsData.DuePrincAmt.toLocaleString('en-US', { minimumFractionDigits: 2 }) }}
+                </div>
+              </div>
+            </div>
+            <div class="form-group row" *ngIf="atyclass3">
+              <label class="col-md-6 col-form-label">Curr.Interest Amt. :</label>
+              <div class="col-md-6">
+                <div class="col-form-label">
+                  {{ accountDetailsData.DueIntAmt.toLocaleString('en-US', { minimumFractionDigits: 2 }) }}
+                </div>
+              </div>
+            </div>
+            <div class="form-group row" *ngIf="atyclass3 || atyclass4">
+              <label class="col-md-6 col-form-label">Due Interest Amt. :</label>
+              <div class="col-md-6">
+                <div class="col-form-label">
+                  {{ accountDetailsData.DueIntAmt.toLocaleString('en-US', { minimumFractionDigits: 2 }) }}
+                </div>
+              </div>
+            </div>
+            <div class="form-group row" *ngIf="atyclass4">
+              <label class="col-md-6 col-form-label">No. of Defaulter Period :</label>
+              <div class="col-md-6">
+                <div class="col-form-label">
+                  {{ accountDetailsData.CtrlDuePeriod }}
+                </div>
+              </div>
+            </div>
+
+
+            <div class="form-group row">
+              <label class="col-md-6 col-form-label">&nbsp;</label>
+              <div class="col-md-6">
+                <div class="col-form-label"></div>
+              </div>
+            </div>
+            <div class="form-group row">
+              <label class="col-md-6 col-form-label">&nbsp;</label>
+              <div class="col-md-6">
+                <div class="col-form-label"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div *ngIf="showModal" class="modal_alert py-5">
+      <p class="text-center">Voucher Already Exist</p>
+      <p class="text-center">Wish to Edit Voucher Information ?</p>
+      <div class="col-md-6 mx-auto d-flex justify-content-between buttons">
+        <button class="btn btn-primary" (click)="modalYes()">Yes</button>
+        <button class="btn btn-danger" (click)="modalNo()">No</button>
+      </div>
+    </div>
+    <div *ngIf="showPensionMessage" class="modal_alert py-5">
+      <p class="text-center">Current Month Deposit Posted</p>
+      <p class="text-center">Wish to Advance Deposit ?</p>
+      <div class="col-md-6 mx-auto d-flex justify-content-between buttons">
+        <button class="btn btn-primary" (click)="PensionModalYes()">Yes</button>
+        <button class="btn btn-danger" (click)="PensionModalNo()">No</button>
+      </div>
+    </div>
+    <div *ngIf="showUpdateModal" class="modal_alert py-5">
+      <p class="text-center">Due Interest Remaining</p>
+      <p class="text-center">Wish to Close the Account ?</p>
+      <div class="col-md-6 mx-auto d-flex justify-content-between buttons">
+        <button class="btn btn-primary" (click)="modalUpdateYes()">Yes</button>
+        <button class="btn btn-danger" (click)="modalUpdateNo()">No</button>
+      </div>
+    </div>
+
+
+  </form>
+</app-main-wrapper>

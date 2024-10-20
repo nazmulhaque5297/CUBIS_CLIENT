@@ -1,0 +1,99 @@
+<app-house-keeping-wrapper>
+  <form
+    [formGroup]="FieldsSetupMaintenanceForm"
+    class="mx-auto border col-md-6 main-container pb-3"
+  >
+    <p class="bg-dark title">Fields Setup Maintenance</p>
+
+    <div class="form-group row">
+      <label class="col-md-3 col-form-label"
+        >Fields Flag<span class="text-danger">*</span>:</label
+      >
+      <div class="col-md-9">
+        <select
+          class="form-control pt-0"
+          formControlName="Flag"
+          (change)="onChangeFlag($event.target.value)"
+        >
+          <option value="0">-Select-</option>
+          <option
+            *ngFor="let item of inputHelpData.FieldsFlagList"
+            [value]="item.Id"
+          >
+            {{ item.Description }}
+          </option>
+        </select>
+      </div>
+    </div>
+
+    <div class="form-group row">
+      <label class="col-md-3 col-form-label">Code:</label>
+      <div class="col-md-4">
+        <input
+          type="text"
+          class="form-control"
+          id="Code"
+          formControlName="Code"
+          name="CodeNumber"
+          (change)="onChangeCode($event)"
+        />
+      </div>
+      <div class="col-md-5">
+        <select
+          class="form-control pt-0"
+          formControlName="selectedOptionCode"
+          (change)="onChangeselectedOptionCode($event)"
+        >
+          <option value="0">-Select-</option>
+          <option *ngFor="let item of CodeList" [value]="item.Id">
+            {{ item.Description }}
+          </option>
+        </select>
+      </div>
+    </div>
+    <div class="form-group row">
+      <label class="col-md-3 col-form-label"
+        >Description<span class="text-danger">*</span>:</label
+      >
+      <div class="col-md-9">
+        <input
+          type="text"
+          id="Description"
+          formControlName="Description"
+          class="form-control"
+        />
+      </div>
+    </div>
+
+    <div class="buttons">
+      <button type="button" (click)="saveOrUpdate()" class="btn btn-success">
+        {{ submitButtonText }}
+      </button>
+      <button
+        type="button"
+        (click)="getTableReportData()"
+        class="ml-5 btn btn_1"
+      >
+        View
+      </button>
+    </div>
+  </form>
+
+  <div
+    *ngIf="dataList.length != 0 && displayTabularData"
+    class="mx-auto col-md-6 set-height"
+  >
+    <table id="Data">
+      <tr>
+        <th>Flag</th>
+        <th>Code</th>
+        <th>Description</th>
+      </tr>
+      <tr *ngFor="let item of dataList">
+        <td class="text-center">{{ item.Flag }}</td>
+        <td class="text-center">{{ item.Code }}</td>
+        <td>{{ item.Description }}</td>
+      </tr>
+    </table>
+  </div>
+</app-house-keeping-wrapper>

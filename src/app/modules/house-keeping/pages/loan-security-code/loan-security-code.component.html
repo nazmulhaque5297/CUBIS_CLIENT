@@ -1,0 +1,85 @@
+<app-house-keeping-wrapper>
+  <form
+    [formGroup]="LoanSecurityCodeForm"
+    novalidate
+    class="mx-auto border col-md-6 main-container pb-3"
+  >
+    <p class="bg-dark title">Loan Security Code Maintenance</p>
+    <div class="form-row">
+      <label>Loan Security Code:</label>
+      <div class="form-group col-md-3">
+        <input
+          type="text"
+          (change)="changeSelectValue($event)"
+          class="form-control"
+          id="LSecurityCode"
+          formControlName="LSecurityCode"
+          name="LSecurityCode"
+        />
+      </div>
+      <div class="form-group col-md-5">
+        <select
+          formControlName="selectedOptionCode"
+          (change)="selectChangeHandler($event)"
+          class="form-control pt-0"
+        >
+          <option *ngFor="let item of dataList" [value]="item.LSecurityCode">
+            {{ item.LSecurityDescription }}
+          </option>
+        </select>
+      </div>
+    </div>
+    <div class="form-row">
+      <label for="inputDesc">Description:</label>
+      <div class="form-group col-md-8">
+        <input
+          type="text"
+          formControlName="LSecurityDescription"
+          class="form-control desc-input"
+          id="LSecurityDescription"
+        />
+      </div>
+    </div>
+    <div class="buttons">
+      <button
+        *ngIf="submitButtonTextSubmit"
+        type="button"
+        (click)="save()"
+        class="btn btn-success"
+      >
+        Submit
+      </button>
+      <button
+        *ngIf="submitButtonTextUpdate"
+        type="button"
+        (click)="update()"
+        class="btn btn-success"
+      >
+        Update
+      </button>
+      <button
+        type="button"
+        (click)="getTableReportData()"
+        class="ml-5 btn btn_1"
+      >
+        View
+      </button>
+    </div>
+  </form>
+
+  <div
+    *ngIf="dataList.length != 0 && displayTabularData"
+    class="mx-auto set-height col-md-6"
+  >
+    <table id="Data">
+      <tr>
+        <th>Code</th>
+        <th>Description</th>
+      </tr>
+      <tr *ngFor="let item of dataList">
+        <td class="text-center">{{ item.LSecurityCode }}</td>
+        <td>{{ item.LSecurityDescription }}</td>
+      </tr>
+    </table>
+  </div>
+</app-house-keeping-wrapper>

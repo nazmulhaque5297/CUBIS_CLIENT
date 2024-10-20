@@ -1,0 +1,79 @@
+<app-main-wrapper [module]="module">
+  <ng-container [formGroup]="loanApplicationForm">
+    <p class="bg-primary text-center text-light bg-secondary title">New Loan Application</p>
+      <div class="card">
+        <div class="row card-body">
+          <div class="col-md-12 col-xl-12">
+
+            <ul class="nav nav-pills navtab-bg nav-justified col-md-8">
+              <li class="nav-item">
+                  <a href="#loan-application-b1" data-toggle="tab" aria-expanded="false" class="nav-link active">
+                      <span class="d-block d-sm-none"><i class="mdi mdi-home-variant-outline font-18"></i></span>
+                      <span class="d-none d-sm-block">Loan Application</span>
+                  </a>
+              </li>
+              <li class="nav-item">
+                  <a href="#share-guarantor-b1" data-toggle="tab" aria-expanded="true" class="nav-link">
+                      <span class="d-block d-sm-none"><i class="mdi mdi-account-outline font-18"></i></span>
+                      <span class="d-none d-sm-block">Share Guarantor</span>
+                  </a>
+              </li>
+              <li class="nav-item">
+                  <a href="#deposit-guarantor-b1" data-toggle="tab" aria-expanded="false" class="nav-link">
+                      <span class="d-block d-sm-none"><i class="mdi mdi-email-outline font-18"></i></span>
+                      <span class="d-none d-sm-block">Deposit Guarantor</span>
+                  </a>
+              </li>
+              <li class="nav-item">
+                <a href="#property-guarantor-b1" data-toggle="tab" aria-expanded="false" class="nav-link">
+                    <span class="d-block d-sm-none"><i class="mdi mdi-email-outline font-18"></i></span>
+                    <span class="d-none d-sm-block">Property Guarantor</span>
+                </a>
+            </li>
+            </ul>
+
+          <div class="tab-content" style="margin-top: 20px;">
+            <div class="tab-pane active col-md-8" id="loan-application-b1">
+              <app-loan-application-info  formGroupName="loanInfo" (callParentFunction)="parentFunction($event)"></app-loan-application-info>
+            </div>
+            <div class="tab-pane" id="share-guarantor-b1">
+              <app-loan-share-guarantor formGroupName="shareGuarantorInfo" (callParentFunction)="parentFunction($event)"></app-loan-share-guarantor>
+            </div>
+            <div class="tab-pane" id="deposit-guarantor-b1">
+              <app-loan-deposit-guarantor formGroupName = "depositGuarantorInfo" (callParentFunction)="parentFunction($event)"></app-loan-deposit-guarantor>
+            </div>
+            <div class="tab-pane" id="property-guarantor-b1">
+              <app-loan-property-guarantor formGroupName = "propertyGuarantorInfo"  (callParentFunction)="parentFunction($event)"></app-loan-property-guarantor>
+            </div>
+          </div>
+          <div class="row">
+            <div *ngIf= "showModal" class="modal_alert py-5">
+              <p *ngIf="module!='3'" class="text-center">Guaranty Amount Should Be {{totalNeed}} Amount</p>
+              <p *ngIf="module=='3'" class="text-center">Guaranty Amount Should Be {{totalNeed}}% More Than Loan Amount</p>
+              <div class="col-md-6 mx-auto d-flex justify-content-between buttons">
+                <button class="btn btn-primary" (click)="modalYes()">Yes</button>
+                <button class="btn btn-danger" (click)="modalNo()">No</button>
+              </div>
+            </div>
+          <div class="col-md-8 mx-auto pt-2">
+            <button id="Submit" type="button" class="btn btn_s ml-2" (click)="checkEverything()">Submit</button>
+            <button type="button" class="btn btn_v ml-2" (click)="ViewImage()">View Image</button>
+            <button type="button" class="btn btn_s ml-2" (click)="onReturnSchedule()">Return Schedule</button>
+          </div>
+          </div>
+          <div class="row m-3">
+            <div class="h3 mx-auto">
+              Total Gauranty: {{totalGuaranty}}
+            </div>
+          </div>
+        </div>
+        </div>
+      </div>
+      <div class="image-popup text-center col-md-3" *ngIf="imageUrl != ''">
+        <span class="popup-cross" (click)="hideImageModal()">X</span>
+        <img height="216" width="250" src="{{ imageUrl }}" />
+      </div>
+
+
+  </ng-container>
+</app-main-wrapper>

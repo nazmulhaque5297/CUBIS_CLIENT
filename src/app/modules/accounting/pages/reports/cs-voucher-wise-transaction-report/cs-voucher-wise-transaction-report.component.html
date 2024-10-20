@@ -1,0 +1,288 @@
+<app-accounting-wrapper>
+  <form
+    [formGroup]="CsVchWiseTransactionReportForm"
+    class="mx-auto border col-md-7 pb-2"
+  >
+    <p class="bg-dark title">Voucher Wise Transaction List</p>
+
+    <div class="form-group row">
+      <label class="col-md-4 col-form-label"
+        >Transaction Mode ...........</label
+      >
+    </div>
+    <div class="form-group row">
+      <div class="col-md-1">
+        <input
+          type="radio"
+          value="2"
+          name="rbTrnMode"
+          id="rbTrnMode2_tm"
+          formControlName="rbTrnMode"
+        />
+      </div>
+
+      <label class="col-md-3 col-form-label" for="rbTrnMode2_tm">Credit</label>
+
+      <div class="col-md-1">
+        <input
+          type="radio"
+          value="1"
+          name="rbTrnMode"
+          id="rbTrnMode1_tm"
+          formControlName="rbTrnMode"
+        />
+      </div>
+
+      <label class="col-md-3 col-form-label" for="rbTrnMode1_tm">Debit</label>
+
+      <div class="col-md-1">
+        <input
+          type="radio"
+          value="0"
+          name="rbTrnMode"
+          id="rbTrnMode0_tm"
+          formControlName="rbTrnMode"
+        />
+      </div>
+
+      <label class="col-md-3 col-form-label" for="rbTrnMode0_tm">All</label>
+    </div>
+
+    <div class="form-group row">
+      <label class="col-md-4 col-form-label">Report Mode ...........</label>
+    </div>
+    <div class="form-group row">
+      <div class="col-md-1">
+        <input
+          type="radio"
+          value="1"
+          name="rbReportMode"
+          id="rbReportMode1_rm"
+          formControlName="rbReportMode"
+        />
+      </div>
+
+      <label class="col-md-3 col-form-label" for="rbReportMode1_rm">Cash</label>
+
+      <div class="col-md-1">
+        <input
+          type="radio"
+          value="3"
+          name="rbReportMode"
+          id="rbReportMode3_rm"
+          formControlName="rbReportMode"
+        />
+      </div>
+
+      <label class="col-md-3 col-form-label" for="rbReportMode3_rm"
+        >Transfer</label
+      >
+
+      <div class="col-md-1">
+        <input
+          type="radio"
+          value="0"
+          name="rbReportMode"
+          id="rbReportMode0_rm"
+          formControlName="rbReportMode"
+        />
+      </div>
+
+      <label class="col-md-3 col-form-label" for="rbReportMode0_rm">Both</label>
+    </div>
+
+    <div class="form-group row">
+      <label class="col-md-4 col-form-label">Teller Mode ...........</label>
+    </div>
+    <div class="form-group row">
+      <div class="col-md-1">
+        <input
+          [(ngModel)]="chbIsAllTellerStatus"
+          (ngModelChange)="checkIsAllTellerValue($event)"
+          class="form-check-input ml-1 checkbox"
+          style="margin: 0.8rem"
+          type="checkbox"
+          id="IsAllTeller"
+          formControlName="IsAllTeller"
+        />
+      </div>
+      <!-- style="margin-left: 0.6rem" -->
+      <label class="col-md-3 col-form-label" for="IsAllTeller">All</label>
+      <div class="col-md-3">
+        <input
+          appOnlyNumber
+          (focusout)="onChangeTellerCode($event)"
+          type="text"
+          class="form-control"
+          id="TellerCode"
+          formControlName="TellerCode"
+          name="TellerCode"
+          [attr.disabled]="
+            CsVchWiseTransactionReportForm.value.IsAllTeller ? '' : null
+          "
+        />
+      </div>
+
+      <div class="col-md-5">
+        <select
+          class="form-control pt-0"
+          formControlName="Teller"
+          [attr.disabled]="
+            CsVchWiseTransactionReportForm.value.IsAllTeller ? '' : null
+          "
+          (change)="onChangeTeller($event)"
+        >
+          <option value="0">-Select-</option>
+          <option
+            *ngFor="let item of inputHelpData.cashDisbTellerList"
+            [value]="item.Id"
+          >
+            {{ item.Description }}
+          </option>
+        </select>
+      </div>
+    </div>
+
+    <div class="form-group row">
+      <label class="col-md-4 col-form-label">Collector Mode ...........</label>
+    </div>
+    <div class="form-group row">
+      <div class="col-md-1">
+        <input
+          [(ngModel)]="chbIsAllCollectorStatus"
+          (ngModelChange)="checkIsAllCollectorValue($event)"
+          class="form-check-input ml-1 checkbox"
+          style="margin: 0.8rem"
+          type="checkbox"
+          id="IsAllCollector"
+          formControlName="IsAllCollector"
+        />
+      </div>
+      <!-- style="margin-left: 0.6rem" -->
+      <label class="col-md-3 col-form-label" for="IsAllCollector">All</label>
+      <div class="col-md-3">
+        <input
+          appOnlyNumber
+          (focusout)="onChangeCollectorCode($event)"
+          type="text"
+          class="form-control"
+          id="CollectorCode"
+          formControlName="CollectorCode"
+          name="CollectorCode"
+          [attr.disabled]="
+            CsVchWiseTransactionReportForm.value.IsAllCollector ? '' : null
+          "
+        />
+      </div>
+
+      <div class="col-md-5">
+        <select
+          [attr.disabled]="
+            CsVchWiseTransactionReportForm.value.IsAllCollector ? '' : null
+          "
+          class="form-control pt-0"
+          formControlName="Collector"
+          (change)="onChangeCollector($event)"
+        >
+          <option value="0">-Select-</option>
+          <option
+            *ngFor="let item of inputHelpData.CollectorList"
+            [value]="item.Id"
+          >
+            {{ item.Description }}
+          </option>
+        </select>
+      </div>
+    </div>
+
+    <div class="form-group row">
+      <div class="col-md-1">
+        <input
+          type="radio"
+          value="0"
+          name="rbCollection"
+          id="allcollection"
+          formControlName="rbCollection"
+        />
+      </div>
+
+      <label class="col-md-3 col-form-label" for="allcollection"
+        >All - Collection</label
+      >
+
+      <div class="col-md-1">
+        <input
+          type="radio"
+          value="1"
+          name="rbCollection"
+          id="withoutboothcollection"
+          formControlName="rbCollection"
+        />
+      </div>
+
+      <label class="col-md-3 col-form-label" for="withoutboothcollection"
+        >WithOut Booth Collection</label
+      >
+
+      <div class="col-md-1">
+        <input
+          type="radio"
+          value="3"
+          name="rbCollection"
+          formControlName="rbCollection"
+          id="onlyboothcollection"
+        />
+      </div>
+
+      <label class="col-md-3 col-form-label" for="onlyboothcollection"
+        >Only Booth Collection</label
+      >
+    </div>
+
+    <div class="form-group row">
+      <label class="col-md-4 col-form-label">From date:</label>
+      <div class="col-md-3">
+        <input
+          id="dateFormat"
+          type="text"
+          class="form-control"
+          bsDatepicker
+          formControlName="IssueFromDate"
+          [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY' }"
+          autocomplete="off"
+          (ngModelChange)="applicationDateChange()"
+        />
+      </div>
+      <label class="col-md-2 col-form-label">To date:</label>
+      <div class="col-md-3">
+        <input
+          id="dateFormat"
+          type="text"
+          class="form-control"
+          bsDatepicker
+          formControlName="IssueToDate"
+          [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY' }"
+          autocomplete="off"
+          (ngModelChange)="applicationDateChange2()"
+        />
+      </div>
+    </div>
+
+    <div class="buttons">
+      <button
+        type="button"
+        class="btn btn-info ml-2"
+        (click)="getReportToken('CRV')"
+      >
+        Preview
+      </button>
+      <button
+        type="button"
+        class="btn btn-success ml-2"
+        (click)="getReportToken('PDF')"
+      >
+        Print
+      </button>
+    </div>
+  </form>
+</app-accounting-wrapper>

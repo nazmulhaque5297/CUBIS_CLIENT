@@ -1,0 +1,148 @@
+<app-accounting-wrapper>
+  <form [formGroup]="AutoProvisionProcessForm">
+    <div class="mx-auto border col-md-7">
+      <p class="bg-dark title">Auto Provision Processing</p>
+      <div class="form-row">
+        <label class="col-md-2 col-form-label"
+          >Account Type:<span class="text-danger">*</span></label
+        >
+        <div class="form-group col-md-4">
+          <input
+            (change)="selectAccountTypeChangeHandler($event)"
+            type="text"
+            class="form-control"
+            id="AccountType"
+            formControlName="AccountType"
+            name="AccountType"
+          />
+        </div>
+        <div class="form-group col-md-6">
+          <select
+            formControlName="SelectedAccountType"
+            (change)="selectAccountTypeChangeHandler($event)"
+            class="form-control pt-0"
+          >
+            <option value="0">-Select-</option>
+            <option *ngFor="let item of accTypeList" [value]="item.Id">
+              {{ item.Description }}
+            </option>
+          </select>
+        </div>
+      </div>
+
+      <div class="form-row">
+        <label class="col-md-2 col-form-label">Voucher No:</label>
+        <div class="form-group col-md-4">
+          <input
+            type="text"
+            class="form-control"
+            id="VoucherNo"
+            formControlName="VoucherNo"
+            name="VoucherNo"
+          />
+        </div>
+      </div>
+
+      <div class="buttons col-md-11">
+        <button
+          *ngIf="accInfoList.ShowCalculateButton"
+          type="button"
+          class="btn btn-success ml-3"
+          (click)="CalculateAndProvisionListHandler()"
+        >
+          Calculate
+        </button>
+        <button
+          *ngIf="ProvisionList.length != 0"
+          type="button"
+          class="btn ml-2 btn-info"
+          (click)="PostProvision()"
+        >
+          Post
+        </button>
+        <button
+          *ngIf="accInfoList.ShowReverseButton"
+          type="button"
+          class="btn ml-3 btn-danger"
+          (click)="ReverseProvision()"
+        >
+          Reverse
+        </button>
+        <button
+          type="button"
+          class="btn ml-3 btn-primary"
+          (click)="getReportToken()"
+        >
+          Print
+        </button>
+      </div>
+    </div>
+
+    <div class="mx-auto mt-1 col-md-7">
+      <div class="form-row">
+        <label class="col-md-3 col-form-label">Provision Debit Code:</label>
+        <div class="form-group col-md-4">
+          <input
+            type="text"
+            class="form-control"
+            id="AccountType"
+            formControlName="DebitCode"
+            name="AccountType"
+          />
+        </div>
+        <div *ngIf="accInfoList.length != 0" class="form-group col-md-5">
+          <p>Int.Paid On {{ accInfoList.AccTypeDescription }}</p>
+        </div>
+      </div>
+      <div class="form-row">
+        <label class="col-md-3 col-form-label">Provision Credit Code:</label>
+        <div class="form-group col-md-4">
+          <input
+            type="text"
+            class="form-control"
+            id="AccountType"
+            formControlName="ProvisionCode"
+            name=" "
+          />
+        </div>
+        <div *ngIf="accInfoList.length != 0" class="form-group col-md-5">
+          <p>Int.Payable On {{ accInfoList.AccTypeDescription }}</p>
+        </div>
+      </div>
+    </div>
+  </form>
+  <div
+    *ngIf="ProvisionList.length != 0"
+    class="mx-auto mt-2 col-md-7 set-height"
+  >
+    <!-- <p class="mt-1 bg-dark title">Verify - Auto Instruction Claculation Sheet</p> -->
+    <table id="Data">
+      <tr>
+        <th>Member</th>
+        <th>Name</th>
+        <th>Account No.</th>
+        <th>Balance</th>
+        <th>Cal.Date</th>
+        <th>Days</th>
+        <th>Rate</th>
+        <th>UPTO Last Month</th>
+        <th>Current Month</th>
+        <th>During the Year</th>
+        <th>UPTO Date</th>
+      </tr>
+      <tr *ngFor="let item of ProvisionList">
+        <td>{{ item.MemNumber }}</td>
+        <td>{{ item.MemName }}</td>
+        <td>{{ item.AccNo }}</td>
+        <td>{{ item.AccBalance }}</td>
+        <td>{{ item.CalFromDate }}</td>
+        <td>{{ item.NoDays }}</td>
+        <td>{{ item.AccIntRate }}</td>
+        <td>{{ item.UptoLastMthProvision }}</td>
+        <td>{{ item.CurrMthProvision }}</td>
+        <td>{{ item.CalFYProvision }}</td>
+        <td>{{ item.UptoMthProvision }}</td>
+      </tr>
+    </table>
+  </div>
+</app-accounting-wrapper>

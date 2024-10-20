@@ -1,0 +1,192 @@
+<app-accounting-wrapper>
+    
+    <form [formGroup]="suretyReleaseForm">
+        <div class="mx-auto border col-md-11">
+            <p class="bg-dark title">
+                Surety Release Transaction</p>
+            <div class="form-row ml-0 mt-2 mx-auto">
+                <span class="col-md-2"></span>
+                <label class="col-md-2 ml-3 pl-5 pr-0">Surety Member:<span class="text-danger">*</span></label>
+                <div class="form-group ml-3 pl-3 col-md-3 mt-0 pt-0">
+                    <input type="text" formControlName="SuretyMemberNo" (change)="suretyMemberNoChange()"  class="form-control mt-0 pt-0">
+                </div>
+                <div class="form-group col-md-4">
+                    <label > {{suretyMemberName}} </label>
+                </div>
+            </div>
+            <div class="form-row ml-0 mt-2 mx-auto">
+                <span class="col-md-2"></span>
+                <label class="col-md-2 ml-3 pl-5 pr-0">Loan Member:<span class="text-danger">*</span></label>
+                <div class="form-group ml-3 pl-3 col-md-3 mt-0 pt-0">
+                    <input type="text" id="LoanMemberNo" formControlName="LoanMemberNo" (change)="loanMemberNoChange()"   class="form-control mt-0 pt-0">
+                </div>
+                <div class="form-group col-md-4">
+                    <label > {{loanMemberName}} </label>
+                </div>
+            </div>
+            <div class="buttons mt-3 mb-2">
+                <button type="button" class="btn" (click)="submitBtnClick()" [disabled]="GuaranteeAccountInfo.length>0">Submit</button>
+                <!-- <button type="button"  class="btn ml-5">Exit</button> -->
+            </div>
+        </div>
+        <div class="mx-auto mt-2 border col-md-11 main-container">
+            <p class="mt-1 bg-dark title">
+                Loan Member Information</p>
+            <table id="Data" class="mt-2">
+                <tr>
+                    <td>Loan Application No:</td>
+                    <td>
+                        <input type="text" formControlName="LoanApplicationNo" readonly class="form-control mt-0 pt-0">
+                    </td>
+                    <td>Account No:</td>
+                    <td>
+                        <input type="text" formControlName="AccountNo" readonly class="form-control mt-0 pt-0">
+                    </td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>Outstanding Balance:</td>
+                    <td>
+                        <input type="text" formControlName="OutstadingBalance" readonly class="form-control mt-0 pt-0">
+                    </td>
+                    <td>Sanction Amount:</td>
+                    <td>
+                        <input type="text" formControlName="SanctionAmount" readonly class="form-control mt-0 pt-0">
+                    </td>
+                    <td>No. of Defaulter:</td>
+                    <td>
+                        <input type="text" formControlName="NoOfDefaulter" readonly class="form-control mt-0 pt-0">
+                    </td>
+                </tr>
+                <tr>
+                    <td>Interest Amount:</td>
+                    <td>
+                        <input type="text" formControlName="InterestAmount" readonly class="form-control mt-0 pt-0">
+                    </td>
+                    <td>Last Payment Date:</td>
+                    <td>
+                        <input type="text" formControlName="LastPaymentDate" readonly  class="form-control mt-0 pt-0">
+                    </td>
+                    <td>Interest Rate:</td>
+                    <td>
+                        <input type="text" formControlName="InterestRate"  class="form-control mt-0 pt-0">
+                    </td>
+                </tr>
+                <tr>
+                    <td>Penalty Amount:</td>
+                    <td>
+                        <input type="text" formControlName="PenaltyAmount"  class="form-control mt-0 pt-0">
+                    </td>
+                    <td>Total Guarantee Amount:</td>
+                    <td>
+                        <input type="text" formControlName="TotalGuaranteeAmount" readonly class="form-control mt-0 pt-0">
+                    </td>
+                    <td>Penal Interest Rate:</td>
+                    <td>
+                        <input type="text" formControlName="PenalInterestRate" readonly class="form-control mt-0 pt-0">
+                    </td>
+                </tr>
+                <tr>
+                    <td>Total Outstanding Amount:</td>
+                    <td>
+                        <input type="text" formControlName="TotalOutstandingAmount" readonly class="form-control mt-0 pt-0">
+                    </td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+            </table>
+
+            <div class="mx-auto mt-0 col-md-11 m-0 p-0">
+                <table id="Data" class="col-md-12 mx-auto mt-0">
+                    <tr *ngIf="GuaranteeAccountInfo.length>0">
+                        <th>Select</th>
+                        <th>Account Type</th>
+                        <th>Account No</th>
+                        <th>Guarantee Amount</th>
+                        <th>Mem No</th>
+                        <th>Acc Type</th>
+                        <th>ID</th>
+                    </tr>
+                    <tr *ngFor="let item of GuaranteeAccountInfo">
+                        <td class="text-center">
+                            <button class="btn-verify" (click)="btnSelectClick(item.Id)">Select</button>
+                        </td>
+                        <td class="text-center">{{item.AccTypeDescription}}</td>
+                        <td class="text-center">{{item.AccNo}}</td>
+                        <td class="text-center">{{item.AccAmount}}</td>
+                        <td class="text-center">{{item.MemNo}}</td>
+                        <td class="text-center">{{item.AccType}}</td>
+                        <td class="text-center">{{item.Id}}</td>
+                    </tr>
+                </table>
+                
+            </div>
+
+            <p class="mt-1 bg-dark title">
+                Surety Member Information</p> 
+
+            <table id="Data" class="mt-0">
+                <tr>
+                    <td>Guarantor Amount:</td>
+                    <td>
+                        <input type="text" formControlName="GuarantorAmount" readonly class="form-control mt-0 pt-0">
+                    </td>
+                    <td>Corresponding Account No.:</td>
+                    <td>
+                        <input type="text" formControlName="CorrespondingAccountNo" readonly class="form-control mt-0 pt-0">
+                    </td>
+                    <td>Corresponding Balance</td>
+                    <td>
+                        <input type="text" formControlName="CorrespondingBalance" readonly class="form-control mt-0 pt-0">
+                    </td>
+                </tr>
+                <tr>
+                    <td>Debit Transaction Amount:</td>
+                    <td>
+                        <input type="text" formControlName="DebitTransactionAmount" readonly class="form-control mt-0 pt-0">
+                    </td>
+                    <td>Input Voucher No.:</td>
+                    <td>
+                        <input type="text" formControlName="InputVoucherNo" class="form-control mt-0 pt-0">
+                    </td>
+                    <td>
+                        <button *ngIf="showUpdate" type="button" (click)="btnUpdateClick()" class="btn ml-5" >Update</button>
+                    </td>
+                </tr>
+                
+            </table>
+            <div *ngIf="showMessageBox" class="mx-auto mt-5 col-md-7 m-0 p-0 border">
+                <table id="Data" class="col-md-12 mx-auto mt-0">
+                    <tr>
+                        <td class="text-center">
+                            {{showMessage}}
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <div *ngIf="LoanGuarantorAccountInfo.length>0" class="mx-auto mt-5 col-md-7 m-0 p-0">
+                <table id="Data" class="col-md-12 mx-auto mt-0">
+                    <tr>
+                        <th>Account Type</th>
+                        <th>Account No.</th>
+                        <th>Guarantee Amount</th>
+                        <th>MemNo</th>
+                    </tr>
+                    <tr *ngFor="let item of LoanGuarantorAccountInfo">
+                        <td class="text-center">{{item.AccTypeDescription}}</td>
+                        <td class="text-center">{{item.AccNo}}</td>
+                        <td class="text-center">{{item.AccAmount}}</td>
+                        <td class="text-center">{{item.MemNo}}</td>
+                    </tr>
+                </table>
+                
+            </div>
+        </div>
+
+
+        
+    </form>
+</app-accounting-wrapper>

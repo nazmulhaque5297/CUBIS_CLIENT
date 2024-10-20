@@ -1,0 +1,328 @@
+<app-accounting-wrapper>
+  <form [formGroup]="LoanDefaultForm" class="mx-auto border col-md-9">
+    <p class="bg-dark title">Loan Defaulter Report</p>
+
+    <div class="form-group row">
+      <div class="col-md-1 col-form-label"></div>
+      <label class="col-md-3 col-form-label">Account Type<span class="text-danger"> *</span></label>
+      <div class="col-md-2">
+        <input
+          type="text"
+          class="form-control"
+          id="AccNameInput"
+          formControlName="AccNameInput"
+          name="AccNameInput"
+          (focusout)="AccInput()"
+        />
+      </div>
+      <div class="col-md-4">
+        <select
+          class="form-control pt-0"
+          formControlName="AccountDdl"
+          (change)="AccDDLChange()"
+        >
+          <option value="0">-Select-</option>
+          <option
+            *ngFor="let item of pageLoadModel.AllAccountDropdown"
+            [value]="item.Id"
+          >
+            {{ item.Description }}
+          </option>
+        </select>
+      </div>
+      <label class="col-md-2 col-form-label">{{
+        AccDsc.AccTypeModeDesc
+      }}</label>
+    </div>
+
+    <div class="form-group row">
+      <div class="col-md-1 col-form-label">
+        <input
+          class="form-check-input ml-1 checkbox"
+          style="margin: 0.8rem"
+          type="checkbox"
+          id="CollectorChb"
+          value="0"
+          formControlName="CollectorChb"
+          (change)="CollectorChbChange()"
+          [(ngModel)]="chbIsCollectorTypeStatus"
+        />
+      </div>
+      <label class="col-md-3 col-form-label" for="CollectorChb" >All Collector Code </label>
+      <div class="col-md-2">
+        <input
+          type="text"
+          class="form-control"
+          id="CollectorCodeInput"
+          formControlName="CollectorCodeInput"
+          name="CollectorCodeInput"
+          (focusout)="CollectorCodeChange()"
+          [attr.disabled]="LoanDefaultForm.value.CollectorChb ? '' : null"
+        />
+      </div>
+      <div class="col-md-4">
+        <select
+          class="form-control pt-0"
+          formControlName="CollectorCodeDdl"
+          (change)="CollectorCodeDDLChange()"
+        >
+          <option value="0">-Select-</option>
+          <option
+            *ngFor="let item of pageLoadModel.AllCollectorDropdown"
+            [value]="item.Id"
+          >
+            {{ item.Description }}
+          </option>
+        </select>
+      </div>
+    </div>
+
+    <div class="form-group row">
+      <div class="col-md-1 col-form-label">
+        <input
+          class="form-check-input ml-1 checkbox"
+          style="margin: 0.8rem"
+          type="checkbox"
+          id="GroupChb"
+          value="0"
+          formControlName="GroupChb"
+          (change)="GroupDDlChb()"
+          [(ngModel)]="chbIsGroupTypeStatus"
+        />
+      </div>
+      <label class="col-md-3 col-form-label" for="GroupChb" >All Group No.</label>
+      <div class="col-md-2">
+        <input
+          appOnlyNumber
+          type="text"
+          class="form-control"
+          id="GroupTypeInput"
+          formControlName="GroupNameInput"
+          name="GroupNameInput"
+          (focusout)="GroupInputChange()"
+          [attr.disabled]="LoanDefaultForm.value.GroupChb ? '' : null"
+        />
+      </div>
+      <div class="col-md-4">
+        <select
+          class="form-control pt-0"
+          formControlName="AllGroupDdl"
+          (change)="GroupDDLOptChange()"
+        >
+          <option value="0">-Select-</option>
+          <option
+            *ngFor="let item of pageLoadModel.AllGroupDropdown"
+            [value]="item.Id"
+          >
+            {{ item.Description }}
+          </option>
+        </select>
+      </div>
+    </div>
+
+    <div class="form-group row">
+      <div class="col-md-1 col-form-label">
+        <input
+          class="form-check-input ml-1 checkbox"
+          style="margin: 0.8rem"
+          type="checkbox"
+          id="AllMemberNoChb"
+          value="0"
+          [(ngModel)]="chbIsMemberTypeStatus"
+          formControlName="AllMemberNoChb"
+        />
+      </div>
+      <label class="col-md-3 col-form-label" for="AllMemberNoChb" >All Member No.</label>
+      <div class="col-md-2">
+        <input
+          appOnlyNumber
+          type="text"
+          class="form-control"
+          id="MemberNoInput"
+          formControlName="MemberNoInput"
+          name="MemberNoInput"
+          (focusout)="MemNumberInput()"
+          [attr.disabled]="LoanDefaultForm.value.AllMemberNoChb ? '' : null"
+        />
+      </div>
+      <label class="col-md-3 col-form-label">{{ MemName.MemName }}</label>
+    </div>
+
+    <div class="form-group row">
+      <div class="col-md-1"></div>
+      <label class="col-md-3 col-form-label">Month Of </label>
+
+      <div class="col-md-3">
+        <select class="form-control pt-0" formControlName="AllMonthDdl">
+          <option value="0">-Select-</option>
+          <option
+            *ngFor="let item of pageLoadModel.AllMonthDropdown"
+            [value]="item.Id"
+          >
+            {{ item.Description }}
+          </option>
+        </select>
+      </div>
+
+      <div class="col-md-3">
+        <select class="form-control pt-0" formControlName="AllYearDdl">
+          <option value="0">-Select-</option>
+          <option
+            *ngFor="let item of pageLoadModel.AllYearDropdown"
+            [value]="item.Id"
+          >
+            {{ item.Description }}
+          </option>
+        </select>
+      </div>
+    </div>
+
+    <div class="form-group row">
+      <div class="col-md-1 col-form-label">
+        <input
+          class="form-check-input ml-1 checkbox"
+          style="margin: 0.8rem"
+          type="checkbox"
+          id="SurityMemberChb"
+          value="0"
+          [(ngModel)]="chbIsSurityMemberTypeStatus"
+          formControlName="SurityMemberChb"
+        />
+      </div>
+      <label class="col-md-3 col-form-label" for="SurityMemberChb" >With Surety Member's</label>
+    </div>
+
+    <div class="form-group row">
+      <div class="col-md-1">
+        <input
+          checked
+          type="radio"
+          value="0"
+          name="LoanInfoRb"
+          id="LoanInfoRb0"
+          formControlName="LoanInfoRb"
+          (ngModelChange)="RadioButtonChange($event)"
+          [attr.disabled]="LoanDefaultForm.value.SurityMemberChb ? '' : null"
+        />
+      </div>
+
+      <label class="col-md-3 col-form-label" for="LoanInfoRb0"
+        >Input Defaulter No. of Period
+      </label>
+      <div class="col-md-2" *ngIf="fromFieldHide">
+        <input
+          type="text"
+          class="form-control"
+          id="DefaulterInputFrom"
+          formControlName="DefaulterInputFrom"
+          name="DefaulterInputFrom"
+        />
+      </div>
+      <label class="col-md-2 col-form-label" *ngIf="fromFieldHide">To </label>
+      <div class="col-md-2" *ngIf="fromFieldHide">
+        <input
+          type="text"
+          class="form-control"
+          id="DefaulterInputTo"
+          formControlName="DefaulterInputTo"
+          name="DefaulterInputTo"
+        />
+      </div>
+    </div>
+    <div class="form-group row">
+      <div class="col-md-1">
+        <input
+          checked
+          type="radio"
+          value="1"
+          name="LoanInfoRb"
+          id="LoanInfoRb1"
+          formControlName="LoanInfoRb"
+          (ngModelChange)="RadioButtonChange($event)"
+        />
+      </div>
+
+      <label class="col-md-3 col-form-label" for="LoanInfoRb1" >All Period </label>
+    </div>
+
+    <div class="buttons mb-2">
+      <button type="button" class="btn btn-info ml-2" id="btn4" (click)="GenerateReport()">
+        Generate
+      </button>
+      <button type="button" class="btn btn-primary" id="btn1" (click)="ViewTableData()">
+        View
+      </button>
+      <!-- <button type="button" class="btn btn-success ml-2" id="btn2" (click)="getReportToken()">
+        Print
+      </button> -->
+      <button type="button" class="btn btn-info ml-2" (click)="getReportToken('CRV')">
+        Preview
+      </button>
+      <button type="button" class="btn btn-success ml-2" (click)="getReportToken('PDF')">
+        Print
+      </button>
+      
+    </div>
+
+    <!-- *ngIf="checked"
+    *ngIf="ViewDataList.length != 0" -->
+
+    <span *ngIf="checked">
+      <div class="mx-auto mt-1 col-md-12 set-height">
+        <table id="Data">
+          <tr>
+            <th>Action</th>
+            <th>Member</th>
+            <th>AccNo</th>
+            <th>Name</th>
+            <th>Due No.</th>
+
+            <th>Due Princ.Amt.</th>
+            <th>Due Int.Amt.</th>
+            <th>Sanc.Amt.</th>
+            <th>Int.Rate</th>
+            <th>No.Instl.</th>
+            <th>Outs.Bal.</th>
+          </tr>
+          <tr *ngFor="let item of ViewDataList; let i = index">
+            <td class="text-center">
+              <button class="btn btn-success ml-2">Details</button>
+            </td>
+            <td>
+              {{ item.MemNo }}
+            </td>
+            <td>
+              {{ item.AccNo }}
+            </td>
+            <td>
+              {{ item.MemName }}
+            </td>
+            <td>
+              {{ item.DueNoInstl }}
+            </td>
+
+            <td>
+              {{ item.DuePrincAmt }}
+            </td>
+            <td>
+              {{ item.DueIntAmt }}
+            </td>
+            <td>
+              {{ item.AccLoanSancAmt }}
+            </td>
+            <td>
+              {{ item.AccIntRate }}
+            </td>
+
+            <td>
+              {{ item.AccNoInstl }}
+            </td>
+            <td>
+              {{ item.AccBalance }}
+            </td>
+          </tr>
+        </table>
+      </div>
+    </span>
+  </form>
+</app-accounting-wrapper>

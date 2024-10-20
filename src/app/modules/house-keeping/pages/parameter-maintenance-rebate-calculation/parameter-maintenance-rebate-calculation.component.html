@@ -1,0 +1,249 @@
+<app-house-keeping-wrapper>
+    <form [formGroup]='RebateCalculationForm'>
+        <div class="mx-auto border col-md-9 main-container pb-2">
+            <p class="bg-dark title">
+                Rebate Calculation Parameter</p>
+            <div class="form-row ml-0 mt-2">
+                <label class="col-md-3" class="col-md-3 mr-1 pr-0">Account Type:<span
+                        style="color: red;">*</span></label>
+                <div class="form-group ml-3 pl-3 col-md-3 mt-0 pt-0">
+                    <input type="text" formControlName="AccType" class="form-control mt-0 pt-0" id="TrnCode"
+                        name="TrnCode" readonly>
+                </div>
+                <div class="form-group col-md-4">
+                    <select class="form-control  mt-0 pt-0" formControlName="AccType"
+                        (change)="selectChangeHandler($event)">
+                        <option value="0" class="mt-0 pt-0">-Select-</option>
+                        <option *ngFor="let item of AccountTypeData" [value]="item.AccTypeCode" class="mt-0 pt-0">
+                            {{item.AccTypeDescription}}
+                        </option>
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div class="mx-auto border col-md-9 main-container">
+            <table id="Data">
+                <tr>
+                    <td>1. Rebate Calculation For</td>
+                    <td>
+                        <input type="radio" value="1" name="rbCalculationFor" Checked="true"
+                            formControlName="rbCalculationFor">
+                        <label class="ml-2">Current Financial Year</label>
+                    </td>
+                    <td>
+                        <input type="radio" value="2" name="rbCalculationFor"
+                            formControlName="rbCalculationFor">Previous Financial Year
+                    </td>
+                    <td style="width: fit-content;"></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>2. Rate of Rebate</td>
+                    <td>
+                        <input appOnlyNumber maxlength="5" type="text" class="form-control mt-0 pt-0" formControlName="InterestRate">
+                    </td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>3. Rebate for Re-Schedule A/C?</td>
+                    <td>
+                        <input type="radio" value="1" name="rbRescheduleFlag" Checked="true"
+                            formControlName="rbRescheduleFlag">
+                        <label class="ml-2">No</label>
+                    </td>
+                    <td>
+                        <input type="radio" value="2" name="rbRescheduleFlag" formControlName="rbRescheduleFlag">
+                        <label class="ml-2">Yes</label><br>
+                    </td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td> <u>Rebate Calculation for T/A</u></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>4.Rebate for T/A?</td>
+                    <td>
+                        <input type="radio" value="1" name="rbTAYesNo" Checked="true" formControlName="rbTAYesNo"
+                            checked="true">
+                        <label class="ml-2">No</label>
+                    </td>
+                    <td>
+                        <input type="radio" value="2" name="rbTAYesNo" formControlName="rbTAYesNo">
+                        <label class="ml-2">Yes</label><br>
+                    </td>
+                    <td></td>
+                    <td></td>
+                </tr>
+
+                <tr>
+                    <td>4-A Rebate will not Get for T/A <br> if Principal Paid Less Than</td>
+                    <td>
+                        <input appOnlyNumber maxlength="2" type="text" class="form-control mt-0 pt-0" maxlength="2"
+                            formControlName="TAPrincipalPercent" checked="true">
+                    </td>
+                    <td>4-B Rebate will not Get <br> if T/A more Than</td>
+                    <td>
+                        <input appOnlyNumber maxlength="1" type="text" class="form-control mt-0 pt-0" maxlength="1" formControlName="TANoOfTimes">
+                    </td>
+                    <td>Times</td>
+                </tr>
+
+                <tr>
+                    <td></td>
+                    <td><u>Rebate for Regular Account</u></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+
+                <tr>
+                    <td>5.One Month Not Paid (Defaulter) or <br> Paymnet < Install Amt. But Next Month <br> Full Paid
+                            Get Rebate?</td>
+                    <td>
+                        <input type="radio" value="1" name="rbRebateFullMonthFlag" Checked="true"
+                            formControlName="rbRebateFullMonthFlag" checked="true">
+                        <label class="ml-2">No</label>
+                    </td>
+                    <td>
+                        <input type="radio" value="2" name="rbRebateFullMonthFlag"
+                            formControlName="rbRebateFullMonthFlag">
+                        <label class="ml-2">Yes</label><br>
+                    </td>
+                    <td></td>
+                    <td></td>
+                </tr>
+
+                <tr>
+                    <td>5-A Number 5 Facility Only For</td>
+                    <td>
+                        <input appOnlyNumber maxlength="1" type="text" class="form-control mt-0 pt-0" formControlName="RebateFullMonthFlagTimes">
+                    </td>
+                    <td>Month</td>
+                    <td></td>
+                    <td></td>
+                </tr>
+
+                <tr>
+                    <td>6. If Monthly Installment is paid by Multiple <br> Deposit in Same Month Will Get Rebate?</td>
+                    <td>
+                        <input type="radio" value="1" name="rbMultipleDepositFlag" Checked="true"
+                            formControlName="rbMultipleDepositFlag">
+                        <label class="ml-2">No</label>
+                    </td>
+                    <td>
+                        <input type="radio" value="2" name="rbMultipleDepositFlag"
+                            formControlName="rbMultipleDepositFlag">
+                        <label class="ml-2">Yes</label><br>
+                    </td>
+                    <td></td>
+                    <td></td>
+                </tr>
+
+                <tr>
+                    <td>7. There are 2 (Two) Loan A/C In Same Financial <br> Year 1 is Regular and another is Defaulter
+                        Will <br> Get Rebate for Regular Account?</td>
+                    <td>
+                        <input type="radio" value="1" name="rbTwoLoanFlag" Checked="true"
+                            formControlName="rbTwoLoanFlag">
+                        <label class="ml-2">No</label>
+                    </td>
+                    <td>
+                        <input type="radio" value="2" name="rbTwoLoanFlag" formControlName="rbTwoLoanFlag">
+                        <label class="ml-2">Yes</label><br>
+                    </td>
+                    <td></td>
+                    <td></td>
+                </tr>
+
+                <tr>
+                    <td>Note : If Yes then only regular account will <br> get Rebate If No then both account will Not
+                        <br> get Rebate
+                    </td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+
+                <tr>
+                    <td>8.Rebate Will not Get if Last Payment Date <br> is Expired?</td>
+                    <td>
+                        <input type="radio" value="1" name="rbRebateExpireDateFlag" Checked="true"
+                            formControlName="rbRebateExpireDateFlag">
+                        <label class="ml-2">No</label>
+                    </td>
+                    <td>
+                        <input type="radio" value="2" name="rbRebateExpireDateFlag"
+                            formControlName="rbRebateExpireDateFlag">
+                        <label class="ml-2">Yes</label><br>
+                    </td>
+                    <td></td>
+                    <td></td>
+                </tr>
+
+                <tr>
+                    <td>9. Rebate will be Transferred to the Target <br> Account Type</td>
+                    <td>
+                        <input appOnlyNumber maxlength="3" type="text" class="form-control mt-0 pt-0" formControlName="TargetAccType">
+                    </td>
+                    <td>10. Rebate Debit GL Code</td>
+                    <td>
+                        <input appOnlyNumber maxlength="8" type="text" class="form-control mt-0 pt-0" (change)="changeGLCode()"
+                            formControlName="RebateGlDrCode">
+                    </td>
+                    <td>
+                        <input type="text" class="form-control mt-0 pt-0" readonly formControlName="RebateGlDrDesc">
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>11. Rebate Calculation Type</td>
+                    <td>
+                        <!--   (change)="shareProtDeductAccTypeChange($event)" -->
+                        <select class="form-control  mt-0 pt-0" formControlName="RebateCalType">
+                            <option value="0" class="mt-0 pt-0">-Select-</option>
+                            <option *ngFor="let item of RebateCalculationTypeEnum" [value]="item.Id" class="mt-0 pt-0">
+                                {{item.Description}}
+                            </option>
+                        </select>
+                    </td>
+                    <td>
+                        12. Upto Months
+                    </td>
+                    <td>
+                        <select class="form-control  mt-0 pt-0" formControlName="UptoMthCal">
+                            <option value="0" class="mt-0 pt-0">-Select-</option>
+                            <option *ngFor="let item of UptoMonthEnum" [value]="item.Id" class="mt-0 pt-0">
+                                {{item.Description}}
+                            </option>
+                        </select>
+                    </td>
+                    <td>
+                        <div class="d-flex mt-2">
+                            <p class="pr-2 mt-1">13. Rest Months</p>
+                            <select class="form-control col-md-7  mt-0 pt-0" formControlName="RestMthCalType">
+                                <option value="0" class="mt-0 pt-0">-Select-</option>
+                                <option *ngFor="let item of RestMonthsEnum" [value]="item.Id" class="mt-0 pt-0">
+                                    {{item.Description}}
+                                </option>
+                            </select>
+                        </div>
+                    </td>
+                </tr>
+
+            </table>
+
+            <div class="buttons mx-auto d-flex  mt-3 mb-3">
+                <button *ngIf="ShowSubmit" type="button" (click)="submitData()" class="btn btn-success">Submit</button>
+                <button *ngIf="!ShowSubmit" type="button" (click)="updateData()" class="btn btn-success">Update</button>
+            </div>
+        </div>
+    </form>
+</app-house-keeping-wrapper>

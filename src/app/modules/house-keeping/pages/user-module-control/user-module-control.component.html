@@ -1,0 +1,39 @@
+<app-house-keeping-wrapper>
+    <form [formGroup]='ModuleControlForm' class="mx-auto  border col-md-6 main-container pb-2">
+        <p class="bg-dark title">System Module Control</p>
+        <div class="form-row">
+            <label>ID No.</label><span class="text-danger">*</span>
+            <div class="form-group col-md-4">
+                <input (change)='onOptionsSelectedId($event)' type="text"  class="form-control" id="ID Nummber"
+                    formControlName="IDNumber" name="IDNumber">
+            </div>
+            <div class="form-group col-md-6">
+                <select formControlName="selectedOptionCode"  class="form-control pt-1" [(ngModel)]="selectedUser"
+                (change)='onOptionsSelected($event)' >
+                    <option value="0">-Select-</option>
+                    <option *ngFor="let item of userlist" [value]="item.IdsNo">{{item.IdsName}}
+                    </option>
+                </select>
+            </div>
+        </div>
+
+        <div class="buttons ml-1">
+            <button type="button" class="ml-5 btn btn-success" (click)="updatePermission()">Save</button>
+        </div>
+    </form>
+
+    <div  class="mx-auto set-height col-md-6 ">
+        <table id="Data">
+            <tr>
+                <th>Select</th>
+                <th>ModuleNo</th>
+                <th>ModuleName</th>
+            </tr>
+            <tr *ngFor="let item of selectedUserModulePermissionList">
+                <td><Input type="checkbox" [checked]="item.permission" (change)="permissionChange(item)"/></td>
+                <td>{{item.Id}}</td>
+                <td>{{item.Description}}</td>
+            </tr>
+        </table>
+    </div>
+    </app-house-keeping-wrapper>

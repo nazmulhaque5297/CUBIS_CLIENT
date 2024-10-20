@@ -1,0 +1,58 @@
+<div class="modal-header">
+    <h4 class="modal-title">Verify - Rebate Calculation Sheet</h4>
+    <button type="button" class="close" (click)="activeModal.dismiss()" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+ 
+  <div class="modal-body">
+    <div style="height: 480px;overflow: auto;">
+        <div class="row">
+            <div class="col-md-6">
+              <table id="Data">
+                <tr>
+                  <th>Select</th>
+                  <th>Member</th>
+                  <th>Name</th>
+                  <th>A/C No.</th>
+                  <th>Disb. Date</th>
+                  <th>A/C Balance</th>
+                  <th>Paid Princ.</th>
+                  <th>Paid Int.</th>
+                  <th>Rebate Rate</th>
+                  <th>Rebate Amt.</th>
+                  <th>Corr.A/C No.</th>
+                  <th>Action</th>
+                </tr>
+                <tr *ngFor="let n of accountList">
+                  <td>
+                    <input [(ngModel)]="n.VerifyFlag" type="checkbox">
+                  </td>
+                  <td>{{n.MemNo}}</td>
+                  <td>{{n.MemName}}</td>
+                  <td>{{n.AccNo}}</td>
+                  <td>{{n.AccDisbDate}}</td>
+                  <td>{{n.AccBalance}}</td>
+                  <td>{{n.PaidPrincipalAmt}}</td>
+                  <td>{{n.AccProduct}}</td>
+                  <td>{{n.RebateIntRate}}</td>
+                  <td>
+                    <input style="width: 90px;text-align: right;" [(ngModel)]="n.AccInterest" type="number">
+                    </td>
+                  <td>{{n.TargetAccNo}}</td>
+                  <td>
+                    <button type="button" class="btn btn-primary" click="setParameter(n.AccNo)">Details</button>
+                  </td>
+                </tr>
+              </table>
+        
+            </div>
+          </div>
+
+    </div>
+</div>
+
+<div class="modal-footer">
+    <button type="button" (click)="onVerifyUpdate()" class="btn btn-primary">Verify Update</button>
+</div>
+   

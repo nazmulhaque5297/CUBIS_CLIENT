@@ -1,0 +1,138 @@
+@import url('https://fonts.googleapis.com/css2?family=Passion+One&display=swap');
+.no__data{
+  margin-top: 15%;
+  font-family: 'Passion One', cursive;
+  font-size: 3rem;
+}
+#Data {
+    font-family: Arial, Helvetica, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+  }
+  
+  #Data td, #Data th {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: center;
+  }
+  
+  #Data tr:nth-child(even) {
+    background-color: #f2f2f2;
+  }
+  
+  #Data tr:hover {
+    background-color: #ddd;
+  }
+  
+  #Data th {
+    text-align: center;
+    background-color: #0069AA;
+    color: white;
+    text-align: center;
+  }
+  
+
+  #Data2 {
+    font-family: Arial, Helvetica, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+  }
+  
+  #Data2 td, #Data th {
+    border: 0px solid #ddd;
+    padding: 8px;
+    text-align: center;
+  }
+  
+  #Data2 tr:nth-child(even) {
+    background-color: none;
+  }
+  
+  #Data2 tr:hover {
+    background-color: none;
+  }
+  
+  #Data2 th {
+    text-align: center;
+    background-color: #0069AA;
+    color: white;
+    text-align: center;
+  }
+  
+
+
+  .buttons .btn_1 {
+    background: #6DAD4F !important;
+    color: white;
+    padding: 4px 30px !important;
+  }
+  
+  .buttons .btn {
+    background: #0069AA;
+    color: white;
+    padding: 4px 30px !important;
+  }
+  .buttons .btn:focus {
+    outline: none !important;
+    box-shadow: none !important;
+  }
+  
+  .infoTable .btn-verify {
+    padding: 3px 15px !important;
+    border-radius: 37px !important;
+    transition: 0.7s ease-in;
+    background: #53a653;
+    color: #fff;
+    border: none;
+  }
+  
+  .infoTable .btn-reject {
+    padding: 3px 15px !important;
+    border-radius: 37px !important;
+    transition: 0.7s ease-in;
+    background: #bb2124;
+    color: #fff;
+    border: none;
+  }
+  
+  .infoTable .btn-print {
+    padding: 3px 15px !important;
+    border-radius: 37px !important;
+    transition: 0.7s ease-in;
+    background: #080808;
+    color: #fff;
+    border: none;
+  }
+  
+
+  .infoTable .btn-verify {
+    padding: 3px 15px !important;
+    border-radius: 37px !important;
+    transition: 0.7s ease-in;
+    background: #53a653;
+    color: #fff;
+    border: none;
+  }
+  .infoTable{
+    min-height: 200px;
+    max-height: 450px;
+    overflow-y: auto;
+  }
+
+  .details__model{
+    height: 550px;
+    overflow-y: auto;
+  }
+  
+  .iframeStyle {
+    height: 1500px;
+    width: 100%;
+    z-index: 20;
+    position: relative;
+    margin-top: 50px;
+    border: 0;
+  }
+  
+  .holds-the-iframe {
+    background: url(src\assets\images\loader.gif) top center no-repeat;
+  }

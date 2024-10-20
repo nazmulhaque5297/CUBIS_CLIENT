@@ -1,0 +1,193 @@
+<app-accounting-wrapper>
+  <form [formGroup]="AutoRenewalProcessForm">
+    <div class="mx-auto border col-md-8">
+      <p class="bg-dark title">Auto Renewal Processing</p>
+      <div class="form-row">
+        <label class="col-md-2 col-form-label">Account Type:<span class="text-danger">*</span></label>
+        <div class="form-group col-md-3">
+          <input
+          (change)="selectAccountTypeChangeHandler($event)"
+         
+            type="text"
+            class="form-control"
+            id="AccountType"
+            formControlName="AccountType"
+            name="AccountType"
+          />
+        </div>
+        <div class="form-group col-md-4">
+          <select
+            formControlName="SelectedAccountType"
+            (change)="selectAccountTypeChangeHandler($event)"
+            class="form-control pt-0"
+          >
+            <option value="0">-Select-</option>
+            <option *ngFor="let item of accTypeList" [value]="item.Id">
+              {{ item.Description }}
+            </option>
+          </select>
+        </div>
+      </div>
+
+      <div class="form-row">
+        <label class="col-md-2 col-form-label" for="DebitCode"
+          >GL Debit Code:</label
+        >
+        <div class="form-group col-md-3">
+          <input
+            type="text"
+            formControlName="GLDebitCodeType"
+            class="form-control"
+            id="DebitCode"
+            disabled
+          />
+        </div>
+        <div class="pl-2 form-group col-md-4">
+          <input
+            type="text"
+            formControlName="GLDebitCode"
+            class="form-control"
+            id="GLDebitCode"
+            disabled
+          />
+        </div>
+        <div
+          *ngIf="accInfoListTypeThree.length != 0 || accInfoList.length != 0"
+          class="form-group col-md-3"
+        >
+          <p>{{ AccShortDescription }}</p>
+        </div>
+      </div>
+      <div *ngIf="showVoucherField == true" class="form-row">
+        <label class="col-md-2 col-form-label" for="VoucherNo"
+          >Voucher No:</label
+        >
+        <div class="form-group col-md-3">
+          <input
+            type="text"
+            formControlName="VoucherNo"
+            class="form-control"
+            id="VoucherNo"
+          />
+        </div>
+      </div>
+      <div class="buttons">
+        <button type="button" class="btn btn-success" (click)="CalculateHandler()">
+          Calculate
+        </button>
+        <button type="button" class="btn btn-secondary" (click)="getReportToken()">
+          Print
+        </button>
+        <button type="button" class="btn btn-success" (click)="PostHandler()">Post</button>
+        <button type="button" class="btn btn-info" (click)="AllMarkHandler()">
+          All Mark
+        </button>
+        <button type="button" class="btn btn-primary" (click)="AllUnMarkHandler()">
+          All Un-Mark
+        </button>
+        <button  *ngIf="showCorresButton == true" type="button" class="btn btn-info">All CorrMark</button>
+        <button  *ngIf="showCorresButton == true" type="button" class="btn btn-primary">All Un-CorrMark</button>
+      </div>
+     
+
+      
+    </div>
+
+    <div
+      *ngIf="accInfoListTypeThree.length != 0"
+      class="mx-auto mt-1  col-md-11 set-height"
+    >
+      <p class="mt-1 bg-dark title">Module Title Information</p>
+      <table id="Data">
+        <tr>
+          <th>Select</th>
+          <th>Corr A/c</th>
+          <th>Memno</th>
+          <th>Name</th>
+          <th>AccNo</th>
+          <th>OldNo</th>
+          <th>Open/Rnw.Date</th>
+          <th>Period</th>
+          <th>Maturity Date</th>
+          <th>FD Amount</th>
+          <th>Rate</th>
+          <th>Interest</th>
+        </tr>
+        <tr *ngFor="let item of accInfoListTypeThree">
+          <td>
+            <Input
+              [checked]="item.RecordMark"
+              type="checkbox"
+              class="checkBtnSize"
+              (change)="checkHandler(item)"
+            />
+          </td>
+          <td><Input type="checkbox" class="checkBtnSize" disabled /></td>
+          <td>{{ item.MemNo }}</td>
+          <td>{{ item.MemName }}</td>
+          <td>{{ item.AccNo }}</td>
+          <td>{{ item.AccOldNumber }}</td>
+          <td>{{ item.CalFromDate }}</td>
+          <td>{{ item.AccPeriodMonths }}</td>
+          <td>{{ item.AccMatureDate }}</td>
+          <td>{{ item.FDAmount }}</td>
+          <td>{{ item.AccIntRate }}</td>
+          <td>{{ item.CalInterest }}</td>
+        </tr>
+      </table>
+    </div>
+    <div
+      *ngIf="accInfoList.length != 0"
+      class="mx-auto mt-1 col-md-12 set-height"
+    >
+      <p class="mt-1 bg-dark title">Module Title Information</p>
+      <table id="Data">
+        <tr>
+          <th>Select</th>
+          <th>Memno</th>
+          <th>Name</th>
+          <th>AccNo</th>
+          <th>Open/Rnw.Date</th>
+          <th>Period</th>
+          <th>Maturity Date</th>
+          <th>FD Amount</th>
+        </tr>
+        <tr *ngFor="let item of accInfoList">
+          <td>
+            <Input
+              [checked]="item.RecordMark"
+              type="checkbox"
+              class="checkBtnSize"
+              (change)="checkHandler(item)"
+            />
+          </td>
+          <td>{{ item.MemNo }}</td>
+          <td>{{ item.MemName }}</td>
+          <td>{{ item.AccNo }}</td>
+          <td>{{ item.CalFromDate }}</td>
+          <td>{{ item.AccPeriodMonths }}</td>
+          <td>{{ item.AccMatureDate }}</td>
+          <td>{{ item.FDAmount }}</td>
+        </tr>
+      </table>
+    </div>
+    <div
+      *ngIf="accInfoListTypeThree.length != 0 || accInfoList.length != 0"
+      class="mx-auto mt-1 mt-5 col-md-7 set-height"
+    >
+      <table id="Data">
+        <tr>
+          <th>INTEREST CORR.AMOUNT</th>
+          <th>INTEREST NON-CORR. AMOUNT</th>
+          <th>TOTAL INTEREST AMOUNT</th>
+        </tr>
+        <tr>
+          <td>0</td>
+          <td>{{ this.TotalInterest }}</td>
+          <td>{{ this.TotalInterest }}</td>
+        </tr>
+      </table>
+    </div>
+  </form>
+
+</app-accounting-wrapper>

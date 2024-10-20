@@ -1,0 +1,114 @@
+<app-house-keeping-wrapper>
+  <form
+    [formGroup]="MenuAccessibilityControlForm"
+    class="mx-auto border col-md-6 main-container"
+  >
+    <p class="bg-dark title">General User Accessibility</p>
+    <div class="form-row">
+      <label class="col-md-2">ID No. <span class="text-danger">*</span></label>
+      <div class="form-group col-md-4 ml-2">
+        <input
+          appOnlyNumberWithoutDecimal
+          type="text"
+          class="form-control"
+          id="IDNumber"
+          formControlName="IdsNo"
+          maxlength="4"
+          name="IDNumber"
+          (change)="changeSelectValue($event)"
+        />
+        <div
+          *ngIf="
+            MenuAccessibilityControlForm.controls['IdsNo'].invalid &&
+            MenuAccessibilityControlForm.controls['IdsNo'].touched
+          "
+          class="text-danger"
+        >
+          Required*
+        </div>
+      </div>
+      <div class="form-group col-md-5">
+        <select
+          formControlName="selectedOptionCode"
+          (change)="selectChangeHandler($event)"
+          class="form-control pt-0"
+        >
+          <option value="0">-Select-</option>
+          <option *ngFor="let item of userlist" [value]="item.IdsNo">
+            {{ item.IdsName }}
+          </option>
+        </select>
+      </div>
+    </div>
+    <div class="form-group row">
+      <label for="select" class="col-form-label col-md-2 ml-1">Module:</label>
+      <div class="col-md-9">
+        <select
+          id="selectedModule"
+          formControlName="selectedModule"
+          id="selectedModule"
+          class="form-control pt-0"
+          (change)="selectModuleHandler($event)"
+        >
+          <option value="0">-Select-</option>
+          <option *ngFor="let item of modulelist" [value]="item.ModuleNo">
+            {{ item.ModuleName }}
+          </option>
+        </select>
+      </div>
+    </div>
+  </form>
+
+  <div
+    *ngIf="allMenuList.length != 0"
+    class="mx-auto border set-height col-md-6"
+  >
+    <p class="mt-1 bg-dark title">Module Title Information</p>
+    <table id="Data">
+      <tr>
+        <th>Select</th>
+        <th>MenuName</th>
+        <th>MenuNo</th>
+        <th>MenuParentNo</th>
+        <th>UserId</th>
+      </tr>
+      <tr *ngFor="let item of allMenuList">
+        <td>
+          <Input
+            type="checkbox"
+            [checked]="item.IsAssigned"
+            class="checkBtnSize"
+            (change)="checkHandler(item)"
+          />
+        </td>
+        <td>{{ item.MenuName }}</td>
+        <td>{{ item.MenuNo }}</td>
+        <td>{{ item.MenuParentNo }}</td>
+        <td>{{ item.UserId }}</td>
+      </tr>
+    </table>
+  </div>
+  <div class="buttons col-md-5 mx-auto mt-2">
+    <button
+      type="button"
+      class="btn btn-first btn-success"
+      (click)="updateHandler()"
+    >
+      {{ submitButtonText }}
+    </button>
+    <button
+      type="button"
+      class="btn ml-2 btn-primary"
+      (click)="allMarkHandler()"
+    >
+      All Mark
+    </button>
+    <button
+      type="button"
+      class="btn ml-2 btn-info"
+      (click)="allUnMarkHandler()"
+    >
+      All Un-Mark
+    </button>
+  </div>
+</app-house-keeping-wrapper>

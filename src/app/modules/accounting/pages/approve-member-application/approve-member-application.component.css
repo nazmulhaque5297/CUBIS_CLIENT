@@ -1,0 +1,96 @@
+@import url("https://fonts.googleapis.com/css2?family=Passion+One&display=swap");
+#Data {
+  font-family: Arial, Helvetica, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+}
+.iframeStyle {
+  height: 1500px;
+  width: 100%;
+  z-index: 20;
+  position: relative;
+  margin-top: 50px;
+  border: 0;
+}
+
+.holds-the-iframe {
+  background: url(src\assets\images\loader.gif) top center no-repeat;
+}
+
+#Data {
+  font-family: Arial, Helvetica, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+#Data td,
+#Data th {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: center;
+}
+
+#Data tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
+
+#Data tr:hover {
+  background-color: #ddd;
+}
+
+#Data th {
+  text-align: center;
+  background-color: #0069aa;
+  color: white;
+  text-align: center;
+}
+
+.buttons .btn {
+  padding: 8px 35px !important;
+  border-radius: 37px !important;
+  transition: 0.7s ease-in;
+  background: #0069aa;
+  color: #fff;
+}
+
+.buttons .btn:focus {
+  outline: none !important;
+  box-shadow: none !important;
+}
+.infoTable {
+  min-height: 200px;
+  max-height: 450px;
+  overflow-y: auto;
+}
+
+.infoTable .btn-verify {
+  padding: 3px 15px !important;
+  border-radius: 37px !important;
+  transition: 0.7s ease-in;
+  background: #53a653;
+  color: #fff;
+  border: none;
+}
+
+.infoTable .btn-reject {
+  padding: 3px 15px !important;
+  border-radius: 37px !important;
+  transition: 0.7s ease-in;
+  background: #bb2124;
+  color: #fff;
+  border: none;
+}
+
+.infoTable .btn-print {
+  padding: 3px 15px !important;
+  border-radius: 37px !important;
+  transition: 0.7s ease-in;
+  background: #080808;
+  color: #fff;
+  border: none;
+}
+.no__data{
+  margin-top: 15%;
+  font-family: 'Passion One', cursive;
+  font-size: 3rem;
+}

@@ -1,0 +1,81 @@
+.ng-invalid.ng-dirty:not(form),
+.ng-invalid:not(form).form-submitted {
+  border: solid 2px red;
+}
+.title {
+  background: #6c757d !important;
+  color: #fff;
+  font-weight: 600;
+  padding: 2px;
+}
+
+input {
+  box-shadow: none !important;
+}
+
+.desc-input {
+  margin-left: 30px !important;
+}
+
+.btn {
+  padding: 4px 30px !important;
+  transition: 0.7s ease-in;
+  color: #fff;
+}
+
+.btn:focus {
+  outline: none !important;
+  box-shadow: none !important;
+}
+
+.btn-verify {
+  padding: 3px 15px !important;
+  border-radius: 37px !important;
+  transition: 0.7s ease-in;
+  background: #53a653;
+  color: #fff;
+  border: none;
+}
+
+#Data {
+  font-family: Arial, Helvetica, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+.set-height {
+  height: auto;
+  overflow-x: auto;
+}
+
+#Data td,
+#Data th {
+  border: 1px solid #ddd;
+  padding: 8px;
+}
+
+#Data tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
+
+#Data tr:hover {
+  background-color: #ddd;
+}
+
+#Data th {
+  padding-top: 12px;
+  padding-bottom: 12px;
+  text-align: left;
+  background-color: #0069aa;
+  color: white;
+  text-align: center;
+}
+
+@media screen and (max-width: 762px) {
+  .desc-input {
+    margin-left: 0px !important;
+  }
+  .buttons {
+    margin-left: 0px;
+  }
+}

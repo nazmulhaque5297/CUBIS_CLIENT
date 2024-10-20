@@ -1,0 +1,106 @@
+<app-accounting-wrapper>
+  <form
+    [formGroup]="AccountTransferListForm"
+    class="mx-auto border col-md-7 pb-2"
+  >
+    <p class="bg-dark title">Account Transfer Report</p>
+
+    <div class="form-group row">
+      <div class="col-md-1">
+        <input
+          [(ngModel)]="chbIsAllAccTypeStatus"
+          (ngModelChange)="checkIsAllAccTypeValue($event)"
+          class="form-check-input ml-1 checkbox"
+          style="margin: 0.8rem"
+          type="checkbox"
+          id="IsAllAccTypeCheckbox"
+          formControlName="IsAllAccType"
+        />
+      </div>
+      <!-- style="margin-left: 0.6rem" -->
+      <label class="col-md-3 col-form-label" for="IsAllAccTypeCheckbox"
+        >All - Account Type</label
+      >
+      <div class="col-md-3">
+        <input
+          appOnlyNumber
+          (change)="onChangeAccTypeCode($event)"
+          (keydown)="onEnterAccTypeCodeHandler($event)"
+          type="text"
+          class="form-control"
+          id="CodeNumber"
+          formControlName="AccTypeCode"
+          name="CodeNumber"
+          [attr.disabled]="
+            AccountTransferListForm.value.IsAllAccType ? '' : null
+          "
+        />
+      </div>
+
+      <div class="col-md-5">
+        <select
+          [attr.disabled]="
+            AccountTransferListForm.value.IsAllAccType ? '' : null
+          "
+          class="form-control pt-0"
+          formControlName="AccType"
+          (change)="onChangeAccType($event)"
+        >
+          <option value="0">-Select-</option>
+          <option
+            *ngFor="let item of inputHelpData.accTransferAccountTypeList"
+            [value]="item.Id"
+          >
+            {{ item.Description }}
+          </option>
+        </select>
+      </div>
+    </div>
+
+    <div class="form-group row">
+      <label class="col-md-4 col-form-label">From date:</label>
+      <div class="col-md-3">
+        <input
+          id="IssueFromDate"
+          type="text"
+          class="form-control"
+          bsDatepicker
+          formControlName="IssueFromDate"
+          [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY' }"
+          autocomplete="off"
+          (ngModelChange)="applicationDateChange()"
+        />
+      </div>
+      <label class="col-md-2 col-form-label">To date:</label>
+      <div class="col-md-3">
+        <input
+          id="dateFormat"
+          type="text"
+          class="form-control"
+          bsDatepicker
+          formControlName="IssueToDate"
+          [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY' }"
+          autocomplete="off"
+          (ngModelChange)="applicationDateChange2()"
+        />
+      </div>
+    </div>
+
+    <div class="buttons">
+      <button
+        type="button"
+        class="btn btn-info ml-2"
+        (click)="getReportToken('CRV')"
+      >
+        Preview
+      </button>
+      <button
+        type="button"
+        class="btn btn-success ml-2"
+        (click)="getReportToken('PDF')"
+      >
+        Print
+      </button>
+    </div>
+  </form>
+</app-accounting-wrapper>

@@ -1,0 +1,328 @@
+<app-main-wrapper [module]="module">
+  <form [formGroup]="DepositDefaultForm" class="mx-auto border col-md-10 pb-2">
+    <p class="bg-dark title">Deposit Defaulter Report</p>
+
+    <div class="form-group row">
+      <div class="col-md-1 col-form-label"></div>
+      <label class="col-md-3 col-form-label">Account Type</label>
+      <div class="col-md-2">
+        <input
+        appOnlyNumber
+          type="text"
+          class="form-control"
+          id="AccNameInput"
+          formControlName="AccNameInput"
+          name="AccNameInput"
+          (focusout)="AccInput()"
+        />
+      </div>
+      <div class="col-md-4">
+        <select
+          class="form-control pt-0"
+          formControlName="AccountDdl"
+          (change)="onChangeAccType($event)"
+        >
+          <option value="0">-Select-</option>
+          <option
+            *ngFor="let item of pageLoadModel.AllAccountDropdown"
+            [value]="item.Id"
+          >
+            {{ item.Description }}
+          </option>
+        </select>
+      </div>
+    </div>
+
+    <div class="form-group row">
+      <div class="col-md-1 col-form-label">
+        <input
+          class="form-check-input ml-1 checkbox"
+          style="margin: 0.8rem"
+          type="checkbox"
+          id="CollectorChb"
+          value="0"
+          formControlName="CollectorChb"
+          (change)="CollectorChbChange()"
+        />
+      </div>
+      <label class="col-md-3 col-form-label" for="CollectorChb" >All Collector Code </label>
+      <div class="col-md-2">
+        <input
+          type="text"
+          class="form-control"
+          id="CollectorCodeInput"
+          formControlName="CollectorCodeInput"
+          name="CollectorCodeInput"
+          (focusout)="CollectorCodeChange()"
+          [attr.disabled]="DepositDefaultForm.value.CollectorChb ? '' : null"
+        />
+      </div>
+      <div class="col-md-4">
+        <select
+          class="form-control pt-0"
+          formControlName="CollectorCodeDdl"
+          (change)="CollectorCodeDDLChange()"
+        >
+          <option value="0">-Select-</option>
+          <option
+            *ngFor="let item of pageLoadModel.AllCollectorDropdown"
+            [value]="item.Id"
+          >
+            {{ item.Description }}
+          </option>
+        </select>
+      </div>
+    </div>
+
+    <div class="form-group row">
+      <div class="col-md-1 col-form-label">
+        <input
+          class="form-check-input ml-1 checkbox"
+          style="margin: 0.8rem"
+          type="checkbox"
+          id="GroupChb"
+          value="0"
+          formControlName="GroupChb"
+          (change)="GroupDDlChb()"
+        />
+      </div>
+      <label class="col-md-3 col-form-label" for="GroupChb" >All Group No</label>
+      <div class="col-md-2">
+        <input
+        appOnlyNumber
+          type="text"
+          class="form-control"
+          id="GroupTypeInput"
+          formControlName="GroupNameInput"
+          name="GroupNameInput"
+          (focusout)="GroupInputChange()"
+          [attr.disabled]="DepositDefaultForm.value.GroupChb ? '' : null"
+        />
+      </div>
+      <div class="col-md-4">
+        <select
+          class="form-control pt-0"
+          formControlName="AllGroupDdl"
+          (change)="GroupDDLOptChange()"
+        >
+          <option value="0">-Select-</option>
+          <option
+            *ngFor="let item of pageLoadModel.AllGroupDropdown"
+            [value]="item.Id"
+          >
+            {{ item.Description }}
+          </option>
+        </select>
+      </div>
+    </div>
+
+    <div class="form-group row">
+      <div class="col-md-1 col-form-label"></div>
+      <label class="col-md-3 col-form-label">Month of</label>
+      <div class="col-md-2">
+        <select class="form-control pt-0" formControlName="MonthDdl">
+          <option value="0">-Select-</option>
+          <option
+            *ngFor="let item of pageLoadModel.AllMonthDropdown"
+            [value]="item.Id"
+          >
+            {{ item.Description }}
+          </option>
+        </select>
+      </div>
+      <div class="col-md-4">
+        <select class="form-control" formControlName="YearDdl">
+          <option value="0">-Select-</option>
+          <option
+            *ngFor="let item of pageLoadModel.AllYearDropdown"
+            [value]="item.Id"
+          >
+            {{ item.Description }}
+          </option>
+        </select>
+      </div>
+    </div>
+
+    <div class="form-group row">
+      <div class="col-md-1">
+        <input
+          checked
+          type="radio"
+          value="0"
+          name="LoanInfoRb"
+          id="LoanInfoRb0"
+          formControlName="LoanInfoRb"
+        />
+      </div>
+
+      <label class="col-md-3 col-form-label" for="LoanInfoRb0"
+        >Input Defaulter No. of Period
+      </label>
+      <div class="col-md-2">
+        <input
+          type="text"
+          class="form-control"
+          id="DefaulterInputFrom"
+          formControlName="DefaulterInputFrom"
+          name="DefaulterInputFrom"
+        />
+      </div>
+      <label class="col-md-2 col-form-label">To </label>
+      <div class="col-md-2">
+        <input
+          type="text"
+          class="form-control"
+          id="DefaulterInputTo"
+          formControlName="DefaulterInputTo"
+          name="DefaulterInputTo"
+        />
+      </div>
+    </div>
+    <div class="form-group row">
+      <div class="col-md-1">
+        <input
+          checked
+          type="radio"
+          value="1"
+          name="LoanInfoRb"
+          id="LoanInfoRb1"
+          formControlName="LoanInfoRb"
+        />
+      </div>
+
+      <label class="col-md-3 col-form-label" for="LoanInfoRb1" >All Period </label>
+    </div>
+
+    <div class="buttons">
+      <button type="button" class="btn btn-primary" id="btn1" (click)="ShowGrid()">
+        View
+      </button>
+      <button type="button" class="btn btn-info ml-2" (click)="getReportToken('CRV')">
+        Preview
+      </button>
+      <button type="button" class="btn btn-success ml-2" (click)="getReportToken('PDF')">
+        Print
+      </button>
+    </div>
+  </form>
+
+  <!-- Grid Table 1 region start    -->
+  <div
+    *ngIf="Grid1DataList.length != 0 && showGrid1"
+    class="mx-auto mt-1 mt-5 col-md-10 set-height"
+  >
+    <table id="Data">
+      <tr>
+        <th>Action</th>
+        <th>Mem No.</th>
+        <th>AccNo</th>
+        <th>Name</th>
+        <th>Due No.</th>
+        <th>Due Deposit</th>
+        <th>Deposit Amt.</th>
+        <th>Period</th>
+        <th>Ledger Bal.</th>
+      </tr>
+      <tr *ngFor="let item of Grid1DataList">
+        <td>
+          <button
+            (click)="ShowGrid2(item)"
+            data-toggle="modal"
+            data-target="#exampleModal"
+          >
+            Detail
+          </button>
+        </td>
+        <td class="text-center">{{ item.MemNumber }}</td>
+        <td class="text-left">{{ item.AccNo }}</td>
+        <td class="text-left">{{ item.MemName }}</td>
+        <td class="text-left">{{ item.DueNoDeposit }}</td>
+        <td class="text-left">{{ item.DueDepositAmt }}</td>
+        <td class="text-left">{{ item.AccMonthlyDeposit }}</td>
+        <td class="text-left">{{ item.AccPeriod }}</td>
+        <td class="text-left">{{ item.AccBalance }}</td>
+      </tr>
+    </table>
+  </div>
+  <!-- Grid Table 1 region end-->
+
+  <!-- Button trigger modal -->
+  <!-- <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+  Launch demo modal
+</button> -->
+
+  <!-- Modal -->
+  <div
+    class="modal fade"
+    id="exampleModal"
+    tabindex="-1"
+    aria-labelledby="exampleModalLabel"
+    aria-hidden="true"
+  >
+    <div class="modal-dialog modal-xl">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">
+            Detail Deposit Defaulter
+          </h5>
+          <button
+            type="button"
+            class="close"
+            data-dismiss="modal"
+            aria-label="Close"
+          >
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div>
+            <div class="form-group row">
+              <label class="col-md-2 col-form-label">Account Title:</label>
+              <label class="col-md-2 col-form-label">{{ accountType }}</label>
+              <label class="col-md-2 col-form-label">{{ accountDesc }}</label>
+            </div>
+            <div class="form-group row">
+              <label class="col-md-2 col-form-label">Account No:</label>
+              <label class="col-md-2 col-form-label">{{ accountNo }}</label>
+            </div>
+            <div class="form-group row">
+              <label class="col-md-2 col-form-label">Memeber No:</label>
+              <label class="col-md-2 col-form-label">{{ memberNo }}</label>
+              <label class="col-md-3 col-form-label">{{ memberName }}</label>
+            </div>
+          </div>
+
+          <!-- Grid Table 2 region start    -->
+          <div
+            *ngIf="Grid2DataList.length != 0 && showGrid2"
+            class="mx-auto mt-1 mt-5 col-md-12 set-height"
+          >
+            <table id="Data">
+              <tr>
+                <th>TrnDate</th>
+                <th>Curr.DepositAmt</th>
+                <th>PrevDueDeposit</th>
+                <th>PayableDeposit</th>
+                <th>PayablePenal</th>
+                <th>PaidDeposit</th>
+                <th>PaidPenal</th>
+                <th>CurrDueDeposit</th>
+              </tr>
+              <tr *ngFor="let item of Grid2DataList">
+                <td class="text-center">{{ item.TrnDate }}</td>
+                <td class="text-left">{{ item.CalDepositAmt }}</td>
+                <td class="text-left">{{ item.UptoDueDepositAmt }}</td>
+                <td class="text-left">{{ item.PayableDepositAmt }}</td>
+                <td class="text-left">{{ item.PayablePenalAmt }}</td>
+                <td class="text-left">{{ item.PaidDepositAmt }}</td>
+                <td class="text-left">{{ item.PaidPenalAmt }}</td>
+                <td class="text-left">{{ item.CurrDueDepositAmt }}</td>
+              </tr>
+            </table>
+          </div>
+          <!-- Grid Table 2 region end-->
+        </div>
+      </div>
+    </div>
+  </div>
+</app-main-wrapper>

@@ -1,0 +1,25 @@
+<app-accounting-wrapper>
+  <form [formGroup]="GLYearTransactionList" class="mx-auto border col-md-6">
+    <p class="bg-dark title">GL Year End Transaction List</p>
+
+    <div class="form-group row">
+      <label class="col-md-3 col-form-label">Transaction Date </label>
+      <div class="col-md-6">
+        <input
+          id="dateFormat"
+          type="text"
+          class="form-control"
+          bsDatepicker
+          formControlName="IssueFromDate"
+          [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY' }"
+          autocomplete="off"
+        />
+      </div>
+    </div>
+
+    <div class="buttons mb-2">
+      <button type="button" class="btn btn-success" (click)="getReportToken()">Print</button>
+      
+    </div>
+  </form>
+</app-accounting-wrapper>

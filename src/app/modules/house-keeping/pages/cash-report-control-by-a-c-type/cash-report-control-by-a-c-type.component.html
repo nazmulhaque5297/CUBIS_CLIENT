@@ -1,0 +1,48 @@
+<app-house-keeping-wrapper>
+  <form
+    [formGroup]="CashReportControlForm"
+    novalidate
+    class="mx-auto border col-md-8"
+  >
+    <p class="bg-dark title">Cash Reports Control Maintenance</p>
+    <div class="form-group row col-md-8 mx-auto">
+      <div class="ml-2 mt-2">
+        <input type="radio" />
+      </div>
+      <label for="select" class="col-md-5 col-form-label">Collection</label>
+      <div class="ml-2 mt-2">
+        <input type="radio" />
+      </div>
+      <label for="select" class="col-md-1 col-form-label">Disbursement</label>
+    </div>
+
+    <div>
+      <table id="Data">
+        <tr>
+          <th>Select</th>
+          <th>PayType</th>
+          <th>PayTypeDes</th>
+          <th>Select</th>
+          <th>PayType</th>
+          <th>PayTypeDes</th>
+        </tr>
+        <tr *ngFor="let items of indexing">
+          <td>{{items}}</td>
+          <td><input type="text" class="form-control" /></td>
+          <td>
+            <select>
+              <option value="0">-Select-</option>
+              <option *ngFor="let item of dataList" [value]="item.AccTypeCode">
+                {{ item.AccTypeDescription }}
+              </option>
+            </select>
+          </td>
+          <td><input type="radio" /></td>
+          <td><input type="radio" /></td>
+          <td><input type="radio" /></td>
+        </tr>
+      </table>
+      <button class="btn btn-success mt-2 mb-2">Update</button>
+    </div>
+  </form>
+</app-house-keeping-wrapper>

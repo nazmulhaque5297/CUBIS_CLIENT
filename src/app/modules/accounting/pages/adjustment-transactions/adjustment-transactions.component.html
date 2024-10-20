@@ -1,0 +1,392 @@
+<app-accounting-wrapper>
+  <form [formGroup]="adjustmentForm" class="form-horizontal">
+    <div class="row">
+      <div class="col-xl-9 col-md-9">
+        <p class="bg-primary text-center text-light bg-secondary title">
+          Adjustment Transactions
+        </p>
+        <div class="card first__part">
+          <!-- <div class="card-header bg-primary">
+                <h4 class="card-title text-white mb-0">Adjustment Transactions</h4>
+              </div> -->
+          <div class="card-body">
+            <div class="form-group row">
+              <label class="col-md-3 col-form-label"
+                >A/C Type:<span class="text-danger">*</span></label
+              >
+              <div class="col-md-2">
+                <input
+                  type="text"
+                  class="form-control"
+                  [readonly]="isDisabled"
+                  formControlName="AccountTypeCode"
+                  (change)="
+                    onAccountTypeChange(adjustmentForm.value.AccountTypeCode)
+                  "
+                  appOnlyNumber
+                />
+              </div>
+              <div class="col-md-4">
+                <select
+                  class="form-control pt-0"
+                  [attr.disabled]="isDisabled ? '' : null"
+                  formControlName="AccountTypeId"
+                  (change)="
+                    onAccountTypeChange(adjustmentForm.value.AccountTypeId)
+                  "
+                >
+                  <option value="0">-Select-</option>
+                  <option
+                    *ngFor="let item of inputHelpData.AccountTypeList"
+                    [value]="item.Id"
+                  >
+                    {{ item.Description }}
+                  </option>
+                </select>
+              </div>
+            </div>
+            <div *ngIf="inputHelpData.ShowOldAccNo" class="form-group row">
+              <label class="col-md-3 col-form-label">Old A/c No.:</label>
+              <div class="col-md-2">
+                <input
+                  id="OldAccountNo"
+                  type="text"
+                  class="form-control"
+                  formControlName="OldAccountNo"
+                  (change)="onOldAccNoChange()"
+                  (keydown)="onEnterOldAccHandler($event)"
+                  appOnlyNumber
+                />
+              </div>
+            </div>
+
+            <div class="form-group row" *ngIf="ManualAccNoFlag">
+              <label class="col-md-3 col-form-label">Manual A/c No.:</label>
+              <div class="col-md-2">
+                <input
+                  id="ManualAccountNo"
+                  type="text"
+                  class="form-control"
+                  formControlName="ManualAccountNo"
+                  (keydown)="onEnterManualAccHandler($event)"
+                  appOnlyNumber
+                />
+              </div>
+            </div>
+            <div class="form-group row">
+              <label class="col-md-3 col-form-label"
+                >Member No. :<span class="text-danger">*</span></label
+              >
+              <div class="col-md-2">
+                <input
+                  id="MemberNo"
+                  type="text"
+                  class="form-control"
+                  [readonly]="isDisabled"
+                  formControlName="MemberNo"
+                  (change)="onMemberChange()"
+                  appOnlyNumber
+                  (keydown)="onMemberEnterEvent($event)"
+                />
+              </div>
+              <label class="col-md-4 col-form-label">{{
+                detailsData.MemberName
+              }}</label>
+            </div>
+            <div class="form-group row">
+              <label class="col-md-3 col-form-label">Account No.:</label>
+              <div class="col-md-2">
+                <input
+                  type="text"
+                  class="form-control"
+                  formControlName="AccountNo"
+                  disabled
+                />
+              </div>
+            </div>
+
+            <div *ngIf="!UserData?.AutoVchflag" class="form-group row">
+              <label class="col-md-3 col-form-label"
+                >Voucher No. :<span class="text-danger">*</span></label
+              >
+              <div class="col-md-2">
+                <input
+                  id="VoucherNo"
+                  type="text"
+                  class="form-control"
+                  formControlName="VoucherNo"
+                  (change)="OnVoucherNoChange()"
+                />
+              </div>
+            </div>
+
+            <div class="form-group row">
+              <label class="col-md-3 col-form-label">Transaction Type:</label>
+              <div class="col-md-2">
+                <input
+                  id="TransactionTypeCode"
+                  type="text"
+                  class="form-control"
+                  [readonly]="isDisabled"
+                  formControlName="TransactionTypeCode"
+                  (change)="
+                    onTransTypeChange(adjustmentForm.value.TransactionTypeCode)
+                  "
+                  appOnlyNumber
+                />
+              </div>
+              <div class="col-md-4">
+                <select
+                  class="form-control pt-1"
+                  [attr.disabled]="isDisabled ? '' : null"
+                  formControlName="TransactionTypeId"
+                  (change)="
+                    onTransTypeChange(adjustmentForm.value.TransactionTypeId)
+                  "
+                >
+                  <option value="0">-Select-</option>
+                  <option
+                    *ngFor="let item of inputHelpData.TransactionTypeList"
+                    [value]="item.Id"
+                  >
+                    {{ item.Description }}
+                  </option>
+                </select>
+              </div>
+            </div>
+
+            <div class="form-group row">
+              <label class="col-md-3 col-form-label"
+                >GL Contra Code:<span class="text-danger">*</span></label
+              >
+              <div class="col-md-2">
+                <input
+                  id="bankcode"
+                  type="text"
+                  class="form-control"
+                  formControlName="BankCode"
+                  (change)="onBankChange(adjustmentForm.value.BankCode)"
+                  appOnlyNumber
+                />
+              </div>
+              <div
+                class="col-md-2"
+                *ngIf="adjustmentForm.value.TransactionTypeId == 3"
+              >
+                <select
+                  class="form-control pt-1"
+                  formControlName="AccountHeadId"
+                  (change)="
+                    onAccountHeadChange(adjustmentForm.value.AccountHeadId)
+                  "
+                >
+                  <option value="0">-Select Header Code-</option>
+                  <option
+                    *ngFor="let item of inputHelpData.AccountHeadList"
+                    [value]="item.Id"
+                  >
+                    {{ item.Description }}
+                  </option>
+                </select>
+              </div>
+              <div class="col-md-4">
+                <select
+                  class="form-control pt-1"
+                  formControlName="BankId"
+                  (change)="onBankChange(adjustmentForm.value.BankId)"
+                >
+                  <option value="0">-Select-</option>
+                  <option
+                    *ngFor="let item of inputHelpData.BankList"
+                    [value]="item.Id"
+                  >
+                    {{ item.Description }}
+                  </option>
+                </select>
+              </div>
+            </div>
+
+            <div
+              class="row d-block topSection f-ss-14px"
+              *ngIf="!detailsData?.HasMultipleAccount"
+            >
+              <div class="d-flex deposit-account-list-header">
+                <div class="col-md-2">GL Code</div>
+                <div class="col-md-4">Name of Account Head</div>
+                <div class="col-md-4">Description</div>
+                <div class="col-md-1">Debit</div>
+                <div class="col-md-1">Credit</div>
+              </div>
+
+              <div
+                style="margin-bottom: 10px"
+                formArrayName="Transactions"
+                *ngFor="
+                  let item of adjustmentForm.get('Transactions')['controls'];
+                  let i = index
+                "
+              >
+                <div class="row" [formGroupName]="i">
+                  <div class="col-md-2">
+                    <input
+                      class="form-control"
+                      formControlName="GLAccNo"
+                      disabled
+                    />
+                  </div>
+                  <div class="col-md-4">
+                    <input
+                      class="form-control"
+                      readonly
+                      formControlName="GLAccDesc"
+                    />
+                  </div>
+                  <div class="col-md-4">
+                    <input
+                      id="{{ 'PayTypeDes' + i }}"
+                      class="form-control"
+                      formControlName="PayTypeDes"
+                      (change)="onItemChange(i, item)"
+                      (keydown)="onPayTypeDesEnterHandler($event, i, item)"
+                    />
+                  </div>
+                  <div class="col-md-1">
+                    <input
+                      id="{{ 'DebitAmount' + i }}"
+                      class="form-control"
+                      type="text"
+                      formControlName="DebitAmount"
+                      (change)="onItemChange(i, item)"
+                      (keydown)="onDebitAmountEnterHandler($event, i, item)"
+                      appOnlyNumber
+                    />
+                  </div>
+                  <div class="col-md-1">
+                    <input
+                      id="{{ 'CreditAmount' + i }}"
+                      class="form-control"
+                      type="text"
+                      formControlName="CreditAmount"
+                      (change)="onItemChange(i, item)"
+                      (keydown)="onCreditAmountEnterHandler($event, i, item)"
+                      appOnlyNumber
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <table class="table" *ngIf="detailsData?.HasMultipleAccount">
+              <tr style="background-color: YellowGreen">
+                <td>A/c Type</td>
+                <td>A/c Title</td>
+                <td>A/c No.</td>
+                <td>Old A/c</td>
+                <td>Manual A/c</td>
+                <td>GL Code</td>
+                <td></td>
+              </tr>
+              <tr *ngFor="let item of detailsData.GroupAccounts; let i = index">
+                <td>{{ item.AccType }}</td>
+                <td>{{ item.GLAccDesc }}</td>
+                <td>{{ item.AccNo }}</td>
+                <td>{{ item.AccOldNumber }}</td>
+                <td>{{ item.AccPrevNumber }}</td>
+                <td>{{ item.GLAccNo }}</td>
+                <td
+                  class="gl-help-list-link"
+                  (click)="onAccountNoSelect(item.AccNo)"
+                >
+                  Select
+                </td>
+              </tr>
+            </table>
+          </div>
+        </div>
+        <div class="card" style="margin-top: 30px">
+          <div class="card-body">
+            <div class="form-group row ml-3">
+              <label>Total Amount :</label>
+              <div class="col-md-2 offset-md-7">
+                <input
+                  type="text"
+                  class="form-control"
+                  disabled
+                  formControlName="DebitAmount"
+                />
+              </div>
+              <div class="col-md-2">
+                <input
+                  type="text"
+                  class="form-control"
+                  disabled
+                  formControlName="CreditAmount"
+                />
+              </div>
+            </div>
+            <div class="form-group row">
+              <div class="col-md-6 mx-auto btns">
+                <button
+                  id="update"
+                  type="button"
+                  class="btn btn-success btn_1"
+                  (click)="onUpdate()"
+                >
+                  Update
+                </button>
+                <button
+                  type="button"
+                  class="btn btn-info ml-1"
+                  (click)="onCancel()"
+                >
+                  Refresh
+                </button>
+                <button
+                  type="button"
+                  (click)="ViewImage()"
+                  class="btn btn-primary btn_1 ml-1"
+                >
+                  View Image
+                </button>
+              </div>
+              <div class="col-md-1"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-xl-3 col-md-3">
+        <div class="card">
+          <p class="bg-primary text-center text-light bg-secondary title">
+            A/C Information
+          </p>
+          <!-- <div class="card-header bg-primary">
+            <h4 class="card-title text-white mb-0">A/C Information</h4>
+          </div> -->
+          <app-adjustment-account-details
+            [aData]="accountDetailsData"
+            [vData]="accountViewModel"
+          >
+          </app-adjustment-account-details>
+        </div>
+      </div>
+    </div>
+
+    <div *ngIf="ShowCloseDiv" class="modal_alert py-5">
+      <p class="text-center">A/C Balance will be Zero</p>
+      <p class="text-center">Want to Close this A/C ?</p>
+      <div class="col-md-6 mx-auto d-flex justify-content-between buttons">
+        <button class="btn btn-primary" (click)="CloseModalYes()">Yes</button>
+        <button class="btn btn-danger" (click)="CloseModalNo()">No</button>
+      </div>
+    </div>
+    <div class="image-popup text-center col-md-3" *ngIf="imageUrl != ''">
+      <span class="popup-cross" (click)="hideImageModal()">X</span>
+      <img height="216" width="250" src="{{ imageUrl }}" />
+    </div>
+  </form>
+
+  <div class="imageSig-popup text-center col-md-3" *ngIf="sigUrl != ''">
+    <span class="popup-cross" (click)="hideSigModal()">X</span>
+    <img height="216" width="250" src="{{ sigUrl }}" />
+  </div>
+</app-accounting-wrapper>

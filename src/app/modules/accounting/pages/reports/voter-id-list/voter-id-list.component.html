@@ -1,0 +1,198 @@
+<app-accounting-wrapper>
+  <form [formGroup]="VoterIdForm" class="mx-auto border col-md-9">
+    <p class="bg-dark title">Voter ID List</p>
+    <div class="form-group row">
+      <div class="col-md-1">
+        <input
+          class="form-check-input ml-1 checkbox"
+          style="margin: 0.8rem"
+          type="checkbox"
+          id="IsAllUnitCodeCheckbox2"
+          formControlName="IsAccount1Checked"
+          (change)="CheckCheckBox1()"
+          [(ngModel)]="acc1"
+        />
+      </div>
+      <!-- style="margin-left: 0.6rem" -->
+      <label class="col-md-2 col-form-label" for="IsAllUnitCodeCheckbox2" >Account Type :</label>
+
+      <div class="col-md-2">
+        <select
+          class="form-control pt-0"
+          formControlName="AccountType1"
+          (change)="AccountType1()"
+        >
+          <option value="0">-Select-</option>
+          <option
+            *ngFor="let item of voterDataListModel.AccountType1DropDown"
+            [value]="item.Id"
+          >
+            {{ item.Description }}
+          </option>
+        </select>
+      </div>
+
+      <label class="col-md-2 col-form-label">Date From :</label>
+      <div class="col-md-2">
+        <input
+          id="dateFormat"
+          type="text"
+          class="form-control"
+          bsDatepicker
+          formControlName="IssueFromDate1"
+          [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY' }"
+          autocomplete="off"
+        />
+      </div>
+      <label class="col-md-1 col-form-label">To :</label>
+      <div class="col-md-2">
+        <input
+          id="dateFormat"
+          type="text"
+          class="form-control"
+          bsDatepicker
+          formControlName="IssueToDate1"
+          [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY' }"
+          autocomplete="off"
+        />
+      </div>
+    </div>
+
+    <div class="form-group row">
+      <div class="col-md-1">
+        <input
+          class="form-check-input ml-1 checkbox"
+          style="margin: 0.8rem"
+          type="checkbox"
+          id="IsAllUnitCodeCheckbox"
+          formControlName="IsAccount2Checked"
+          (change)="CheckCheckBox2()"
+        />
+      </div>
+      <!-- style="margin-left: 0.6rem" -->
+      <label class="col-md-2 col-form-label" for="IsAllUnitCodeCheckbox" >Account Type :</label>
+
+      <div class="col-md-2">
+        <select
+          class="form-control pt-0"
+          formControlName="AccountType2"
+          (change)="AccountType2()"
+        >
+          <option value="0">-Select-</option>
+          <option
+            *ngFor="let item of voterDataListModel.AccountType2DropDown"
+            [value]="item.Id"
+          >
+            {{ item.Description }}
+          </option>
+        </select>
+      </div>
+
+      <label class="col-md-2 col-form-label">Date From :</label>
+      <div class="col-md-2">
+        <input
+          id="dateFormat"
+          type="text"
+          class="form-control"
+          bsDatepicker
+          formControlName="IssueFromDate2"
+          [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY' }"
+          autocomplete="off"
+        />
+      </div>
+      <label class="col-md-1 col-form-label">To :</label>
+      <div class="col-md-2">
+        <input
+          id="dateFormat"
+          type="text"
+          class="form-control"
+          bsDatepicker
+          formControlName="IssueToDate2"
+          [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY' }"
+          autocomplete="off"
+        />
+      </div>
+    </div>
+
+    <div class="form-group row">
+      <div class="col-md-1"></div>
+      <!-- style="margin-left: 0.6rem" -->
+      <label class="col-md-2 col-form-label">Male/Female :</label>
+
+      <div class="col-md-2">
+        <select
+          class="form-control pt-0"
+          formControlName="GenderControl"
+          (change)="GenderType()"
+        >
+          <option value="0">-ALL-</option>
+          <option
+            *ngFor="let item of voterDataListModel.GenderDropDown"
+            [value]="item.Id"
+          >
+            {{ item.Description }}
+          </option>
+        </select>
+      </div>
+    </div>
+
+    <div class="form-group row">
+      <div class="col-md-1"></div>
+      <!-- style="margin-left: 0.6rem" -->
+      <label class="col-md-2 col-form-label">With/Without Picture :</label>
+
+      <div class="col-md-2">
+        <select
+          class="form-control pt-0"
+          formControlName="PictureControl"
+          (change)="PictureType()"
+        >
+          <option
+            value="0"
+            *ngFor="let item of voterDataListModel.WithWithoutPicDropDown"
+            [value]="item.Id"
+          >
+            {{ item.Description }}
+          </option>
+        </select>
+      </div>
+    </div>
+    <div class="form-group row">
+      <div class="col-md-1"></div>
+      <div class="col-md-1">
+        <input
+          checked
+          type="radio"
+          value="0"
+          id="LanguageModeRb0"
+          name="LanguageModeRb"
+          formControlName="LanguageModeRb"
+        />
+      </div>
+
+      <label class="col-md-2 col-form-label" for="LanguageModeRb0" >English Mode</label>
+
+      <div class="col-md-1">
+        <input
+          type="radio"
+          value="1"
+          name="LanguageModeRb"
+          id="LanguageModeRb1"
+          formControlName="LanguageModeRb"
+        />
+      </div>
+
+      <label class="col-md-2 col-form-label" for="LanguageModeRb1" >Bangla Mode</label>
+    </div>
+
+    <div class="buttons">
+      <button type="button" class="btn btn-info ml-2" (click)="getReportToken('CRV')">
+        Preview
+      </button>
+      <button type="button" class="btn btn-success ml-2" (click)="getReportToken('PDF')">
+        Print
+      </button>
+    </div>
+  </form>
+  
+</app-accounting-wrapper>

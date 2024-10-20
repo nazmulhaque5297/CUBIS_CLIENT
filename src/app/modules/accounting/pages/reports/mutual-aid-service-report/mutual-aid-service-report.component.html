@@ -1,0 +1,116 @@
+<app-accounting-wrapper>
+  <form [formGroup]="MutualAidServiceForm" class="mx-auto border col-md-7 pb-2">
+    <p class="bg-dark title">Mutual Aid Service Report</p>
+
+    <div class="form-group row">
+      <div class="col-md-1">
+        <input
+          checked
+          type="radio"
+          value="0"
+          name="AccountServiceRb"
+          id="AccountServiceRb0"
+          formControlName="AccountServiceRb"
+          (click)="AccRbSelect()"
+        />
+      </div>
+
+      <label class="col-md-3 col-form-label" for="AccountServiceRb0"
+        >Deposit Account
+      </label>
+
+      <div class="col-md-1">
+        <input
+          type="radio"
+          value="1"
+          name="AccountServiceRb"
+          formControlName="AccountServiceRb"
+          (click)="LoanRbSelect()"
+          id="AccountServiceRb1"
+        />
+      </div>
+
+      <label class="col-md-3 col-form-label" for="AccountServiceRb1"
+        >Loan Account</label
+      >
+    </div>
+
+    <div class="form-group row" *ngIf="LoanAccShow">
+      <label class="col-md-4 col-form-label">Transaction From Date </label>
+      <div class="col-md-3">
+        <input
+          id="dateFormat"
+          type="text"
+          class="form-control"
+          bsDatepicker
+          formControlName="IssueFromDate1"
+          (ngModelChange)="fromDateChange()"
+          [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY' }"
+          autocomplete="off"
+        />
+      </div>
+      <label class="col-md-2 col-form-label">To Date</label>
+      <div class="col-md-3">
+        <input
+          id="dateFormat"
+          type="text"
+          class="form-control"
+          bsDatepicker
+          formControlName="IssueToDate1"
+          (ngModelChange)="toDateChange2()"
+          [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY' }"
+          autocomplete="off"
+        />
+      </div>
+    </div>
+
+    <div class="form-group row">
+      <label class="col-md-4 col-form-label">As On Date </label>
+      <div class="col-md-3">
+        <input
+          id="dateFormat"
+          type="text"
+          class="form-control"
+          bsDatepicker
+          formControlName="IssueFromDate"
+          (ngModelChange)="DateChange()"
+          [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY' }"
+          autocomplete="off"
+        />
+      </div>
+    </div>
+
+    <div class="buttons">
+      <button
+        type="button"
+        class="btn btn-info ml-2"
+        (click)="getReportToken('CRV')"
+      >
+        Preview
+      </button>
+      <button
+        type="button"
+        class="btn btn-success ml-2"
+        (click)="getReportToken('PDF')"
+      >
+        Print
+      </button>
+    </div>
+  </form>
+  <!-- grid table start *ngIf="AccTypeGridInfo.length != 0 && gridCheck" -->
+  <div *ngIf="Grid1DataList.length != 0" class="mx-auto col-md-7 set-height">
+    <table id="Data">
+      <tr>
+        <th>Select</th>
+        <th>A/c Type</th>
+        <th>A/c Title</th>
+      </tr>
+      <tr *ngFor="let item of Grid1DataList">
+        <td><input type="checkbox" (change)="selectedItemList(item)" /></td>
+        <td>{{ item.AccType }}</td>
+        <td>{{ item.Description }}</td>
+      </tr>
+    </table>
+  </div>
+  <!-- grid table end -->
+</app-accounting-wrapper>

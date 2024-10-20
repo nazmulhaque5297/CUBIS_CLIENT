@@ -1,0 +1,63 @@
+<div class="modal-header">
+    <h4 class="modal-title">{{  titleOftheSlab }}</h4>
+    <button type="button" class="close" (click)="activeModal.dismiss()" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+
+<form [formGroup]='SlabMaintainLoanForm'  class="mx-auto mt-1 mt-5 border mb-5 pb-5 col-md-11 main-container">
+    <div class="container mt-3 row pt-3 pr-0 mr-0 mx-auto">
+        <div class="col-md-3 mt-2">
+            <label class="h6">Mem. Type</label>
+        </div>
+        <div class="col-md-3 mt-2">
+            <label class="h6">Upto Loan Amt.</label>
+        </div>
+        <div class="col-md-3 mt-2">
+            <label class="h6">No. Instl.</label>
+        </div>
+    </div>
+    <div class="container row mb-3 pb-3 mx-auto">
+        <div class="col-md-3 mt-2">
+            <select formControlName="SlabFlag" class="form-control  mt-0 pt-0">
+                <option value="0" class="mt-0 pt-0">-Select-</option>
+                <option *ngFor="let item of memberTypeEnum" [value]="item.Id"  class="mt-0 pt-0"> {{item.Description}}
+                </option>
+            </select>
+        </div>
+        <div  class="col-md-3 mt-2">
+            <input formControlName="PensionRecord" type="text" class="form-control desc-input" >
+        </div>
+        <div class="col-md-3 mt-2 ml-1">
+            <input formControlName="PeriodMonth" appOnlyNumber type="text" class="form-control desc-input" >
+        </div>
+        <div *ngIf="!btnUpdate" class="col-md-2 pt-0">
+            <button (click)="onSubmitClick()" class="btn btn-primary pt-1">Submit</button>
+        </div>
+        <div *ngIf="btnUpdate" class="col-md-1 pt-0">
+            <button (click)="onUpdateClick()" class="btn btn-primary pt-1">Update</button>
+        </div>
+    </div>
+    
+    <div *ngIf="dataList.length != 0" class="mx-auto mt-1 col-md-12 set-height">
+        <table id="Data" class="col-md-12">
+            <tr>
+                <th>A/C Type</th>
+                <th>Mem.Type</th>
+                <th>Upto Loan Amt.</th>
+                <th>No. Instl.</th>
+                <th>Action</th>
+            </tr>
+            
+            <tr *ngFor="let item of dataList">
+                <td class="text-center">{{item.AtyAccType}}</td>
+                <td class="text-center">{{item.AtyFlag}}</td>
+                <td class="text-center">{{item.AtyRecords}}</td>
+                <td class="text-center">{{item.AtyPeriod}}</td>
+                <td class="text-center"><button style='font-size:16px' (click)="setDataOnUpdate(item)" class='mdi mdi-square-edit-outline'></button>
+                 <button (click)="onDeleteClick(item)" type="button" class="mdi mdi-delete ml-2 pl-0" aria-label="Close"></button></td>
+            </tr>
+        </table>
+    </div>
+
+</form>

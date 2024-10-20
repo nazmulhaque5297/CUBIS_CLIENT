@@ -1,0 +1,424 @@
+<app-accounting-wrapper>
+  <form [formGroup]="editLoanAccountForm" class="form-horizontal">
+    <p class="bg-primary text-center text-light bg-secondary title">
+      Loan Account Reject
+    </p>
+    <div class="card">
+      <div class="row card-body">
+        <div class="col-xl-9 col-md-11 pr-0 mr-0">
+          <div class="form-group row">
+            <label class="col-md-3 col-form-label"
+              >Loan Application No:<span class="text-danger">*</span></label
+            >
+            <div class="col-md-4">
+              <input
+                type="text"
+                class="form-control"
+                formControlName="ApplicationNo"
+                (change)="applicationNoChange()"
+              />
+            </div>
+            <div class="col-md-4">
+              <label></label>
+            </div>
+          </div>
+
+          <div class="form-group row">
+            <label class="col-md-3 col-form-label">Member No:</label>
+            <div class="col-md-4">
+              <input
+                type="text"
+                class="form-control"
+                formControlName="MemberNo"
+                readonly
+              />
+            </div>
+            <div class="col-md-4">
+              <label></label>
+            </div>
+          </div>
+
+          <div class="form-group row">
+            <label class="col-md-3 col-form-label">Account Type:</label>
+            <div class="col-md-4">
+              <input
+                type="text"
+                class="form-control"
+                formControlName="AccountType"
+                readonly
+              />
+            </div>
+            <div class="col-md-5">
+              <input
+                type="text"
+                class="form-control"
+                formControlName="AccTypeDesc"
+                readonly
+              />
+            </div>
+          </div>
+
+          <div class="form-group row">
+            <label class="col-md-3 col-form-label">Account No.:</label>
+            <div class="col-md-4">
+              <input
+                type="text"
+                class="form-control"
+                formControlName="AccountNo"
+                readonly
+              />
+            </div>
+            <label class="col-md-2 d-flex col-form-label">Status:</label>
+            <div class="col-md-3 d-flex">
+              <input
+                type="text"
+                class="form-control"
+                formControlName="Status"
+                readonly
+              />
+            </div>
+          </div>
+
+          <div class="form-group row">
+            <label class="col-md-3 col-form-label">Open Date:</label>
+            <div class="col-md-4">
+              <input
+                type="text"
+                class="form-control"
+                formControlName="OpenDate"
+                autocomplete="off"
+                readonly
+              />
+            </div>
+            <label class="col-md-2 col-form-label">Ledger Balance:</label>
+            <div class="col-md-3">
+              <input
+                type="text"
+                class="form-control"
+                formControlName="LedgerBalance"
+                readonly
+              />
+            </div>
+          </div>
+
+          <div class="form-group row">
+            <label class="col-md-3 col-form-label">Sanction Date:</label>
+            <div class="col-md-4">
+              <input
+                id="dateFormat"
+                type="text"
+                class="form-control"
+                formControlName="SanctionDate"
+                autocomplete="off"
+                readonly
+              />
+            </div>
+            <label class="col-md-2 col-form-label">Loan Grace Month:</label>
+            <div class="col-md-3">
+              <input
+                type="text"
+                class="form-control"
+                formControlName="LoanGraceMonth"
+                readonly
+              />
+            </div>
+          </div>
+
+          <div class="form-group row">
+            <label class="col-md-3 col-form-label">Disbursemnet Date:</label>
+            <div class="col-md-4">
+              <input
+                id="dateFormat"
+                type="text"
+                class="form-control"
+                formControlName="DisbursementDate"
+                autocomplete="off"
+                readonly
+              />
+            </div>
+            <label class="col-md-2 col-form-label">Sanction Amount:</label>
+            <div class="col-md-3">
+              <input
+                type="text"
+                class="form-control"
+                formControlName="SanctionAmount"
+                readonly
+              />
+            </div>
+          </div>
+
+          <div class="form-group row">
+            <label class="col-md-3 col-form-label">Loan Expiry Date:</label>
+            <div class="col-md-4">
+              <input
+                id="dateFormat"
+                type="text"
+                class="form-control"
+                formControlName="LoanExpiryDate"
+                autocomplete="off"
+                readonly
+              />
+            </div>
+            <label class="col-md-2 col-form-label">Disbursement Amount:</label>
+            <div class="col-md-3">
+              <input
+                type="text"
+                class="form-control"
+                formControlName="DisburesementAmount"
+                readonly
+              />
+            </div>
+          </div>
+
+          <div class="form-group row">
+            <label class="col-md-3 col-form-label"
+              >Last Transaction Date:</label
+            >
+            <div class="col-md-4">
+              <input
+                id="dateFormat"
+                type="text"
+                class="form-control"
+                formControlName="LastTransactionDate"
+                autocomplete="off"
+                readonly
+              />
+            </div>
+            <label class="col-md-2 col-form-label">No. Of Installment:</label>
+            <div class="col-md-3">
+              <input
+                type="text"
+                class="form-control"
+                formControlName="NoOfInstallment"
+                readonly
+              />
+            </div>
+          </div>
+
+          <div class="form-group row">
+            <label class="col-md-3 col-form-label">Interest Rate:</label>
+            <div class="col-md-4">
+              <input
+                type="text"
+                class="form-control"
+                formControlName="InterestRate"
+                readonly
+              />
+            </div>
+            <label class="col-md-2 col-form-label">Installment Amount:</label>
+            <div class="col-md-3">
+              <input
+                type="text"
+                class="form-control"
+                formControlName="InstallmentAmount"
+                readonly
+              />
+            </div>
+          </div>
+
+          <div class="form-group row">
+            <label class="col-md-3 col-form-label">Loan Cal. Method:</label>
+            <div class="col-md-4">
+              <select
+                class="form-control pt-0"
+                formControlName="LoanCalMethod"
+                disabled
+              >
+                <option value="0">-Select-</option>
+                <option
+                  *ngFor="let item of LoanCalculationEnum"
+                  [value]="item.Id"
+                >
+                  {{ item.Description }}
+                </option>
+              </select>
+            </div>
+            <label class="col-md-2 col-form-label"
+              >Last Installment Amt.:</label
+            >
+            <div class="col-md-3">
+              <input
+                type="text"
+                class="form-control"
+                formControlName="LastInstallmentAmount"
+                readonly
+              />
+            </div>
+          </div>
+
+          <div class="form-group row">
+            <label class="col-md-3 col-form-label"
+              >First Installment Date</label
+            >
+            <div class="col-md-4">
+              <input
+                id="dateFormat"
+                type="text"
+                class="form-control"
+                formControlName="FirstInstallmentDate"
+                autocomplete="off"
+                readonly
+              />
+            </div>
+            <label class="col-md-2 col-form-label"
+              >Second Installment Date</label
+            >
+            <div class="col-md-3">
+              <input
+                id="dateFormat"
+                type="text"
+                class="form-control"
+                formControlName="SecondInstallmentDate"
+                autocomplete="off"
+                readonly
+              />
+            </div>
+          </div>
+
+          <div class="form-group row">
+            <label class="col-md-3 col-form-label">OD Period:</label>
+            <div class="col-md-4">
+              <input
+                type="text"
+                class="form-control"
+                formControlName="ODPeriod"
+                readonly
+              />
+            </div>
+          </div>
+
+          <div class="form-group row">
+            <label class="col-md-3 col-form-label"
+              >Loan Surety Member No:</label
+            >
+            <div class="col-md-4">
+              <input
+                type="text"
+                class="form-control"
+                formControlName="LoanSuretyMemberNo"
+                readonly
+              />
+            </div>
+            <div
+              class="col-md-4"
+              *ngIf="editLoanAccountForm.value.LoanSuretyMemberNo != 0"
+            >
+              <input
+                type="text"
+                class="form-control"
+                formControlName="SuretyMemName"
+                readonly
+              />
+            </div>
+          </div>
+
+          <div class="form-group row">
+            <label class="col-md-3 col-form-label">Corr. Account No:</label>
+            <div class="col-md-4">
+              <input
+                type="text"
+                class="form-control"
+                formControlName="CorrAccountNo"
+                readonly
+              />
+            </div>
+            <label class="col-md-2 col-form-label"></label>
+          </div>
+
+          <div class="form-group row">
+            <label class="col-md-3 col-form-label">Auto Trf. Corr. A/c:</label>
+            <div class="col-md-1">
+              <input
+                type="checkbox"
+                class="form-control"
+                formControlName="AutoTrfCorrAC"
+                disabled
+              />
+            </div>
+          </div>
+
+          <div class="form-group row">
+            <label class="col-md-3 col-form-label">Old Account No:</label>
+            <div class="col-md-4">
+              <input
+                type="text"
+                class="form-control"
+                formControlName="OldAccountNo"
+                readonly
+              />
+            </div>
+          </div>
+
+          <div class="form-group row">
+            <label class="col-md-3 col-form-label">SMS Service:</label>
+            <div class="col-md-4">
+              <select
+                class="form-control pt-0"
+                formControlName="SMSService"
+                disabled
+              >
+                <option *ngFor="let item of YesNoEnum" [value]="item.Id">
+                  {{ item.Description }}
+                </option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-group row">
+            <label class="col-md-3 col-form-label">Rebate Paid:</label>
+            <div class="col-md-4">
+              <select
+                class="form-control pt-0"
+                formControlName="RebatePaid"
+                disabled
+              >
+                <option *ngFor="let item of YesNoEnum" [value]="item.Id">
+                  {{ item.Description }}
+                </option>
+              </select>
+            </div>
+          </div>
+
+          <div class="border border-danger mt-5">
+            <div class="form-group row mx-auto col-md-12 main-container pt-2">
+              <label for="select" class="col-md-2 col-form-label"
+                >Reject Note :</label
+              >
+              <div class="col-md-9 mt-1">
+                <select
+                id="selectedRejectCode"
+                  formControlName="selectedRejectCode"
+                  class="form-control pt-0"
+                  (change)="onRejectCodeChange()"
+                >
+                  <option value="0">-Select-</option>
+                  <option *ngFor="let item of RejectDropDown" [value]="item.Id">
+                    {{ item.Description }}
+                  </option>
+                </select>
+              </div>
+              <br />
+              <div class="col-md-1"></div>
+              <label for="select" class="col-md-2 col-form-label"
+                >Description :</label
+              >
+              <div class="col-md-9 mt-1">
+                <input
+                  id="description"
+                  type="text"
+                  formControlName="description"
+                  class="form-control"
+                  (keydown)="onDescriptionEnterPassHandler($event)" 
+                />
+              </div>
+            </div>
+            <div class="col-md-6 mb-3 mx-auto buttons">
+              <button type="button" class="btn" id="btnReject" (click)="rejectLoanAccount()">Reject</button>
+              
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+</app-accounting-wrapper>

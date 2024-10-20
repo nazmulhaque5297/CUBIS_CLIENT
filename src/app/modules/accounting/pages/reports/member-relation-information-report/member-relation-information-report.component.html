@@ -1,0 +1,48 @@
+<app-accounting-wrapper>
+  <form [formGroup]="MemberRelationReportForm" class="mx-auto border col-md-7">
+    <p class="bg-dark title">Member Relation Information Report</p>
+
+    <div class="form-group row">
+      <label class="col-md-3 col-form-label"
+        >Member No:<span class="text-danger">*</span></label
+      >
+
+      <div class="col-md-3">
+        <input
+          (focusout)="onChangeMemNo($event)"
+          type="text"
+          class="form-control"
+          id="MemNo"
+          formControlName="MemNo"
+          name="MemNo"
+        />
+      </div>
+
+      <div class="col-md-6">
+        <input
+          type="text"
+          formControlName="MemName"
+          class="form-control"
+          disabled="true"
+        />
+      </div>
+    </div>
+
+    <div class="buttons">
+      <button
+        type="button"
+        class="btn btn-info ml-2"
+        (click)="getReportToken('CRV')"
+      >
+        Preview
+      </button>
+      <button
+        type="button"
+        class="btn btn-success ml-2"
+        (click)="getReportToken('PDF')"
+      >
+        Print
+      </button>
+    </div>
+  </form>
+</app-accounting-wrapper>

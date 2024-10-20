@@ -1,0 +1,127 @@
+<app-accounting-wrapper>
+  <div class="row wrongAccountMainRow">
+    <div class="col-xl-2" ></div>
+    <div class="col-xl-8 col-md-8">
+      <p class="bg-primary text-center text-light bg-secondary title">
+        Day End Process Wrong Accounts
+      </p>
+        <!-- <table id="Data" >
+            <tr>
+              <th *ngIf="wrongAccountInput.UserId" >    User ID</th>
+              <th *ngIf="wrongAccountInput.VoucherNo" > Voucher No</th>
+            </tr>
+            <tr *ngIf="wrongAccountInput" >
+              <td *ngIf="wrongAccountInput.UserId" >{{ wrongAccountInput.UserId }}</td>
+              <td *ngIf="wrongAccountInput.VoucherNo" >{{ wrongAccountInput.VoucherNo }}</td>
+            </tr>
+        </table> -->
+
+        <table id="Data" >
+          <tr>
+            <th>    User ID</th>
+            <th> Voucher No</th>
+            <!-- <th *ngIf="updateAccountActive || deleteAccountActive" > Select Action</th> -->
+          </tr>
+          <tr *ngFor="let wrongItem of wrongAccountList">
+            <td>{{ wrongItem.UserId }}</td>
+            <td>{{ wrongItem.VoucherNo }}</td>
+            <!-- <td *ngIf="updateAccountActive" > <button class="btn btn-submit" (click)="onUpdateSelectedButtonClicked(wrongItem)" >Update</button> </td>
+            <td *ngIf="deleteAccountActive" > <button class="btn btn-submit" (click)="onDeleteSelectedButtonClicked(wrongItem)" >Delete</button> </td> -->
+          </tr>
+        </table>
+        <!-- <button (click)="getWrongAccountInput()" class="btn ml-5" >View Wrong Accounts</button> -->
+
+    </div>
+    <div class="col-xl-2" ></div>
+  </div>
+
+  
+
+  <!-- <div class="row addAccountFormRow" *ngIf="addAcountActive" >
+    <div class="col-xl-2 col-md-8" ></div>
+    <div class="col-xl-8 col-md-8">
+      <form [formGroup]="WrongAccountForm" class="addAccountForm mx-auto mt-3 border pb-3" >
+        
+        <div class="form-row" >
+          <label for="inputDesc" class="col-md-2">User Id:</label>
+          <input
+              type="number"
+              formControlName="UserId"
+              class="form-control"
+              id="inputDesc"
+            />
+        </div>
+        
+        <div class="form-row" >
+          <label for="inputDesc" class="col-md-2">Voucher No:</label>
+          <input
+            type="text"
+            formControlName="VoucherNo"
+            class="form-control"
+            id="inputDesc"
+          />
+        </div>
+        
+        <div class="buttons mt-3">
+          <button class="btn mr-2" type="submit" (click)="onSubmit()" >Add</button>
+          <button class="btn" (click)="clearAllFlags()" >Cancel</button>
+        </div>
+
+      </form>
+    </div>
+    <div class="col-xl-2 col-md-8" ></div>
+  </div>
+
+
+  <div class="row addAccountFormRow" *ngIf="updateAccountActiveSelected" >
+    <div class="col-xl-2 col-md-8" ></div>
+    <div class="col-xl-8 col-md-8">
+      <form [formGroup]="WrongAccountForm" class="addAccountForm mx-auto mt-3 border pb-3" >
+        
+        <div class="form-row" >
+          <label for="inputUserIdUpdate" class="col-md-2">User Id:</label>
+          <input
+              type="number"
+              formControlName="UserId"
+              class="form-control"
+              id="inputUserIdUpdate"
+              formControlName="UserId"
+              disabled
+            />
+        </div>
+        
+        <div class="form-row" >
+          <label for="inputVoucherNoUpdate" class="col-md-2">Voucher No:</label>
+          <input
+            type="text"
+            formControlName="VoucherNo"
+            class="form-control"
+            id="inputVoucherNoUpdate"
+            formControlName="VoucherNo"
+          />
+        </div>
+        
+        <div class="buttons mt-3">
+          <button class="btn mr-2" type="submit" (click)="onSubmitUpdate()" >Update</button>
+          <button class="btn" (click)="clearAllFlags()" >Cancel</button>
+        </div>
+
+      </form>
+    </div>
+    <div class="col-xl-2 col-md-8" ></div>
+  </div> -->
+
+
+  <!-- <div class="row wrongAccountCRUDRow mt-3">
+    <div class="col-xl-2 col-md-8" ></div>
+    <div class="col-xl-8 col-md-8">
+      <div class="CRUDButtons" >
+        <button class="btn" *ngIf="!addAcountActive && !updateAccountActive && !updateAccountActiveSelected && !deleteAccountActive" (click)="onAddButtonClicked()" >Add</button>
+        <button class="btn" *ngIf="!addAcountActive && !updateAccountActive && !updateAccountActiveSelected && !deleteAccountActive" (click)="onDeleteButtonClicked()" >Delete</button>
+        <button class="btn" *ngIf="!addAcountActive && !updateAccountActive && !updateAccountActiveSelected && !deleteAccountActive" (click)="onUpdateButtonClicked()" >Update</button>
+      </div>
+    </div>
+    <div class="col-xl-2 col-md-8" ></div>
+  </div> -->
+
+</app-accounting-wrapper>

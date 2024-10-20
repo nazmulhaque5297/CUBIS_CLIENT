@@ -1,0 +1,40 @@
+.card-body {
+  padding-top: 2px !important;
+  padding-bottom: 0px !important;
+}
+.card {
+  border: none !important;
+}
+.btn {
+  padding: 6px 40px !important;
+  /* background: #0069aa; */
+  color: #fff;
+}
+
+.btn:focus {
+  outline: none !important;
+  box-shadow: none !important;
+}
+
+.title {
+  margin: 0 !important;
+}
+.modal_toogle {
+  background: #dfdfe4;
+  height: 160px;
+  position: absolute;
+  bottom: 70%;
+  left: 41%;
+  animation: zoom-in-zoom-out 1s ease;
+}
+@keyframes zoom-in-zoom-out {
+  0% {
+    transform: scale(1, 1);
+  }
+  50% {
+    transform: scale(1.5, 1.5);
+  }
+  100% {
+    transform: scale(1, 1);
+  }
+}

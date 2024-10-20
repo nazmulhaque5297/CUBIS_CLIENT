@@ -1,0 +1,105 @@
+<app-main-wrapper [module]="module">
+  <form [formGroup]="GroupSummaryStatementForm" class="mx-auto border col-md-7">
+    <p class="bg-dark title">Group Summary Statement Report</p>
+
+    <div *ngIf="showOldAc" class="form-group row">
+      <label class="col-md-3 col-form-label">A/C Type:</label>
+
+      <div class="col-md-8 d-flex">
+        <input
+          type="text"
+          class="form-control col-md-4 mr-2"
+          id="AccType"
+          formControlName="AccType"
+          name="AccType"
+          (change)="onAccTypeChange($event)"
+          (keydown)="onEnterAccTypeHandler($event)"
+          onfocus="this.select()"
+        />
+        <select
+          class="form-control"
+          (input)="onAccTypeChange($event)"
+          formControlName="AccTypeCode"
+        >
+          <option value="0">-Select-</option>
+          <option *ngFor="let item of accTypeData" [value]="item.Id">
+            {{ item.Description }}
+          </option>
+        </select>
+      </div>
+    </div>
+
+    <div *ngIf="showOldAc" class="form-group row">
+      <label class="col-md-3 col-form-label">Old A/c No:</label>
+
+      <div class="col-md-3">
+        <input
+          type="text"
+          class="form-control"
+          id="OldAcNo"
+          formControlName="OldAcNo"
+          name="OldAcNo"
+          (change)="onChangeOldAcNo($event)"
+          (keydown)="onEnterOldAcNoHandler($event)"
+        />
+      </div>
+    </div>
+
+    <div class="form-group row">
+      <label class="col-md-3 col-form-label"
+        >Member No :<span class="text-danger">*</span></label
+      >
+
+      <div class="col-md-3">
+        <input
+          (change)="onChangeMemNo($event)"
+          type="text"
+          class="form-control"
+          id="MemNo"
+          formControlName="MemNo"
+          name="MemNo"
+        />
+      </div>
+
+      <div class="col-md-6">
+        <input
+          type="text"
+          formControlName="MemName"
+          class="form-control"
+          disabled="true"
+        />
+      </div>
+    </div>
+
+    <div class="form-group row">
+      <label class="col-md-3 col-form-label">Account Status :</label>
+      <div class="col-md-3">
+        <select class="form-control pt-0" formControlName="AccStatus">
+          <option
+            *ngFor="let item of inputHelpData.grpSummaryAccountTypeList"
+            [value]="item.Id"
+          >
+            {{ item.Description }}
+          </option>
+        </select>
+      </div>
+    </div>
+
+    <div class="buttons">
+      <button
+        type="button"
+        class="btn btn-info ml-2"
+        (click)="getReportToken('CRV')"
+      >
+        Preview
+      </button>
+      <button
+        type="button"
+        class="btn btn-success ml-2"
+        (click)="getReportToken('PDF')"
+      >
+        Print
+      </button>
+    </div>
+  </form>
+</app-main-wrapper>

@@ -1,0 +1,64 @@
+<app-house-keeping-wrapper>
+  <form
+    [formGroup]="setupForm"
+    novalidate
+    class="mx-auto border col-md-6 main-container pb-3"
+  >
+    <p class="bg-dark title">Auto Voucher Print Control</p>
+    <div class="form-row">
+      <div class="col-md-12">
+        <div class="row div-table-header">
+          <div class="col-md-2">Select</div>
+          <div class="col-md-2">FuncOpt</div>
+          <div class="col-md-8">FuncOptDesc</div>
+        </div>
+        <div
+          formArrayName="selectedItems"
+          *ngFor="
+            let item of setupForm.get('selectedItems')['controls'];
+            let i = index
+          "
+          class="border"
+        >
+          <div class="row" [formGroupName]="i">
+            <div class="col-md-2">
+              <input
+                type="checkbox"
+                style="font-size: 10px; margin-top: 6px"
+                class="form-control"
+                formControlName="IsChecked"
+              />
+            </div>
+            <div class="col-md-2">
+              <input
+                disabled
+                class="form-control formatting-text-box"
+                formControlName="FuncOpt"
+              />
+            </div>
+            <div class="col-md-8">
+              <input
+                class="form-control formatting-text-box"
+                disabled
+                formControlName="FuncOptDesc"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row mt-2">
+      <div class="col-md-11 mx-auto">
+        <button type="button" (click)="Update()" class="btn btn-success ml-2">
+          Save
+        </button>
+        <button type="button" (click)="SetMark(true)" class="btn btn-primary ml-3">
+          All Mark
+        </button>
+        <button type="button" (click)="SetMark(false)" class="btn btn_1 ml-3">
+          All Un-Mark
+        </button>
+      </div>
+    </div>
+  </form>
+</app-house-keeping-wrapper>

@@ -1,0 +1,199 @@
+<app-accounting-wrapper>
+  <form [formGroup]="AccountBalanceTransfer">
+    <div class="mx-auto border col-md-7">
+      <p class="bg-dark title">A/c To A/c Balance Transfer</p>
+      <div class="form-row">
+        <label class="col-md-4 col-form-label" for="accountType"
+          >From Account Type :</label
+        >
+        <div class="pl-2 form-group col-md-2">
+          <input
+            type="text"
+            formControlName="FromAccountTypeId"
+            (change)="selectFromAccountTypeChangeHandler($event)"
+            class="form-control"
+            id="accountType"
+          />
+        </div>
+        <div class="form-group col-md-6 mt-0 pt-0">
+          <select
+            formControlName="SelectedFromAccountType"
+            (change)="selectFromAccountTypeChangeHandler($event)"
+            class="form-control mt-0 pt-0"
+          >
+            <option value="0">-Select-</option>
+            <option *ngFor="let item of accTypeList" [value]="item.Id">
+              {{ item.Description }}
+            </option>
+          </select>
+        </div>
+      </div>
+
+      <div class="form-row">
+        <label class="col-md-4 col-form-label" for="accountType"
+          >To Account Type :</label
+        >
+        <div class="pl-2 form-group col-md-2">
+          <input
+            type="text"
+            formControlName="ToAccountTypeId"
+            (change)="selectToAccountTypeChangeHandler($event)"
+            class="form-control"
+            id="ToAccountTypeId"
+          />
+        </div>
+        <div class="form-group col-md-6">
+          <select
+            formControlName="SelectedToAccountType"
+            id="SelectedToAccountType"
+            (change)="selectToAccountTypeChangeHandler($event)"
+            class="form-control mt-0 pt-0"
+          >
+            <option value="0">-Select-</option>
+            <option *ngFor="let item of accTypeList" [value]="item.Id">
+              {{ item.Description }}
+            </option>
+          </select>
+        </div>
+      </div>
+
+      <div class="form-row">
+        <label class="col-md-4 col-form-label" for="CurrentStatus"
+          >From A/c Type Last Open Date :</label
+        >
+        <div class="col-md-2">
+          <input
+            id="dateFormat"
+            type="text"
+            placeholder="DD/MM/YYYY"
+            class="form-control"
+            bsDatepicker
+            formControlName="FromLastOpenDate"
+            [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY' }"
+            autocomplete="off"
+          />
+        </div>
+      </div>
+      <div class="form-row">
+        <label class="col-md-4 col-form-label" for="CurrentStatus"
+          >To A/c Type Last Open Date :</label
+        >
+        <div class="col-md-2">
+          <input
+            id="dateFormat"
+            type="text"
+            placeholder="DD/MM/YYYY"
+            class="form-control"
+            bsDatepicker
+            formControlName="ToLastOpenDate"
+            [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY' }"
+            autocomplete="off"
+          />
+        </div>
+      </div>
+
+      <div class="form-row">
+        <label class="col-md-4 col-form-label" for="TransferAmount"
+          >Transfer Amount :</label
+        >
+        <div class="pl-2 form-group col-md-2">
+          <input
+            appOnlyNumber
+            type="text"
+            formControlName="TransferAmount"
+            class="form-control"
+            id="TransferAmount"
+            (keydown)="onEnterTransferAmountHandler($event)"
+          />
+        </div>
+      </div>
+
+      <div class="form-row">
+        <label class="col-md-4 col-form-label" for="GLDebitCode"
+          >GL Debit Code :</label
+        >
+        <div class="pl-2 form-group col-md-2">
+          <input
+            type="text"
+            formControlName="GLDebitCode"
+            class="form-control"
+            id="GLDebitCode"
+            readonly
+          />
+        </div>
+        <label class="col-md-2 col-form-label" for="GLCreditCode"
+          >GL Credit Code :</label
+        >
+        <div class="pl-2 form-group col-md-2">
+          <input
+            type="text"
+            formControlName="GLCreditCode"
+            class="form-control"
+            id="GLCreditCode"
+            readonly
+          />
+        </div>
+      </div>
+
+      <div class="form-row">
+        <label class="col-md-4 col-form-label" for="VoucherNo">Vch.No. :</label>
+        <div class="pl-2 form-group col-md-2">
+          <input
+            type="text"
+            formControlName="VoucherNo"
+            class="form-control"
+            id="VoucherNo"
+            (keydown)="onEnterVoucherNoHandler($event)"
+          />
+        </div>
+      </div>
+
+      <div class="form-row">
+        <label class="col-md-4 col-form-label" for="Description"
+          >Description :</label
+        >
+        <div class="pl-2 form-group col-md-4">
+          <input
+            type="text"
+            formControlName="Description"
+            class="form-control"
+            id="Description"
+          />
+        </div>
+      </div>
+
+      <div class="buttons">
+        <button
+          type="button"
+          class="btn btn-success"
+          (click)="ProcessHandler()"
+        >
+          Process
+        </button>
+        <button type="button" class="btn btn-info" (click)="PostHandler()">
+          Post
+        </button>
+        <button type="button" class="btn btn-danger" (click)="ReverseHandler()">
+          Reverse
+        </button>
+        <button
+          type="button"
+          class="btn btn-primary"
+          (click)="getReportToken()"
+        >
+          Print
+        </button>
+        <!-- <button type="button" class="btn" (click)="exitPage()">Exit</button> -->
+      </div>
+    </div>
+  </form>
+
+  <iframe
+    [src]="iFrameUrl"
+    *ngIf="displayIFrame"
+    class="iframeStyle"
+    id="reportIFrame"
+    scrolling="no"
+  >
+  </iframe>
+</app-accounting-wrapper>

@@ -1,0 +1,90 @@
+<app-accounting-wrapper>
+  <form
+    novalidate
+    [formGroup]="PostOfficeCodeForm"
+    class="mx-auto border col-md-6 main-container pb-3"
+  >
+    <p class="bg-dark title">Post Office Code Maintenance</p>
+    <div class="form-row">
+      <label label for="inputDesc" class="col-md-3">Post Office Code:</label>
+      <div class="form-group col-md-2">
+        <input
+          type="text"
+          (change)="changeSelectValue($event)"
+          class="form-control"
+          id="PostOfficeCode"
+          formControlName="PostOfficeCode"
+          name="PostOfficeCode"
+        />
+      </div>
+      <div class="form-group col-md-4">
+        <select
+          formControlName="selectedOptionCode"
+          (change)="selectChangeHandler($event)"
+          class="form-control pt-1"
+        >
+          <option value="0">-Select-</option>
+          <option *ngFor="let item of dataList" [value]="item.PostOfficeCode">
+            {{ item.PostOfficeName }}
+          </option>
+        </select>
+      </div>
+    </div>
+    <div class="form-row">
+      <label for="inputDesc" class="col-md-3"
+        >Description:<span class="text-danger">*</span></label
+      >
+      <div class="form-group col-md-6">
+        <input
+          type="text"
+          formControlName="PostOfficeName"
+          class="form-control desc-input"
+          id="inputDesc"
+        />
+      </div>
+      <div
+        *ngIf="
+          PostOfficeCodeForm.controls['PostOfficeName'].invalid &&
+          PostOfficeCodeForm.controls['PostOfficeName'].touched
+        "
+        class="text-danger ml-5"
+      >
+        Required*
+      </div>
+    </div>
+    <div class="form-row">
+      <label for="inputDesc" class="col-md-3">Description - Bangla:</label>
+      <div class="form-group col-md-6">
+        <input
+          type="text"
+          formControlName="PostOfficeNameBang"
+          class="form-control desc-input"
+          id="inputDesc"
+        />
+      </div>
+    </div>
+    <div class="buttons col-md-7 mx-auto">
+      <button type="button" (click)="saveOrUpdate()" class="btn btn_1 ml-4">
+        {{ submitButtonText }}
+      </button>
+      <button (click)="getTableReportData()" class="ml-5 btn">View</button>
+    </div>
+  </form>
+  <div
+    *ngIf="dataList.length != 0 && displayTabularData"
+    class="mx-auto col-md-6 set-height"
+  >
+    <table id="Data">
+      <tr>
+        <th>Code</th>
+        <th>Description</th>
+        <th>Description-Bangla</th>
+      </tr>
+      <tr *ngFor="let item of dataList">
+        <td class="text-center">{{ item.PostOfficeCode }}</td>
+        <td>{{ item.PostOfficeName }}</td>
+        <td>{{ item.PostOfficeNameBang }}</td>
+      </tr>
+    </table>
+  </div>
+</app-accounting-wrapper>

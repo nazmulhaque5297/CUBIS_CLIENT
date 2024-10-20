@@ -1,0 +1,173 @@
+<app-accounting-wrapper [formGroup]='memberVerifyForm'>
+    <h4 *ngIf="VerifyDataList.length" class="p-3 text-center">Approve Loan Application</h4>
+    <div *ngIf="!VerifyDataList.length">
+            <h1 class="text-center no__data align-middle">
+                No application to approve..!!
+            </h1>
+    </div>
+    <form *ngIf="VerifyDataList.length" class="mx-auto mt-2 border col-md-12">
+        <h5 class="text-center p-1">Approve - Spooler</h5>
+        <div class="mx-auto  col-md-12 infoTable">
+            <table id="Data">
+                <tr>
+                    <th>Action</th>
+                    <th>Action</th>
+                    <th>View</th>
+                    <th>Member No.</th>
+                    <th>A/C Type</th>
+                    <th>A/C Type Descrpition</th>
+                    <th>Application No.</th>
+                    <th>Application Date</th>
+                    <th>Int.Rate</th>
+                    <th>Application Amt.</th>
+                    <th>Guarantor Amt.</th>
+                    <th>Module</th>
+                    <th>User Id.</th>
+                </tr>
+                <tr *ngFor="let item of VerifyDataList">
+                    <td><button value="{{item.LoanApplicationNo}}" class="btn-verify" (click)="displayVerifyOption(item)" >Select</button></td>
+                    <td><button value="{{item.LoanApplicationNo}}" class="btn-reject" (click)="displayRejectOption(item)">Reject</button></td>
+                    <td><button value="{{item.LoanApplicationNo}}" class="btn-print" (click)="getReportToken(item)">Print</button></td>
+                    <td>{{item.MemNo}}</td>
+                    <td>{{item.AccType}}</td>
+                    <td>{{item.AccTypeDescription}}</td>
+                    <td>{{item.LoanApplicationNo}}</td>
+                    <td>{{item.LoanApplicationDate}}</td>
+                    <td>{{item.LoanIntRate}}</td>
+                    <td>{{item.LoanApplicationAmt}}</td>
+                    <td>{{item.LoanTotGuarantorAmt}}</td>
+                    <td>{{item.Module}}</td>
+                    <td>{{item.InputBy}}</td>
+                </tr>
+            </table>
+        </div>
+    </form>
+    <!-- Member Verify Screeen  -->
+    <div *ngIf="displayVerifyData" class="border border-success">
+        <div class="form-group row  mx-auto col-md-12 pt-2">
+            <table id="Data2">
+                <tr>
+                    <td>Steps of Loan:</td>
+                    <td> <input class="form-control" formControlName="stepOfLoan" type="text" readonly> </td>
+                    <td>Previous Performence:</td>
+                    <td> <input class="form-control" formControlName="previousPerformence" type="text" readonly> </td>
+                    <td>Total Deposit:</td>
+                    <td> <input class="form-control" formControlName="totalDeposit" type="text" readonly> </td>
+                    <td>
+                        <button class="buttons btn btn-primary" data-toggle="modal" data-target="#exampleModal">Details</button>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Approve Amount:</td>
+                    <td> <input class="form-control" formControlName="verifyAmount" (change)="verifyAmountChange()" (keydown)="verifyAmountChangekeydown($event)" type="text"> </td>
+                    <td>No of Installment:</td>
+                    <td> <input class="form-control" id="noOfInstallment" formControlName="noOfInstallment" (change)="noOfInstallmentChange()" (keydown)="noOfInstallmentChangekeydown($event)" type="text"> </td>
+                    <td>Installment Amount:</td>
+                    <td> <input class="form-control" id="installmentAmount" formControlName="installmentAmount"(change)="installmentAmountChange()" (keydown)="installmentAmountChangekeydown($event)" type="text"> </td>
+                </tr>
+                <tr>
+                    <td>Last Installment Amount:</td>
+                    <td> <input class="form-control" formControlName="lastInstallmentAmount" type="text" readonly> </td>
+                    <td>First Installment Date:</td>
+                    <td>
+                        <input id="dateFormat" type="text"
+                            placeholder="DD/MM/YYYY"
+                            class="form-control"
+                            bsDatepicker
+                            formControlName="firstInstallmentDate"
+                            (ngModelChange)="firstInstallmentDateChange()"
+                            (keydown)="firstInstallmentDateChangekeydown($event)"
+                            [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY' }"
+                            autocomplete="off"
+                        >
+                    </td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+            </table>
+        </div>
+        <div class="mx-auto col-md-12 pt-5">
+            <div class="form-group row">
+                <label for="select" class="col-md-2 col-form-label">Approve Note :</label>
+                <div class="col-md-10 mt-1">
+                    <select formControlName="selectedVerifyCode" id="selectedVerifyCode" class="form-control pt-0" (change)="ApproveNoteChange()">
+                        <option value="0">-Select-</option>
+                        <option *ngFor="let item of VerifyCodeDropDown" [value]="item.Id">{{item.Description}}
+                        </option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group row">
+            <label for="select" class="col-md-2 col-form-label">Description :</label>
+            <div class="col-md-10 mt-1">
+                <input type="text" id="description" formControlName="description" class="form-control">
+            </div>
+        </div>
+        </div>
+        <div class="col-md-6 mb-3 mx-auto  buttons">
+            <button class="btn btn_1" (click)="verifyInfo()" type="button">Approve</button>
+            <button (click)="closeVerifyOption()" class="ml-5 btn">Cancel</button>
+        </div>
+    </div>
+
+    <!-- Member Reject Screen  -->
+    <div *ngIf="displayRejectData" class="border border-danger mt-5">
+        <div class="form-group row  mx-auto col-md-12 main-container">
+            <label for="select" class="col-md-1 col-form-label">Reject Note :</label>
+            <div class="col-md-10 mt-1">
+                <select formControlName="selectedRejectCode" class="form-control pt-0">
+                    <option value="0">-Select-</option>
+                    <option *ngFor="let item of RejectCodeDropDown" [value]="item.Id">{{item.Description}}
+                    </option>
+                </select>
+            </div>
+            <div class="col-md-1"></div>
+            <label for="select" class="col-md-1 col-form-label">Description :</label>
+            <div class="col-md-10 mt-1">
+                <input type="text" formControlName="description" class="form-control">
+            </div>
+        </div>
+        <div class="col-md-6 mb-3 mx-auto  buttons">
+            <button class="btn" (click)="rejectInfo()">Reject</button>
+            <button (click)="closeRejectOption()" class="ml-5 btn">Cancel</button>
+        </div>
+    </div>
+
+
+  <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-body details__model">
+            <table id="Data">
+                <tr>
+                    <th>A/C Type</th>
+                    <th>A/C Title</th>
+                    <th>A/C No.</th>
+                    <th>Old A/C</th>
+                    <th>Ledger Balance</th>
+                    <th>Status</th>
+                </tr>
+                <tr *ngFor="let item of UserLoanAccountData">
+                    <td>{{item.AccType}}</td>
+                    <td>{{item.TrnCodeDesc}}</td>
+                    <td>{{item.AccNo}}</td>
+                    <td *ngIf="item.AccOldNumber!=0">{{item.AccOldNumber}}</td>
+                    <td *ngIf="item.AccOldNumber==0"></td>
+                    <td>{{item.AccBalance}}</td>
+                    <td>{{item.AccStatusDesc}}</td>
+                </tr>
+            </table>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+</app-accounting-wrapper>

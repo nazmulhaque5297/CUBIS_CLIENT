@@ -1,0 +1,241 @@
+<app-main-wrapper [module]="module">
+  <form
+    [formGroup]="CsVchWiseTransactionReportForm"
+    class="mx-auto mt-1 mt-5 border col-md-7 main-container"
+  >
+    <p class="mt-1 bg-dark title">Id Wise Received and Payment Register</p>
+
+    <!-- <div class="form-group row">
+      <div class="col-md-1">
+        <input
+          type="radio"
+          value="0"
+          name="rbTrnMode"
+          formControlName="rbTrnMode"
+        />
+      </div>
+
+      <label class="col-md-3 col-form-label">All</label>
+
+      <div class="col-md-1">
+        <input
+          type="radio"
+          value="1"
+          name="rbTrnMode"
+          formControlName="rbTrnMode"
+        />
+      </div>
+
+      <label class="col-md-3 col-form-label">Payment</label>
+
+      <div class="col-md-1">
+        <input
+          type="radio"
+          value="2"
+          name="rbTrnMode"
+          formControlName="rbTrnMode"
+        />
+      </div>
+
+      <label class="col-md-3 col-form-label">Received</label>
+    </div> -->
+
+    <!-- <div class="form-group row">
+          <label class="col-md-4 col-form-label">Report Mode ...........</label>
+        </div>
+        <div class="form-group row">
+          <div class="col-md-1">
+            <input
+              type="radio"
+              value="1"
+              name="rbReportMode"
+              formControlName="rbReportMode"
+            />
+          </div>
+    
+          <label class="col-md-3 col-form-label">Cash</label>
+    
+          <div class="col-md-1">
+            <input
+              type="radio"
+              value="3"
+              name="rbReportMode"
+              formControlName="rbReportMode"
+            />
+          </div>
+    
+          <label class="col-md-3 col-form-label">Transfer</label>
+    
+          <div class="col-md-1">
+            <input
+              type="radio"
+              value="0"
+              name="rbReportMode"
+              formControlName="rbReportMode"
+            />
+          </div>
+    
+          <label class="col-md-3 col-form-label">Both</label>
+        </div>
+    
+        <div class="form-group row">
+          <label class="col-md-4 col-form-label">Teller Mode ...........</label>
+        </div>
+        <div class="form-group row">
+          <div class="col-md-1">
+            <input
+              [(ngModel)]="chbIsAllTellerStatus"
+              (ngModelChange)="checkIsAllTellerValue($event)"
+              class="form-check-input ml-1 checkbox"
+              style="margin: 0.8rem"
+              type="checkbox"
+              id="IsAllTeller"
+              formControlName="IsAllTeller"
+            />
+          </div>
+          
+          <label class="col-md-3 col-form-label">All</label>
+          <div class="col-md-3">
+            <input
+              (focusout)="onChangeTellerCode($event)"
+              type="text"
+              class="form-control"
+              id="TellerCode"
+              formControlName="TellerCode"
+              name="TellerCode"
+            />
+          </div>
+    
+          <div class="col-md-5">
+            <select
+              class="form-control"
+              formControlName="Teller"
+              disabled="IsTellerDisabled"
+              (change)="onChangeTeller($event)"
+            >
+              <option value="0">-Select-</option>
+              <option
+                *ngFor="let item of inputHelpData.cashDisbTellerList"
+                [value]="item.Id"
+              >
+                {{ item.Description }}
+              </option>
+            </select>
+          </div>
+        </div>
+    
+        <div class="form-group row">
+          <label class="col-md-4 col-form-label">Collector Mode ...........</label>
+        </div>
+        <div class="form-group row">
+          <div class="col-md-1">
+            <input
+              [(ngModel)]="chbIsAllCollectorStatus"
+              (ngModelChange)="checkIsAllCollectorValue($event)"
+              class="form-check-input ml-1 checkbox"
+              style="margin: 0.8rem"
+              type="checkbox"
+              id="IsAllCollector"
+              formControlName="IsAllCollector"
+            />
+          </div>
+        
+          <label class="col-md-3 col-form-label">All</label>
+          <div class="col-md-3">
+            <input
+              (focusout)="onChangeCollectorCode($event)"
+              type="text"
+              class="form-control"
+              id="CollectorCode"
+              formControlName="CollectorCode"
+              name="CollectorCode"
+            />
+          </div>
+    
+          <div class="col-md-5">
+            <select
+              disabled="IsCollectorDisabled"
+              class="form-control"
+              formControlName="Collector"
+              (change)="onChangeCollector($event)"
+            >
+              <option value="0">-Select-</option>
+              <option
+                *ngFor="let item of inputHelpData.CollectorList"
+                [value]="item.Id"
+              >
+                {{ item.Description }}
+              </option>
+            </select>
+          </div>
+        </div>
+    
+        <div class="form-group row">
+          <div class="col-md-1">
+            <input
+              type="radio"
+              value="0"
+              name="rbCollection"
+              formControlName="rbCollection"
+            />
+          </div>
+    
+          <label class="col-md-3 col-form-label">All - Collection</label>
+    
+          <div class="col-md-1">
+            <input
+              type="radio"
+              value="1"
+              name="rbCollection"
+              formControlName="rbCollection"
+            />
+          </div>
+    
+          <label class="col-md-3 col-form-label">WithOut Booth Collection</label>
+    
+          <div class="col-md-1">
+            <input
+              type="radio"
+              value="3"
+              name="rbCollection"
+              formControlName="rbCollection"
+            />
+          </div>
+    
+          <label class="col-md-3 col-form-label">Only Booth Collection</label>
+        </div>
+    
+        <div class="form-group row">
+          <label class="col-md-4 col-form-label">From date:</label>
+          <div class="col-md-3">
+            <input
+              id="dateFormat"
+              type="text"
+              class="form-control"
+              bsDatepicker
+              formControlName="IssueFromDate"
+              [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY' }"
+              autocomplete="off"
+            />
+          </div>
+          <label class="col-md-2 col-form-label">To date:</label>
+          <div class="col-md-3">
+            <input
+              id="dateFormat"
+              type="text"
+              class="form-control"
+              bsDatepicker
+              formControlName="IssueToDate"
+              [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY' }"
+              autocomplete="off"
+            />
+          </div>
+        </div> -->
+
+    <div class="buttons">
+      <button type="button" class="btn btn-success" (click)="getReportToken()">
+        Preview/Print
+      </button>
+    </div>
+  </form>
+</app-main-wrapper>

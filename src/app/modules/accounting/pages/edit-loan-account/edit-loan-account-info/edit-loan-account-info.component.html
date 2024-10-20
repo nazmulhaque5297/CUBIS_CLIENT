@@ -1,0 +1,341 @@
+<form [formGroup]='editLoanAccountForm' class="form-horizontal">
+    <div class="form-group row">
+      <label class="col-md-3 col-form-label">Member No:<span class="text-danger">*</span></label>
+      <div class="col-md-4">
+        <input type="text" class="form-control" formControlName="MemberNo" (change)="onMemberNoChange()">
+      </div>
+      <div class="col-md-4">
+        <label>{{MemberNoData.MemName}}</label>
+      </div>
+    </div>
+
+
+    <div class="form-group row">
+      <label class="col-md-3 col-form-label">Account Type:<span class="text-danger">*</span></label>
+      <div class="col-md-4">
+        <input type="text" class="form-control" formControlName="AccountType"
+          (change)="onAccountTypeChange()">
+      </div>
+      <div class="col-md-5">
+        <select class="form-control pt-0" formControlName="AccountType"
+          (change)="onAccountTypeChange()">
+          <option value="0">-Select-</option>
+          <option *ngFor="let item of AccTypeDataDropDown" [value]="item.AccType">{{item.AccTypeDescription}}
+          </option>
+        </select>
+       
+      </div>
+      <div class="col-md-2" *ngIf="accountTypeDetails.AccDepositMode>0">
+        <label>{{accountTypeDetails.AccDepositModeDesc}}</label>
+      </div>
+    </div>
+
+    <div class="form-group row" *ngIf="AccTypeData.WeeklyDayVisible">
+      <label class="col-md-3 col-form-label">Weekly Day:</label>
+      <div class="col-md-4">
+        <select class="form-control pt-0" formControlName="WeeklyDay">
+          <option value="0">-Select-</option>
+          <option *ngFor="let item of AccTypeDataDropDown" [value]="item.AccType">{{item.AccTypeDescription}}
+          </option>
+        </select>
+      </div>
+    </div>
+
+
+    <div class="form-group row">
+      <label class="col-md-3 col-form-label">Account No.:</label>
+      <div class="col-md-4">
+        <select class="form-control pt-0" formControlName="AccountNo"
+          (change)="onAccountNoChange()">
+          <option value="0">-Select-</option>
+          <option *ngFor="let item of AccNoDropdown" [value]="item">{{item}}
+          </option>
+        </select>
+      </div>
+      <label class="col-md-2 d-flex col-form-label">Status:</label>
+      <div class="col-md-3 d-flex">
+        <input type="text" class="form-control" formControlName="Status" readonly>
+      </div>
+    </div>
+
+    <div class="form-group row">
+      <label class="col-md-3 col-form-label">Open Date:</label>
+      <div class="col-md-4">
+        <!-- (ngModelChange)="onBirthDateChange(memberApplicationForm.value.DateOfBirth)" -->
+        <input id="dateFormat" type="text"
+                placeholder="DD/MM/YYYY"
+                class="form-control"
+                bsDatepicker 
+                formControlName="OpenDate"
+                (ngModelChange)="openDateChange()"
+                [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY' }"
+                autocomplete="off"
+              >
+      </div>
+      <label class="col-md-2 col-form-label">Ledger Balance:</label>
+      <div class="col-md-3">
+        <input type="text" class="form-control" formControlName="LedgerBalance" readonly>
+      </div>
+    </div>
+
+    <div class="form-group row">
+      <label class="col-md-3 col-form-label">Sanction Date:</label>
+      <div class="col-md-4">
+        <input id="dateFormat" type="text"
+                placeholder="DD/MM/YYYY"
+                class="form-control"
+                bsDatepicker 
+                formControlName="SanctionDate"
+                (ngModelChange)="sanctionDateChange()"
+                [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY' }"
+                autocomplete="off"
+              >
+      </div>
+      <label *ngIf="AccTypeData.LoanGraceVisible" class="col-md-2 col-form-label">Loan Grace Month:</label>
+      <div *ngIf="AccTypeData.LoanGraceVisible" class="col-md-3">
+        <input type="text" class="form-control" formControlName="LoanGraceMonth">
+      </div>
+    </div>
+
+    <div  *ngIf="AccNoData.DisbAmtVisible" class="form-group row">
+        <label  class="col-md-3 col-form-label">Disbursemnet Date:</label>
+        <div class="col-md-4">
+          <input id="dateFormat" type="text"
+                placeholder="DD/MM/YYYY"
+                class="form-control"
+                bsDatepicker 
+                formControlName="DisbursementDate"
+                (ngModelChange)="disbursementDateChange()"
+                [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY' }"
+                autocomplete="off"
+              >
+        </div>
+        <label class="col-md-2 col-form-label">Sanction Amount:</label>
+        <div class="col-md-3">
+          <input type="text" class="form-control" formControlName="SanctionAmount">
+        </div>
+    </div>
+
+    <div *ngIf="!AccNoData.DisbAmtVisible" class="form-group row">
+      <label class="col-md-3 col-form-label">Sanction Amount:</label>
+      <div class="col-md-4">
+        <input type="text" class="form-control"   formControlName="SanctionAmount">
+      </div>
+    </div>
+
+    <div class="form-group row">
+        <label class="col-md-3 col-form-label">Loan Expiry Date:</label>
+        <div class="col-md-4">
+          <input id="dateFormat" type="text"
+                placeholder="DD/MM/YYYY"
+                class="form-control"
+                bsDatepicker 
+                formControlName="LoanExpiryDate"
+                (ngModelChange)="loanExpiryDateChange()"
+                [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY' }"
+                autocomplete="off"
+              >
+        </div>
+        <label *ngIf="AccNoData.DisbAmtVisible" class="col-md-2 col-form-label">Disbursement Amount:</label>
+        <div *ngIf="AccNoData.DisbAmtVisible" class="col-md-3">
+          <input type="text" class="form-control"  formControlName="DisburesementAmount">
+        </div>
+    </div>
+    
+    <div class="form-group row">
+        <label class="col-md-3 col-form-label">Last Transaction Date:</label>
+        <div class="col-md-4">
+          <input id="dateFormat" type="text"
+                placeholder="DD/MM/YYYY"
+                class="form-control"
+                bsDatepicker 
+                formControlName="LastTransactionDate"
+                (ngModelChange)="lastTransactionDateChange()"
+                [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY' }"
+                autocomplete="off"
+              >
+        </div>
+        <label *ngIf="AccNoData.NoInstlVisible" class="col-md-2 col-form-label">No. Of Installment:</label>
+        <div *ngIf="AccNoData.NoInstlVisible" class="col-md-3">
+          <input type="text" class="form-control" formControlName="NoOfInstallment" (change)="noOfInstallmentChange()">
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <label class="col-md-3 col-form-label">Interest Rate:</label>
+        <div class="col-md-4">
+          <input type="text" class="form-control" formControlName="InterestRate">
+        </div>
+        <label *ngIf="AccNoData.InstlAmountVisible" class="col-md-2 col-form-label">Installment Amount:</label>
+        <div *ngIf="AccNoData.InstlAmountVisible" class="col-md-3">
+          <input type="text" class="form-control"  formControlName="InstallmentAmount" (change)="installmentAmountChange()">
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <label class="col-md-3 col-form-label">Loan Cal. Method:</label>
+        <div class="col-md-4">
+            <select class="form-control pt-0"
+              formControlName="LoanCalMethod">
+              <option value="0">-Select-</option>
+              <option *ngFor="let item of LoanCalculationEnum" [value]="item.Id">{{item.Description}}
+              </option>
+            </select>
+          </div>
+        <label *ngIf="AccNoData.LastInstlAmtVisible" class="col-md-2 col-form-label">Last Installment Amt.:</label>
+        <div *ngIf="AccNoData.LastInstlAmtVisible" class="col-md-3">
+          <input type="text" class="form-control" (change)="onLoanNoEvent()" formControlName="LastInstallmentAmount">
+        </div>
+    </div>
+
+    <div class="form-group row">
+      <label *ngIf="AccNoData.FirstInstlDtVisible" class="col-md-3 col-form-label">First Installment Date</label>
+      <div *ngIf="AccNoData.FirstInstlDtVisible" class="col-md-4">
+        <input id="dateFormat" type="text"
+                placeholder="DD/MM/YYYY"
+                class="form-control"
+                bsDatepicker 
+                formControlName="FirstInstallmentDate"
+                (ngModelChange)="firstInstallmentDateChange()"
+                [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY' }"
+                autocomplete="off"
+              >
+      </div>
+      <label *ngIf="AccNoData.SecondInstlDtVisible" class="col-md-2 col-form-label">Second Installment Date</label>
+      <div *ngIf="AccNoData.SecondInstlDtVisible" class="col-md-3">
+        <input id="dateFormat" type="text"
+                placeholder="DD/MM/YYYY"
+                class="form-control"
+                bsDatepicker 
+                formControlName="SecondInstallmentDate"
+                (ngModelChange)="secondInstallmentDateChange()"
+                [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY' }"
+                autocomplete="off"
+              >
+      </div>
+  </div>
+
+    <div class="form-group row">
+        <label class="col-md-3 col-form-label">Current Effecting Date:</label>
+        <div class="col-md-4">
+          <input id="dateFormat" type="text"
+                placeholder="DD/MM/YYYY"
+                class="form-control"
+                bsDatepicker 
+                formControlName="CurrentEffectingDate"
+                (ngModelChange)="currentEffectingDateChange()"
+                [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY' }"
+                autocomplete="off"
+              >
+        </div>
+        <label class="col-md-2 col-form-label">Next Effecting Date:</label>
+        <div class="col-md-3">
+          <input id="dateFormat" type="text"
+                placeholder="DD/MM/YYYY"
+                class="form-control"
+                bsDatepicker 
+                formControlName="NextEffectingDate"
+                (ngModelChange)="nextEffectingDateChange()"
+                [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY' }"
+                autocomplete="off"
+              >
+        </div>
+    </div>
+
+    <div *ngIf="AccNoData.ODIntDateVisible" class="form-group row">
+        <label class="col-md-3 col-form-label">OD Int. Post Date:</label>
+        <div class="col-md-4">
+          <input id="dateFormat" type="text"
+                placeholder="DD/MM/YYYY"
+                class="form-control"
+                bsDatepicker 
+                formControlName="ODIntPostDate"
+                (ngModelChange)="oDIntPostDateChange()"
+                [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY' }"
+                autocomplete="off"
+              >
+        </div>
+    </div>
+
+    <div *ngIf="AccNoData.ODIDueIntAmtVisible" class="form-group row">
+        <label class="col-md-3 col-form-label">Due OD Interest Amt.:</label>
+        <div class="col-md-4">
+          <input type="text" class="form-control" formControlName="DueODInterestAmt">
+        </div>
+    </div>
+
+    <div *ngIf="AccNoData.PeriodVisible" class="form-group row">
+        <label class="col-md-3 col-form-label">OD Period:</label>
+        <div class="col-md-4">
+          <input type="text" class="form-control" formControlName="ODPeriod">
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <label class="col-md-3 col-form-label">Loan Surety Member No:</label>
+        <div class="col-md-4">
+          <input type="text" class="form-control" formControlName="LoanSuretyMemberNo" (change)="loanSuretyMemberNoChange()">
+        </div>
+        <label class="col-md-2 col-form-label" *ngIf="editLoanAccountForm.value.LoanSuretyMemberNo!=0">{{AccTypeData.SuretyMemName}}</label>
+    </div>
+
+    <div *ngIf="AccNoData.DuePrincVisible" class="form-group row">
+        <label  class="col-md-3 col-form-label">Curr. Principal Due:</label>
+        <div class="col-md-4">
+          <input type="text" class="form-control" formControlName="CurrPrincipalDue">
+        </div>
+    </div>
+
+    <div *ngIf="AccNoData.DueIntVisible" class="form-group row">
+        <label class="col-md-3 col-form-label">Curr. Interest Due:</label>
+        <div  class="col-md-4">
+          <input type="text" class="form-control" formControlName="CurrInterestDue">
+        </div>
+    </div>
+
+    <div *ngIf="AccTypeData.CorrAccNoVisible" class="form-group row">
+        <label class="col-md-3 col-form-label">Corr. Account No:</label>
+        <div class="col-md-4">
+          <input type="text" class="form-control" formControlName="CorrAccountNo" (change)="corrAccountNoChange()">
+        </div>
+        <label class="col-md-2 col-form-label">{{AccTypeData.CorrAccTitle}}</label>
+    </div>
+
+    <div class="form-group row">
+        <label class="col-md-3 col-form-label">Auto Trf. Corr. A/c:</label>
+        <div class="col-md-1">
+          <input type="checkbox" class="form-control" formControlName="AutoTrfCorrAC">
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <label class="col-md-3 col-form-label">Old Account No:</label>
+        <div class="col-md-4">
+          <input type="text" class="form-control" formControlName="OldAccountNo">
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <label class="col-md-3 col-form-label">SMS Service:</label>
+        <div class="col-md-4">
+          <select class="form-control pt-0"  formControlName="SMSService">
+            <!-- (change)="onLoanCalMethodChange(editLoanAccountForm.value.LoanInterestCalMethod)" -->
+            <option *ngFor="let item of YesNoEnum" [value]="item.Id">{{item.Description}}
+            </option>
+          </select>
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <label class="col-md-3 col-form-label">Rebate Paid:</label>
+        <div class="col-md-4">
+          <select class="form-control pt-0"  formControlName="RebatePaid">
+            <!-- (change)="onLoanCalMethodChange(editLoanAccountForm.value.LoanInterestCalMethod)" -->
+            <option *ngFor="let item of YesNoEnum" [value]="item.Id">{{item.Description}}
+            </option>
+          </select>
+        </div>
+    </div>
+
+
+</form>

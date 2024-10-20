@@ -1,0 +1,136 @@
+<app-house-keeping-wrapper>
+  <form
+    [formGroup]="LoanSuretyForm"
+    novalidate
+    class="mx-auto border col-md-7 main-container pb-2"
+  >
+    <p class="bg-dark title">Parameter Maintenance - Loan Surety</p>
+    <div class="border col-md-10">
+      <div class="ml-2 mt-2">
+        <label class="h5">Select Calculation Method:</label> <br />
+        <div class="col-md-12 ml-5 pl-2">
+          <br />
+          <input
+            type="radio"
+            value="1"
+            name="rbtMethod1"
+            formControlName="rbtMethod1"
+          />
+          <label class="ml-2"
+            >1. Total Outstanding X G.Amount / Loan Amount</label
+          ><br />
+          <input
+            type="radio"
+            value="2"
+            name="rbtMethod1"
+            formControlName="rbtMethod1"
+          />
+          <label class="ml-2"
+            >2. Total Outstanding X G.Amount / Tot.G. Amount</label
+          ><br />
+        </div>
+      </div>
+    </div>
+    <br />
+    <div class="form-row ml-2 mt-2">
+      <label for="inputDesc" class="col-md-5"
+        >Interest Calculation when refund to Member :</label
+      >
+      <div class="col-md-1"></div>
+      <div class="form-group ml-4 pl-3 col-md-4 pr-5">
+        <select
+          formControlName="InterestCalculation"
+          class="form-control mt-0 pt-0"
+        >
+          <option
+            *ngFor="let item of yesNoEnumList"
+            [value]="item.Id"
+            class="mt-0 pt-0"
+          >
+            {{ item.Description }}
+          </option>
+        </select>
+      </div>
+    </div>
+    <div class="form-row ml-2 mt-2">
+      <label for="inputDesc" class="col-md-5"
+        >Interest Rate for Refund Amount :
+      </label>
+      <div class="col-md-1"></div>
+      <div class="form-group ml-4 pl-3 col-md-4 pr-5 d-flex">
+        <input
+          type="text"
+          (keydown)="onEnterInterestRateHandler($event)"
+          formControlName="InterestRate"
+          name="AccType"
+          class="form-control mt-0 pt-0"
+          id="inputDesc"
+          required
+        />
+        %
+      </div>
+    </div>
+    <div class="form-row ml-2 mt-2">
+      <label for="inputDesc" class="col-md-6"
+        >Penalty Percentage during Surety Release Calculation :</label
+      >
+      <div class="form-group ml-4 pl-3 col-md-4 pr-5 d-flex">
+        <input
+          type="text"
+          formControlName="Penalty"
+          name="AccType"
+          class="form-control mt-0 pt-0"
+          id="Penalty"
+          required
+        />
+        %
+      </div>
+    </div>
+    <div class="form-row ml-2 mt-2">
+      <label for="inputDesc" class="col-md-5"
+        >Surety Release Account Type :</label
+      >
+      <div class="col-md-1"></div>
+      <div class="form-group ml-4 pl-3 col-md-4 pr-5">
+        <select formControlName="SuretyAccType" class="form-control mt-0 pt-0">
+          <option value="0" class="mt-0 pt-0">-Select-</option>
+          <option
+            *ngFor="let item of suretyAccDataTypeList"
+            [value]="item.AccTypeCode"
+            class="mt-0 pt-0"
+          >
+            {{ item.AccTypeDescription }}
+          </option>
+        </select>
+      </div>
+    </div>
+    <div class="form-row ml-2 mt-2">
+      <label for="inputDesc" class="col-md-5"
+        >Surety Release Corresponding Account Type :</label
+      >
+      <div class="col-md-1"></div>
+      <div class="form-group ml-4 pl-3 col-md-4 pr-5">
+        <select formControlName="CorrAccType" class="form-control mt-0 pt-0">
+          <option value="0" class="mt-0 pt-0">-Select-</option>
+          <option
+            *ngFor="let item of corrAccDataTypeList"
+            [value]="item.AccTypeCode"
+            class="mt-0 pt-0"
+          >
+            {{ item.AccTypeDescription }}
+          </option>
+        </select>
+      </div>
+    </div>
+    <div class="buttons col-md-2 mx-auto">
+      <button
+        type="button"
+        (click)="updateData()"
+        class="btn btn-success"
+        style="margin-left: 112px !important"
+      >
+        Update
+      </button>
+    </div>
+  </form>
+</app-house-keeping-wrapper>

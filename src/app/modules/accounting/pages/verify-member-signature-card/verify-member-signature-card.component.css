@@ -1,0 +1,29 @@
+.title {
+  background: #6c757d !important;
+  color: #fff;
+  font-weight: 600;
+  padding: 2px;
+}
+
+.img__show img {
+  height: 280px;
+  width: 400px;
+}
+.btn {
+  padding: 4px 35px !important;
+  transition: 0.7s ease-in;
+  background: #0069aa;
+  color: #fff;
+}
+.btnn {
+  padding: 8px 35px !important;
+  border-radius: 37px !important;
+  transition: 0.7s ease-in;
+  background: red;
+  color: #fff;
+  width: 118px;
+  line-height: 1.4em;
+  margin-left: 10px;
+}
+
+

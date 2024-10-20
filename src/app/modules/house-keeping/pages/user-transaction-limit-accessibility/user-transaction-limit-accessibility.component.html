@@ -1,0 +1,117 @@
+<app-house-keeping-wrapper>
+  <form
+    [formGroup]="transactionControlForm"
+    class="mx-auto border col-md-7 main-container"
+  >
+    <p class="bg-dark title">Transaction Limit</p>
+    <div class="form-row">
+      <label for="IdsNo" class="col-sm-5 col-form-label">Ids No:</label>
+      <div class="form-group col-sm-3">
+        <input
+          appOnlyNumberWithoutDecimal
+          type="text"
+          class="form-control ml-3"
+          id="IDNumber"
+          formControlName="IdsNo"
+          name="IDNumber"
+          (change)="changeSelectValue($event)"
+       
+        />
+      </div>
+      <div class="form-group col-sm-3">
+        <select
+          formControlName="selectedOptionCode"
+          (change)="selectChangeHandler($event)"
+          class="form-control pt-0 ml-2"
+        >
+          <option value="0">-Select-</option>
+          <option *ngFor="let item of userlist" [value]="item.IdsNo">
+            {{ item.IdsName }}
+          </option>
+        </select>
+      </div>
+    </div>
+    <div class="form-group row">
+      <label for="transactionamount" class="col-sm-5 col-form-label ml-2"
+        >Limit Cash Credit Transaction Amt. :</label
+      >
+      <div class="col-sm-6">
+        <input
+          appOnlyNumber
+          maxlength="14"
+          type="text"
+          class="form-control"
+          id="LIdsCashCredit"
+          formControlName="LIdsCashCredit"
+          (keydown)="onEnterLIdsCashCreditHandler($event)"
+          (change)="onCashCreditChange($event)"
+          onfocus="this.select()"
+        />
+      </div>
+    </div>
+    <div class="form-group row">
+      <label for="transactionamount" class="col-sm-5 col-form-label ml-2"
+        >Limit Cash Debit Transaction Amt. :</label
+      >
+      <div class="col-sm-6">
+        <input
+          appOnlyNumber
+          maxlength="14"
+          type="text"
+          class="form-control"
+          id="LIdsCashDebit"
+          formControlName="LIdsCashDebit"
+          (keydown)="onEnterLIdsCashDebitHandler($event)"
+          (change)="onCashdeditChange($event)"
+          onfocus="this.select()"
+        />
+      </div>
+    </div>
+    <div class="form-group row">
+      <label for="transactionamount" class="col-sm-5 col-form-label ml-2"
+        >Limit Transfer Credit Transaction Amt. :</label
+      >
+      <div class="col-sm-6">
+        <input
+          appOnlyNumber
+          maxlength="14"
+          type="text"
+          class="form-control"
+          id="LIdsTrfCredit"
+          formControlName="LIdsTrfCredit"
+          (keydown)="onEnterLIdsTrfCreditHandler($event)"
+          (change)="onTrfCredit($event)"
+          onfocus="this.select()"
+        />
+      </div>
+    </div>
+    <div class="form-group row">
+      <label for="transactionamount" class="col-sm-5 col-form-label ml-2"
+        >Limit Transfer Debit Transaction Amt. :</label
+      >
+      <div class="col-sm-6">
+        <input
+          appOnlyNumber
+          maxlength="14"
+          type="text"
+          class="form-control"
+          id="LIdsTrfDebit"
+          formControlName="LIdsTrfDebit"
+          (keydown)="onEnterLIdsTrfDebitHandler($event)"
+          (change)="onTrfDebit($event)"
+          onfocus="this.select()"
+        />
+      </div>
+    </div>
+    <div class="buttons col-md-11">
+      <button
+        id="update"
+        type="button"
+        (click)="UpdateUserTransactionLimit()"
+        class="btn btn-success"
+      >
+        {{ submitButtonText }}
+      </button>
+    </div>
+  </form>
+</app-house-keeping-wrapper>

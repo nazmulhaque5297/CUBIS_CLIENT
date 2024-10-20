@@ -1,0 +1,24 @@
+/* You can add global styles to this file, and also import other style files */
+@import '~ngx-toastr/toastr';
+
+.navbar-custom{
+    background-color: #007bff!important;
+    height: 20px !important;
+}
+.navigation-menu>li>a{
+    color: #fff!important;
+    padding: 10px 10px !important;
+    margin: 0px 0px;
+}
+#topnav {
+    background: #007bff !important;
+    position: fixed;
+    left: 0;
+    right: 0;
+    z-index: 1001;
+}
+
+
+.card-body{font-size: 14px!important;}
+.form-control{height: calc(1.50em + 0.5rem + 0px)!important;}
+.form-group{margin-bottom: 0.50rem!important;}

@@ -1,0 +1,321 @@
+<app-house-keeping-wrapper>
+  <form
+    [formGroup]="AddNewUserForm"
+    novalidate
+    class="mx-auto border col-md-8 main-container"
+  >
+    <p class="bg-dark title">Add User Id</p>
+    <div class="form-group row">
+      <label for="select" class="col-sm-5 col-form-label">ID Level:</label>
+      <div class="col-sm-7">
+        <select
+          formControlName="IdsLevel"
+          id="select"
+          class="form-control pt-0"
+          (change)="focusChange()"
+        >
+          <option *ngFor="let item of dataList" [value]="item.Id">
+            {{ item.Description }}
+          </option>
+        </select>
+      </div>
+    </div>
+    <div class="form-group row">
+      <label for="idno" class="col-sm-5 col-form-label"
+        >ID No. : <span class="text-danger">*</span></label
+      >
+      <div class="col-sm-7">
+        <input
+          appOnlyNumberWithoutDecimal
+          type="text"
+          class="form-control"
+          id="idno"
+          formControlName="IdsNo"
+          maxlength="4"
+          (keydown)="onEnterIDNoHandler($event)"
+          (change)="Idcheck()"
+        />
+        <div
+          *ngIf="
+            AddNewUserForm.controls['IdsNo'].invalid &&
+            AddNewUserForm.controls['IdsNo'].touched
+          "
+          class="text-danger"
+        >
+          Required*
+        </div>
+      </div>
+    </div>
+    <div class="form-group row">
+      <label for="username" class="col-sm-5 col-form-label">User Name :</label>
+      <div class="col-sm-7">
+        <input
+          type="text"
+          class="form-control"
+          id="username"
+          formControlName="IdsName"
+          (keydown)="onEnterUsrNameHandler($event)"
+        />
+      </div>
+    </div>
+    <div class="form-group row">
+      <label for="usernumber" class="col-sm-5 col-form-label"
+        >User Mobile No. :</label
+      >
+      <div class="col-sm-7">
+        <input
+          type="text"
+          (change)="validation()"
+          class="form-control"
+          id="UserPhoneNo"
+          formControlName="IdsMobileNo"
+          (keydown)="onEnterUserPhoneNoHandler($event)"
+        />
+      </div>
+    </div>
+    <div class="form-row">
+      <label for="glcashcode" class="col-sm-5 col-form-label"
+        >GL Cash Code :<span class="text-danger">*</span></label
+      >
+      <div class="form-group col-md-4 ml-2">
+        <input
+          type="text"
+          (change)="changeSelectValue($event)"
+          class="form-control"
+          id="glcashcode"
+          formControlName="GLCashCode"
+          name="glcashcodeId"
+        />
+        <div
+          *ngIf="
+            AddNewUserForm.controls['GLCashCode'].invalid &&
+            AddNewUserForm.controls['GLCashCode'].touched
+          "
+          class="text-danger"
+        >
+          Required*
+        </div>
+      </div>
+      <div class="form-group col-md-2">
+        <select
+          formControlName="selectedOptionCode"
+          (change)="selectChangeHandler($event)"
+          id="select"
+          class="form-control"
+        >
+          <option value="0">-Select-</option>
+          <option *ngFor="let item of glcashcodelist" [value]="item.Id">
+            {{ item.Description }}
+          </option>
+        </select>
+      </div>
+    </div>
+    <div class="form-group row">
+      <label for="blankCheckbox" class="col-sm-5 col-form-label"
+        >SOD Permission :</label
+      >
+      <div class="col-sm-7">
+        <input
+          class="form-check-input position-static ml-1 checkbox"
+          type="checkbox"
+          id="blankCheckbox"
+          formControlName="SODflag"
+        />
+      </div>
+    </div>
+    <div class="form-group row">
+      <label for="blankCheckbox" class="col-sm-5 col-form-label"
+        >CS Voucher Print :</label
+      >
+      <div class="col-sm-7">
+        <input
+          class="form-check-input position-static ml-1 checkbox"
+          type="checkbox"
+          id="blankCheckbox"
+          formControlName="CSVPrintflag"
+        />
+      </div>
+    </div>
+    <div class="form-group row">
+      <label for="blankCheckbox" class="col-sm-5 col-form-label"
+        >GL Voucher Print :</label
+      >
+      <div class="col-sm-7">
+        <input
+          class="form-check-input position-static ml-1 checkbox"
+          type="checkbox"
+          id="blankCheckbox"
+          formControlName="GLVPrintflag"
+        />
+      </div>
+    </div>
+    <div class="form-group row">
+      <label for="blankCheckbox" class="col-sm-5 col-form-label"
+        >Generate Auto Voucher No. :</label
+      >
+      <div class="col-sm-7">
+        <input
+          class="form-check-input position-static ml-1 checkbox"
+          type="checkbox"
+          id="blankCheckbox"
+          formControlName="AutoVchflag"
+        />
+      </div>
+    </div>
+    <div class="form-group row">
+      <label for="blankCheckbox" class="col-sm-5 col-form-label"
+        >SMS Permission :</label
+      >
+      <div class="col-sm-7">
+        <input
+          class="form-check-input position-static ml-1 checkbox"
+          type="checkbox"
+          id="blankCheckbox"
+          formControlName="SMSflag"
+        />
+      </div>
+    </div>
+    <p class="transaction-limit">Transaction Limit Accessibility ...........</p>
+    <div class="form-group row">
+      <label for="transactionamount" class="col-sm-5 col-form-label"
+        >Limit Cash Credit Transaction Amt. :<span class="text-danger"
+          >*</span
+        ></label
+      >
+      <div class="col-sm-7">
+        <input
+          appOnlyNumber
+          maxlength="14"
+          type="text"
+          class="form-control"
+          id="transactionamount"
+          formControlName="LIdsCashCredit"
+          (keydown)="onEnterTrnAmtHandler($event)"
+        />
+        <div
+          *ngIf="
+            AddNewUserForm.controls['LIdsCashCredit'].invalid &&
+            AddNewUserForm.controls['LIdsCashCredit'].touched
+          "
+          class="text-danger"
+        >
+          Required*
+        </div>
+      </div>
+    </div>
+    <div class="form-group row">
+      <label for="Dtransactionamount" class="col-sm-5 col-form-label"
+        >Limit Cash Debit Transaction Amt. :<span class="text-danger"
+          >*</span
+        ></label
+      >
+      <div class="col-sm-7">
+        <input
+          appOnlyNumber
+          maxlength="14"
+          type="text"
+          class="form-control"
+          id="Dtransactionamount"
+          formControlName="LIdsCashDebit"
+          (keydown)="onEnterDTrnAmtHandler($event)"
+        />
+        <div
+          *ngIf="
+            AddNewUserForm.controls['LIdsCashDebit'].invalid &&
+            AddNewUserForm.controls['LIdsCashDebit'].touched
+          "
+          class="text-danger"
+        >
+          Required*
+        </div>
+      </div>
+    </div>
+    <div class="form-group row">
+      <label for="transactionamount" class="col-sm-5 col-form-label"
+        >Limit Transfer Credit Transaction Amt. :<span class="text-danger"
+          >*</span
+        ></label
+      >
+      <div class="col-sm-7">
+        <input
+          appOnlyNumber
+          maxlength="14"
+          type="text"
+          class="form-control"
+          id="Ctransactionamount"
+          formControlName="LIdsTrfCredit"
+          (keydown)="onEnterCTrnAmtHandler($event)"
+        />
+        <div
+          *ngIf="
+            AddNewUserForm.controls['LIdsTrfCredit'].invalid &&
+            AddNewUserForm.controls['LIdsTrfCredit'].touched
+          "
+          class="text-danger"
+        >
+          Required*
+        </div>
+      </div>
+    </div>
+    <div class="form-group row">
+      <label for="transactionamount" class="col-sm-5 col-form-label"
+        >Limit Transfer Debit Transaction Amt. :<span class="text-danger"
+          >*</span
+        ></label
+      >
+      <div class="col-sm-7">
+        <input
+          appOnlyNumber
+          maxlength="14"
+          type="text"
+          class="form-control"
+          id="Detransactionamount"
+          formControlName="LIdsTrfDebit"
+        />
+        <div
+          *ngIf="
+            AddNewUserForm.controls['LIdsTrfDebit'].invalid &&
+            AddNewUserForm.controls['LIdsTrfDebit'].touched
+          "
+          class="text-danger"
+        >
+          Required*
+        </div>
+      </div>
+    </div>
+    <div class="buttons">
+      <button
+        type="button"
+        (click)="InsertUserInfo()"
+        [disabled]="!AddNewUserForm.valid"
+        class="btn btn-success"
+      >
+        Add User Id
+      </button>
+      <button type="button" (click)="ShowData()" class="ml-5 btn btn_1">
+        Show Id Info
+      </button>
+    </div>
+  </form>
+  <div
+    *ngIf="userlist.length != 0 && tabularData"
+    class="mx-auto set-height col-md-8"
+  >
+    <table id="Data">
+      <tr>
+        <th>IdsNo</th>
+        <th>IdsName</th>
+        <th>LevelDesc</th>
+        <th>EmpCode</th>
+        <th>GLCashCode</th>
+      </tr>
+      <tr *ngFor="let item of userlist">
+        <td>{{ item.IdsNo }}</td>
+        <td>{{ item.IdsName }}</td>
+        <td>{{ item.LevelDesc }}</td>
+        <td>{{ item.EmpCode }}</td>
+        <td>{{ item.GLCashCode }}</td>
+      </tr>
+    </table>
+  </div>
+</app-house-keeping-wrapper>

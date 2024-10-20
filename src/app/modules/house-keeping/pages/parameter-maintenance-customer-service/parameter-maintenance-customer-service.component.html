@@ -1,0 +1,366 @@
+<app-house-keeping-wrapper>
+    <form [formGroup]='CustomerServiceForm' class="mx-auto border col-md-7 main-container pb-2">
+        <p class="bg-dark title">
+            Parameter Maintenance - Customer Service</p>
+        <div class="form-row ml-0 mt-2">
+            <label class="col-md-3" class="col-md-3 mr-1 pr-0">Account Type:<span class="text-danger">*</span></label>
+            <div class="form-group ml-3 pl-3 col-md-3 mt-0 pt-0">
+                <input type="text" (change)="selectChangeHandler($event)" formControlName="AccTypeCode"
+                    class="form-control mt-0 pt-0" id="TrnCode" name="TrnCode" required>
+            </div>
+            <div class="form-group col-md-4">
+                <select (change)="selectChangeHandler($event)" formControlName="AccType" class="form-control  mt-0 pt-0">
+                    <option value="0" class="mt-0 pt-0">-Select-</option>
+                    <option *ngFor="let item of dataList" [value]="item.AccTypeCode" class="mt-0 pt-0">
+                        {{item.AccTypeDescription}}
+                    </option>
+                </select>
+            </div>
+        </div>
+        <div *ngIf="accTypeData.CalculationPeriodVisible" class="form-row ml-0 mt-2">
+            <label class="col-md-3" class="col-md-3">Calculation Period:</label>
+            <div class=" form-group ml-4 pl-2  col-md-6">
+                <select formControlName="CalculationPeriod" class="form-control  mt-0 pt-0">
+                    <option value="0" class="mt-0 pt-0">-Select-</option>
+                    <option *ngFor="let item of enumData.PaymentModeEnum" [value]="item.Id" class="mt-0 pt-0">
+                        {{item.Description}}
+                    </option>
+                </select>
+            </div>
+        </div>
+        <div *ngIf="accTypeData.CalculationMethodVisible" class="form-row ml-0 mt-2">
+            <label class="col-md-3" class="col-md-3 pl-1">Calculation Method:</label>
+            <div class=" form-group pl-2 ml-4 col-md-6">
+                <!-- (change)="selectChangeHandler($event)" -->
+                <select formControlName="CalculationMethod" class="form-control  mt-0 pt-0">
+                    <option value="0" class="mt-0 pt-0">-Select-</option>
+                    <option *ngFor="let item of enumData.CalculationMethodEnum" [value]="item.Id" class="mt-0 pt-0">
+                        {{item.Description}}
+                    </option>
+                </select>
+            </div>
+        </div>
+        <div *ngIf="accTypeData.LoanCalculationMethodVisible" class="form-row ml-0 mt-2">
+            <label class="col-md-3" class="col-md-3">Loan Calculation Method:</label>
+            <div class=" form-group pl-3 ml-3 col-md-6">
+                <!-- (change)="selectChangeHandler($event)" -->
+                <select formControlName="LoanCalculationMethod" class="form-control  mt-0 pt-0">
+                    <option value="0" class="mt-0 pt-0">-Select-</option>
+                    <option *ngFor="let item of enumData.LoanCalculationMethodEnum" [value]="item.Id" class="mt-0 pt-0">
+                        {{item.Description}}
+                    </option>
+                </select>
+            </div>
+        </div>
+        <div *ngIf="accTypeData.InterestRateVisible" class="form-row ml-0 mt-2">
+            <label class="col-md-3" for="inputDesc">Interest Rate:</label>
+            <div class=" form-group pl-1 col-md-6">
+                <input formControlName="InterestRate" type="text" name="AccType"
+                    class="form-control desc-input mt-0 pt-0" appOnlyNumber>
+            </div>
+        </div>
+        <div *ngIf="accTypeData.FundRateVisible" class="form-row ml-0 mt-2">
+            <label class="col-md-3" for="inputDesc">Fund Rate:</label>
+            <div class=" form-group  col-md-6">
+                <input formControlName="FundRate" type="text" name="AccType" class="form-control desc-input mt-0 pt-0">
+            </div>
+        </div>
+        <div *ngIf="accTypeData.ProductConditionVisible" class="form-row ml-0 mt-2">
+            <label class="col-md-3">Product Condition:</label>
+            <div class=" form-group  col-md-6">
+                <!-- (change)="selectChangeHandler($event)" -->
+                <select formControlName="ProductCondition" class="form-control  mt-0 pt-0">
+                    <option value="0" class="mt-0 pt-0">-Select-</option>
+                    <option *ngFor="let item of enumData.ProductConditionEnum" [value]="item.Id" class="mt-0 pt-0">
+                        {{item.Description}}
+                    </option>
+                </select>
+            </div>
+        </div>
+        <div *ngIf="accTypeData.ProductInterestTypeVisible" class="form-row ml-0 mt-2">
+            <label class="col-md-3">Product Interest Type:</label>
+            <div class=" form-group ml-3 pl-3 col-md-6">
+                <!-- (change)="selectChangeHandler($event)" -->
+                <select formControlName="ProductInterestType" class="form-control  mt-0 pt-0">
+                    <option value="0" class="mt-0 pt-0">-Select-</option>
+                    <option *ngFor="let item of enumData.ProductInterestType" [value]="item.Id" class="mt-0 pt-0">
+                        {{item.Description}}
+                    </option>
+                </select>
+            </div>
+        </div>
+        <div *ngIf="accTypeData.MinDepositAmtVisible" class="form-row ml-0 mt-2">
+            <label class="col-md-3" for="inputDesc">Min. Deposit Amount:</label>
+            <div class=" form-group pl-1 col-md-6">
+                <input formControlName="MinDepositAmt" type="text" name="AccType"
+                    class="form-control desc-input mt-0 pt-0" appOnlyNumber>
+            </div>
+        </div>
+        <div *ngIf="accTypeData.RoundFlagVisible" class="form-row ml-0 mt-2">
+            <label class="col-md-3">Amount Rounding Flag:</label>
+            <div class="form-group col-md-6">
+                <!-- (change)="selectChangeHandler($event)" -->
+                <select formControlName="RoundFlag" class="form-control  desc-input mt-0 pt-0">
+                    <option value="0" class="mt-0 pt-0">-Select-</option>
+                    <option *ngFor="let item of enumData.RoundFlagEnum" [value]="item.Id" class="mt-0 pt-0">
+                        {{item.Description}}
+                    </option>
+                </select>
+            </div>
+        </div>
+        <div *ngIf="accTypeData.IntWithdrDaysVisible" class="form-row ml-0 mt-2">
+            <label class="col-md-3" for="inputDesc">Int.Withdrawal Days:</label>
+            <div class=" form-group pl-1 col-md-6">
+                <input formControlName="IntWithdrDays" type="text" name="AccType"
+                    class="form-control desc-input mt-0 pt-0">
+            </div>
+        </div>
+        <div *ngIf="accTypeData.AccProcFeesVisible" class="form-row ml-0 mt-2">
+            <label class="col-md-3 " for="inputDesc">Service Charge Amt.:</label>
+            <div class=" form-group pl-0 col-md-6 ml-1">
+                <input formControlName="AccProcFees" type="text" name="AccType"
+                    class="form-control desc-input mt-0 pt-0" appOnlyNumber>
+            </div>
+        </div>
+        <div *ngIf="accTypeData.AccProcFlagVisible" class="form-row ml-0 mt-2">
+            <label class="col-md-3">Service Charge Deb. Flag:</label>
+            <div class=" form-group col-md-6">
+                <!-- (change)="selectChangeHandler($event)" -->
+                <select formControlName="AccProcFlag" class="form-control  mt-0 pt-0 desc-input">
+                    <option *ngFor="let item of enumData.YesNoEnum" [value]="(item.Id-1)==0?1:0" class="mt-0 pt-0">
+                        {{item.Description}}
+                    </option>
+                </select>
+            </div>
+        </div>
+        <div *ngIf="accTypeData.AccClosingFeesVisible" class="form-row ml-0 mt-2">
+            <label class="col-md-3" for="inputDesc">Account Closing Fees:</label>
+            <div class=" form-group  col-md-6">
+                <input formControlName="AccClosingFees" type="text" name="AccType"
+                    class="form-control desc-input mt-0 pt-0">
+            </div>
+        </div>
+        <div *ngIf="accTypeData.PenalAmountVisible" class="form-row ml-0 mt-2">
+            <label class="col-md-3" for="inputDesc">Penal Amount:</label>
+            <div class=" form-group  col-md-6">
+                <input formControlName="PenalAmount" type="text" name="AccType"
+                    class="form-control desc-input mt-0 pt-0" appOnlyNumber>
+            </div>
+        </div>
+        <div *ngIf="accTypeData.MaxPenalAmountVisible" class="form-row ml-0 mt-2">
+            <label class="col-md-3" for="inputDesc">Max. Penal Amount:</label>
+            <div class=" form-group  col-md-6">
+                <input formControlName="MaxPenalAmount" type="text" name="AccType"
+                    class="form-control desc-input mt-0 pt-0" appOnlyNumber>
+            </div>
+        </div>
+        <div *ngIf="accTypeData.BenefitByVisible" class="form-row ml-0 mt-2">
+            <label class="col-md-3">Benefit Amt. By:</label>
+            <div class=" form-group pl-3 ml-3 col-md-6">
+                <!-- (change)="selectChangeHandler($event)" -->
+                <select formControlName="BenefitBy" class="form-control  mt-0 pt-0">
+                    <option value="0" class="mt-0 pt-0">-Select-</option>
+                    <option *ngFor="let item of enumData.BenefitByEnum" [value]="item.Id" class="mt-0 pt-0">
+                        {{item.Description}}
+                    </option>
+                </select>
+            </div>
+        </div>
+        <div *ngIf="accTypeData.MandatoryDepFlagVisible" class="form-row ml-0 mt-2">
+            <label class="col-md-3">Mandatory Deposit Flag:</label>
+            <div class="form-group col-md-6">
+                <!-- (change)="selectChangeHandler($event)" -->
+                <select formControlName="MandatoryDepFlag" class="form-control desc-input mt-0 pt-0">
+                    <option *ngFor="let item of enumData.YesNoEnum" [value]="(item.Id-1)==0?1:0" class="mt-0 pt-0">
+                        {{item.Description}}
+                    </option>
+                </select>
+            </div>
+        </div>
+        <div *ngIf="accTypeData.AutoDepositFlagVisible" class="form-row ml-0  mt-2">
+            <label class="col-md-3">Auto Deposit Flag:</label>
+            <div class=" form-group col-md-6">
+                <!-- (change)="selectChangeHandler($event)" -->
+                <select formControlName="AutoDepositFlag" class="form-control desc-input mt-0 pt-0">
+                    <option value="0" class="mt-0 pt-0">-Select-</option>
+                    <option *ngFor="let item of enumData.YesNoEnum" [value]="item.Id" class="mt-0 pt-0">
+                        {{item.Description}}
+                    </option>
+                </select>
+            </div>
+        </div>
+        <div *ngIf="accTypeData.AutoDepositFeesVisible" class="form-row ml-0 mt-2">
+            <label class="col-md-3" for="inputDesc">Auto Deposit Fees:</label>
+            <div class=" form-group  col-md-6">
+                <input formControlName="AutoDepositFees" type="text" name="AccType"
+                    class="form-control desc-input mt-0 pt-0">
+            </div>
+        </div>
+        <div *ngIf="accTypeData.ProvBegDateVisible" class="form-row ml-0 mt-2">
+            <label class="col-md-3" for="inputDesc">Beg. Provision Date:</label>
+            <div class=" form-group pl-3 ml-3 col-md-6">
+                <input id="dateFormat" type="text" placeholder="DD/MM/YYYY" class="form-control" bsDatepicker
+                    formControlName="ProvBegDate" [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY' }" autocomplete="off">
+            </div>
+        </div>
+        <div *ngIf="accTypeData.MinBalanceAmtVisible" class="form-row ml-0 mt-2">
+            <label class="col-md-3" for="inputDesc">Min. Balance Amount:</label>
+            <div class=" form-group  col-md-6">
+                <input formControlName="MinBalanceAmt" type="text" name="AccType"
+                    class="form-control desc-input mt-0 pt-0" appOnlyNumber>
+            </div>
+        </div>
+        <div *ngIf="accTypeData.BenefitWByVisible" class="form-row ml-0 mt-2">
+            <label class="col-md-3">Benefit Withdrawal By:</label>
+            <div class=" form-group pl-3 ml-3 col-md-6">
+                <!-- (change)="selectChangeHandler($event)" -->
+                <select formControlName="BenefitWBy" class="form-control  mt-0 pt-0">
+                    <option value="0" class="mt-0 pt-0">-Select-</option>
+                    <option *ngFor="let item of enumData.BenefitWithdrawalByEnum" [value]="item.Id" class="mt-0 pt-0">
+                        {{item.Description}}
+                    </option>
+                </select>
+            </div>
+        </div>
+
+
+        <!-- Need to fix here what have they done didn't understand -->
+
+        <div *ngIf="accTypeData.ProvisionFlagVisible" class="form-row ml-0 mt-2">
+            <label class="col-md-3" for="inputDesc">Provision Flag:</label>
+            <div class=" form-group  col-md-6">
+                <checkbox formControlName="ProvisionFlag" type="text" name="AccType"
+                    class="form-control desc-input mt-0 pt-0"></checkbox>
+            </div>
+        </div>
+
+        <div *ngIf="accTypeData.RenewalFlagVisible" class="form-row ml-0 mt-2">
+            <label class="col-md-3" for="inputDesc">Renewal Flag:</label>
+            <div class=" form-group  col-md-6">
+                <checkbox formControlName="RenewalFlag" type="text" name="AccType"
+                    class="form-control desc-input mt-0 pt-0"></checkbox>
+            </div>
+        </div>
+
+        <div *ngIf="accTypeData.AnniversaryFlagVisible" class="form-row ml-0 mt-2">
+            <label class="col-md-3" for="inputDesc">Anniversary Flag:</label>
+            <div class=" form-group  col-md-6">
+                <chcckbox formControlName="AnniversaryFlag" type="text" name="AccType"
+                    class="form-control desc-input mt-0 pt-0"></chcckbox>
+            </div>
+        </div>
+        <!-- until here  -->
+
+
+        <div *ngIf="accTypeData.SurityPictureFromVisible" class="form-row ml-0 mt-2">
+            <label class="col-md-3">Loan Surety Picture From:</label>
+            <div class=" form-group ml-3 pl-3 col-md-6">
+                <!-- (change)="selectChangeHandler($event)" -->
+                <select formControlName="SurityPictureFrom" class="form-control  mt-0 pt-0">
+                    <option value="0" class="mt-0 pt-0">-Select-</option>
+                    <option *ngFor="let item of enumData.LoanPictureFromEnum" [value]="item.Id" class="mt-0 pt-0">
+                        {{item.Description}}
+                    </option>
+                </select>
+            </div>
+        </div>
+        <div *ngIf="accTypeData.ShareGuaranteeMonthVisible" class="form-row ml-0 mt-2">
+            <label class="col-md-3" for="inputDesc">Share Guarantee (Open Months):</label>
+            <div class=" form-group  col-md-6">
+                <input formControlName="ShareGuaranteeMonth" type="text" name="AccType"
+                    class="form-control desc-input mt-0 pt-0">
+            </div>
+        </div>
+        <div *ngIf="accTypeData.ShareGuaranteeNoVisible" class="form-row ml-0 mt-2">
+            <label class="col-md-3" for="inputDesc">No. of Share Gurantee:</label>
+            <div class=" form-group  col-md-6">
+                <input formControlName="ShareGuaranteeNo" type="text" name="AccType"
+                    class="form-control desc-input mt-0 pt-0">
+            </div>
+        </div>
+        <div *ngIf="accTypeData.MinAgeLoanOpenVisible" class="form-row ml-0 mt-2">
+            <label class="col-md-3" for="inputDesc">Minimum Age for Loan Open:</label>
+            <div class=" form-group  col-md-6">
+                <input formControlName="MinAgeLoanOpen" type="text" name="AccType"
+                    class="form-control desc-input mt-0 pt-0">
+            </div>
+        </div>
+        <div *ngIf="accTypeData.MaxAgeLoanOpenVisible" class="form-row ml-0 mt-2">
+            <label class="col-md-3" for="inputDesc">Maximum Age for Loan Open:</label>
+            <div class=" form-group  col-md-6">
+                <input formControlName="MaxAgeLoanOpen" type="text" name="AccType"
+                    class="form-control desc-input mt-0 pt-0">
+            </div>
+        </div>
+        <div *ngIf="accTypeData.MinAgeLoanGuaranteeVisible" class="form-row ml-0 mt-2">
+            <label class="col-md-3" for="inputDesc">Minimum Age for Share Guarantee:</label>
+            <div class=" form-group  col-md-6">
+                <input formControlName="MinAgeLoanGuarantee" type="text" name="AccType"
+                    class="form-control desc-input mt-0 pt-0">
+            </div>
+        </div>
+        <div *ngIf="accTypeData.MaxAgeLoanGuaranteeVisible" class="form-row ml-0 mt-2">
+            <label class="col-md-3" for="inputDesc">Maximum Age for Share Guarantee:</label>
+            <div class=" form-group  col-md-6">
+                <input formControlName="MaxAgeLoanGuarantee" type="text" name="AccType"
+                    class="form-control desc-input mt-0 pt-0">
+            </div>
+        </div>
+        <div *ngIf="accTypeData.GraceFlagVisible" class="form-row ml-0 mt-2">
+            <label class="col-md-3">Loan Grace Flag:</label>
+            <div class=" form-group ml-3 pl-3  col-md-6">
+                <!-- (change)="selectChangeHandler($event)" -->
+                <select formControlName="GraceFlag" class="form-control  mt-0 pt-0">
+                    <option value="0" class="mt-0 pt-0">-Select-</option>
+                    <option *ngFor="let item of enumData.YesNoEnum" [value]="item.Id" class="mt-0 pt-0">
+                        {{item.Description}}
+                    </option>
+                </select>
+            </div>
+        </div>
+        <div *ngIf="accTypeData.GraceMonthVisible" class="form-row ml-0 mt-2">
+            <label class="col-md-3" for="inputDesc">Default Grace Month:</label>
+            <div class=" form-group  col-md-6">
+                <input formControlName="GraceMonth" type="text" name="AccType"
+                    class="form-control desc-input mt-0 pt-0">
+            </div>
+        </div>
+        <div *ngIf="accTypeData.PeriodVisible" class="form-row ml-0 mt-2">
+            <label class="col-md-3" for="inputDesc">OD Period:</label>
+            <div class=" form-group  col-md-6">
+                <input formControlName="Period" type="text" name="AccType" class="form-control desc-input mt-0 pt-0">
+            </div>
+        </div>
+        <div *ngIf="accTypeData.NoDoubleVisible" class="form-row ml-0 mt-2">
+            <label class="col-md-3" for="inputDesc">No. of Times Double:</label>
+            <div class=" form-group  col-md-6">
+                <input formControlName="NoDouble" type="text" name="AccType" class="form-control desc-input mt-0 pt-0">
+            </div>
+        </div>
+        <div *ngIf="accTypeData.LoanGuarantyAmtPercVisible" class="form-row ml-0 mt-2">
+            <label class="col-md-3" for="inputDesc">Loan Guaranty Amt. Avobe %:</label>
+            <div class=" form-group  col-md-6">
+                <input formControlName="LoanGuarantyAmtPerc" type="text" name="AccType"
+                    class="form-control desc-input mt-0 pt-0">
+            </div>
+        </div>
+        <div *ngIf="accTypeData.LoanPenaltyAmtPercVisible" class="form-row ml-0 mt-2">
+            <label class="col-md-3" for="inputDesc">Loan Penalty %</label>
+            <div class=" form-group  col-md-6">
+                <input formControlName="LoanPenaltyAmtPerc" type="text" name="AccType"
+                    class="form-control desc-input mt-0 pt-0">
+            </div>
+        </div>
+        <div *ngIf="accTypeData.BtnSlabVisible" class="form-row ml-0 mt-2">
+            <label class="col-md-3 ml-0 pr-3 mr-4" for="inputDesc">Period Slab:</label>
+            <button class="mt-0 pl-2 ml-2 slab_btn btn btn-info col-md-3" (click)="slabData()" type="button">Slab Maintain</button>
+        </div>
+
+
+    </form>
+    <div class="buttons col-md-3">
+        <button *ngIf="!accTypeData.BtnUpdate" (click)="submitData()" type="button" class="btn btn_1">Submit</button>
+        <button *ngIf="accTypeData.BtnUpdate" (click)="updateData()" type="button" class="btn btn_1">Update</button>
+        <!-- <button type="button" (click)="exitPage()" class="ml-5 btn">Exit</button> -->
+    </div>
+</app-house-keeping-wrapper>

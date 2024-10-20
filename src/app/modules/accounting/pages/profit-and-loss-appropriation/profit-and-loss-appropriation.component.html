@@ -1,0 +1,152 @@
+<app-accounting-wrapper>
+  <form
+    [formGroup]="ProvAndLossForm"
+    class="mx-auto border col-md-7 main-container"
+  >
+    <p class="bg-dark title">Profit & Loss Appropriation Maintenance</p>
+    <div class="d-none">
+      <input type="text" formControlName="Id" />
+    </div>
+    <div class="form-row">
+      <label class="col-md-2"
+        >Prov Code :<span class="text-danger">*</span></label
+      >
+      <div class="form-group col-md-4">
+        <input
+          type="text"
+          class="form-control"
+          id="ProvCode"
+          formControlName="ProvCode"
+          name="ProvCode"
+          (focusout)="changeSelectValue($event)"
+          (keydown)="onEnterProvCodeHandler($event)"
+          required
+        />
+      </div>
+      <div class="form-group col-md-4">
+        <select
+          formControlName="ProvCodeSelect"
+          class="form-control pt-0"
+          (change)="selectChangeHandler($event)"
+        >
+          <option value="0">- Select -</option>
+          <option *ngFor="let item of glProvCodeList" [value]="item.GLAccNo">
+            {{ item.DescriptionwithCode }}
+          </option>
+        </select>
+      </div>
+    </div>
+    <div class="form-row">
+      <label class="col-md-2">Prov Code Desc :</label>
+      <div class="form-group col-md-4">
+        <input
+          type="text"
+          class="form-control"
+          id="ProvCodeDesc"
+          formControlName="ProvCodeDesc"
+          name="ProvCodeDesc"
+        />
+      </div>
+    </div>
+    <div class="form-row">
+      <label class="col-md-2"
+        >Expenses Code :<span class="text-danger">*</span>
+      </label>
+      <div class="form-group col-md-4">
+        <input
+          type="text"
+          class="form-control"
+          id="ExpCode"
+          formControlName="ExpCode"
+          name="ExpCode"
+          (focusout)="expenseCodeChangeHandler($event)"
+          (keydown)="onEnterExpCodeHandler($event)"
+          required
+        />
+      </div>
+      <div class="form-group col-md-4">
+        <select
+          formControlName="ExpCodeSelect"
+          class="form-control pt-0"
+          (change)="selectExpChangeHandler($event)"
+        >
+          <option value="0">- Select -</option>
+          <option *ngFor="let item of glExpCodeList" [value]="item.GLAccNo">
+            {{ item.DescriptionwithCode }}
+          </option>
+        </select>
+      </div>
+    </div>
+    <div class="form-row">
+      <label class="col-md-2">Exp.Code Desc:</label>
+      <div class="form-group col-md-4">
+        <input
+          type="text"
+          class="form-control"
+          id="ExpCode"
+          formControlName="ExpCodeDesc"
+          name="ExpCode"
+        />
+      </div>
+    </div>
+    <div class="form-row">
+      <label class="col-md-2">Rate :<span class="text-danger">*</span></label>
+      <div class="form-group col-md-4">
+        <input
+          type="text"
+          class="form-control"
+          id="rate"
+          formControlName="Rate"
+          name="Rate"
+          required
+        />
+      </div>
+    </div>
+    <div class="buttons col-md-9 mt-3 mx-auto">
+      <button
+        type="button"
+        class="btn ml-4"
+        (click)="Saveinfo()"
+        *ngIf="submitBtn"
+      >
+        Submit
+      </button>
+      <button
+        type="button"
+        class="btn ml-4"
+        (click)="Updateinfo()"
+        *ngIf="updateBtn"
+      >
+        Update
+      </button>
+    </div>
+  </form>
+  <div class="mx-auto col-md-7 set-height" *ngIf="AllData.length != 0">
+    <table id="Data">
+      <tr>
+        <th>Id</th>
+        <th>Prov Code</th>
+        <th>Description</th>
+        <th>Exp Code</th>
+        <th>Description</th>
+        <th>Rate</th>
+        <th>Action</th>
+        <th>Action</th>
+      </tr>
+      <tr *ngFor="let item of AllData">
+        <td>{{ item.Id }}</td>
+        <td>{{ item.ProvCode }}</td>
+        <td>{{ item.ProvCodeDesc }}</td>
+        <td>{{ item.ExpCode }}</td>
+        <td>{{ item.ExpCodeDesc }}</td>
+        <td>{{ item.Rate }}</td>
+        <td (click)="DeleteData(item)">
+          <span type="button" class="mdi mdi-delete"></span>
+        </td>
+        <td (click)="patchValue(item)">
+          <span type="button" class="mdi mdi-square-edit-outline"></span>
+        </td>
+      </tr>
+    </table>
+  </div>
+</app-accounting-wrapper>

@@ -1,0 +1,157 @@
+<app-accounting-wrapper>
+  <form [formGroup]="setupForm" novalidate class="form-horizontal">
+    <div class="row">
+      <div class="col-xl-8 col-md-8">
+        <p class="bg-primary text-center text-light bg-secondary title">
+          Pension Account - Interest Calculation
+        </p>
+        <div class="card">
+          <!-- <div class="card-header bg-primary">
+              <h4 class="card-title text-white mb-0">
+                Pension Account - Interest Calculation
+              </h4>
+            </div> -->
+          <div class="card-body">
+            <div class="form-group row">
+              <label class="col-md-3 col-form-label">Branch:</label>
+              <div class="form-group col-md-2">
+                <input
+                  type="text"
+                  class="form-control"
+                  disabled
+                  formControlName="BranchCode"
+                />
+              </div>
+              <div class="col-md-5">
+                <select
+                  formControlName="BranchId"
+                  class="form-control pt-0"
+                  (change)="onBranchChange(setupForm.value.BranchId)"
+                >
+                  <option value="">All</option>
+                  <option *ngFor="let item of branchList" [value]="item.Id">
+                    {{ item.Description }}
+                  </option>
+                </select>
+              </div>
+            </div>
+            <div class="form-group row">
+              <label class="col-md-3 col-form-label">A/C Type:</label>
+              <div class="form-group col-md-2">
+                <input
+                  type="text"
+                  class="form-control"
+                  disabled
+                  formControlName="AccountTypeCode"
+                />
+              </div>
+              <div class="col-md-5">
+                <select
+                  formControlName="AccountTypeId"
+                  class="form-control pt-0"
+                  (change)="onTypeChange(setupForm.value.AccountTypeId)"
+                >
+                  <option value="">-Select-</option>
+                  <option
+                    *ngFor="let item of accountTypeList"
+                    [value]="item.Id"
+                  >
+                    {{ item.Description }}
+                  </option>
+                </select>
+              </div>
+            </div>
+            <div class="form-group row">
+              <div class="col-md-3"></div>
+              <div class="col-md-5 cal-period">
+                Int. {{ interestDetailsData.CalculationPeriod }}
+              </div>
+            </div>
+
+            <div class="form-group row">
+              <label class="col-md-3 col-form-label">GL Debit Code:</label>
+              <div class="form-control col-md-2 ml-3">
+                {{ interestDetailsData.GlDebitCode }}
+              </div>
+              <div class="form-group col-md-5 form-control">
+                {{ interestDetailsData.GlDebitCodeDesc }}
+              </div>
+            </div>
+
+            <div class="form-group row">
+              <label class="col-md-3 col-form-label">GL Credit Code:</label>
+              <div class="form-group col-md-2 form-control ml-3">
+                {{ interestDetailsData.GlCreditCode }}
+              </div>
+              <div class="form-group col-md-5 form-control">
+                {{ interestDetailsData.GlCreditCodeDesc }}
+              </div>
+            </div>
+
+            <div class="form-group row">
+              <label class="col-md-3 col-form-label">Input Voucher No.:</label>
+              <div class="form-group col-md-7">
+                <input
+                maxlength="10"
+                  type="text"
+                  formControlName="VoucherNo"
+                  class="form-control mt-0 pt-0"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-xl-4 col-md-4">
+        <table id="Data">
+          <tr>
+            <th>Branch</th>
+            <th>Calculation Status</th>
+          </tr>
+          <tr *ngFor="let n of calculationStatusList">
+            <td>{{ n.BranchNo }}</td>
+            <td>{{ n.CalStatus }}</td>
+          </tr>
+        </table>
+      </div>
+    </div>
+
+    <div class="buttons mt-2">
+      <button type="button" (click)="onCalculation()" class="btn btn-primary">
+        Calculation
+      </button>
+      <button
+        type="button"
+        (click)="setParameter1()"
+        class="btn btn-success"
+        style="margin-left: 20px"
+      >
+        View - Summary
+      </button>
+      <button
+        type="button"
+        (click)="setParameter2()"
+        class="btn btn-primary"
+        style="margin-left: 20px"
+      >
+        View - Detail
+      </button>
+      <button
+        type="button"
+        (click)="onPost()"
+        class="btn btn-info"
+        style="margin-left: 20px"
+      >
+        Post
+      </button>
+      <button
+        type="button"
+        (click)="onReversePost()"
+        class="btn btn-danger"
+        style="margin-left: 20px"
+      >
+        Post - Reverse
+      </button>
+    </div>
+  </form>
+</app-accounting-wrapper>

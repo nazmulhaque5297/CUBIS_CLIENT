@@ -1,0 +1,87 @@
+<app-accounting-wrapper>
+  <form
+    [formGroup]="ChequeBookReverseForm"
+    class="mx-auto border col-md-7 pb-3"
+  >
+    <p class="bg-dark title">Reverse Cheque Book</p>
+    <div class="form-row">
+      <label for="MemNo" class="col-md-3">Member No:</label>
+      <div class="form-group col-md-5">
+        <input
+          type="text"
+          formControlName="MemNo"
+          class="form-control"
+          id="MemNo"
+          (focusout)="GetMemInformation()"
+          (keydown)="onEnterMemNoHandler($event)"
+        />
+      </div>
+      <label *ngFor="let item of memInfo">{{ item.MemName }}</label>
+    </div>
+    <div class="form-row">
+      <label for="AccType" class="col-md-3">Account Type:</label>
+      <div class="form-group col-md-1">
+        <input
+          type="text"
+          class="form-control"
+          id="AccType"
+          formControlName="AccType"
+          name="AccType"
+          (focusout)="changeSelectValue($event)"
+          (keydown)="onEnterAccTypeHandler($event)"
+        />
+      </div>
+      <div class="form-group col-md-4">
+        <select
+          formControlName="selectedOptionCode"
+          (change)="selectChangeHandler($event)"
+          class="form-control pt-0"
+        >
+          <option value="0">-Select-</option>
+          <option *ngFor="let item of dataList" [value]="item.AccTypeCode">
+            {{ item.AccTypeDescription }}
+          </option>
+        </select>
+      </div>
+    </div>
+    <div class="form-row">
+      <label for="AccNo" class="col-md-3">Account No:</label>
+      <div class="form-group col-md-5">
+        <input
+          type="text"
+          formControlName="AccNo"
+          class="form-control"
+          id="AccNo"
+        />
+      </div>
+      <div class="col-md-6 mx-auto">
+        <button type="button" class="btn" (click)="reverseButton()">
+          Reverse
+        </button>
+      </div>
+    </div>
+  </form>
+  <div
+    *ngIf="ChequeGridInfo.length != 0 && gridCheck"
+    class="mx-auto col-md-7 set-height"
+  >
+    <table id="Data">
+      <tr>
+        <th>Action</th>
+        <th>Chq. Prefix</th>
+        <th>Beg.SL. No.</th>
+        <th>End SL. No.</th>
+        <th>Issue Date</th>
+        <th>Chq.Book Status</th>
+      </tr>
+      <tr *ngFor="let item of ChequeGridInfo">
+        <td><input type="checkbox" (change)="addOrDeleteData(item)" /></td>
+        <td>{{ item.ChqeFx }}</td>
+        <td>{{ item.ChqSlNo }}</td>
+        <td>{{ item.EndSlNo }}</td>
+        <td>{{ item.ChqBIssDt }}</td>
+        <td>{{ item.ChqBStatDesc }}</td>
+      </tr>
+    </table>
+  </div>
+</app-accounting-wrapper>

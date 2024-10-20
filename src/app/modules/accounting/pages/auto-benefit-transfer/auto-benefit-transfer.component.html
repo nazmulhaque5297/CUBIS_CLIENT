@@ -1,0 +1,110 @@
+<app-accounting-wrapper>
+  <form [formGroup]="AutoBenefitTransferForm">
+    <div class="mx-auto border col-md-8">
+      <p class="bg-dark title">Auto Benefit Processing</p>
+      <div class="form-row">
+        <label class="col-md-2 col-form-label">Account Type:</label>
+        <div class="form-group col-md-5">
+          <select formControlName="SelectedAccountType" (change)="selectAccountTypeChangeHandler($event)"
+            class="form-control pt-0">
+            <option value="0">-Select-</option>
+            <option *ngFor="let item of accTypeList" [value]="item.Id">
+              {{ item.Description }}
+            </option>
+          </select>
+        </div>
+      </div>
+
+      <div class="form-row">
+        <label class="col-md-2 col-form-label" for="DebitCode">GL Debit Code:</label>
+        <div class="form-group col-md-3">
+          <input type="text" formControlName="GLDebitCodeType" class="form-control" id="DebitCode" disabled />
+        </div>
+        <div class="pl-2 form-group col-md-2">
+          <input type="text" formControlName="GLDebitCode" class="form-control" id="GLDebitCode" disabled />
+        </div>
+        <div *ngIf="accInfoList.length != 0" class="form-group col-md-5">
+          <p>{{ AccShortDescription }}</p>
+        </div>
+      </div>
+
+      <div *ngIf="accInfoList.ShowVoucherNo" class="form-row">
+        <label class="col-md-2 col-form-label">Voucher No:</label>
+        <div class="form-group col-md-5">
+          <input type="text" class="form-control" id="VoucherNo" formControlName="VoucherNo" name="VoucherNo" />
+        </div>
+      </div>
+
+      <div class="buttons col-md-11">
+        <button *ngIf="accInfoList.ShowCalculateBtn" type="button" class="btn btn_1" (click)="Calculate()">Calculate</button>
+        <button *ngIf="accInfoList.ShowPostBtn" type="button" class="btn" (click)="Post()">Post</button>
+        <button type="button" class="btn" (click)="SearchReverse()">Search
+          Reverse</button>
+        <button type="button" class="btn btn_2" (click)="Reverse()">Reverse</button>
+      </div>
+    </div>
+  </form>
+
+  <div *ngIf="accInfoList?.MemberList?.length > 0" class="mx-auto mt-1 col-md-8 set-height">
+    <table id="Data">
+      <tr>
+        <th>Select</th>
+        <th>Member</th>
+        <th>Acc No.</th>
+        <th>Name</th>
+        <th>Benefit Date</th>
+        <th>FD Amount</th>
+        <th>Int.Rate</th>
+        <th>Benefit Amt.</th>
+        <th>No.Month</th>
+        <th>Total Benefit</th>
+        <th>Old A/C</th>
+        <th>Corr.AccNo</th>
+      </tr>
+      <tr *ngFor="let item of accInfoList?.MemberList">
+        <td>
+          <Input [checked]="item.RecordMark" type="checkbox" class="checkBtnSize" (change)="checkHandler(item)" />
+        </td>
+        <td>{{ item.MemNumber }}</td>
+        <td>{{ item.AccNo }}</td>
+        <td>{{ item.MemName }}</td>
+        <td>{{ item.AccBenefitDate }}</td>
+        <td>{{ item.AccFixedAmt }}</td>
+        <td>{{ item.AccIntRate }}</td>
+        <td>{{ item.AccFixedMthInt }}</td>
+        <td>{{ item.NoMonths }}</td>
+        <td>{{ item.CalBenefit }}</td>
+        <td>{{ item.AccOldNumber }}</td>
+        <td>{{ item.AccCorrAccNo }}</td>
+      </tr>
+    </table>
+  </div>
+  <div *ngIf="RevAccList?.length > 0" class="mx-auto mt-1 col-md-8 set-height">
+    <table id="Data">
+      <tr>
+        <th>Mem.No</th>
+        <th>AccNo</th>
+        <th>Name</th>
+        <th>Description</th>
+        <th>Amount</th>
+      </tr>
+      <tr *ngFor="let item of RevAccList">
+        <td>{{ item.MemNo }}</td>
+        <td>{{ item.AccNo }}</td>
+        <td>{{ item.MemName }}</td>
+        <td>{{ item.TrnDesc }}</td>
+        <td>{{ item.GLAmount }}</td>
+      </tr>
+    </table>
+  </div>
+  <div *ngIf="accInfoList?.MemberList?.length > 0" class="mx-auto mt-1 mt-5 col-md-2 set-height">
+    <table id="Data">
+      <tr>
+        <th>TOTAL BENEFIT AMOUNT</th>
+      </tr>
+      <tr>
+        <td>{{ TotalBenefit }}</td>
+      </tr>
+    </table>
+  </div>
+</app-accounting-wrapper>

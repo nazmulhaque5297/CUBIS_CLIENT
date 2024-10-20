@@ -1,0 +1,26 @@
+<app-accounting-wrapper>
+  <form
+  [formGroup]="LoanApplicationReportForm"
+    class="mx-auto border col-md-7 main-container"
+  >
+    <p class="bg-dark title">Loan Application Report</p>
+    <div class="form-group row">
+        <label class="col-md-3 col-form-label">Loan Application No:</label>
+        <div class="col-md-5">
+          <input
+            type="text"
+            class="form-control"
+            id="loanAppNo"
+            name="loanAppNo"
+            formControlName="loanAppNo"
+          />
+        </div>
+      </div>
+      <div class="butttons col-md-6 mx-auto">
+        <button type="button" class="btn btn-success mb-2" (click)="changeLoanAppNo()">
+          Preview/Print
+        </button>
+      </div>
+  </form>
+
+</app-accounting-wrapper>

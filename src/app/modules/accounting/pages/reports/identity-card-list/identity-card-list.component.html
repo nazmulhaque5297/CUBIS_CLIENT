@@ -1,0 +1,185 @@
+<app-accounting-wrapper>
+  <form [formGroup]="IdentityCardReportForm" class="mx-auto border col-md-7">
+    <p class="bg-dark title">Identity Card List</p>
+    <div class="form-group row">
+      <div class="col-md-12">
+        <input
+          type="radio"
+          class="form-check-input position-static ml-1 checkbox"
+          value="1"
+          id="rbReportName1"
+          name="rbReportName"
+          formControlName="rbReportName"
+          (click)="AllMemberRb()"
+        />
+        <label class="col-md-8 col-form-label" for="rbReportName1"
+          >All Member</label
+        >
+      </div>
+    </div>
+
+    <div class="form-group row">
+      <div class="col-md-12">
+        <input
+          type="radio"
+          class="form-check-input position-static ml-1 checkbox"
+          value="2"
+          id="rbReportName2"
+          name="rbReportName"
+          formControlName="rbReportName"
+          (click)="SelectMemberMethod()"
+        />
+        <label class="col-md-8 col-form-label" for="rbReportName2"
+          >Selective Member with QR Code</label
+        >
+      </div>
+    </div>
+
+    <div class="form-group row">
+      <div class="col-md-12">
+        <input
+          type="radio"
+          class="form-check-input position-static ml-1 checkbox"
+          value="3"
+          name="rbReportName"
+          id="rbReportName3"
+          formControlName="rbReportName"
+          (click)="rangeMethod()"
+        />
+        <label class="col-md-8 col-form-label" for="rbReportName3"
+          >Range Member with QR Code (Max. 2000 Member's)</label
+        >
+      </div>
+    </div>
+
+    <div class="form-group row" *ngIf="InputRowOne">
+      <div class="col-md-3">
+        <input
+          type="text"
+          class="form-control"
+          id="QrCode1"
+          formControlName="QrCode1"
+          name="QrCode1"
+          (focusout)="memberNoCheck($event, 1)"
+        />
+      </div>
+      <div class="col-md-3">
+        <input
+          type="text"
+          class="form-control"
+          id="QrCode2"
+          formControlName="QrCode2"
+          name="QrCode2"
+          (focusout)="memberNoCheck($event, 2)"
+        />
+      </div>
+      <div class="col-md-3">
+        <input
+          type="text"
+          class="form-control"
+          id="QrCode3"
+          formControlName="QrCode3"
+          name="QrCode3"
+          (focusout)="memberNoCheck($event, 3)"
+        />
+      </div>
+      <div class="col-md-3">
+        <input
+          type="text"
+          class="form-control"
+          id="QrCode4"
+          formControlName="QrCode4"
+          name="QrCode4"
+          (focusout)="memberNoCheck($event, 4)"
+        />
+      </div>
+    </div>
+
+    <div class="form-group row" *ngIf="InputRowTwo">
+      <div class="col-md-3">
+        <input
+          type="text"
+          class="form-control"
+          id="QrCode5"
+          formControlName="QrCode5"
+          name="QrCode5"
+          (focusout)="memberNoCheck($event, 5)"
+        />
+      </div>
+      <div class="col-md-3">
+        <input
+          type="text"
+          class="form-control"
+          id="QrCode6"
+          formControlName="QrCode6"
+          name="QrCode6"
+          (focusout)="memberNoCheck($event, 6)"
+        />
+      </div>
+      <div class="col-md-3">
+        <input
+          type="text"
+          class="form-control"
+          id="QrCode7"
+          formControlName="QrCode7"
+          name="QrCode7"
+          (focusout)="memberNoCheck($event, 7)"
+        />
+      </div>
+      <div class="col-md-3">
+        <input
+          type="text"
+          class="form-control"
+          id="QrCode8"
+          formControlName="QrCode8"
+          name="QrCode8"
+          (focusout)="memberNoCheck($event, 8)"
+        />
+      </div>
+    </div>
+
+    <div class="form-group row" *ngIf="FromToMember">
+      <!-- <div class="col-md-1">
+
+        </div> -->
+      <!-- style="margin-left: 0.6rem" -->
+      <label class="col-md-3 col-form-label">From Member No :</label>
+      <div class="col-md-3">
+        <input
+          type="text"
+          class="form-control"
+          id="fromMemberNo"
+          formControlName="fromMemberNo"
+          name="fromMemberNo"
+        />
+      </div>
+
+      <label class="col-md-3 col-form-label">To Member No :</label>
+      <div class="col-md-3">
+        <input
+          type="text"
+          class="form-control"
+          id="toMemberNo"
+          formControlName="toMemberNo"
+          name="toMemberNo"
+        />
+      </div>
+    </div>
+    <div class="buttons">
+      <button
+        type="button"
+        class="btn btn-info ml-2"
+        (click)="getReportToken('CRV')"
+      >
+        Preview
+      </button>
+      <button
+        type="button"
+        class="btn btn-success ml-2"
+        (click)="getReportToken('PDF')"
+      >
+        Print
+      </button>
+    </div>
+  </form>
+</app-accounting-wrapper>

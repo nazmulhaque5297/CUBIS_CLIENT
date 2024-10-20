@@ -1,0 +1,168 @@
+<app-accounting-wrapper>
+  <form [formGroup]="ChequeBookStatusForm">
+    <div class="mx-auto border col-md-6 pb-3">
+      <p class="bg-dark title">Cheque Status Changes</p>
+      <div class="form-row">
+        <label for="MemNo" class="col-md-3">Member No:</label>
+        <div class="form-group col-md-2">
+          <input
+            type="text"
+            formControlName="MemNo"
+            class="form-control"
+            id="MemNo"
+            (focusout)="GetMemInformation()"
+            (keydown)="onEnterMemNoHandler($event)" 
+          />
+        </div>
+        <label *ngFor="let item of memInfo">{{ item.MemName }}</label>
+      </div>
+      <div class="form-row">
+        <label for="AccType" class="col-md-3">Account Type:</label>
+        <div class="form-group col-md-2">
+          <input
+            type="text"
+            class="form-control"
+            id="AccType"
+            formControlName="AccType"
+            name="AccType"
+            (focusout)="changeSelectValue($event)"
+            (keydown)="onEnterAccTypeHandler($event)" 
+          />
+        </div>
+        <div class="form-group col-md-5">
+          <select
+            formControlName="selectedOptionCode"
+            (change)="selectChangeHandler($event)"
+            class="form-control pt-0"
+          >
+            <option value="0">-Select-</option>
+            <option *ngFor="let item of dataList" [value]="item.AccTypeCode">
+              {{ item.AccTypeDescription }}
+            </option>
+          </select>
+        </div>
+      </div>
+      <div class="form-row">
+        <label for="AccNo" class="col-md-3">Account No:</label>
+        <div class="form-group col-md-7">
+          <input
+            type="text"
+            formControlName="AccNo"
+            class="form-control"
+            id="AccNo"
+          />
+        </div>
+        <div class="col-md-6 mx-auto buttons">
+          <button type="button" class="btn btn_1 mt-2" *ngIf="hideDetails" (click)="updateBData()">
+            Update
+          </button>
+          <button type="button" class="btn btn_1 mt-2" *ngIf="showDetails" (click)="updatePData()">
+            Update
+          </button>
+          <button
+            type="button"
+            class="btn mt-2 ml-2"
+            (click)="backButton()"
+            *ngIf="showDetails"
+          >
+            Back
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div
+      *ngIf="infoData.length != 0 && hideDetails"
+      class="col-md-6 mx-auto set-height"
+    >
+      <table id="Data">
+        <tr>
+          <th>Chq. Prefix</th>
+          <th>Beg.SL. No.</th>
+          <th>End SL. No.</th>
+          <th>Issue Date</th>
+          <th>Chq.Book Status</th>
+          <th>Status Date</th>
+          <th>Action</th>
+        </tr>
+        <tr *ngFor="let item of infoData">
+          <td>{{ item.ChqeFx }}</td>
+          <td>{{ item.ChqSlNo }}</td>
+          <td>{{ item.EndSlNo }}</td>
+          <td>{{ item.ChqBIssDt }}</td>
+          <td>
+            <select (change)=changeBData(item) formControlName="ChqBStatChange">
+              <option *ngIf="item.ChqBStat==1" Value="1" selected>Valid</option>
+              <option *ngIf="item.ChqBStat!=1" Value="1">Valid</option>
+              <option *ngIf="item.ChqBStat==3" Value="3" selected>Stopped</option>
+              <option *ngIf="item.ChqBStat!=3" Value="3">Stopped</option>
+              <option *ngIf="item.ChqBStat==5" Value="5" selected>Lost</option>
+              <option *ngIf="item.ChqBStat!=5" Value="5">Lost</option>
+              <option *ngIf="item.ChqBStat==6" Value="6" selected>Destroyed</option>
+              <option *ngIf="item.ChqBStat!=6" Value="6">Destroyed</option>
+            </select>
+          </td>
+          <td>{{ item.ChqBStatDt }}</td>
+          <td>
+            <button *ngIf="item.ChqBStatDt.length!=0" class="btn" disabled>
+              Select
+            </button>
+            <button *ngIf="item.ChqBStatDt.length==0" class="btn" (click)="SelectedValueDetails(item.BookCount)">
+              Select
+            </button>
+          </td>
+        </tr>
+      </table>
+    </div>
+    <div
+      *ngIf="detailsData.length != 0 && showDetails"
+      class="col-md-6 mx-auto set-height"
+    >
+      <table id="Data">
+        <tr>
+          <th>Chq. Prefix</th>
+          <th>Chq. No.</th>
+          <th>Issue Date</th>
+          <th>Chq. Status</th>
+          <th>Status Date</th>
+        </tr>
+        <tr *ngFor="let items of detailsData">
+          <td>{{ items.ChqeFx }}</td>
+          <td>{{ items.ChqSlNo }}</td>
+          <td>{{ items.ChqBIssDt }}</td>
+          <td>
+            <select (change)=changePData(items,$event) *ngIf="items.ChqPStat==1 || items.ChqPStat==3">
+              <option *ngIf="items.ChqPStat==1" value="1" selected>Uncashed</option>
+              <option *ngIf="items.ChqPStat!=1" value="1">Uncashed</option>
+              <option *ngIf="items.ChqPStat==2" value="2" selected>Cashed</option>
+              <option *ngIf="items.ChqPStat!=2" value="2">Cashed</option>
+              <option *ngIf="items.ChqPStat==3" value="3" selected>Stopped</option>
+              <option *ngIf="items.ChqPStat!=3" value="3">Stopped</option>
+              <option *ngIf="items.ChqPStat==4" value="4" selected>Dishonored</option>
+              <option *ngIf="items.ChqPStat!=4" value="4">Dishonored</option>
+              <option *ngIf="items.ChqPStat==5" value="5" selected>Lost</option>
+              <option *ngIf="items.ChqPStat!=5" value="5">Lost</option>
+              <option *ngIf="items.ChqPStat==6" value="6" selected>Destroyed</option>
+              <option *ngIf="items.ChqPStat!=6" value="6">Destroyed</option>
+            </select>
+            <select (change)=changePData(items,$event) *ngIf="items.ChqPStat!=1 && items.ChqPStat!=3" disabled>
+              <option *ngIf="items.ChqPStat==1" value="1" selected>Uncashed</option>
+              <option *ngIf="items.ChqPStat!=1" value="1">Uncashed</option>
+              <option *ngIf="items.ChqPStat==2" value="2" selected>Cashed</option>
+              <option *ngIf="items.ChqPStat!=2" value="2">Cashed</option>
+              <option *ngIf="items.ChqPStat==3" value="3" selected>Stopped</option>
+              <option *ngIf="items.ChqPStat!=3" value="3">Stopped</option>
+              <option *ngIf="items.ChqPStat==4" value="4" selected>Dishonored</option>
+              <option *ngIf="items.ChqPStat!=4" value="4">Dishonored</option>
+              <option *ngIf="items.ChqPStat==5" value="5" selected>Lost</option>
+              <option *ngIf="items.ChqPStat!=5" value="5">Lost</option>
+              <option *ngIf="items.ChqPStat==6" value="6" selected>Destroyed</option>
+              <option *ngIf="items.ChqPStat!=6" value="6">Destroyed</option>
+            </select>
+          </td>
+          <td>{{ items.ChqPDt }}</td>
+        </tr>
+      </table>
+    </div>
+  </form>
+</app-accounting-wrapper>

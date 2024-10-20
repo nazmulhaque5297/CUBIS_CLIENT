@@ -1,0 +1,179 @@
+<app-house-keeping-wrapper>
+  <form
+    [formGroup]="parameterMaintenanceSysControlForm"
+    class="mx-auto border col-md-6 main-container"
+  >
+    <p class="bg-dark title">Parameter Maintenance - System</p>
+    <div class="form-group row">
+      <label class="col-md-3 col-form-label">Name :</label>
+      <div class="col-md-9">
+        <input
+          type="text"
+          (keydown)="onEnterPrmUnitNameHandler($event)"
+          formControlName="PrmUnitName"
+          class="form-control"
+        />
+      </div>
+    </div>
+    <div class="form-group row">
+      <label class="col-md-3 col-form-label">Short Name :</label>
+      <div class="col-md-9">
+        <input
+          type="text"
+          formControlName="PrmUnitShortName"
+          id="PrmUnitShortName"
+          class="form-control"
+          (keydown)="onEnterPrmUnitShortNameHandler($event)"
+        />
+      </div>
+    </div>
+    <div class="form-group row">
+      <label class="col-md-3 col-form-label">Address Line1 :</label>
+      <div class="col-md-9">
+        <input
+          type="text"
+          formControlName="PrmUnitAdd1"
+          id="PrmUnitAdd1"
+          class="form-control"
+          (keydown)="onEnterPrmUnitAdd1Handler($event)"
+        />
+      </div>
+    </div>
+    <div class="form-group row">
+      <label class="col-md-3 col-form-label">Address Line2 :</label>
+      <div class="col-md-9">
+        <input
+          type="text"
+          id="PrmUnitAdd2"
+          formControlName="PrmUnitAdd2"
+          class="form-control"
+          (keydown)="onEnterPrmUnitAdd2Handler($event)"
+        />
+      </div>
+    </div>
+    <div class="form-group row">
+      <label class="col-md-3 col-form-label">Address Line3 :</label>
+      <div class="col-md-9">
+        <input
+          type="text"
+          id="PrmUnitAdd3"
+          formControlName="PrmUnitAdd3"
+          class="form-control"
+          (keydown)="onEnterPrmUnitAdd3Handler($event)"
+        />
+      </div>
+    </div>
+    <div class="form-group row">
+      <label class="col-md-3 col-form-label">Telephone No :</label>
+      <div class="col-md-9">
+        <input
+          type="text"
+          formControlName="PrmUnitPhone"
+          id="PrmUnitPhone"
+          class="form-control"
+          (keydown)="onEnterPrmUnitPhoneHandler($event)"
+        />
+      </div>
+    </div>
+    <div class="form-group row">
+      <label class="col-md-3 col-form-label">System Path :</label>
+      <div class="col-md-9">
+        <input
+          type="text"
+          formControlName="PrmSystemPath"
+          id="PrmSystemPath"
+          class="form-control"
+          (keydown)="onEnterPrmSystemPathHandler($event)"
+        />
+      </div>
+    </div>
+    <div class="form-group row">
+      <label class="col-md-3 col-form-label">Backup Path :</label>
+      <div class="col-md-9">
+        <input
+          type="text"
+          formControlName="PrmBackUpPath"
+          id="PrmBackUpPath"
+          class="form-control"
+          (keydown)="onEnterPrmBackUpPathHandler($event)"
+        />
+      </div>
+    </div>
+    <div class="form-group row">
+      <label class="col-md-3 col-form-label">Data Path :</label>
+      <div class="col-md-9">
+        <input
+          type="text"
+          formControlName="PrmDataPath"
+          id="PrmDataPath"
+          class="form-control"
+          (keydown)="onEnterPrmDataPathHandler($event)"
+        />
+      </div>
+    </div>
+    <div class="form-group row">
+      <label class="col-md-3 col-form-label">Email Data Path :</label>
+      <div class="col-md-9">
+        <input
+          type="text"
+          formControlName="PrmEmailDataPath"
+          id="PrmEmailDataPath"
+          class="form-control"
+          (keydown)="onEnterPrmEmailDataPathHandler($event)"
+        />
+      </div>
+    </div>
+    <div class="form-group row">
+      <label class="col-md-3 col-form-label">Out Data Path :</label>
+      <div class="col-md-9">
+        <input
+          type="text"
+          formControlName="PrmOutDataPath"
+          id="PrmOutDataPath"
+          class="form-control"
+          (keydown)="onEnterPrmOutDataPathHandler($event)"
+        />
+      </div>
+    </div>
+    <div class="form-group row">
+      <label class="col-md-3 col-form-label">In Data Path :</label>
+      <div class="col-md-9">
+        <input
+          type="text"
+          formControlName="PrmInDataPath"
+          id="PrmInDataPath"
+          class="form-control"
+          (keydown)="onEnterPrmInDataPathHandler($event)"
+        />
+      </div>
+    </div>
+    <div class="form-group row">
+      <label class="col-md-3 col-form-label">Picture Path :</label>
+      <div class="col-md-9">
+        <input
+          type="text"
+          formControlName="PrmPicturePath"
+          id="PrmPicturePath"
+          class="form-control"
+          (keydown)="onEnterPrmPicturePathHandler($event)"
+        />
+      </div>
+    </div>
+    <div class="form-group row">
+      <label class="col-md-3 col-form-label">System TimeOut :</label>
+      <div class="col-md-9">
+        <input
+          type="text"
+          formControlName="PrmTimeOut"
+          id="PrmTimeOut"
+          class="form-control"
+        />
+      </div>
+    </div>
+    <div class="buttons col-md-7 mx-auto">
+      <button type="button" class="btn btn-success ml-4" (click)="onUpdate()">
+        Update
+      </button>
+    </div>
+  </form>
+</app-house-keeping-wrapper>

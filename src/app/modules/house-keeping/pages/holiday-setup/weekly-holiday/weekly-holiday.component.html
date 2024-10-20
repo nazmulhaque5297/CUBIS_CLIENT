@@ -1,0 +1,30 @@
+<app-house-keeping-wrapper>
+    <form [formGroup]='setupForm' novalidate class="mx-auto mt-3 border col-md-6 main-container">
+        <p class="bg-secondary text-light title">Weekly Holiday Maintenance</p>
+        <div class="form-row">
+            <label class="col-md-2">Day 1 :</label>
+            <div class="form-group col-md-8">
+                <select formControlName="Day1" class="form-control pt-0">
+                    <option value="0">-Select-</option>
+                    <option *ngFor="let item of dataList" [value]="item.Id">{{item.Description}}
+                    </option>
+                </select>
+            </div>
+        </div>
+        <div class="form-row">
+            <label class="col-md-2">Day 2 :</label>
+            <div class="form-group col-md-8">
+                <select formControlName="Day2" class="form-control pt-0">
+                    <option value="0">-Select-</option>
+                    <option *ngFor="let item of dataList" [value]="item.Id">{{item.Description}}
+                    </option>
+                </select>
+            </div>
+        </div>
+        
+        <div class="buttons">
+            <button type="button" (click)="Update()" class="btn btn-success">Update</button>
+        </div>
+    </form>
+
+    </app-house-keeping-wrapper>

@@ -1,0 +1,125 @@
+<app-accounting-wrapper>
+  <form [formGroup]="BackUpProcessForm">
+    <div class="mx-auto mt-1 mt-5 border col-md-7 main-container">
+      <div class="mt-1 bg-dark title row-md-12 d-flex">
+        <div class="col-md-9">Backup Database</div>
+      </div>
+
+      <table id="Data" class="mt-3 ml-4">
+        <tr>
+          <td>
+            <input
+              type="radio"
+              value="1"
+              id="1"
+              name="radioButton"
+              formControlName="radioButton"
+              (change)="radioBtnChange()"
+            />
+            <label for="1" class="ml-2">Sunday</label>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <input
+              type="radio"
+              value="2"
+              id="2"
+              name="radioButton"
+              formControlName="radioButton"
+              (change)="radioBtnChange()"
+            />
+            <label for="2" class="ml-2">Monday</label>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <input
+              type="radio"
+              value="3"
+              id="3"
+              name="radioButton"
+              formControlName="radioButton"
+              (change)="radioBtnChange()"
+            />
+            <label for="3" class="ml-2">Tuesday</label>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <input
+              type="radio"
+              value="4"
+              id="4"
+              name="radioButton"
+              formControlName="radioButton"
+              (change)="radioBtnChange()"
+            />
+            <label for="4" class="ml-2">Wednesday</label>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <input
+              type="radio"
+              value="5"
+              id="5"
+              name="radioButton"
+              formControlName="radioButton"
+              (change)="radioBtnChange()"
+            />
+            <label for="5" class="ml-2">Thursday</label>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <input
+              type="radio"
+              value="6"
+              id="6"
+              name="radioButton"
+              formControlName="radioButton"
+              (change)="radioBtnChange()"
+            />
+            <label for="6" class="ml-2">Friday</label>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <input
+              type="radio"
+              value="7"
+              id="7"
+              name="radioButton"
+              formControlName="radioButton"
+              (change)="radioBtnChange()"
+            />
+            <label for="7" class="ml-2">Saturday</label>
+          </td>
+        </tr>
+      </table>
+      <div>
+        <div class="col-md-12 d-flex mt-2">
+          <div class="col-md-1">To</div>
+          <div class="col-md-6">
+            <input
+              type="text"
+              formControlName="ToAddress"
+              class="form-control"
+            />
+          </div>
+        </div>
+
+        <div class="mt-2 ml-4 pl-2 mb-2">
+          <!--  [disabled]="showDelete" -->
+          <button type="button" class="btn btn-success" (click)="backupBtnClick()">
+            Backup
+          </button>
+          <!-- <button type="button" class="btn ml-2" (click)="exitPage()">
+            Exit
+          </button> -->
+        </div>
+      </div>
+    </div>
+  </form>
+</app-accounting-wrapper>

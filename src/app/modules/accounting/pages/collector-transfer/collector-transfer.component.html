@@ -1,0 +1,120 @@
+<app-accounting-wrapper>
+  <form [formGroup]="CollectorTransferForm">
+    <div class="mx-auto border col-md-6">
+      <p class="bg-dark title">Collector Transfer From..........</p>
+      <div class="form-row ml-0 mt-2 col-md-12">
+        <label class="col-md-3 pr-0"
+          >Collector Code <span style="color: red">*</span> :</label
+        >
+        <div class="form-group col-md-8 d-flex mt-0 pt-0">
+          <input
+            type="text"
+            formControlName="FromCollectorCode"
+            (change)="fromCollectorChange()"
+            appOnlyNumberWithoutDecimal
+            class="form-control mt-0 pt-0"
+          />
+          <select
+            class="form-control pt-0 ml-2 col-md-7"
+            (change)="fromCollectorDrop($event)"
+            formControlName="FromCollectorCode"
+          >
+            <option value="0">-Select-</option>
+            <option *ngFor="let item of fromCollectorCode" [value]="item.Id">
+              {{ item.Description }}
+            </option>
+          </select>
+        </div>
+      </div>
+      <div class="form-row ml-0 mt-2 col-md-12">
+        <label class="col-md-3 pr-0"
+          >Group Name <span style="color: red">*</span> :</label
+        >
+        <div class="form-group col-md-8 d-flex mt-0 pt-0">
+          <input
+            type="text"
+            formControlName="FromGroupCode"
+            id="FromGroupCode"
+            appOnlyNumberWithoutDecimal
+            (change)="fromGroupNameChange()"
+            class="form-control mt-0 pt-0"
+          />
+          <select
+            class="form-control pt-0 ml-2 col-md-7"
+            formControlName="FromGroupCode"
+            (change)="fromGroupDrop($event)"
+          >
+            <option value="0">-Select-</option>
+            <option *ngFor="let item of fromGroupName" [value]="item.Id">
+              {{ item.Description }}
+            </option>
+          </select>
+        </div>
+      </div>
+    </div>
+
+    <div class="mx-auto border col-md-6 mt-3">
+      <p class="bg-dark title">Collector Transfer To..............</p>
+      <div class="form-row ml-0 mt-2 col-md-12">
+        <label class="col-md-3 pr-0"
+          >Collector Code <span style="color: red">*</span> :</label
+        >
+        <div class="form-group col-md-8 d-flex mt-0 pt-0">
+          <input
+            type="text"
+            formControlName="ToCollectorCode"
+            id="ToCollectorCode"
+            (change)="toCollectorChange()"
+            appOnlyNumberWithoutDecimal
+            class="form-control mt-0 pt-0"
+          />
+          <select
+            class="form-control pt-0 ml-2 col-md-7"
+            (change)="toCollectorDrop($event)"
+            formControlName="ToCollectorCode"
+          >
+            <option value="0">-Select-</option>
+            <option *ngFor="let item of toCollectorCode" [value]="item.Id">
+              {{ item.Description }}
+            </option>
+          </select>
+        </div>
+      </div>
+      <div class="form-row ml-0 mt-2 col-md-12">
+        <label class="col-md-3 pr-0"
+          >Group Name <span style="color: red">*</span> :</label
+        >
+        <div class="form-group col-md-8 d-flex mt-0 pt-0">
+          <input
+            type="text"
+            formControlName="ToGroupCode"
+            id="ToGroupCode"
+            appOnlyNumberWithoutDecimal
+            (change)="toGroupNameChange()"
+            class="form-control mt-0 pt-0"
+          />
+          <select
+            class="form-control pt-0 ml-2 col-md-7"
+            (change)="toGroupDrop($event)"
+            formControlName="ToGroupCode"
+          >
+            <option value="0">-Select-</option>
+            <option *ngFor="let item of toGroupName" [value]="item.Id">
+              {{ item.Description }}
+            </option>
+          </select>
+        </div>
+      </div>
+      <div class="buttons">
+        <button
+          type="button"
+          class="ml-4 pl-5 btn btn-success mb-2"
+          (click)="btnTransferClick()"
+        >
+          Transfer
+        </button>
+        <!-- <button class="ml-2 btn btn-success mb-2" (click)="exitPage()"> Exit </button> -->
+      </div>
+    </div>
+  </form>
+</app-accounting-wrapper>

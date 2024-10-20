@@ -1,0 +1,44 @@
+<app-house-keeping-wrapper>
+    <form [formGroup]='AccountStatusCodeForm' novalidate class="mx-auto  border col-md-6 main-container pb-3">
+        <p class="bg-dark title"> Account Status Maintenance</p>
+        <div class="form-row">
+            <label>Account Status Code:</label>
+            <div class="form-group col-md-3 ml-2">
+                <input type="text" (focusout)="changeSelectValue($event)" class="form-control" id="AccStatusCode" formControlName="AccStatusCode" name="AccStatusCode">
+            </div>
+            <div class="form-group col-md-4">
+                <select formControlName="selectedOptionCode" (change)="selectChangeHandler($event)" class="form-control pt-0">
+              <option value="0">-Select-</option>
+              <option *ngFor="let item of dataList" [value]="item.AccStatusCode">{{item.AccStatusDescription}}
+              </option>
+          </select>
+            </div>
+        </div>
+        <div class="form-row">
+            <label for="inputDesc">Description:</label><span class="text-danger">*</span>
+            <div class="ml-3 form-group col-md-7">
+                <input type="text" formControlName="AccStatusDescription" class="form-control desc-input" id="inputDesc">
+                <div *ngIf="AccountStatusCodeForm.controls['AccStatusDescription'].invalid && AccountStatusCodeForm.controls['AccStatusDescription'].touched" class="text-danger ml-4">Required*</div>
+
+            </div>
+        </div>
+        <div class="buttons col-md-8 mx-auto">
+            <button *ngIf="submitButtonTextSubmit" type="button" (click)="save()" class="btn btn-success ml-2">Submit</button>
+            <button *ngIf="submitButtonTextUpdate" type="button" (click)="update()" class="btn btn-success ml-2">Update</button>
+            <button (click)="getTableReportData()" class="ml-5 btn_1 btn">View</button>
+        </div>
+    </form>
+
+    <div *ngIf="dataList.length != 0 && displayTabularData" class="mx-auto set-height col-md-6 ">
+        <table id="Data">
+            <tr>
+                <th>Code</th>
+                <th>Description</th>
+            </tr>
+            <tr *ngFor="let item of dataList">
+                <td class="text-center">{{item.AccStatusCode}}</td>
+                <td>{{item.AccStatusDescription}}</td>
+            </tr>
+        </table>
+    </div>
+</app-house-keeping-wrapper>

@@ -1,0 +1,121 @@
+<app-house-keeping-wrapper>
+  <form
+    [formGroup]="TransactionCodeForm"
+    novalidate
+    class="mx-auto border col-md-6 main-container pb-3"
+  >
+    <p class="bg-dark title">Transaction Code Maintenance</p>
+    <div class="form-row mt-2">
+      <label class="col-md-2"
+        >Transaction Code:<span class="text-danger">*</span></label
+      >
+      <div class="form-group col-md-3">
+        <input
+          type="text"
+          (change)="changeSelectValue($event)"
+          class="form-control mt-0 pt-0"
+          id="TrnCode"
+          formControlName="TrnCode"
+          name="TrnCode"
+          required
+        />
+      </div>
+      <div class="form-group col-md-4">
+        <select
+          formControlName="selectedOptionCode"
+          (change)="selectChangeHandler($event)"
+          class="form-control mt-0 pt-0"
+        >
+          <option value="0" class="mt-0 pt-0">-Select-</option>
+          <option
+            *ngFor="let item of dataList"
+            [value]="item.TrnCode"
+            class="mt-0 pt-0"
+          >
+            {{ item.TrnDescription }}
+          </option>
+        </select>
+      </div>
+    </div>
+    <div class="form-row mt-2">
+      <label for="inputDesc" class="col-md-2"
+        >Description:<span class="text-danger">*</span></label
+      >
+      <div class="form-group col-md-7">
+        <input
+          type="text"
+          formControlName="TrnDescription"
+          (keydown)="onEnterTrnDescriptionHandler($event)"
+          class="form-control mt-0 pt-0"
+          id="TrnDescription"
+          required
+        />
+        <div
+          *ngIf="
+            TransactionCodeForm.controls['TrnDescription'].invalid &&
+            TransactionCodeForm.controls['TrnDescription'].touched
+          "
+          class="text-danger ml-4"
+        >
+          Required*
+        </div>
+      </div>
+    </div>
+    <div class="form-row mt-2">
+      <label for="inputDesc" class="col-md-2">Account Type:</label>
+      <div class="form-group col-md-7">
+        <input
+          type="text"
+          formControlName="AccType"
+          name="AccType"
+          class="form-control mt-0 pt-0"
+          id="AccType"
+          required
+        />
+      </div>
+    </div>
+    <div class="buttons">
+      <button
+        *ngIf="submitOk"
+        type="button"
+        (click)="insertData()"
+        class="btn btn-success"
+      >
+        Submit
+      </button>
+      <button
+        *ngIf="updateOk"
+        type="button"
+        (click)="updateData()"
+        class="btn btn-success"
+      >
+        Update
+      </button>
+      <button
+        type="button"
+        (click)="getTableReportData()"
+        class="ml-5 btn btn_1"
+      >
+        View
+      </button>
+    </div>
+  </form>
+
+  <div
+    *ngIf="dataList.length != 0 && displayTabularData"
+    class="mx-auto set-height col-md-6"
+  >
+    <table id="Data">
+      <tr>
+        <th>Code</th>
+        <th>Description</th>
+        <th>A/C Type</th>
+      </tr>
+      <tr *ngFor="let item of dataList">
+        <td class="text-center">{{ item.TrnCode }}</td>
+        <td>{{ item.TrnDescription }}</td>
+        <td class="text-center">{{ item.AccType }}</td>
+      </tr>
+    </table>
+  </div>
+</app-house-keeping-wrapper>

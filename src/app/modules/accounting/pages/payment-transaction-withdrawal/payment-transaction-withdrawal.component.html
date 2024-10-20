@@ -1,0 +1,570 @@
+<app-main-wrapper [module]="module">
+  <form [formGroup]="paymentWithdrawalForm" class="form-horizontal">
+    <div class="row">
+      <div class="col-xl-8 col-md-8">
+        <p class="bg-primary text-center text-light bg-secondary title">
+          Withdrawal Transaction
+        </p>
+        <div class="card first__part">
+          <!-- <div class="card-header bg-primary">
+            <h4 class="card-title text-white mb-0">Withdrawal Transaction</h4>
+          </div> -->
+          <div class="card-body">
+            <div class="form-group row">
+              <label class="col-md-3 col-form-label"
+                >A/C Type:<span class="text-danger">*</span></label
+              >
+              <div class="col-md-2">
+                <input
+                  type="text"
+                  class="form-control"
+                  formControlName="AccountTypeCode"
+                  (change)="
+                    onAccountTypeChange(
+                      paymentWithdrawalForm.value.AccountTypeCode
+                    )
+                  "
+                  appOnlyNumber
+                />
+              </div>
+              <div class="col-md-4">
+                <select
+                  class="form-control pt-0"
+                  formControlName="AccountTypeId"
+                  (change)="
+                    onAccountTypeChange(
+                      paymentWithdrawalForm.value.AccountTypeId
+                    )
+                  "
+                >
+                  <option value="0">-Select-</option>
+                  <option
+                    *ngFor="let item of viewData.AccountTypeList"
+                    [value]="item.Id"
+                  >
+                    {{ item.Description }}
+                  </option>
+                </select>
+              </div>
+            </div>
+            <div *ngIf="viewData.ShowOldAccount" class="form-group row">
+              <label class="col-md-3 col-form-label">Old A/c No.:</label>
+              <div class="col-md-2">
+                <input
+                  id="OldAccountNo"
+                  type="text"
+                  class="form-control"
+                  formControlName="OldAccountNo"
+                  (change)="onOldAccNoChange()"
+                  (keydown)="onEnterOldAccHandler($event)"
+                  appOnlyNumber
+                />
+              </div>
+              <label *ngIf="ManualAccNoFlag" class="col-md-2 col-form-label">Manual A/c No.:</label>
+              <div class="col-md-2">
+                <input
+                *ngIf="ManualAccNoFlag"
+                  id="ManualAccountNo"
+                  type="text"
+                  class="form-control"
+                  formControlName="ManualAccountNo"
+                  (keydown)="onEnterManualAccHandler($event)"
+                  appOnlyNumber
+                />
+              </div>
+            </div>
+
+            <div class="form-group row">
+              <label class="col-md-3 col-form-label"
+                >Member No. :<span class="text-danger">*</span></label
+              >
+              <div class="col-md-2">
+                <input
+                  id="MemberNo"
+                  type="text"
+                  class="form-control"
+                  formControlName="MemberNo"
+                  (change)="onMemberChange()"
+                  (keydown)="onMemberEnterChange($event)"
+                  appOnlyNumber
+                />
+              </div>
+              <label class="col-md-4 col-form-label">{{
+                detailsData.MemberName
+              }}</label>
+            </div>
+
+            <div class="form-group row">
+              <label class="col-md-3 col-form-label"
+                >Account No :<span class="text-danger">*</span></label
+              >
+              <div class="col-md-6">
+                <input
+                  type="text"
+                  class="form-control"
+                  disabled
+                  formControlName="AccountNo"
+                />
+              </div>
+            </div>
+
+            <div class="form-group row">
+              <label class="col-md-3 col-form-label">Transaction Type:</label>
+              <div class="col-md-2">
+                <input
+                  id="TransactionTypeCode"
+                  type="text"
+                  class="form-control pt-1"
+                  formControlName="TransactionTypeCode"
+                  (change)="
+                    onTransactionTypeChange(
+                      paymentWithdrawalForm.value.TransactionTypeCode
+                    )
+                  "
+                />
+              </div>
+              <div class="col-md-4">
+                <select
+                  class="form-control pt-0"
+                  formControlName="TransactionType"
+                  (change)="
+                    onTransactionTypeChange(
+                      paymentWithdrawalForm.value.TransactionType
+                    )
+                  "
+                >
+                  <option value="0">-Select-</option>
+                  <option
+                    *ngFor="let item of viewData.TransactionTypeList"
+                    [value]="item.Id"
+                  >
+                    {{ item.Description }}
+                  </option>
+                </select>
+              </div>
+            </div>
+
+            <div
+              class="form-group row"
+              *ngIf="
+                paymentWithdrawalForm.value.TransactionType == 48 ||
+                paymentWithdrawalForm.value.BankCode
+              "
+            >
+              <label class="col-md-3 col-form-label">Bank Chq. No. :</label>
+              <div class="col-md-2">
+                <input
+                  id="BankChequeNo"
+                  type="text"
+                  class="form-control"
+                  formControlName="BankChequeNo"
+                  (change)="onCheckHandler()"
+                />
+              </div>
+            </div>
+
+            <div
+              class="form-group row"
+              *ngIf="
+                paymentWithdrawalForm.value.TransactionType == 47 ||
+                paymentWithdrawalForm.value.TransactionType == 48
+              "
+            >
+              <label class="col-md-3 col-form-label">GL Contra Code:</label>
+              <div class="col-md-2">
+                <input
+                  id="BankCode"
+                  type="text"
+                  class="form-control pt-0"
+                  formControlName="BankCode"
+                  (change)="onBankChange(paymentWithdrawalForm.value.BankCode)"
+                />
+              </div>
+              <div class="col-md-6">
+                <select
+                  class="form-control pt-0"
+                  formControlName="BankId"
+                  (change)="onBankChange(paymentWithdrawalForm.value.BankId)"
+                >
+                  <option value="0">-Select-</option>
+                  <option
+                    *ngFor="let item of viewData.BankList"
+                    [value]="item.Id"
+                  >
+                    {{ item.Description }}
+                  </option>
+                </select>
+              </div>
+            </div>
+
+            <div *ngIf="!UserData?.AutoVchflag" class="form-group row">
+              <label class="col-md-3 col-form-label">Vch./Chq. Number :</label>
+              <div class="col-md-2">
+                <input
+                  id="VoucherOrChqNo"
+                  type="text"
+                  class="form-control"
+                  formControlName="VoucherOrChqNo"
+                  (change)="onVoucherChange()"
+                />
+              </div>
+            </div>
+
+            <div class="form-group row">
+              <label class="col-md-3 col-form-label"
+                >Special Instruction :</label
+              >
+              <div class="col-md-6">
+                <input
+                  type="text"
+                  class="form-control"
+                  disabled
+                  formControlName="SpInstruction"
+                />
+              </div>
+            </div>
+
+            <div class="row d-block topSection f-ss-14px">
+              <table class="table" *ngIf="detailsData?.ShowGroupAccInfo">
+                <tr style="background-color: YellowGreen">
+                  <td>A/c Type</td>
+                  <td>A/c Title</td>
+                  <td>A/c No.</td>
+                  <td>Old A/c</td>
+                  <td>Manual A/c</td>
+                  <td>GL Code</td>
+                  <td></td>
+                </tr>
+                <tr *ngFor="let item of detailsData.GroupAccountList; let i = index">
+                  <td>{{ item.AccType }}</td>
+                  <td>{{ item.TrnCodeDesc }}</td>
+                  <td>{{ item.AccNo }}</td>
+                  <td>{{ item.AccOldNumber }}</td>
+                  <td>{{ item.AccPrevNumber }}</td>
+                  <td>{{ item.TrnCode }}</td>
+                  <td
+                    class="gl-help-list-link"
+                    (click)="onAccountNoSelect(item.AccNo)"
+                  >
+                    Select
+                  </td>
+                </tr>
+              </table>
+            </div>
+
+
+            <div class="row d-block topSection f-ss-14px" *ngIf="!detailsData?.ShowGroupAccInfo">
+              <div class="d-flex deposit-account-list-header">
+                <div class="col-md-2">GL Code</div>
+                <div class="col-md-4">Name of Account Head</div>
+                <div class="col-md-4">Description</div>
+                <div class="col-md-2">Amount</div>
+              </div>
+
+              <div
+                style="margin-bottom: 10px"
+                formArrayName="Transactions"
+                *ngFor="
+                  let item of paymentWithdrawalForm.get('Transactions')[
+                    'controls'
+                  ];
+                  let i = index
+                "
+              >
+                <div class="row" [formGroupName]="i">
+                  <div class="col-md-2">
+                    <input
+                      class="form-control"
+                      formControlName="GLAccNo"
+                      disabled
+                    />
+                  </div>
+                  <div class="col-md-4">
+                    <input
+                      class="form-control"
+                      readonly
+                      formControlName="GLAccDesc"
+                    />
+                  </div>
+                  <div class="col-md-4">
+                    <input
+                      id="{{ 'PayTypeDes' + i }}"
+                      class="form-control"
+                      formControlName="PayTypeDes"
+                      (change)="onItemChange(i, item)"
+                      (keydown)="onPayTypeDesEnterHandler($event, i, item)"
+                    />
+                  </div>
+                  <div class="col-md-2">
+                    <input
+                      id="{{ 'TrnAmount' + i }}"
+                      class="form-control"
+                      type="text"
+                      formControlName="TrnAmount"
+                      (change)="onItemChange(i, item)"
+                      (keydown)="onAmoutEnterHandler($event, i, item)"
+                      onfocus="this.select()"
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card" style="margin-top: 30px">
+          <div class="card-body">
+            <div class="form-group row">
+              <label class="col-md-3 col-form-label">Total Amount :</label>
+              <div class="col-md-2">
+                <div class="col-form-label">
+                  <input
+                    type="text"
+                    class="form-control"
+                    disabled
+                    formControlName="TotalAmount"
+                  />
+                </div>
+              </div>
+            </div>
+            <div class="form-group row">
+              <div class="col-md-6 mx-auto">
+                <button
+                  id="update"
+                  type="button"
+                  class="btn btn-success btn_1"
+                  (click)="onUpdate()"
+                >
+                  Update
+                </button>
+                <button
+                  type="button"
+                  (click)="ViewImage()"
+                  class="btn btn-primary ml-2"
+                >
+                  View Image
+                </button>
+                <button
+                  type="button"
+                  (click)="refresh()"
+                  class="btn btn-info ml-2"
+                >
+                  Refresh
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-xl-4 col-md-4">
+        <p class="bg-primary text-center text-light bg-secondary title">
+          A/C Information
+        </p>
+        <div class="card">
+          <!-- <div class="card-header bg-primary">
+            <h4 class="card-title text-white mb-0">A/C Information</h4>
+          </div> -->
+          <div class="card-body">
+            <div class="form-group row">
+              <label class="col-md-6 col-form-label">Account No. :</label>
+              <div class="col-md-6">
+                <div class="col-form-label">{{ detailsData.AccountNo }}</div>
+              </div>
+            </div>
+            <div
+              class="form-group row"
+              *ngIf="accountViewModel?.AccTypeClass == 1"
+            >
+              <label class="col-md-6 col-form-label">Ledger Balance :</label>
+              <div class="col-md-6">
+                <div class="col-form-label">
+                  {{ detailsData.LadgerBalance }}
+                </div>
+              </div>
+            </div>
+            <div
+              class="form-group row"
+              *ngIf="accountViewModel?.AccTypeClass == 6"
+            >
+              <label class="col-md-6 col-form-label">Outstanding Bal :</label>
+              <div class="col-md-6">
+                <div class="col-form-label">
+                  {{ detailsData.LadgerBalance }}
+                </div>
+              </div>
+            </div>
+            <div class="form-group row">
+              <label class="col-md-6 col-form-label">Hold Balance Dr. :</label>
+              <div class="col-md-6">
+                <div class="col-form-label">
+                  {{ detailsData.HoldBalanceDr }}
+                </div>
+              </div>
+            </div>
+            <div class="form-group row">
+              <label class="col-md-6 col-form-label">Hold Balance Cr. :</label>
+              <div class="col-md-6">
+                <div class="col-form-label">
+                  {{ detailsData.HoldBalanceCr }}
+                </div>
+              </div>
+            </div>
+            <div class="form-group row">
+              <label class="col-md-6 col-form-label">Open Date :</label>
+              <div class="col-md-6">
+                <div class="col-form-label">{{ detailsData.OpenDate }}</div>
+              </div>
+            </div>
+
+            <div
+              class="form-group row"
+              *ngIf="accountViewModel?.AccTypeClass == 6"
+            >
+              <label class="col-md-6 col-form-label">Sanction Amount :</label>
+              <div class="col-md-6">
+                <div class="col-form-label">{{ detailsData.SancAmount }}</div>
+              </div>
+            </div>
+            <div
+              class="form-group row"
+              *ngIf="accountViewModel?.AccTypeClass == 6"
+            >
+              <label class="col-md-6 col-form-label"
+                >Available Limit Amount :</label
+              >
+              <div class="col-md-6">
+                <div class="col-form-label">{{ detailsData.AvailLimit }}</div>
+              </div>
+            </div>
+            <div
+              class="form-group row"
+              *ngIf="accountViewModel?.AccTypeClass == 6"
+            >
+              <label class="col-md-6 col-form-label">Interest Rate :</label>
+              <div class="col-md-6">
+                <div class="col-form-label">{{ detailsData.IntRate }}</div>
+              </div>
+            </div>
+            <div
+              class="form-group row"
+              *ngIf="accountViewModel?.AccTypeClass == 1"
+            >
+              <label class="col-md-6 col-form-label">Lien Amount :</label>
+              <div class="col-md-6">
+                <div class="col-form-label">{{ detailsData.LienAmt }}</div>
+              </div>
+            </div>
+            <div class="form-group row">
+              <label class="col-md-6 col-form-label"
+                >Last Transaction Date :</label
+              >
+              <div class="col-md-6">
+                <div class="col-form-label">{{ detailsData.LastTrnDate }}</div>
+              </div>
+            </div>
+            <div class="form-group row">
+              <label class="col-md-6 col-form-label">Corr. Account No. :</label>
+              <div class="col-md-6">
+                <div class="col-form-label">{{ detailsData.CorrAccNo }}</div>
+              </div>
+            </div>
+            <div class="form-group row">
+              <label class="col-md-6 col-form-label"
+                >Corr. Account Balance :</label
+              >
+              <div class="col-md-6">
+                <div class="col-form-label">{{ detailsData.TrfBalance }}</div>
+              </div>
+            </div>
+            <div class="form-group row">
+              <label class="col-md-6 col-form-label">&nbsp;</label>
+              <div class="col-md-6">
+                <div class="col-form-label"></div>
+              </div>
+            </div>
+            <div class="form-group row">
+              <label class="col-md-6 col-form-label">&nbsp;</label>
+              <div class="col-md-6">
+                <div class="col-form-label"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="image-popup text-center col-md-3" *ngIf="imageUrl != ''">
+      <span class="popup-cross" (click)="hideImageModal()">X</span>
+      <img height="216" width="250" src="{{ imageUrl }}" />
+    </div>
+
+    <div class="imageSig-popup text-center col-md-3" *ngIf="sigUrl != ''">
+      <span class="popup-cross" (click)="hideSigModal()">X</span>
+      <img height="216" width="250" src="{{ sigUrl }}" />
+    </div>
+
+    <div class="popup col-md-5 text-center py-4" *ngIf="showModal">
+      <p>Cheque No. Not Available</p>
+      <p>Do You Want To Issue New Chq. Book ?</p>
+      <div class="col-md-5 mx-auto d-flex justify-content-between">
+        <button
+          class="btn btn-primary popup__btn"
+          (click)="callChequebookModal()"
+        >
+          Yes
+        </button>
+        <button class="btn btn-danger popup__btn" (click)="hideModal()">
+          No
+        </button>
+      </div>
+    </div>
+
+    <div
+      *ngIf="trnHistoryData.length != 0"
+      class="mx-auto mt-1 mt-5 col-md-7 set-height"
+    >
+      <table id="Data">
+        <tr>
+          <th>Vch.No.</th>
+          <th>GL Code</th>
+          <th>Name of Account Head</th>
+          <th>Description</th>
+          <th>Debit</th>
+          <th>Trn.Type</th>
+        </tr>
+        <tr *ngFor="let item of trnHistoryData">
+          <td>{{ item.VchNo }}</td>
+          <td>{{ item.GLAccNo }}</td>
+          <td>{{ item.GLAccDesc }}</td>
+          <td>{{ item.TrnType }}</td>
+          <td>{{ item.GLDebitAmt }}</td>
+          <td>{{ item.Discription }}</td>
+        </tr>
+      </table>
+    </div>
+    <div *ngIf="LoanDefaulterList.length != 0" class="mt-5 col-md-7 set-height">
+      <table id="Data">
+        <tr>
+          <th>A/C Type</th>
+          <th>Name of A/C Type</th>
+          <th>TrnDate</th>
+          <th>Princ. Amt</th>
+          <th>Int. Amt</th>
+          <th>Penal Amt</th>
+          <th>Total Amt</th>
+        </tr>
+        <tr *ngFor="let item of LoanDefaulterList">
+          <td>{{ item.AccType }}</td>
+          <td>{{ item.AccTypeDescription }}</td>
+          <td>{{ item.AccLastTrnDateU }}</td>
+          <td>{{ item.CurrDuePrincAmt }}</td>
+          <td>{{ item.CurrDueIntAmt }}</td>
+          <td>{{ item.CurrPenalAmt }}</td>
+          <td>{{ item.TotalDueAmt }}</td>
+        </tr>
+      </table>
+    </div>
+    
+  </form>
+</app-main-wrapper>

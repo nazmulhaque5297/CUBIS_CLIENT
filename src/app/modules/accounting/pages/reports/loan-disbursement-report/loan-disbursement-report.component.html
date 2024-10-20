@@ -1,0 +1,407 @@
+<app-accounting-wrapper>
+  <form [formGroup]="LoanDisbursementForm" class="mx-auto border col-md-7">
+    <p class="bg-dark title">Loan Disbursment Report</p>
+
+    <div class="form-group row">
+      <div class="col-md-1">
+        <input
+          [(ngModel)]="chbIsAllAccTypeStatus"
+          (ngModelChange)="checkIsAllAccTypeValue($event)"
+          class="form-check-input ml-1 checkbox"
+          style="margin: 0.8rem"
+          type="checkbox"
+          id="IsAllAccTypeCheckbox"
+          formControlName="IsAllAccType"
+        />
+      </div>
+      <!-- style="margin-left: 0.6rem" -->
+      <label class="col-md-3 col-form-label" for="IsAllAccTypeCheckbox" >All Account Type</label>
+      <div class="col-md-3">
+        <input
+        appOnlyNumber
+          (focusout)="onChangeAccTypeCode($event)"
+          type="text"
+          class="form-control"
+          id="AccTypeCode"
+          formControlName="AccTypeCode"
+          name="AccTypeCode"
+          [attr.disabled]="LoanDisbursementForm.value.IsAllAccType ? '' : null"
+        />
+      </div>
+
+      <div class="col-md-5">
+        <select
+          [attr.disabled]="LoanDisbursementForm.value.IsAllAccType ? '' : null"
+          class="form-control pt-0"
+          formControlName="AccType"
+          (change)="onChangeAccType($event)"
+        >
+          <option value="0">-Select-</option>
+          <option
+            *ngFor="let item of inputHelpData.loanDisbAccountTypeList"
+            [value]="item.Id"
+          >
+            {{ item.Description }}
+          </option>
+        </select>
+      </div>
+    </div>
+
+    <div class="form-group row">
+      <div class="col-md-1">
+        <input
+          [(ngModel)]="chbIsAllCollectorStatus"
+          (ngModelChange)="checkIsAllCollectorValue($event)"
+          class="form-check-input ml-1 checkbox"
+          style="margin: 0.8rem"
+          type="checkbox"
+          id="IsAllCollector"
+          formControlName="IsAllCollector"
+        />
+      </div>
+      <!-- style="margin-left: 0.6rem" -->
+      <label class="col-md-3 col-form-label" for="IsAllCollector" >All Collector Code</label>
+      <div class="col-md-3">
+        <input
+        appOnlyNumber
+          (focusout)="onChangeCollectorCode($event)"
+          type="text"
+          class="form-control"
+          id="CollectorCode"
+          formControlName="CollectorCode"
+          name="CollectorCode"
+          [attr.disabled]="LoanDisbursementForm.value.IsAllCollector ? '' : null"
+        />
+      </div>
+
+      <div class="col-md-5">
+        <select
+          [attr.disabled]="LoanDisbursementForm.value.IsAllCollector ? '' : null"
+          class="form-control pt-0"
+          formControlName="Collector"
+          (change)="onChangeCollector($event)"
+        >
+          <option value="0">-Select-</option>
+          <option
+            *ngFor="let item of inputHelpData.CollectorList"
+            [value]="item.Id"
+          >
+            {{ item.Description }}
+          </option>
+        </select>
+      </div>
+    </div>
+
+    <div class="form-group row">
+      <div class="col-md-1">
+        <input
+          [(ngModel)]="chbIsAllGroupStatus"
+          (ngModelChange)="checkIsAllGroupValue($event)"
+          class="form-check-input ml-1 checkbox"
+          style="margin: 0.8rem"
+          type="checkbox"
+          id="IsAllGroup"
+          formControlName="IsAllGroup"
+        />
+      </div>
+      <!-- style="margin-left: 0.6rem" -->
+      <label class="col-md-3 col-form-label" for="IsAllGroup" >All Group No</label>
+      <div class="col-md-3">
+        <input
+        appOnlyNumber
+          (focusout)="onChangeGroupCode($event)"
+          type="text"
+          class="form-control"
+          id="GroupCode"
+          formControlName="GroupCode"
+          name="GroupCode"
+          [attr.disabled]="LoanDisbursementForm.value.IsAllGroup ? '' : null"
+        />
+      </div>
+
+      <div class="col-md-5">
+        <select
+          [attr.disabled]="LoanDisbursementForm.value.IsAllGroup ? '' : null"
+          class="form-control pt-0"
+          formControlName="Group"
+          (change)="onChangeGroup($event)"
+        >
+          <option value="0">-Select-</option>
+          <option
+            *ngFor="let item of inputHelpData.GroupList"
+            [value]="item.Id"
+          >
+            {{ item.Description }}
+          </option>
+        </select>
+      </div>
+    </div>
+
+    <div class="form-group row">
+      <div class="col-md-1">
+        <input
+          [(ngModel)]="chbIsAllMemberStatus"
+          (ngModelChange)="checkIsAllMemberValue($event)"
+          class="form-check-input ml-1 checkbox"
+          style="margin: 0.8rem"
+          type="checkbox"
+          id="IsAllMember"
+          formControlName="IsAllMember"
+        />
+      </div>
+      <!-- style="margin-left: 0.6rem" -->
+      <label class="col-md-3 col-form-label" for="IsAllMember" >All Member No</label>
+      <div class="col-md-3">
+        <input
+        appOnlyNumber
+          (focusout)="onChangeMemNo($event)"
+          type="text"
+          class="form-control"
+          id="MemNo"
+          formControlName="MemNo"
+          name="MemNo"
+          [attr.disabled]="LoanDisbursementForm.value.IsAllMember ? '' : null"
+        />
+      </div>
+
+      <div class="col-md-5">
+        <input
+          type="text"
+          formControlName="MemName"
+          class="form-control"
+          disabled="true"
+        />
+      </div>
+    </div>
+
+    <div class="form-group row">
+      <div class="col-md-1">
+        <input
+          [(ngModel)]="chbIsAllGenderStatus"
+          (ngModelChange)="checkIsAllGenderValue($event)"
+          class="form-check-input ml-1 checkbox"
+          style="margin: 0.8rem"
+          type="checkbox"
+          id="IsAllGenderCheckbox"
+          formControlName="IsAllGender"
+        />
+      </div>
+      <!-- style="margin-left: 0.6rem" -->
+      <label class="col-md-3 col-form-label" for="IsAllGenderCheckbox" >All Gender</label>
+      <div class="col-md-3">
+        <select
+          [attr.disabled]="LoanDisbursementForm.value.IsAllGender ? '' : null"
+          class="form-control pt-0"
+          formControlName="Gender"
+        >
+          <option value="0">-Select-</option>
+          <option
+            *ngFor="let item of inputHelpData.loanDisbGenderList"
+            [value]="item.Id"
+          >
+            {{ item.Description }}
+          </option>
+        </select>
+      </div>
+    </div>
+
+    <div class="form-group row">
+      <div class="col-md-1">
+        <input
+          [(ngModel)]="chbIsAllTellerStatus"
+          (ngModelChange)="checkIsAllTellerValue($event)"
+          class="form-check-input ml-1 checkbox"
+          style="margin: 0.8rem"
+          type="checkbox"
+          id="IsAllTeller"
+          formControlName="IsAllTeller"
+        />
+      </div>
+      <!-- style="margin-left: 0.6rem" -->
+      <label class="col-md-3 col-form-label" for="IsAllTeller" >All User Id No</label>
+      <div class="col-md-3">
+        <input
+        appOnlyNumber
+          (focusout)="onChangeTellerCode($event)"
+          type="text"
+          class="form-control"
+          id="TellerCode"
+          formControlName="TellerCode"
+          name="TellerCode"
+          [attr.disabled]="LoanDisbursementForm.value.IsAllTeller ? '' : null"
+        />
+      </div>
+
+      <div class="col-md-5">
+        <select
+          [attr.disabled]="LoanDisbursementForm.value.IsAllTeller ? '' : null"
+          class="form-control pt-0"
+          formControlName="Teller"
+          (change)="onChangeTeller($event)"
+        >
+          <option value="0">-Select-</option>
+          <option
+            *ngFor="let item of inputHelpData.cashDisbTellerList"
+            [value]="item.Id"
+          >
+            {{ item.Description }}
+          </option>
+        </select>
+      </div>
+    </div>
+
+    <div class="form-group row">
+      <div class="col-md-1">
+        <input
+          [(ngModel)]="chbIsAllDisburseStatus"
+          (ngModelChange)="checkIsAllDisburseValue($event)"
+          class="form-check-input ml-1 checkbox"
+          style="margin: 0.8rem"
+          type="checkbox"
+          id="IsAllDisburse"
+          formControlName="IsAllDisburse"
+        />
+      </div>
+      <!-- style="margin-left: 0.6rem" -->
+      <label class="col-md-3 col-form-label" for="IsAllDisburse" >All Disburse. Type</label>
+      <div class="col-md-3">
+        <select
+          [attr.disabled]="LoanDisbursementForm.value.IsAllDisburse ? '' : null"
+          class="form-control pt-0"
+          formControlName="Disburse"
+        >
+          <option value="0">-Select-</option>
+          <option
+            *ngFor="let item of inputHelpData.loanDisbDisburseTypeList"
+            [value]="item.Id"
+          >
+            {{ item.Description }}
+          </option>
+        </select>
+      </div>
+    </div>
+
+    <div class="form-group row">
+      <div class="col-md-1">
+        <input
+          [(ngModel)]="chbIsAllPurposeStatus"
+          (ngModelChange)="checkIsAllPurposeValue($event)"
+          class="form-check-input ml-1 checkbox"
+          style="margin: 0.8rem"
+          type="checkbox"
+          id="IsAllPurpose"
+          formControlName="IsAllPurpose"
+        />
+      </div>
+      <!-- style="margin-left: 0.6rem" -->
+      <label class="col-md-3 col-form-label" for="IsAllPurpose" >All Loan Purpose</label>
+      <div class="col-md-3">
+        <input
+        appOnlyNumber
+          (focusout)="onChangePurposeCode($event)"
+          type="text"
+          class="form-control"
+          id="PurposeCode"
+          formControlName="PurposeCode"
+          name="PurposeCode"
+          [attr.disabled]="LoanDisbursementForm.value.IsAllPurpose ? '' : null"
+        />
+      </div>
+
+      <div class="col-md-5">
+        <select
+          [attr.disabled]="LoanDisbursementForm.value.IsAllPurpose ? '' : null"
+          class="form-control pt-0"
+          formControlName="Purpose"
+          (change)="onChangePurpose($event)"
+        >
+          <option value="0">-Select-</option>
+          <option
+            *ngFor="let item of inputHelpData.LPurposeList"
+            [value]="item.Id"
+          >
+            {{ item.Description }}
+          </option>
+        </select>
+      </div>
+    </div>
+
+    <div class="form-group row">
+      <label for="chbSkipLoanPurpose" class="col-sm-3 col-form-label"
+        >Skip Loan Purpose</label
+      >
+      <div class="col-md-3">
+        <input
+          class="form-check-input position-static ml-1 mt-3 checkbox"
+          type="checkbox"
+          id="chbSkipLoanPurpose"
+          formControlName="chbSkipLoanPurpose"
+        />
+      </div>
+    </div>
+
+    <div class="form-group row">
+      <label class="col-md-4 col-form-label">From date:</label>
+      <div class="col-md-3">
+        <input
+          id="dateFormat"
+          type="text"
+          class="form-control"
+          bsDatepicker
+          formControlName="IssueFromDate"
+          [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY' }"
+          autocomplete="off"
+          (ngModelChange)="applicationDateChange()"
+        />
+      </div>
+      <label class="col-md-2 col-form-label">To date:</label>
+      <div class="col-md-3">
+        <input
+          id="dateFormat"
+          type="text"
+          class="form-control"
+          bsDatepicker
+          formControlName="IssueToDate"
+          [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY' }"
+          autocomplete="off"
+          (ngModelChange)="applicationDateChange2()"
+        />
+      </div>
+    </div>
+
+    <div class="form-group row">
+      <div class="col-md-4"></div>
+      <div class="col-md-3">
+        <input
+          type="radio"
+          class="form-check-input position-static ml-1 checkbox"
+          value="1"
+          name="rbAccNoWise"
+          id="rbAccNoWise1"
+          formControlName="rbAccNoWise"
+        />
+        <label class="col-md-2 col-form-label" for="rbAccNoWise1" >AccNoWise</label>
+      </div>
+
+      <div class="col-md-3">
+        <input
+          type="radio"
+          value="2"
+          name="rbAccNoWise"
+          id="rbAccNoWise2"
+          formControlName="rbAccNoWise"
+        />
+        <label class="col-md-2 col-form-label" for="rbAccNoWise2" >LoanAppSrl.Wise</label>
+      </div>
+    </div>
+
+    <div class="buttons">
+      <button type="button" class="btn btn-info ml-2" (click)="getReportToken('CRV')">
+        Preview
+      </button>
+      <button type="button" class="btn btn-success ml-2" (click)="getReportToken('PDF')">
+        Print
+      </button>
+    </div>
+  </form>
+</app-accounting-wrapper>

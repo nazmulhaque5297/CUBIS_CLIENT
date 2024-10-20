@@ -1,0 +1,45 @@
+.main-container {
+  padding: 25px;
+}
+
+.title {
+  background: #6c757d !important;
+  color: #fff;
+  font-weight: 600;
+  padding: 2px;
+}
+
+input {
+  box-shadow: none !important;
+}
+
+.desc-input {
+  margin-left: 33px !important;
+}
+
+.buttons {
+  margin-left: 320px;
+  margin-top: 8px;
+}
+
+.iframeStyle {
+  height: 1500px;
+  width: 100%;
+  z-index: 20;
+  position: relative;
+  margin-top: 50px;
+  border: 0;
+}
+
+.btn {
+  padding: 4px 35px !important;
+  transition: 0.7s ease-in;
+  color: #fff;
+  margin-left: 10px;
+  margin-bottom: 10px;
+}
+
+.btn:focus {
+  outline: none !important;
+  box-shadow: none !important;
+}

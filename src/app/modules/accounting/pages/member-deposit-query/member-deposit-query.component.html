@@ -1,0 +1,182 @@
+<app-accounting-wrapper>
+
+  <form [formGroup]="depositQueryForm" class="form-horizontal">
+    <div class="row">
+      <div class="col-xl-10 col-md-10">
+        <p class="bg-primary text-center text-light bg-secondary title">
+          Member Deposit Query
+        </p>
+        <div class="card first__part">
+          <!-- <div class="card-header bg-primary">
+                <h4 class="card-title text-white mb-0">Member Deposit Query</h4>
+              </div> -->
+          <div class="card-body">
+            <div class="form-group row">
+              <label class="col-md-2 col-form-label"></label>
+              <div class="col-md-4">
+                <input type="radio" value='true' name="IsCashDeposit" formControlName="IsCashDeposit">Cash Deposit
+                <input type="radio" style="margin-left: 20px;" value='false' name="IsCashDeposit"
+                  formControlName="IsCashDeposit">Transfer Deposit
+              </div>
+            </div>
+
+            <div class="form-group row">
+              <label class="col-md-2 col-form-label">A/C Type:</label>
+              <div class="col-md-2">
+                <input type="text" class="form-control" [readonly]="isDisabled" formControlName="AccountTypeCode"
+                  (change)="onAccountTypeChange(depositQueryForm.value.AccountTypeCode)" (keydown)="onAccountTypeEventChange($event)" appOnlyNumber>
+              </div>
+              <div class="col-md-4">
+                <select class="form-control pt-0" [attr.disabled]="isDisabled ? '' : null" formControlName="AccountTypeId"
+                  (change)="onAccountTypeChange(depositQueryForm.value.AccountTypeId)">
+                  <option value="0">-Select-</option>
+                  <option *ngFor="let item of inputHelpData.AccountTypeList" [value]="item.Id">{{item.Description}}
+                  </option>
+                </select>
+
+              </div>
+            </div>
+            <div *ngIf="inputHelpData.ShowOldAccNo" class="form-group row">
+              <label class="col-md-2 col-form-label">Old A/c No.:</label>
+              <div class="col-md-2">
+                <input id="OldAccountNo" type="text" class="form-control" formControlName="OldAccountNo"
+                  (change)="onOldAccNoChange()" appOnlyNumber (keydown)="onEnterOldAccHandler($event)"/>
+              </div>
+              </div>
+              <div class="form-group row" *ngIf="ManualAccNoFlag">
+                <label class="col-md-2 col-form-label" >Manual A/c No.:</label>
+                <div class="col-md-2">
+                  <input type="text" class="form-control" formControlName="ManualAccountNo"  />
+                </div>
+              </div>
+
+            
+            <div class="form-group row">
+              <label class="col-md-2 col-form-label member-no">Member No. :<span class="text-danger">*</span></label>
+              <div class="col-md-2">
+                <input id="MemberNo" type="text" class="form-control  member-no" [readonly]="isDisabled" formControlName="MemberNo"
+                  appOnlyNumber (change)="onMemberChange()">
+              </div>
+              <label class="col-md-4 col-form-label member-no"
+                formControlName="MemberName">{{queryDataDetails.MemberName}}</label>
+            </div>
+
+            <div class="form-group row" *ngIf="depositQueryForm.value.IsCashDeposit=='false'">
+              <label class="col-md-2 col-form-label">Corr. Account No.:</label>
+              <div class="col-md-2">
+                <input type="text" class="form-control" formControlName="CorrAccountNo" disabled />
+              </div>
+              <label class="col-md-2 col-form-label">Corr. Account Balance:</label>
+              <div class="col-md-2">
+                <input type="text" class="form-control" formControlName="CorrAccountBalance" disabled />
+              </div>
+            </div>
+
+            <div class="form-group row">
+              <label *ngIf="!UserData?.AutoVchflag" class="col-md-2 col-form-label">Voucher No. :<span
+                  class="text-danger">*</span></label>
+              <div *ngIf="!UserData?.AutoVchflag" class="col-md-2">
+                <input id="VoucherNo" type="text" class="form-control" formControlName="VoucherNo" (change)="OnVoucherNoChange()">
+              </div>
+              <div class="col-md-3">
+                User Cash Code : {{inputHelpData.UserCashCode}}
+              </div>
+            </div>
+
+
+            <div class="row d-block topSection f-ss-14px">
+              <div class="d-flex deposit-account-list-header">
+                <div class="col-md-2">GL Code</div>
+                <div class="col-md-3">Description</div>
+                <div class="col-md-2">Amount</div>
+                <div class="col-md-1">A/C Type</div>
+                <div class="col-md-2">A/C No.</div>
+                <div class="col-md-2">A/C Balance</div>
+              </div>
+              <div style="margin-bottom: 10px;" formArrayName="Transactions"
+                *ngFor="let item of depositQueryForm.get('Transactions')['controls']; let i = index;">
+
+                <div class="row" [formGroupName]="i">
+
+                  <div class="col-md-2">
+                    <input class="form-control" formControlName="GLAccNo" disabled>
+                  </div>
+                  <div class="col-md-3">
+                    <input class="form-control" disabled formControlName="GLAccDesc">
+                  </div>
+                  <div class="col-md-2">
+                    <input id="{{ 'TrnAmount' + i }}" class="form-control" type="text" style="text-align: right;"
+                      (change)="onItemChange(i, item)" (keydown)="onAmountEnterHandler($event,i,item)" onfocus="this.select()" formControlName="TrnAmount">
+                  </div>
+                  <div class="col-md-1">
+                    <input class="form-control" disabled type="text" formControlName="AccType">
+                  </div>
+                  <div class="col-md-2">
+                    <input class="form-control" disabled type="text" formControlName="AccNo">
+                  </div>
+                  <div class="col-md-2">
+                    <input class="form-control" disabled type="text" style="text-align: right;"
+                      formControlName="AccBalance">
+                  </div>
+
+                </div>
+
+              </div>
+            </div>
+
+          </div>
+        </div>
+        <div class="card" style="margin-top: 30px;">
+          <div class="card-body">
+            <div class="form-group row">
+              <label class="col-md-2 col-form-label member-no">Total Amount :</label>
+              <div class="col-md-2">
+                <div class="col-form-label">
+                  <input type="text" class="form-control member-no" style="text-align:right" disabled
+                    formControlName="TotalAmount">
+                </div>
+              </div>
+
+              <label *ngIf="depositQueryForm.value.IsCashDeposit=='false'"
+                class="col-md-4 col-form-label member-no">Corr. Account Remaining Balance :
+                {{queryDataDetails.CorrAccDetails.RemainingBalance}}</label>
+
+            </div>
+            <div class="form-group row">
+              <div class="col-md-8 mx-auto ">
+                <button id="update" type="button" class="btn btn-success btn_1" (click)="onCreate()">
+                  Update
+                </button>
+                <button type="button" (click)="setParameter1()" class="btn btn-primary ml-2">
+                  Print
+                </button>
+                <button type="button" (click)="onCancel()" class="btn btn-info ml-2">
+                  Refresh
+                </button>
+              </div>
+       
+            <!-- <div class="form-group row">
+              <div class="col-md-4">
+
+              </div>
+              <div class="col-md-2">
+                <button id="update" type="button" class="btn btn-success" (click)="onCreate()">Update</button>
+              </div>
+              <div class="col-md-1">
+                <button type="button" id="printbtn" class="btn btn-success" (click)="setParameter1()">Print</button>
+              </div>
+              <div class="col-md-2">
+                <button type="button" class="btn btn-info" (click)="onCancel()">Refresh</button>
+              </div> -->
+              <!-- <div class="col-md-2">
+                    <button type="button" class="btn btn-danger" (click)="exitPage()">Exit</button>
+                  </div> -->
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+
+
+</app-accounting-wrapper>

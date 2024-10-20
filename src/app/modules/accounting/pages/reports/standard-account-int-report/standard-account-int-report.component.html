@@ -1,0 +1,158 @@
+<app-main-wrapper [module]="module">
+  <form
+    [formGroup]="StandardAccountIntReportForm"
+    class="mx-auto border col-md-10 pb-2"
+  >
+    <p class="bg-dark title">Standard Account - Interest Calculation</p>
+
+    <div class="form-group row">
+      <div class="col-md-1 col-form-label"></div>
+      <label class="col-md-3 col-form-label">Branch</label>
+      <div class="col-md-2">
+        <input
+          type="text"
+          class="form-control"
+          id="BranchNameInput"
+          formControlName="BranchNameInput"
+          name="BranchNameInput"
+          (focusout)="BranchInput()"
+        />
+      </div>
+      <div class="col-md-4">
+        <select
+          class="form-control pt-0"
+          formControlName="BranchDdl"
+          (change)="onChangeBranch($event)"
+        >
+          <option value="0">-Select-</option>
+          <option
+            *ngFor="let item of pageLoadModel.AllBranchDropdown"
+            [value]="item.Id"
+          >
+            {{ item.Description }}
+          </option>
+        </select>
+      </div>
+    </div>
+
+    <div class="form-group row">
+      <div class="col-md-1 col-form-label"></div>
+      <label class="col-md-3 col-form-label">Account Type</label>
+      <div class="col-md-2">
+        <input
+          type="text"
+          class="form-control"
+          id="AccNameInput"
+          formControlName="AccNameInput"
+          name="AccNameInput"
+          (change)="AccInput()"
+        />
+      </div>
+      <div class="col-md-4">
+        <select
+          class="form-control pt-0"
+          formControlName="AccountDdl"
+          (change)="onChangeAccType($event)"
+        >
+          <option value="0">-Select-</option>
+          <option
+            *ngFor="let item of pageLoadModel.AllAccountDropdown"
+            [value]="item.Id"
+          >
+            {{ item.Description }}
+          </option>
+        </select>
+      </div>
+    </div>
+
+    <div class="form-group row">
+      <div class="col-md-1 col-form-label"></div>
+      <label class="col-md-3 col-form-label">Period</label>
+      <div class="col-md-6">
+        <input
+          type="text"
+          class="form-control"
+          id="PeriodInput"
+          formControlName="PeriodInput"
+          name="PeriodInput"
+        />
+      </div>
+    </div>
+
+    <div class="buttons">
+      <button
+        type="button"
+        class="btn btn-info"
+        id="btn1"
+        (click)="getReportToken2('CRV')"
+      >
+        View - Summary
+      </button>
+      <button
+        type="button"
+        class="btn btn-success"
+        id="btn1"
+        (click)="getReportToken2('PDF')"
+      >
+        Print - Summary
+      </button>
+      <button
+        type="button"
+        class="btn btn-info ml-2"
+        id="btn2"
+        (click)="getReportToken('CRV')"
+      >
+        View - Detail
+      </button>
+      <button
+        type="button"
+        class="btn btn-success ml-2"
+        id="btn2"
+        (click)="getReportToken('PDF')"
+      >
+        Print - Detail
+      </button>
+    </div>
+  </form>
+
+  <!-- Grid Table 1 region start    -->
+
+  <div class="mx-auto mt-1 mt-5 col-md-10">
+    <p class="bg-dark title">Calculation Status</p>
+    <table id="Data" *ngIf="Grid1DataList.length != 0 && showGrid1">
+      <tr>
+        <th>BranchNo</th>
+        <th>CalStatus</th>
+        <th>Date</th>
+        <th>IntPostFlag</th>
+      </tr>
+      <tr *ngFor="let item of Grid1DataList">
+        <td class="text-center">{{ item.BranchNo }}</td>
+        <td class="text-center">{{ item.CalStatus }}</td>
+        <td class="text-center">{{ item.Date }}</td>
+        <td class="text-center">{{ item.IntPostFlag }}</td>
+      </tr>
+    </table>
+  </div>
+  <!-- Grid Table 1 region end-->
+
+  <!-- Grid Table 2 region start    -->
+  <div class="mx-auto mt-1 mt-5 col-md-10">
+    <p class="bg-dark title">List of Account Without Target Account</p>
+    <table id="Data" *ngIf="Grid2DataList.length != 0 && showGrid2">
+      <tr>
+        <th>BranchNo</th>
+        <th>MemType</th>
+        <th>MemNo</th>
+        <th>AccNo</th>
+      </tr>
+      <tr *ngFor="let item of Grid2DataList">
+        <td class="text-center">{{ item.BranchNo }}</td>
+        <td class="text-center">{{ item.MemType }}</td>
+        <td class="text-center">{{ item.MemNo }}</td>
+        <td class="text-center">{{ item.AccNo }}</td>
+      </tr>
+    </table>
+  </div>
+  <!-- Grid Table 2 region end-->
+</app-main-wrapper>

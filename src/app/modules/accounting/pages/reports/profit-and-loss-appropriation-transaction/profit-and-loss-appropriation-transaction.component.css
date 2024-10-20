@@ -1,0 +1,150 @@
+@import url("https://fonts.googleapis.com/css2?family=Passion+One&display=swap");
+#Data {
+  font-family: Arial, Helvetica, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+}
+.title {
+  background: #6c757d !important;
+  color: #fff;
+  font-weight: 600;
+  padding: 2px;
+}
+.iframeStyle {
+  height: 1500px;
+  width: 100%;
+  z-index: 20;
+  position: relative;
+  margin-top: 50px;
+  border: 0;
+}
+
+.holds-the-iframe {
+  background: url(src\assets\images\loader.gif) top center no-repeat;
+}
+
+input {
+  box-shadow: none !important;
+}
+
+.desc-input {
+  margin-left: 30px !important;
+}
+
+.buttons {
+  margin-left: 20px;
+}
+
+.btn {
+  padding: 4px 23px !important;
+  transition: 0.7s ease-in;
+  /* background: #0069aa; */
+  color: #fff;
+}
+
+.btn:focus {
+  outline: none !important;
+  box-shadow: none !important;
+}
+
+#Data {
+  font-family: Arial, Helvetica, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+.set-height {
+  height: 210px;
+  overflow-x: auto;
+}
+
+#Data td,
+#Data th {
+  border: 1px solid #ddd;
+  padding: 8px;
+}
+
+#Data tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
+
+#Data tr:hover {
+  background-color: #ddd;
+}
+
+#Data th {
+  padding-top: 12px;
+  padding-bottom: 12px;
+  text-align: left;
+  background-color: #0069aa;
+  color: white;
+  text-align: center;
+}
+
+@media screen and (max-width: 762px) {
+  .desc-input {
+    margin-left: 0px !important;
+  }
+  .buttons {
+    margin-left: 0px;
+  }
+}
+
+button.btn.btn-success.button2 {
+  padding: 3px 23px !important;
+  margin-left: 1px !important;
+}
+
+button.btn.btn-success {
+  margin-left: 350px !important;
+  margin-bottom: 1rem !important;
+  margin-top: 1rem !important;
+}
+
+button.btn.btn-danger {
+  margin-top: 1rem !important;
+}
+
+button.btn.btn-danger {
+  margin-left: 2rem !important;
+  margin-bottom: 1rem !important;
+  width: 8rem !important;
+}
+
+element.style {
+  margin-left: 23rem !important;
+}
+
+.btn btn-success {
+  margin-left: 10rem !important;
+}
+
+.form-group.row {
+  height: 4rem !important;
+}
+
+input#dateFormat {
+  margin-left: 0.7rem !important;
+  width: 8rem !important;
+}
+
+label.col-form-label {
+  margin-left: 2rem !important;
+}
+
+button.btn.btn-success {
+  margin-left: 12rem !important;
+  width: 8rem !important;
+}
+button.btn.btn-primary {
+  margin-left: 2rem !important;
+  width: 8rem !important;
+}
+button.btn.btn-danger {
+  margin-left: 2rem !important;
+  width: 8rem !important;
+}
+input#VoucherCodeInput {
+  margin-left: 0.7rem !important;
+  width: 8rem !important;
+}

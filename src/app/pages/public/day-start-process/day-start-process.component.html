@@ -1,0 +1,70 @@
+<div class="modal-content">
+    <div class="modal-header">
+      <h4 class="modal-title">Start Of Day</h4>
+      <button type="button" class="close" (click)="activeModal.dismiss()" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+  
+  
+    <div class="modal-body">
+      <form class="form-horizontal" [formGroup]="dayStartForm" novalidate>
+        <div class="form-body">
+
+            <div class="form-group row">
+                <label class="col-md-4 col-form-label">Last Transaction Date:</label>
+                <div class="col-md-7">
+                    <input type="text" disabled class="form-control" formControlName="LastTransactionDate">
+                </div>
+            </div>
+
+            <div class="form-row">
+                <label class="col-md-4 col-form-label">Today's Transaction Date:</label>
+                <div class="col-md-6">
+                    <input type="text" disabled class="form-control" formControlName="NewProcessDate">
+                   
+                </div>
+                <div class="col-md-1">
+                    <input type="button" value="Change" (click)="ChangeDate()" class="btn btn-info btn-sm">
+                </div>
+            </div>
+
+            <div class="form-row" *ngIf="isChangeDate">
+                <label class="col-md-4 col-form-label">Change Today's Transaction Date:</label>
+                <div class="col-md-3">
+                    <input type="text" class="form-control" formControlName="ChangeProcessDate">
+                </div>
+                <div class="col-md-4">
+                    <select class="form-control pt-1" formControlName="HolidayType">
+                    <option value="0">-Holiday Type-</option>
+                    <option
+                    *ngFor="let item of HolidayTypeList"
+                    [value]="item.Id"
+                  >
+                    {{ item.Description }}
+                  </option>
+                  </select>
+                </div>
+            </div>
+
+            <div class="form-row">
+                <label class="col-md-4 col-form-label">Please Type START OF DAY:<span class="text-danger">*</span></label>
+                <div class="col-md-3">
+                    <input type="text" class="form-control" formControlName="StartOfDay">
+                </div>
+                <div class="col-md-4" *ngIf="isChangeDate">
+                    <input type="text" class="form-control" placeholder="Holiday Notes" formControlName="ChangeNotes">
+                </div>
+            </div>
+
+        </div>
+      </form>
+    </div>
+    <div class="modal-footer">
+    
+      <button type="button" class="btn btn-success mr-1 mb-1" (click)="UpdateProcess()">
+        Start Of Day
+      </button>
+    </div>
+  </div>
+  

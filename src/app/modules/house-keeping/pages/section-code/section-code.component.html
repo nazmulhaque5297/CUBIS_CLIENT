@@ -1,0 +1,87 @@
+<app-house-keeping-wrapper>
+  <form
+    [formGroup]="SectionCodeForm"
+    novalidate
+    class="mx-auto border col-md-6 main-container pb-3"
+  >
+    <p class="bg-dark title">Section Code Maintenance</p>
+    <div class="form-row">
+      <label for="inputProCode">Section Code:</label>
+      <div class="form-group col-md-3">
+        <input
+          type="text"
+          (change)="changeSelectValue($event)"
+          class="form-control"
+          id="SectionCode"
+          formControlName="SectionCode"
+          name="SectionCode"
+        />
+      </div>
+      <div class="form-group col-md-5">
+        <select
+          formControlName="selectedOptionCode"
+          (change)="selectChangeHandler($event)"
+          class="form-control pt-0"
+        >
+          <option value="0">-Select-</option>
+          <option *ngFor="let item of dataList" [value]="item.SectionCode">
+            {{ item.SectionName }}
+          </option>
+        </select>
+      </div>
+    </div>
+    <div class="form-row">
+      <label for="inputDesc">Description:</label
+      ><span class="text-danger">*</span>
+      <div class="form-group col-md-8">
+        <input
+          type="text"
+          formControlName="SectionName"
+          class="form-control desc-input"
+          id="SectionName"
+        />
+      </div>
+    </div>
+    <div class="buttons">
+      <button
+        type="button"
+        *ngIf="submitButtonTextSubmit"
+        (click)="save()"
+        class="btn btn-success"
+      >
+        Submit
+      </button>
+      <button
+        type="button"
+        *ngIf="submitButtonTextUpdate"
+        (click)="update()"
+        class="btn btn-success"
+      >
+        Update
+      </button>
+      <button
+        type="button"
+        (click)="getTableReportData()"
+        class="ml-5 btn btn_1"
+      >
+        View
+      </button>
+    </div>
+  </form>
+
+  <div
+    *ngIf="dataList.length != 0 && displayTabularData"
+    class="mx-auto set-height col-md-6"
+  >
+    <table id="Data">
+      <tr>
+        <th>Code</th>
+        <th>Description</th>
+      </tr>
+      <tr *ngFor="let item of dataList">
+        <td class="text-center">{{ item.SectionCode }}</td>
+        <td>{{ item.SectionName }}</td>
+      </tr>
+    </table>
+  </div>
+</app-house-keeping-wrapper>

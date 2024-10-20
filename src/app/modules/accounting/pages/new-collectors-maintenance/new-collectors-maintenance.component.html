@@ -1,0 +1,218 @@
+<app-accounting-wrapper>
+  <form [formGroup]="CollectorsCodeForm" class="mx-auto border col-md-10 pb-3">
+    <p class="bg-primary text-center text-light bg-secondary title">
+      Collector Code Maintenance
+    </p>
+    <div class="form-row mx-auto">
+      <label class="col-md-2">Collector No :</label>
+      <div class="form-group col-md-3">
+        <input
+          type="text"
+          class="form-control"
+          id="CollectorNo"
+          formControlName="CollectorNo"
+          name="CollectorNo"
+          (focusout)="changeSelectValue($event)"
+          (keydown)="changeSelectValuekeydown($event)"
+        />
+      </div>
+      <div class="form-group col-md-2">
+        <select
+          formControlName="Collectordesc"
+          class="form-control pt-0"
+          (change)="selectChangeHandler($event)"
+        >
+          <option value="0">-Select-</option>
+          <option *ngFor="let item of collectorList" [value]="item.CollectorNo">
+            {{ item.CollectorName }}
+          </option>
+        </select>
+      </div>
+    </div>
+    <div class="form-row">
+      <label for="inputDesc" class="col-md-2">Collector Name:</label>
+      <div class="pl-2 form-group col-md-5">
+        <input
+          type="text"
+          formControlName="CollectorName"
+          (keydown)="onEnterCollectorNameHandler($event)"
+          class="form-control"
+          id="CollectorName"
+        />
+      </div>
+    </div>
+    <div class="form-row">
+      <label for="inputDesc" class="col-md-2">National ID No:</label>
+      <div class="pl-2 form-group col-md-5">
+        <input
+          type="text"
+          formControlName="NationalIdNo"
+          (keydown)="onEnterNationalIdNoHandler($event)"
+          class="form-control"
+          id="NationalIdNo"
+        />
+      </div>
+    </div>
+    <div class="form-row">
+      <label for="inputDesc" class="col-md-2">Address Line1:</label>
+      <div class="pl-2 form-group col-md-5">
+        <input
+          type="text"
+          formControlName="AddressL1"
+          (keydown)="onEnterAddressL1Handler($event)"
+          class="form-control"
+          id="AddressL1"
+        />
+      </div>
+    </div>
+    <div class="form-row">
+      <label for="inputDesc" class="col-md-2">Address Line2:</label>
+      <div class="pl-2 form-group col-md-5">
+        <input
+          type="text"
+          formControlName="AddressL2"
+          (keydown)="onEnterAddressL2Handler($event)"
+          class="form-control"
+          id="AddressL2"
+        />
+      </div>
+    </div>
+    <div class="form-row">
+      <label for="inputDesc" class="col-md-2">Address Line3:</label>
+      <div class="pl-2 form-group col-md-5">
+        <input
+          type="text"
+          formControlName="AddressL3"
+          (keydown)="onEnterAddressL3Handler($event)"
+          class="form-control"
+          id="AddressL3"
+        />
+      </div>
+    </div>
+    <div class="form-row">
+      <label for="inputDesc" class="mt-1 col-md-2">Division:</label>
+      <div class="pl-2 form-group col-md-2">
+        <select
+          formControlName="Division"
+          class="form-control pt-0"
+          (change)="sentDiviCode()"
+        >
+          <option *ngFor="let item of divisionList" [value]="item.DivisionCode">
+            {{ item.DivisionDescription }}
+          </option>
+        </select>
+      </div>
+
+      <label for="inputDesc" class="ml-5 mt-1">District:</label>
+      <div class="form-group col-md-2 ml-3">
+        <select
+          formControlName="District"
+          class="form-control pt-0"
+          (change)="getUpizila()"
+        >
+          <option value="0">-Select-</option>
+          <option *ngFor="let item of districtList" [value]="item.DistrictCode">
+            {{ item.DestrictDiscription }}
+          </option>
+        </select>
+      </div>
+    </div>
+    <div class="form-row">
+      <label for="inputDesc" class="mt-1 col-md-2">Upazila:</label>
+      <div class="pl-2 form-group col-md-2">
+        <select
+          formControlName="UpZila"
+          class="form-control pt-0"
+          (change)="getThana()"
+        >
+          <option value="0">-Select-</option>
+          <option *ngFor="let item of upzilaList" [value]="item.UpzilaCode">
+            {{ item.UpzilaDescription }}
+          </option>
+        </select>
+      </div>
+      <label for="inputDesc" class="mt-1 ml-5">Thana:</label>
+      <div class="form-group col-md-2 ml-4">
+        <select formControlName="Thana" class="form-control pt-0">
+          <option value="0">-Select-</option>
+          <option *ngFor="let item of thanaList" [value]="item.ThanaCode">
+            {{ item.ThanaDescription }}
+          </option>
+        </select>
+      </div>
+    </div>
+
+    <div class="form-row">
+      <label for="inputDesc" class="col-md-2">Telephone No:</label>
+      <div class="pl-2 form-group col-md-5">
+        <input
+          type="text"
+          formControlName="TelephoneNo"
+          (keydown)="onEnterTelephoneNoHandler($event)"
+          class="form-control"
+          id="TelephoneNo"
+        />
+      </div>
+    </div>
+    <div class="form-row">
+      <label for="inputDesc" class="col-md-2">Mobile No:</label>
+      <div class="pl-2 form-group col-md-5">
+        <input
+          type="text"
+          formControlName="MobileNo"
+          (keydown)="onEnterMobileNoHandler($event)"
+          class="form-control"
+          id="MobileNo"
+        />
+      </div>
+    </div>
+
+    <div class="form-row">
+      <label for="inputDesc" class="col-md-2">Fax:</label>
+      <div class="pl-2 form-group col-md-5">
+        <input
+          type="text"
+          formControlName="Fax"
+          (keydown)="onEnterFaxHandler($event)"
+          class="form-control"
+          id="Fax"
+        />
+      </div>
+    </div>
+    <div class="form-row">
+      <label for="inputDesc" class="col-md-2">E-mail:</label>
+      <div class="pl-2 form-group col-md-5">
+        <input
+          type="text"
+          formControlName="email"
+          class="form-control"
+          id="email"
+        />
+      </div>
+    </div>
+
+    <div class="col-md-6 mt-2 buttons">
+      <button type="button" class="btn btn_1" (click)="saveOrUpdate()">
+        {{ submitButtonText }}
+      </button>
+      <button type="button" class="btn ml-5" (click)="getTableReportData()">
+        View
+      </button>
+    </div>
+  </form>
+  <div
+    *ngIf="collectorList.length != 0 && displayTabularData"
+    class="mx-auto mt-1 mt-5 col-md-8 set-height"
+  >
+    <table id="Data">
+      <tr>
+        <th>Code</th>
+        <th>Description</th>
+      </tr>
+      <tr *ngFor="let item of collectorList">
+        <td>{{ item.CollectorNo }}</td>
+        <td>{{ item.CollectorName }}</td>
+      </tr>
+    </table>
+  </div>
+</app-accounting-wrapper>

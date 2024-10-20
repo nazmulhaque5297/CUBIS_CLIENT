@@ -1,0 +1,71 @@
+<app-accounting-wrapper>
+    <form [formGroup]="ModifyChartOfAccount">
+        <div class="mx-auto border col-md-7 pb-3">
+            <p class="bg-dark title">Modify Chart Of Account</p>
+            <div class="form-group row">
+                <label class="col-md-3 col-form-label">GL Code:<span class="text-danger">*</span></label>
+                <div class="col-md-2">
+                  <input type="text" class="form-control" formControlName="GLCodeId" (focusout)="onGLCodeChange($event)"/>
+                </div>
+                <div class="col-md-4">
+                  <select class="form-control pt-0" formControlName="GLCodeDescription" (change)="onGLCodeChange($event)">
+                    <option value="0">-Select-</option>
+                    <option *ngFor="let item of GlCodeList" [value]="item.Id" >
+                      {{ item.Description }}
+                    </option>
+                  </select>
+                </div>
+            </div>
+            <div  class="form-group row">
+                <label class="col-md-3 col-form-label">Description - English :</label>
+                <div class="col-md-6">
+                  <input type="text" class="form-control" formControlName="GLAccDesc"/>
+                </div>
+            </div>
+            <div  class="form-group row">
+                <label class="col-md-3 col-form-label">Description - Bangla :</label>
+                <div class="col-md-6">
+                  <input type="text" class="form-control" formControlName="GLAccDescB"/>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-md-3 col-form-label">Transaction Mode :</label>
+                <div class="col-md-6">
+                  <select class="form-control pt-0" formControlName="GLAccMode">
+                    <option value="0">G/L Code</option>
+                    <option value="1">Non G/L Code</option>
+                  </select>
+                </div>
+            </div>
+            <div *ngIf="GLCodeViewModel.ShowOverDraft" class="form-group row">
+                <label class="col-md-3 col-form-label">OverDraft A/c :</label>
+                <div class="col-md-1">
+                  <input type="checkbox" class="form-control" formControlName="OverDraft" />
+                </div>
+            </div>
+            <div *ngIf="GLCodeViewModel.ShowMsicAcc" class="form-group row">
+                <label class="col-md-3 col-form-label">Msic. A/C :</label>
+                <div class="col-md-1">
+                  <input type="checkbox" class="form-control" formControlName="Msic" />
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-md-3 col-form-label">Status :</label>
+                <div class="col-md-6">
+                  <select class="form-control pt-0" formControlName="Status">
+                    <option value="1">Active</option>
+                    <option value="99">Closed</option>
+                  </select>
+                </div>
+            </div>
+            <div class="buttons">
+              <button type="button" class="btn" (click)="ModifyHandler()">
+                  Modify
+              </button>
+          </div>
+        </div>
+        
+    </form>
+</app-accounting-wrapper>
+
+

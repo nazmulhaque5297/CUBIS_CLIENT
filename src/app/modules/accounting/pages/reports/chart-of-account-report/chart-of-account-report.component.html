@@ -1,0 +1,176 @@
+<app-accounting-wrapper>
+  <form
+    [formGroup]="coaReportForm"
+    class="mx-auto mt-1 mt-5 border col-md-7 main-container"
+  >
+    <p class="mt-1 bg-dark title">Chart Of Account Report</p>
+
+    <div class="form-group row">
+      <div class="col-md-1">
+        <input
+          [(ngModel)]="chbIsAllHeaderStatus"
+          (ngModelChange)="checkIsAllHeaderValue($event)"
+          class="form-check-input ml-1 checkbox"
+          style="margin: 0.8rem"
+          type="checkbox"
+          id="IsAllHeaderCheckbox"
+          formControlName="IsAllHeader"
+        />
+      </div>
+
+      <label class="col-md-6 col-form-label" for="IsAllHeaderCheckbox"
+        >All Header</label
+      >
+      <div class="col-md-5">
+        <select
+          disabled="IsHeaderDisabled"
+          class="form-control"
+          formControlName="HeadId"
+        >
+          <option value="0">-Select-</option>
+          <option *ngFor="let item of inputHelpData.HeadList" [value]="item.Id">
+            {{ item.Description }}
+          </option>
+        </select>
+      </div>
+    </div>
+
+    <div class="form-group row">
+      <div class="col-md-1">
+        <input
+          [(ngModel)]="chbIsAllMainHeaderStatus"
+          (ngModelChange)="checkIsAllMainHeaderValue($event)"
+          class="form-check-input ml-1 checkbox"
+          style="margin: 0.8rem"
+          type="checkbox"
+          id="IsAllMainHeaderCheckbox"
+          formControlName="IsAllMainHeader"
+        />
+      </div>
+
+      <label class="col-md-6 col-form-label" for="IsAllMainHeaderCheckbox"
+        >All Main Head</label
+      >
+      <div class="col-md-5">
+        <select
+          disabled="IsMainHeaderDisabled"
+          class="form-control"
+          formControlName="MainHeadId"
+        >
+          <option value="0">-Select-</option>
+          <option
+            *ngFor="let item of inputHelpData.MainHeadList"
+            [value]="item.Id"
+          >
+            {{ item.Description }}
+          </option>
+        </select>
+      </div>
+    </div>
+
+    <div class="form-group row">
+      <div class="col-md-1">
+        <input
+          [(ngModel)]="chbIsAllSubHeaderStatus"
+          (ngModelChange)="checkIsAllSubHeaderValue($event)"
+          class="form-check-input ml-1 checkbox"
+          style="margin: 0.8rem"
+          type="checkbox"
+          id="IsAllSubHeaderCheckbox"
+          formControlName="IsAllSubHeader"
+        />
+      </div>
+
+      <label class="col-md-6 col-form-label" for="IsAllSubHeaderCheckbox"
+        >All Sub Head</label
+      >
+      <div class="col-md-5">
+        <select
+          disabled="IsSubHeaderDisabled"
+          class="form-control"
+          formControlName="SubHeadId"
+          (change)="onChangeSubHead($event)"
+        >
+          <option value="0">-Select-</option>
+          <option
+            *ngFor="let item of inputHelpData.SubHeadList"
+            [value]="item.Id"
+          >
+            {{ item.Description }}
+          </option>
+        </select>
+      </div>
+    </div>
+
+    <div class="form-group row" *ngIf="selectedValue == '10106000'">
+      <label class="col-md-3 col-form-label">Bank Account Type</label>
+      <div class="col-md-3">
+        <select class="form-control" formControlName="BankAccountType">
+          <option value="0">-Select-</option>
+          <option
+            *ngFor="let item of inputHelpData.BankAccountType"
+            [value]="item.Id"
+          >
+            {{ item.Description }}
+          </option>
+        </select>
+      </div>
+    </div>
+
+    <div class="form-group row">
+      <div class="col-md-1">
+        <input
+          checked
+          type="radio"
+          value="0"
+          id="rbLanguage0"
+          name="rbLanguage"
+          formControlName="rbLanguage"
+        />
+      </div>
+
+      <label class="col-md-3 col-form-label" for="rbLanguage0"
+        >English Mode</label
+      >
+
+      <div class="col-md-1">
+        <input
+          type="radio"
+          value="1"
+          id="rbLanguage1"
+          name="rbLanguage"
+          formControlName="rbLanguage"
+        />
+      </div>
+
+      <label class="col-md-3 col-form-label" for="rbLanguage1"
+        >Bangla Mode</label
+      >
+    </div>
+
+    <!-- <div class="form-group row">
+      <label class="col-md-3 col-form-label"></label>
+      <div class="col-md-3">
+        <button type="button" class="btn btn-success" (click)="getReportToken()">
+          Preview/Print
+        </button>
+      </div>
+    </div> -->
+    <div class="buttons">
+      <button
+        type="button"
+        class="btn btn-info ml-2"
+        (click)="getReportToken('CRV')"
+      >
+        Preview
+      </button>
+      <button
+        type="button"
+        class="btn btn-success ml-2"
+        (click)="getReportToken('PDF')"
+      >
+        Print
+      </button>
+    </div>
+  </form>
+</app-accounting-wrapper>

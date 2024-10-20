@@ -1,0 +1,22 @@
+.footer p{
+    float: left;
+    font-size: 14px;
+    word-spacing: 2px;
+    text-transform: capitalize;
+ }
+ .footer p a{
+   color:#44bae8;
+   font-size: 16px;
+   text-decoration: none;
+ }
+ .footer span{
+     text-transform: uppercase;
+     opacity: .4;
+     font-weight: 200;
+ }
+
+ .footer-menu{
+    float: right;
+    color: auto;
+  }
+  

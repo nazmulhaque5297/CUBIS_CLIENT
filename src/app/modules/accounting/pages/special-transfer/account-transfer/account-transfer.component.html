@@ -1,0 +1,128 @@
+<app-accounting-wrapper>
+  <form [formGroup]="AccountTransferForm">
+    <div class="mx-auto border col-md-7">
+      <p class="bg-dark title">Account Transfer From</p>
+      <div class="form-row">
+        <label class="col-md-2 col-form-label"
+          >Member No :<span class="text-danger">*</span></label
+        >
+        <div class="form-group col-md-4">
+          <input
+            (change)="changeMemberNoHandler($event)"
+            (keydown)="onEnterMemNoHandler($event)"
+            type="text"
+            class="form-control"
+            id="MemberNo"
+            formControlName="MemNo"
+            name="MemberNo"
+            required
+          />
+        </div>
+        <div class="form-group col-md-4">
+          <p>{{ MemAndAccTypeInfo?.MemberName }}</p>
+        </div>
+      </div>
+      <div class="form-row">
+        <label class="col-md-2 col-form-label">Account Type :</label>
+        <div class="form-group col-md-4">
+          <input
+            (change)="AccountTypeChangeHandler($event)"
+            (keydown)="onEnterAccountTypeHandler($event)"
+            type="text"
+            class="form-control"
+            id="AccountType"
+            formControlName="AccountType"
+            name="AccountType"
+          />
+        </div>
+        <div class="form-group col-md-6">
+          <select
+            formControlName="SelectedAccountType"
+            (change)="AccountTypeChangeHandler($event)"
+            class="form-control pt-0"
+          >
+            <option value="0">-Select-</option>
+            <option
+              *ngFor="let item of MemAndAccTypeInfo?.AccountTypeList"
+              [value]="item.Id"
+            >
+              {{ item.Description }}
+            </option>
+          </select>
+        </div>
+      </div>
+      <div class="form-row">
+        <label class="col-md-2 col-form-label">Account No :</label>
+        <div
+          *ngIf="TransferViewModel?.AccList?.length <= 1"
+          class="form-group col-md-4"
+        >
+          <input
+            type="text"
+            class="form-control"
+            id="AccountNo"
+            formControlName="AccountNo"
+            name="AccountNo"
+            disabled
+          />
+        </div>
+        <div
+          *ngIf="TransferViewModel?.AccList?.length > 1"
+          class="form-group col-md-4"
+        >
+          <select
+            formControlName="AccountNo"
+            (change)="AccountNoChangeHandler($event)"
+            class="form-control"
+          >
+            <option value="0">-Select-</option>
+            <option
+              *ngFor="let item of TransferViewModel.AccList"
+              [value]="item"
+            >
+              {{ item }}
+            </option>
+          </select>
+        </div>
+        <label class="col-md-2 col-form-label">Ledger Balance :</label>
+        <div class="form-group col-md-4">
+          <input
+            type="text"
+            class="form-control"
+            id="LedgerBalance"
+            formControlName="LedgerBalance"
+            name="LedgerBalance"
+            disabled
+          />
+        </div>
+      </div>
+    </div>
+
+    <div class="mx-auto mt-1 border col-md-7">
+      <p class="bg-dark title">Account Transfer To</p>
+      <div class="form-row">
+        <label class="col-md-2 col-form-label"
+          >Member No :<span class="text-danger">*</span></label
+        >
+        <div class="form-group col-md-4">
+          <input
+            (change)="TrnMemChangeHandler($event)"
+            type="text"
+            class="form-control"
+            id="TrnMemberNo"
+            formControlName="TrnMemNo"
+            name="TrnMemberNo"
+          />
+        </div>
+        <div class="form-group col-md-4">
+          <p>{{ TransferViewModel?.TrnMemberName }}</p>
+        </div>
+      </div>
+      <div class="buttons col-md-11">
+        <button type="button" class="btn btn-success" (click)="Transfer()">
+          Transfer
+        </button>
+      </div>
+    </div>
+  </form>
+</app-accounting-wrapper>

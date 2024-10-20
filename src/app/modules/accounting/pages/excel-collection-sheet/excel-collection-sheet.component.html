@@ -1,0 +1,133 @@
+<app-accounting-wrapper>
+  <form
+    [formGroup]="excelCollectionForm"
+    novalidate
+    class="mx-auto border col-md-6 main-container pb-3"
+  >
+    <p class="bg-dark title">Excel Sheet Collection</p>
+    <div class="form-row">
+      <label class="col-md-2"
+        >Select Excel For:<span class="text-danger">*</span></label
+      >
+      <div class="form-group col-md-8 ml-3">
+        <select formControlName="OptionId" class="form-control pt-0">
+          <option
+            *ngFor="let item of excelCollectionSheetModel.ExcelCollectionType"
+            [value]="item.Id"
+          >
+            {{ item.Description }}
+          </option>
+        </select>
+      </div>
+    </div>
+
+    <div class="form-row">
+      <input type="checkbox" class="mt-2" />
+      <label class="col-md-2">All User Id:</label>
+      <div class="form-group col-md-4" style="margin-left: 3px;">
+        <input
+          type="text"
+          class="form-control"
+          (change)="onUserChange(excelCollectionForm.value.UserCode)"
+          formControlName="UserCode"
+        />
+      </div>
+      <div class="form-group col-md-4">
+        <select
+          formControlName="UserId"
+          (change)="onUserChange(excelCollectionForm.value.UserId)"
+          class="form-control pt-0"
+        >
+          <option value="">-Select-</option>
+          <option
+            *ngFor="let item of excelCollectionSheetModel.UserList"
+            [value]="item.Id"
+          >
+            {{ item.Description }}
+          </option>
+        </select>
+      </div>
+    </div>
+
+    <div class="form-row">
+      <label class="col-md-2">From Date:</label>
+      <div class="form-group col-md-4 ml-3">
+        <input
+          type="text"
+          class="form-control"
+          bsDatepicker
+          [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY' }"
+          formControlName="FromDate"
+        />
+      </div>
+      <label class="ml-1">To Date:</label>
+      <div class="form-group col-md-3">
+        <input
+          type="text"
+          class="form-control"
+          bsDatepicker
+          [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY' }"
+          formControlName="ToDate"
+        />
+      </div>
+    </div>
+
+    <div class="form-row">
+      <input
+      class="mt-2"
+        type="checkbox"
+        formControlName="ChkOldMemNo"
+      />
+      <label class="col-md-3 col-form-label">With Member Old No.</label>
+    </div>
+
+    <div class="buttons">
+      <button type="button" (click)="onLoadGlList()" class="btn btn_1 ml-5">
+        Load GL List
+      </button>
+      <button type="button" (click)="onVerifyColumn()" class="btn ml-2">
+        Verify Column
+      </button>
+      <button
+        type="button"
+        *ngIf="dataList.length > 0"
+        (click)="onExportToExcel()"
+        class="btn ml-2"
+      >
+        Export to Excel
+      </button>
+    </div>
+  </form>
+
+  <div *ngIf="dataList.length > 0" class="mx-auto set-height col-md-6">
+    <div class="buttons col-md-12 mx-auto">
+      <button
+        type="button"
+        (click)="onSave()"
+        style="float: right; background-color: #28a745"
+        class="btn ml-2 btn-success"
+      >
+        Save
+      </button>
+    </div>
+
+    <table id="Data">
+      <tr>
+        <th>GL Acc No.</th>
+        <th>GL Acc Desc</th>
+        <th>ColumnNo.</th>
+      </tr>
+      <tr *ngFor="let item of dataList">
+        <td class="text-center">{{ item.GlAccountNo }}</td>
+        <td>{{ item.AccountDescription }}</td>
+        <td>
+          <input
+            style="width: 90px"
+            [(ngModel)]="item.ColumnNo"
+            type="number"
+          />
+        </td>
+      </tr>
+    </table>
+  </div>
+</app-accounting-wrapper>

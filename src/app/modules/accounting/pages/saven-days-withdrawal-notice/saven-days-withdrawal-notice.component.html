@@ -1,0 +1,208 @@
+<app-accounting-wrapper>
+  <form [formGroup]="SevenDaysWithdrawalForm">
+    <div class="mx-auto border col-md-7">
+      <p class="bg-dark title">Standard Account Seven Day Notice</p>
+      <div class="form-row">
+        <label class="col-md-2 col-form-label"
+          >Member No:<span class="text-danger">*</span></label
+        >
+        <div class="form-group col-md-5">
+          <input
+            type="text"
+            class="form-control"
+            id="MemberNo"
+            formControlName="MemberNo"
+            name="MemberNo"
+            (change)="MemberHandler()"
+          />
+        </div>
+        <div class="form-group col-md-4">
+          <p>{{ MemberData?.MemberName }}</p>
+        </div>
+      </div>
+
+      <div class="buttons mb-2">
+        <button
+          type="button"
+          class="btn btn-success ml-5"
+          (click)="SubmitHandler()"
+        >
+          Submit
+        </button>
+        <button
+        type="button"
+        class="btn btn-info ml-5"
+        (click)="showAllMember()"
+      >
+        Search Member
+      </button>
+      </div>
+    </div>
+    <div *ngIf="AccList?.length > 0" class="mx-auto mt-1 col-md-6">
+      <table id="Data">
+        <tr>
+          <th>Select</th>
+          <th>Account Type</th>
+          <th>Account No.</th>
+          <th>Account Balance</th>
+          <th>MemNo</th>
+          <th>Acc Type</th>
+          <th>ID</th>
+        </tr>
+        <tr *ngFor="let item of AccList">
+          <td>
+            <Input
+              [checked]="item.CheckMark"
+              type="checkbox"
+              class="checkBtnSize"
+              (change)="checkHandler(item)"
+            />
+          </td>
+          <td>{{ item.AccTypeDescription }}</td>
+          <td>{{ item.AccNo }}</td>
+          <td>{{ item.AccBalance }}</td>
+          <td>{{ item.MemNo }}</td>
+          <td>{{ item.AccType }}</td>
+          <td>{{ item.Id }}</td>
+        </tr>
+      </table>
+    </div>
+    <div class="mx-auto mt-3 border col-md-7 pt-2 pb-2">
+      <div class="form-row">
+        <label class="col-md-2 col-form-label" for="ChangeStatus"
+          >Notice:</label
+        >
+        <div class="col-md-4">
+          <input
+            id="dateFormat"
+            type="text"
+            placeholder="DD/MM/YYYY"
+            class="form-control"
+            bsDatepicker
+            formControlName="NoticeDate"
+            [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY' }"
+            autocomplete="off"
+          />
+        </div>
+      </div>
+      <div class="form-row">
+        <label class="col-md-2 col-form-label">Withdrawal Amount :</label>
+        <div class="form-group col-md-4">
+          <input
+            type="text"
+            class="form-control"
+            (keydown)="onEnterWithdrawalAmountHandler($event)"
+            id="WithdrawalAmount"
+            formControlName="WithdrawalAmount"
+          />
+        </div>
+        <label class="col-md-2 col-form-label" for="ChangeStatus"
+          >Withdrawal Date:</label
+        >
+        <div class="col-md-4">
+          <input
+            id="dateFormat"
+            type="text"
+            placeholder="DD/MM/YYYY"
+            class="form-control"
+            bsDatepicker
+            formControlName="WithdrawalDate"
+            [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY' }"
+            autocomplete="off"
+          />
+        </div>
+      </div>
+      <div class="form-row">
+        <label class="col-md-2 col-form-label offset-md-6">Note :</label>
+        <div class="form-group col-md-4">
+          <input
+            type="text"
+            class="form-control"
+            id="Note"
+            formControlName="Note"
+          />
+        </div>
+      </div>
+      <div class="form-row">
+        <label class="col-md-2 col-form-label offset-md-6"
+          >Notice Status :</label
+        >
+        <div class="form-group col-md-4">
+          <input
+            type="text"
+            class="form-control"
+            formControlName="NoticeStatus"
+            disabled
+          />
+        </div>
+      </div>
+      <div class="form-row">
+        <label class="col-md-2 col-form-label offset-md-6">Status Date :</label>
+        <div class="form-group col-md-4">
+          <input
+            type="text"
+            class="form-control"
+            formControlName="StatusDate"
+            disabled
+          />
+        </div>
+      </div>
+      <div class="buttons mb-2">
+        <button
+          type="button"
+          class="btn btn-success ml-5"
+          (click)="AddEditCancelNotice(0)"
+        >
+          Add Notice
+        </button>
+        <button
+          type="button"
+          class="btn btn-primary ml-5"
+          (click)="AddEditCancelNotice(1)"
+        >
+          Edit Notice
+        </button>
+        <button
+          type="button"
+          class="btn btn-info ml-5"
+          (click)="AddEditCancelNotice(2)"
+        >
+          Cancel Notice
+        </button>
+      </div>
+    </div>
+    <div *ngIf="NoticeList?.length > 0" class="mx-auto mt-1 col-md-6">
+      <table id="Data">
+        <tr>
+          <th>Select</th>
+          <th>Srl</th>
+          <th>NoticeDate</th>
+          <th>NoticeAmount</th>
+          <th>WithdrawalDate</th>
+          <th>Note</th>
+          <th>Status</th>
+          <th>StatusDate</th>
+          <th>NTCStatus</th>
+          <th>ID</th>
+        </tr>
+        <tr *ngFor="let item of NoticeList">
+          <td (click)="OnEdit(item)" style="cursor: pointer">
+            <button type="button">Edit</button>
+          </td>
+          <td>{{ item.Srl }}</td>
+          <td>{{ item.NoticeDate }}</td>
+          <td>{{ item.NoticeAmount }}</td>
+          <td>{{ item.WithdrawalDate }}</td>
+          <td>{{ item.Note }}</td>
+          <td>{{ item.Status }}</td>
+          <td>{{ item.StatusDate }}</td>
+          <td>{{ item.NTCStatus }}</td>
+          <td>{{ item.Id }}</td>
+        </tr>
+      </table>
+    </div>
+    <div class="mx-auto col-md-3">
+      <p class="title" *ngIf="ShowNoticeMessage">Empty Notice Information</p>
+    </div>
+  </form>
+</app-accounting-wrapper>

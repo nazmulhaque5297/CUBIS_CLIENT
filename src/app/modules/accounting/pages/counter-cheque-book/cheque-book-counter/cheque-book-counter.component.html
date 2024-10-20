@@ -1,0 +1,99 @@
+
+<form [formGroup]="ChequeCounterForm" class="mx-auto mt-3 border col-md-7 pb-3">
+  <p class="bg-dark title" *ngIf="showHide">Counter Cheque Book Issue</p>
+  <div class="form-row">
+    <label for="inputDesc" class="col-md-2">Cheque Prefix:</label>
+    <div class="pl-2 form-group col-md-6">
+      <input
+        type="text"
+        formControlName="ChqeFx"
+        (keydown)="onEnterChqeFxHandler($event)"
+        class="form-control"
+        id="inputDesc"
+      />
+    </div>
+  </div>
+  <div class="form-row">
+    <label for="inputDesc" class="col-md-2">Number Of Pages :</label>
+    <div class="pl-2 form-group col-md-6">
+      <input
+        type="text"
+        formControlName="ChqbPage"
+        (keydown)="onEnterChqbPageHandler($event)"
+        class="form-control"
+        id="ChqbPage"
+      />
+    </div>
+  </div>
+  <div class="form-row">
+    <label for="inputDesc" class="col-md-2">Beginning No:</label>
+    <div class="pl-2 form-group col-md-6">
+      <input
+        appOnlyNumber
+        type="text"
+        formControlName="BeginNo"
+        class="form-control"
+        id="BeginNo"
+        (focusout)="begNoChanged()"
+        (keydown)="onEnterBeginNoHandler($event)"
+      />
+    </div>
+  </div>
+  <div class="form-row">
+    <label for="inputDesc" class="col-md-2">Ending No :</label>
+    <div class="pl-2 form-group col-md-6">
+      <input
+        appOnlyNumber
+        type="text"
+        formControlName="EndNo"
+        (keydown)="onEnterEndNoHandler($event)"
+        class="form-control"
+        id="EndNo"
+      />
+    </div>
+  </div>
+  <div class="form-row" *ngIf="showHide">
+    <label class="col-md-2 col-form-label">Issue Date :</label>
+    <div class="pl-2 form-group col-md-6">
+      <input
+        id="dateFormat"
+        type="text"
+        placeholder="DD/MM/YYYY"
+        class="form-control"
+        bsDatepicker
+        formControlName="ChqBIssDt"
+        [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY' }"
+        (input)="dateChanged()"
+      />
+    </div>
+  </div>
+  <div class="col-md-9 mx-auto buttons">
+    <button type="button" class="btn btn_1 ml-4" (click)="insertDetails()">
+      Submit
+    </button>
+    <button type="button" class="btn ml-5" (click)="getTableReportData()">
+      View
+    </button>
+  </div>
+</form>
+<div
+  *ngIf="chequeDetails.length != 0 && displayTabularData"
+  class="mx-auto mt-1 col-md-7 set-height"
+>
+  <table id="Data">
+    <tr>
+      <th>Chq. Prefix</th>
+      <th>Chq.No.</th>
+      <th>Issue Date</th>
+      <th>Chq.Status</th>
+      <th>Status Date</th>
+    </tr>
+    <tr *ngFor="let item of chequeDetails">
+      <td>{{ item.ChqeFx }}</td>
+      <td>{{ item.ChqSlNo }}</td>
+      <td>{{ item.ChqBIssDt }}</td>
+      <td>{{ item.ChqPStatDesc }}</td>
+      <td></td>
+    </tr>
+  </table>
+</div>

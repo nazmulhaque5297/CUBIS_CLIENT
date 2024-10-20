@@ -1,0 +1,14 @@
+<app-main-wrapper>
+  <div class="row flex-column menu">
+    <div *ngFor="let item of dataList" class="col-md-4 mx-auto border mt-5 menuList">
+      <!-- <a href="javascript:void(0);" [routerLink]="item.ModuleNo === 1 ? ['/accounting'] : (item.ModuleNo === 3?  ['/booth']:['/housekeeping'])"  class="dropdown-item notify-item text-center">
+        <p class="p-3">{{item.ModuleName}}</p>
+      </a> -->
+      <a (click)="checkProcessStartDate(item)"  class="dropdown-item notify-item text-center">
+        <p class="p-3">{{item.ModuleName}}</p>
+      </a>
+    </div>
+  </div>
+</app-main-wrapper>
+
+

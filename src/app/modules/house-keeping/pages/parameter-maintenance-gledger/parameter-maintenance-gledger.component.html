@@ -1,0 +1,57 @@
+<app-house-keeping-wrapper>
+  <form
+    [formGroup]="parameterMaintenanceGLedgerControlForm"
+    class="mx-auto border col-md-6 main-container"
+  >
+    <p class="bg-dark title">Parameter Maintenance - General Ledger</p>
+
+    <div class="form-group row">
+      <label for="transactionamount" class="col-sm-5 col-form-label"
+        >Financial Begining Month :</label
+      >
+      <div class="col-sm-7">
+        <input
+          type="text"
+          class="form-control"
+          formControlName="FinancialMonth"
+          (keydown)="onEnterFinancialMonthHandler($event)"
+        />
+      </div>
+    </div>
+
+    <div class="form-group row">
+      <label for="transactionamount" class="col-sm-5 col-form-label"
+        >GL P/L Code :</label
+      >
+      <div class="col-sm-7">
+        <input
+          type="text"
+          class="form-control"
+          formControlName="PLCode"
+          id="PLCode"
+          (keydown)="onEnterPLCodeHandler($event)"
+        />
+      </div>
+    </div>
+
+    <div class="form-group row">
+      <label for="transactionamount" class="col-sm-5 col-form-label"
+        >Undistributed Last Year P/L Code :</label
+      >
+      <div class="col-sm-7">
+        <input
+          type="text"
+          class="form-control"
+          formControlName="UDPLCode"
+          id="UDPLCode"
+        />
+      </div>
+    </div>
+
+    <div class="buttons col-md-12">
+      <button type="button" class="btn btn-success" (click)="onUpdate()">
+        Update
+      </button>
+    </div>
+  </form>
+</app-house-keeping-wrapper>

@@ -1,0 +1,74 @@
+.ng-invalid.ng-dirty:not(form),
+.ng-invalid:not(form).form-submitted {
+  border: solid 2px red;
+}
+
+label{
+  cursor: pointer;
+}
+
+.title {
+  background: #6c757d !important;
+  color: #fff;
+  font-weight: 600;
+  padding: 2px;
+}
+
+input {
+  box-shadow: none !important;
+}
+
+.desc-input {
+  margin-left: 30px !important;
+}
+
+.buttons {
+  margin-top: 25px;
+  margin-left: 110px;
+}
+
+.btn {
+  padding: 4px 35px !important;
+  transition: 0.7s ease-in;
+  /* background: #0069aa; */
+  color: #fff;
+}
+
+.btn:focus {
+  outline: none !important;
+  box-shadow: none !important;
+}
+
+#Data {
+  font-family: Arial, Helvetica, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+.set-height {
+  height: 310px;
+  overflow-x: auto;
+}
+
+#Data td,
+#Data th {
+  border: 0px solid #ddd;
+  padding: 8px;
+}
+
+#Data th {
+  padding-top: 12px;
+  padding-bottom: 12px;
+  text-align: left;
+  color: white;
+  text-align: center;
+}
+
+@media screen and (max-width: 762px) {
+  .desc-input {
+    margin-left: 0px !important;
+  }
+  .buttons {
+    margin-left: 0px;
+  }
+}

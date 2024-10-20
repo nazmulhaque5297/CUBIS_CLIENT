@@ -1,0 +1,27 @@
+.title {
+  background: #6c757d !important;
+  color: #fff;
+  font-weight: 600;
+  padding: 2px;
+}
+
+.img__show img {
+  height: 280px;
+  width: 400px;
+}
+.btn {
+  padding: 4px 35px !important;
+  transition: 0.7s ease-in;
+  background: #28A745;
+  color: #fff;
+  width: 220px;
+  line-height: 1.4em;
+}
+
+.col-md-7 {
+  max-width: 60.333333% !important;
+}
+.col-md-3 {
+  flex: 0 0 28%;
+  max-width: 28%;
+}

@@ -1,0 +1,75 @@
+<app-accounting-wrapper [formGroup]='memberApproveForm'>
+    <div>
+        <h1 *ngIf="applicationList.length == 0" class="text-center no__data align-middle">No More Data For Approve!!</h1>
+    </div>
+    <h4 *ngIf="applicationList.length != 0" class="border p-3 text-center">Approve Member Application</h4>
+    <form *ngIf="applicationList.length != 0" class="mx-auto mt-1 mt-5 border col-md-12 main-container">
+        <h5 class="text-center p-1">Approve - Spooler</h5>
+        <div class="mx-auto mb-3 col-md-12 infoTable">
+            <table id="Data">
+                <tr>
+                    <th>Action</th>
+                    <th>Action</th>
+                    <th>View</th>
+                    <th>Application No.</th>
+                    <th>Application Date</th>
+                    <th>Member Name</th>
+                    <th>Member Type</th>
+                    <th>Module</th>
+                    <th>User Id.</th>
+                </tr>
+                <tr *ngFor="let item of applicationList">
+                    <td><button value="{{item.MemApplicationNo}}" class="btn-verify" (click)="displayApproveOption(item)">Select</button></td>
+                    <td><button value="{{item.MemApplicationNo}}" class="btn-reject" (click)="displayRejectOption($event)">Reject</button></td>
+                    <td><button class="btn-print" (click)="getReportToken(item)">Print</button></td>
+                    <td>{{item.MemApplicationNo}}</td>
+                    <td>{{item.MemApplicationDate}}</td>
+                    <td>{{item.MemName}}</td>
+                    <td>{{item.MemTypeDesc}}</td>
+                    <td>{{item.Module}}</td>
+                    <td>{{item.UserId}}</td>
+                </tr>
+            </table>
+        </div>
+    </form>
+
+    <!-- Member Approve Screeen  -->
+    <div *ngIf="displayApproveData" class="border border-success mt-5">
+        <div class="form-group row  mx-auto col-md-12 main-container p-5">
+            <label for="select" class="col-md-2 col-form-label">Approve Note :</label>
+            <div class="col-md-8 mt-1">
+                <select formControlName="selectedApproveCode" id="select" class="form-control pt-0">
+                    <option value="0">-Select-</option>
+                    <option *ngFor="let item of dataList" [value]="item.MApproveCode">{{item.MApproveDescription}}
+                    </option>
+                </select>
+            </div>
+        </div>
+        <div class="col-md-6 mb-3 mx-auto  buttons">
+            <button class="btn" type="button"(click)="approveInfo()">Approve</button>
+            <button class="ml-5 btn" (click)="closeApproveOption()">Cancel</button>
+        </div>
+    </div>
+
+    <!-- Member Reject Screen  -->
+    <div *ngIf="displayRejectData" class="border border-danger mt-5">
+        <div class="form-group row  mx-auto col-md-12 main-container p-5">
+            <label for="select" class="col-md-2 col-form-label">Reject Note :</label>
+            <div class="col-md-8 mt-1">
+                <select formControlName="selectedRejectCode" class="form-control pt-0">
+                    <option value="0">-Select-</option>
+                    <option *ngFor="let item of RdataList" [value]="item.MRejectCode">{{item.MRejectDescription}}
+                    </option>
+                </select>
+            </div>
+        </div>
+        <div class="col-md-6 mb-3 mx-auto  buttons">
+            <button class="btn" (click)="rejectInfo()">Reject</button>
+            <button class="ml-5 btn" (click)="closeRejectOption()">Cancel</button>
+        </div>
+    </div>
+
+
+
+
+</app-accounting-wrapper>

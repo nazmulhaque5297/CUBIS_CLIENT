@@ -1,0 +1,512 @@
+<app-accounting-wrapper>
+  <form [formGroup]="cashDepositForm" class="form-horizontal">
+    <div class="row">
+      <div class="col-xl-8 col-md-8">
+        <p class="bg-primary text-center text-light bg-secondary title">
+          Transfer Deposit Transaction
+        </p>
+        <div class="card first__part">
+          <!-- <div class="card-header bg-primary">
+              <h4 class="card-title text-white mb-0">Transfer Deposit Transaction</h4>
+            </div> -->
+          <div class="card-body">
+            <div class="form-group row">
+              <label class="col-md-3 col-form-label"
+                >Member No. :<span class="text-danger">*</span></label
+              >
+              <div class="col-md-4">
+                <input
+                  id="memberno"
+                  type="text"
+                  class="form-control"
+                  formControlName="MemberNo"
+                  (change)="onMemberChange()"
+                  appOnlyNumber
+                />
+              </div>
+              <label class="col-md-4 col-form-label">{{
+                detailsData.MemberName
+              }}</label>
+            </div>
+
+            <div class="form-group row">
+              <label class="col-md-3 col-form-label"
+                >A/C Type:<span class="text-danger">*</span></label
+              >
+              <div class="col-md-1">
+                <input
+                  id="AccountTypeCode"
+                  type="text"
+                  class="form-control"
+                  formControlName="AccountTypeCode"
+                  appOnlyNumber
+                  (change)="
+                    onAccountTypeChange(cashDepositForm.value.AccountTypeCode)
+                  "
+                />
+              </div>
+              <div class="col-md-3">
+                <select
+                  class="form-control pt-0"
+                  formControlName="AccountTypeId"
+                  (change)="
+                    onAccountTypeChange(cashDepositForm.value.AccountTypeId)
+                  "
+                >
+                  <option value="0">-Select-</option>
+                  <option
+                    *ngFor="let item of inputHelpData.AccountTypeList"
+                    [value]="item.Id"
+                  >
+                    {{ item.Description }}
+                  </option>
+                </select>
+              </div>
+            </div>
+            <div class="form-group row">
+              <label class="col-md-3 col-form-label">Account No.:</label>
+              <div class="col-md-4">
+                <input
+                  type="text"
+                  class="form-control"
+                  formControlName="AccountNo"
+                  disabled
+                />
+              </div>
+            </div>
+
+            <div *ngIf="!UserData?.AutoVchflag" class="form-group row">
+              <label class="col-md-3 col-form-label"
+                >Voucher No. :<span class="text-danger">*</span></label
+              >
+              <div class="col-md-4">
+                <input
+                  id="VoucherNo"
+                  type="text"
+                  class="form-control"
+                  formControlName="VoucherNo"
+                  (change)="OnVoucherNoChange()"
+                />
+              </div>
+            </div>
+
+            <div class="row d-block topSection f-ss-14px"
+            *ngIf="!accountViewModel?.HasMultipleAccount">
+              <div class="d-flex deposit-account-list-header">
+                <div class="col-md-2">GL Code</div>
+                <div class="col-md-4">Name of Account Head</div>
+                <div class="col-md-4">Description</div>
+                <div class="col-md-2">Amount</div>
+              </div>
+
+              <div
+                style="margin-bottom: 10px"
+                formArrayName="DepositedAccountList"
+                *ngFor="
+                  let item of cashDepositForm.get('DepositedAccountList')[
+                    'controls'
+                  ];
+                  let i = index
+                "
+              >
+                <div class="row" [formGroupName]="i">
+                  <div class="col-md-2">
+                    <input
+                      class="form-control"
+                      formControlName="GLAccNo"
+                      disabled
+                    />
+                  </div>
+                  <div class="col-md-4">
+                    <input
+                      class="form-control"
+                      readonly
+                      formControlName="GLAccDesc"
+                    />
+                  </div>
+                  <div class="col-md-4">
+                    <input
+                      class="form-control"
+                      readonly
+                      formControlName="PayTypeDes"
+                    />
+                  </div>
+                  <div class="col-md-2">
+                    <input
+                      onfocus="this.select()"
+                      id="{{ 'TrnAmount' + i }}"
+                      class="form-control"
+                      type="text"
+                      formControlName="TrnAmount"
+                      (change)="onAmountChange(i, item)"
+                      (keydown)="onAmountEnterEvent($event, i, item)"
+                      appOnlyNumber
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <table class="table" *ngIf="accountViewModel?.HasMultipleAccount">
+              <tr style="background-color: YellowGreen">
+                <td>A/c Type</td>
+                <td>A/c Title</td>
+                <td>A/c No.</td>
+                <td>Old A/c</td>
+                <td>Manual A/c</td>
+                <td>GL Code</td>
+                <td></td>
+              </tr>
+              <tr *ngFor="let item of accountViewModel.GroupAccounts; let i = index">
+                <td>{{ item.AccType }}</td>
+                <td>{{ item.GLAccDesc }}</td>
+                <td>{{ item.AccNo }}</td>
+                <td>{{ item.AccOldNumber }}</td>
+                <td>{{ item.AccPrevNumber }}</td>
+                <td>{{ item.GLAccNo }}</td>
+                <td
+                  class="gl-help-list-link"
+                  (click)="onAccountNoSelect(item.AccNo)"
+                >
+                  Select
+                </td>
+              </tr>
+            </table>
+
+
+
+          </div>
+        </div>
+        <div class="card" style="margin-top: 30px">
+          <div class="card-body">
+            <div class="form-group row">
+              <label class="col-md-2 col-form-label">Total Amount :</label>
+              <div class="col-md-2">
+                <div class="col-form-label">
+                  <input
+                    type="text"
+                    class="form-control"
+                    disabled
+                    formControlName="TotalAmount"
+                  />
+                </div>
+              </div>
+            </div>
+            <div class="form-group row">
+              <div class="col-md-8 mx-auto">
+                <button
+                  id="update"
+                  type="button"
+                  class="btn btn-success"
+                  (click)="onUpdate()"
+                >
+                  Update
+                </button>
+                <button
+                  type="button"
+                  class="btn btn-info ml-2"
+                  (click)="refresh()"
+                >
+                  Refresh
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-xl-4 col-md-4">
+        <p class="bg-primary text-center text-light bg-secondary title">
+          A/C Information
+        </p>
+        <div class="card">
+          <!-- <div class="card-header bg-primary">
+              <h4 class="card-title text-white mb-0">A/C Information</h4>
+            </div> -->
+          <div class="card-body">
+            <div class="form-group row">
+              <label class="col-md-6 col-form-label">Account No. :</label>
+              <div class="col-md-6">
+                <div class="col-form-label">
+                  {{ accountDetailsData.AccountNo }}
+                </div>
+              </div>
+            </div>
+            <div class="form-group row" *ngIf="atyclass1">
+              <label class="col-md-6 col-form-label">Ledger Balance :</label>
+              <div class="col-md-6">
+                <div class="col-form-label">
+                  {{ accountDetailsData.LadgerBalance }}
+                </div>
+              </div>
+            </div>
+            <div class="form-group row" *ngIf="atyclass1">
+              <label class="col-md-6 col-form-label">Hold Balance Dr. :</label>
+              <div class="col-md-6">
+                <div class="col-form-label">
+                  {{ accountDetailsData.HoldBalanceDr }}
+                </div>
+              </div>
+            </div>
+            <div class="form-group row" *ngIf="atyclass1">
+              <label class="col-md-6 col-form-label">Hold Balance Cr. :</label>
+              <div class="col-md-6">
+                <div class="col-form-label">
+                  {{ accountDetailsData.HoldBalanceCr }}
+                </div>
+              </div>
+            </div>
+            <div class="form-group row" *ngIf="atyclass1">
+              <label class="col-md-6 col-form-label">Open Date :</label>
+              <div class="col-md-6">
+                <div class="col-form-label">
+                  {{ accountDetailsData.OpenDate }}
+                </div>
+              </div>
+            </div>
+            <div class="form-group row" *ngIf="atyclass3 || atyclass4">
+              <label class="col-md-6 col-form-label">Loan Expiry Date :</label>
+              <div class="col-md-6">
+                <div class="col-form-label">
+                  {{ accountDetailsData.AccLoanExpiryDate }}
+                </div>
+              </div>
+            </div>
+
+            <div class="form-group row" *ngIf="atyclass1">
+              <label class="col-md-6 col-form-label"
+                >Last Transaction Date :</label
+              >
+              <div class="col-md-6">
+                <div class="col-form-label">
+                  {{ accountDetailsData.LastTrnDate }}
+                </div>
+              </div>
+            </div>
+            <div class="form-group row" *ngIf="atyclass2">
+              <label class="col-md-6 col-form-label">Maturity Date :</label>
+              <div class="col-md-6">
+                <div class="col-form-label">
+                  {{ accountDetailsData.MatruityDate }}
+                </div>
+              </div>
+            </div>
+            <div class="form-group row" *ngIf="atyclass2">
+              <label class="col-md-6 col-form-label">Period(Month) :</label>
+              <div class="col-md-6">
+                <div class="col-form-label">
+                  {{ accountDetailsData.Period }}
+                </div>
+              </div>
+            </div>
+            <div class="form-group row" *ngIf="atyclass2">
+              <label class="col-md-6 col-form-label">Deposit Amt. :</label>
+              <div class="col-md-6">
+                <div class="col-form-label">
+                  {{ accountDetailsData.DepositAmount }}
+                </div>
+              </div>
+            </div>
+            <div class="form-group row" *ngIf="atyclass2">
+              <label class="col-md-6 col-form-label"
+                >Total Deposit Amt. :</label
+              >
+              <div class="col-md-6">
+                <div class="col-form-label">
+                  {{ accountDetailsData.TotalDeposit }}
+                </div>
+              </div>
+            </div>
+            <div class="form-group row" *ngIf="atyclass2">
+              <label class="col-md-6 col-form-label">Upto Deposit Date :</label>
+              <div class="col-md-6">
+                <div class="col-form-label">
+                  {{ accountDetailsData.UptoDepositDate }}
+                </div>
+              </div>
+            </div>
+            <div class="form-group row" *ngIf="atyclass2">
+              <label class="col-md-6 col-form-label"
+                >Upto Deposit Period :</label
+              >
+              <div class="col-md-6">
+                <div class="col-form-label">
+                  {{ accountDetailsData.UptoDepositPeriod }}
+                </div>
+              </div>
+            </div>
+
+            <div
+            class="form-group row"
+            *ngIf="atyclass2 && accountDetailsData.DueDepositAmt != '00.00'"
+          >
+            <label class="col-md-6 col-form-label">Due Deposit Amt.:</label>
+            <div class="col-md-6">
+              <div class="col-form-label">{{ accountDetailsData.DueDepositAmt }}</div>
+            </div>
+          </div>
+          <div
+            class="form-group row"
+            *ngIf="atyclass2 && accountDetailsData.DueDepositAmt != '00.00'"
+          >
+            <label class="col-md-6 col-form-label">No. of Due Period :</label>
+            <div class="col-md-6">
+              <div class="col-form-label">{{ accountDetailsData.DuePeriod }}</div>
+            </div>
+          </div>
+
+            <div class="form-group row" *ngIf="atyclass3 || atyclass4">
+              <label class="col-md-6 col-form-label">Sanction Amount :</label>
+              <div class="col-md-6">
+                <div class="col-form-label">
+                  {{ accountDetailsData.SancAmount }}
+                </div>
+              </div>
+            </div>
+            <div class="form-group row" *ngIf="atyclass4">
+              <label class="col-md-6 col-form-label"
+                >Disbursement Amount :</label
+              >
+              <div class="col-md-6">
+                <div class="col-form-label">
+                  {{ accountDetailsData.DisbAmt }}
+                </div>
+              </div>
+            </div>
+            <div class="form-group row" *ngIf="atyclass3 || atyclass4">
+              <label class="col-md-6 col-form-label">Interest Rate :</label>
+              <div class="col-md-6">
+                <div class="col-form-label">
+                  {{ accountDetailsData.IntRate }}
+                </div>
+              </div>
+            </div>
+            <div class="form-group row" *ngIf="atyclass3">
+              <label class="col-md-6 col-form-label"
+                >Last Int. Post Date :</label
+              >
+              <div class="col-md-6">
+                <div class="col-form-label">0</div>
+              </div>
+            </div>
+            <div class="form-group row" *ngIf="atyclass4">
+              <label class="col-md-6 col-form-label">Installment Amt. :</label>
+              <div class="col-md-6">
+                <div class="col-form-label">
+                  {{ accountDetailsData.InstlAmt }}
+                </div>
+              </div>
+            </div>
+            <div class="form-group row" *ngIf="atyclass4">
+              <label class="col-md-6 col-form-label"
+                >No. of Installment :</label
+              >
+              <div class="col-md-6">
+                <div class="col-form-label">
+                  {{ accountDetailsData.NoInstl }}
+                </div>
+              </div>
+            </div>
+            <div class="form-group row" *ngIf="atyclass4">
+              <label class="col-md-6 col-form-label"
+                >Due Principal Amt. :</label
+              >
+              <div class="col-md-6">
+                <div class="col-form-label">
+                  {{ accountDetailsData.DuePrincAmt }}
+                </div>
+              </div>
+            </div>
+            <div class="form-group row" *ngIf="atyclass3 || atyclass4">
+              <label class="col-md-6 col-form-label">Due Interest Amt. :</label>
+              <div class="col-md-6">
+                <div class="col-form-label">
+                  {{ accountDetailsData.DueIntAmt }}
+                </div>
+              </div>
+            </div>
+            <div class="form-group row" *ngIf="atyclass4">
+              <label class="col-md-6 col-form-label"
+                >No. of Defaulter Period :</label
+              >
+              <div class="col-md-6">
+                <div class="col-form-label">
+                  {{ accountDetailsData.CtrlDuePeriod }}
+                </div>
+              </div>
+            </div>
+            <div class="form-group row" *ngIf="atyclass1">
+              <label class="col-md-6 col-form-label">Lien Amount :</label>
+              <div class="col-md-6">
+                <div class="col-form-label">
+                  {{ accountDetailsData.LienAmt }}
+                </div>
+              </div>
+            </div>
+
+            <div class="form-group row" *ngIf="atyclass1">
+              <label class="col-md-6 col-form-label">Corr. Account No. :</label>
+              <div class="col-md-6">
+                <div class="col-form-label">
+                  {{ accountDetailsData.CorrAccountNo }}
+                </div>
+              </div>
+            </div>
+            <div class="form-group row" *ngIf="atyclass1">
+              <label class="col-md-6 col-form-label"
+                >Corr. Account Balance :</label
+              >
+              <div class="col-md-6">
+                <div class="col-form-label">
+                  {{ accountDetailsData.CorrAccountBalance }}
+                </div>
+              </div>
+            </div>
+            <div class="form-group row" *ngIf="atyclass1">
+              <label class="col-md-6 col-form-label"
+                >Corr. Hold Balance Dr. :</label
+              >
+              <div class="col-md-6">
+                <div class="col-form-label">
+                  {{ accountDetailsData.CorrAccountHoldBalanceDr }}
+                </div>
+              </div>
+            </div>
+            <div class="form-group row" *ngIf="atyclass1">
+              <label class="col-md-6 col-form-label"
+                >Corr. Hold Balance Cr. :</label
+              >
+              <div class="col-md-6">
+                <div class="col-form-label">
+                  {{ accountDetailsData.CorrAccountHoldBalanceCr }}
+                </div>
+              </div>
+            </div>
+            <div class="form-group row" *ngIf="atyclass1">
+              <label class="col-md-6 col-form-label"
+                >Corr. A/C Lien Amount :</label
+              >
+              <div class="col-md-6">
+                <div class="col-form-label">
+                  {{ accountDetailsData.CorrAccountLienAmount }}
+                </div>
+              </div>
+            </div>
+
+            <div class="form-group row">
+              <label class="col-md-6 col-form-label">&nbsp;</label>
+              <div class="col-md-6">
+                <div class="col-form-label"></div>
+              </div>
+            </div>
+            <div class="form-group row">
+              <label class="col-md-6 col-form-label">&nbsp;</label>
+              <div class="col-md-6">
+                <div class="col-form-label"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+</app-accounting-wrapper>

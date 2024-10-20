@@ -1,0 +1,47 @@
+@import url("https://fonts.googleapis.com/css2?family=Passion+One&display=swap");
+#Data {
+  font-family: Arial, Helvetica, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+}
+.iframeStyle {
+  height: 1500px;
+  width: 100%;
+  z-index: 20;
+  position: relative;
+  margin-top: 50px;
+  border: 0;
+}
+
+.holds-the-iframe {
+  background: url(src\assets\images\loader.gif) top center no-repeat;
+}
+
+.deposit-account-list-header {
+  color: White;
+  background-color: #000084;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+.gl-help-list-link {
+  color: blue;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.member-no {
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.btn{
+  padding: 2px 25px !important;
+}
+
+.card-body {
+  padding-top: 2px !important;
+  padding-bottom: 0px !important;
+}
+.first__part {
+  border: none !important;
+}

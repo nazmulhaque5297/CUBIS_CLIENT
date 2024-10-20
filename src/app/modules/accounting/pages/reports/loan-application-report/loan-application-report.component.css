@@ -1,0 +1,20 @@
+.title {
+  background: #6C757D !important;
+  color: #fff;
+  font-weight: 600;
+  padding: 2px;
+  }
+
+  .iframeStyle {
+    height: 1500px;
+    width: 100%;
+    z-index: 20;
+    position: relative;
+    margin-top: 50px;
+    border: 0;
+  }
+  
+  .holds-the-iframe {
+    background: url(src\assets\images\loader.gif) top center no-repeat;
+  }
+  

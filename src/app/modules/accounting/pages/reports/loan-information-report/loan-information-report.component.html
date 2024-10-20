@@ -1,0 +1,71 @@
+<app-main-wrapper [module]="module">
+  <form
+    [formGroup]="loanInfoReportForm"
+    class="mx-auto mt-1 mt-5 border col-md-7 main-container"
+  >
+    <p class="mt-1 bg-dark title">Member Loan Information's Report</p>
+
+    <div class="form-group row">
+      <label class="col-md-3 col-form-label">Member No:</label>
+      <div class="col-md-4">
+        <input
+          type="text"
+          class="form-control"
+          id="MemNumber"
+          formControlName="MemNo"
+          name="MemNumber"
+          (focusout)="onChangeMemNo($event)"
+        />
+      </div>
+    </div>
+    <div class="form-group row">
+      <label class="col-md-3 col-form-label">Member Name:</label>
+      <div class="col-md-4">
+        <input
+          type="text"
+          formControlName="MemName"
+          class="form-control"
+          disabled="true"
+        />
+      </div>
+    </div>
+
+    <div class="form-group row" hidden="true">
+      <label for="blankCheckbox" class="col-sm-3 col-form-label"
+        >Old Member :</label
+      >
+      <div class="col-md-3">
+        <input
+          class="form-check-input position-static ml-1 checkbox"
+          type="checkbox"
+          id="blankCheckbox"
+          formControlName="IsOldMem"
+        />
+      </div>
+
+      <label class="col-md-2 col-form-label" *ngIf="false">Branch No:</label>
+      <div class="col-md-4" *ngIf="false">
+        <select class="form-control" formControlName="BranchNo">
+          <option value="0">-Select-</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="buttons">
+      <button
+        type="button"
+        class="btn btn-info ml-2"
+        (click)="getReportToken('CRV')"
+      >
+        Preview
+      </button>
+      <button
+        type="button"
+        class="btn btn-success ml-2"
+        (click)="getReportToken('PDF')"
+      >
+        Print
+      </button>
+    </div>
+  </form>
+</app-main-wrapper>

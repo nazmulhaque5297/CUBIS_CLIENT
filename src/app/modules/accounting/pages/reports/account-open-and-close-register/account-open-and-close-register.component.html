@@ -1,0 +1,228 @@
+<app-accounting-wrapper>
+  <form [formGroup]="AccountOpenCloseForm" class="mx-auto border col-md-9">
+    <p class="bg-dark title">A/C's Open Close Register</p>
+    <div class="form-group row">
+      <div class="col-md-1 col-form-label"></div>
+      <label class="col-md-3 col-form-label">Account Type </label>
+      <div class="col-md-2">
+        <input
+          appOnlyNumber
+          type="text"
+          class="form-control"
+          id="AccountTypeInput"
+          formControlName="AccountTypeInput"
+          name="AccountTypeInput"
+          (focusout)="AccountCodeChange()"
+        />
+      </div>
+      <div class="col-md-5">
+        <select
+          class="form-control pt-0"
+          formControlName="AllAccDdl"
+          (change)="AccountChange()"
+        >
+          <option value="0">-Select-</option>
+          <option
+            *ngFor="let item of pageLoadModel.AllAccountDropdown"
+            [value]="item.Id"
+          >
+            {{ item.Description }}
+          </option>
+        </select>
+      </div>
+    </div>
+
+    <div class="form-group row">
+      <div class="col-md-1 col-form-label">
+        <input
+          class="form-check-input ml-1 checkbox"
+          style="margin: 0.8rem"
+          type="checkbox"
+          id="CollectorChb"
+          value="0"
+          formControlName="CollectorChb"
+          (change)="ChbForCollector()"
+        />
+      </div>
+      <label class="col-md-3 col-form-label" for="CollectorChb" >All Collector Code </label>
+      <div class="col-md-2">
+        <input
+          type="text"
+          class="form-control"
+          id="AllCollectorCodeInput"
+          formControlName="AllCollectorCodeInput"
+          name="AllCollectorCodeInput"
+          (focusout)="CollectorCodeChange()"
+          [attr.disabled]="AccountOpenCloseForm.value.CollectorChb ? '' : null"
+        />
+      </div>
+      <div class="col-md-5">
+        <select
+          class="form-control pt-0"
+          formControlName="AllCollectorDdl"
+          (change)="CollectorDdlChange()"
+        >
+          <option value="0">-Select-</option>
+          <option
+            *ngFor="let item of pageLoadModel.AllCollectorCodeDropdown"
+            [value]="item.Id"
+          >
+            {{ item.Description }}
+          </option>
+        </select>
+      </div>
+    </div>
+
+    <div class="form-group row">
+      <div class="col-md-1 col-form-label">
+        <input
+          class="form-check-input ml-1 checkbox"
+          style="margin: 0.8rem"
+          type="checkbox"
+          id="GroupChb"
+          value="0"
+          formControlName="GroupChb"
+          (change)="ChbForGroupCode()"
+        />
+      </div>
+      <label class="col-md-3 col-form-label" for="GroupChb" >All Group Code </label>
+      <div class="col-md-2">
+        <input
+          appOnlyNumber
+          type="text"
+          class="form-control"
+          id="AllGroupCodeInput"
+          formControlName="AllGroupCodeInput"
+          name="AllGroupCodeInput"
+          (focusout)="GroupCodeChange()"
+          [attr.disabled]="AccountOpenCloseForm.value.GroupChb ? '' : null"
+        />
+      </div>
+      <div class="col-md-5">
+        <select
+          class="form-control pt-0"
+          formControlName="AllGroupDdl"
+          (change)="GroupDdlChange()"
+        >
+          <option value="0">-Select-</option>
+          <option
+            *ngFor="let item of pageLoadModel.AllGroupCodeDropdown"
+            [value]="item.Id"
+          >
+            {{ item.Description }}
+          </option>
+        </select>
+      </div>
+    </div>
+
+    <div class="form-group row">
+      <div class="col-md-1 col-form-label">
+        <input
+          class="form-check-input ml-1 checkbox"
+          style="margin: 0.8rem"
+          type="checkbox"
+          id="GenderChb"
+          value="0"
+          formControlName="GenderChb"
+          (change)="ChbForGender()"
+        />
+      </div>
+      <label class="col-md-3 col-form-label" for="GenderChb" >All Gender </label>
+      <div class="col-md-2">
+        <select
+          class="form-control pt-0"
+          formControlName="AllGenderDdl"
+          (change)="GenderDdlChange()"
+        >
+          <option value="0">-Select-</option>
+          <option
+            *ngFor="let item of pageLoadModel.AllGenderDropdown"
+            [value]="item.Id"
+          >
+            {{ item.Description }}
+          </option>
+        </select>
+      </div>
+    </div>
+
+    <div class="form-group row">
+      <div class="col-md-1"></div>
+      <label class="col-md-3 col-form-label">From Date </label>
+      <div class="col-md-2">
+        <input
+          id="dateFormat"
+          type="text"
+          class="form-control"
+          bsDatepicker
+          formControlName="IssueFromDate"
+          [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY' }"
+          autocomplete="off"
+          (ngModelChange)="applicationDateChange()"
+        />
+      </div>
+      <label class="col-md-1col-form-label">To Date </label>
+      <div class="col-md-2">
+        <input
+          id="dateFormat"
+          type="text"
+          class="form-control"
+          bsDatepicker
+          formControlName="IssueToDate"
+          [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY' }"
+          autocomplete="off"
+          (ngModelChange)="applicationDateChange2()"
+        />
+      </div>
+      <div class="col-md-1">
+        <input
+          class="form-check-input ml-1 checkbox"
+          style="margin: 0.8rem"
+          type="checkbox"
+          id="ByDate"
+          value="1"
+          formControlName="ByDate"
+        />
+      </div>
+      <label class="col-md-2 col-form-label" for="ByDate" >By Date</label>
+    </div>
+
+    <div class="form-group row">
+      <div class="col-md-4"></div>
+      <div class="col-md-1">
+        <input
+          checked
+          type="radio"
+          value="0"
+          id="InfoModeRb0"
+          name="InfoModeRb"
+          formControlName="InfoModeRb"
+        />
+      </div>
+      <label class="col-md-3 col-form-label" for="InfoModeRb0" >Open Information</label>
+    </div>
+
+    <div class="form-group row">
+      <div class="col-md-4"></div>
+      <div class="col-md-1 col-form-label">
+        <input
+          type="radio"
+          value="1"
+          id="InfoModeRb1"
+          name="InfoModeRb"
+          formControlName="InfoModeRb"
+        />
+      </div>
+
+      <label class="col-md-3 col-form-label mt-2" for="InfoModeRb1" >Close Information</label>
+    </div>
+
+    <div class="buttons">
+      <button type="button" class="btn btn-info ml-2" (click)="getReportToken('CRV')">
+        Preview
+      </button>
+      <button type="button" class="btn btn-success ml-2" (click)="getReportToken('PDF')">
+        Print
+      </button>
+    </div>
+  </form>
+</app-accounting-wrapper>

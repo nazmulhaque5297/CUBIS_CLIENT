@@ -1,0 +1,55 @@
+<app-accounting-wrapper [formGroup]="MemberSignatureAuthorizationForm" >
+    <div   
+      class="mx-auto border col-md-7"
+    >
+      <p class="bg-dark title">Signature/Signature Image Authorization</p>
+      <div class="form-row">
+        <label for="MemNo" class="col-md-3">Member No:</label>
+        <div class="pl-2 form-group col-md-4">
+          <input
+            type="text"
+            formControlName="MemNo"
+            class="form-control"
+            id="MemNo"
+            (change)="GetMemInformation()"
+          />
+        </div>
+        <label *ngFor="let item of memInfo">{{ item.MemName }}</label>
+      </div>
+  
+      <div class="form-row">
+        <label class="col-md-3">Upload a Photo:</label>
+        <div class="pl-2 form-group col-md-7">
+          <input type="file" (change)="selectFile($event)" />
+
+          <button *ngIf="showUpdate && fileHere" type="button" class="btn my-3" (click)="updateBtnClick()">
+            Update Card
+          </button>
+        </div>
+      </div>
+      <div class="img__show"><img [src]="url" *ngIf="url" /></div>
+    </div>
+    <div class="mx-auto mt-3 border col-md-7 pb-3">
+      <div class="form-row">
+        <label class="col-md-3">Signature Image File Format : </label>
+        <p>S201.JPG (Example : S = Signature, 201 = Member No.)</p>
+      </div>
+      <div class="form-row">
+          <label  class="col-md-3">Signature Image Folder :</label>
+          <div class="pl-2 form-group col-md-4">
+            <input
+              type="text"
+              formControlName="FolderPath"
+              class="form-control"
+              id="folder"
+            />
+          </div>
+        </div>
+        <div class="col-md-7 mx-auto mt-2">
+          <button type="button" class="btn ml-4" (click)="submitBtnClick()">
+            Update All Signature
+          </button>
+        </div>
+    </div>
+  </app-accounting-wrapper>
+  

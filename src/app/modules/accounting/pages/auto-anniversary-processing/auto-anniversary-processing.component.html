@@ -1,0 +1,103 @@
+<app-accounting-wrapper>
+  <form [formGroup]="AutoAnniversaryProcessForm">
+    <div class="mx-auto border col-md-6">
+      <p class="mt-1 bg-dark title">Auto Anniversary Processing</p>
+      <div class="form-row">
+        <label class="col-md-2 col-form-label"
+          >Account Type:<span class="text-danger">*</span></label
+        >
+        <div class="form-group col-md-7">
+          <select
+            formControlName="SelectedAccountType"
+            (change)="selectAccountTypeChangeHandler($event)"
+            class="form-control pt-0"
+          >
+            <option value="0">-Select-</option>
+            <option *ngFor="let item of accTypeList" [value]="item.Id">
+              {{ item.Description }}
+            </option>
+          </select>
+        </div>
+      </div>
+
+      <div class="form-row">
+        <label class="col-md-2 col-form-label">Voucher No:</label>
+        <div class="form-group col-md-7">
+          <input
+            type="text"
+            class="form-control"
+            id="VoucherNo"
+            formControlName="VoucherNo"
+            name="VoucherNo"
+          />
+        </div>
+      </div>
+
+      <div class="buttons col-md-11">
+        <button
+          type="button"
+          class="btn btn-success"
+          id="btn1"
+          *ngIf="accInfoList.ShowCalculateBtn"
+          (click)="Calculate()"
+        >
+          Calculate
+        </button>
+        <button
+          type="button"
+          class="btn btn-info"
+          id="btn1"
+          *ngIf="accInfoList.ShowPostBtn"
+          (click)="Post()"
+        >
+          Post
+        </button>
+        <button
+          type="button"
+          class="btn btn-danger"
+          id="btn1"
+          *ngIf="accInfoList.ShowReverseBtn"
+          (click)="Reverse()"
+        >
+          Reverse
+        </button>
+        <button
+          type="button"
+          class="btn btn-primary"
+          id="btn2"
+          *ngIf="accInfoList.ShowPrintBtn"
+          (click)="getReportToken()"
+        >
+          Print
+        </button>
+      </div>
+    </div>
+  </form>
+  <div
+    *ngIf="accInfoList?.MemberList?.length > 0"
+    class="mx-auto mt-1 col-md-8 set-height"
+  >
+    <table id="Data">
+      <tr>
+        <th>Memno</th>
+        <th>Name</th>
+        <th>AccType</th>
+        <th>AccNo</th>
+        <th>FD Amount</th>
+        <th>Rate</th>
+        <th>Days</th>
+        <th>Interest</th>
+      </tr>
+      <tr *ngFor="let item of accInfoList?.MemberList">
+        <td>{{ item.MemNo }}</td>
+        <td>{{ item.MemName }}</td>
+        <td>{{ item.AccType }}</td>
+        <td>{{ item.AccNo }}</td>
+        <td>{{ item.FDAmount }}</td>
+        <td>{{ item.AccIntRate }}</td>
+        <td>{{ item.NoDays }}</td>
+        <td>{{ item.CalInterest }}</td>
+      </tr>
+    </table>
+  </div>
+</app-accounting-wrapper>

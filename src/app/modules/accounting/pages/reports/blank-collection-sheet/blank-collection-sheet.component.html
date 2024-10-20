@@ -1,0 +1,95 @@
+<app-accounting-wrapper>
+  <form
+    [formGroup]="BlankCollectionForm"
+    class="mx-auto mt-1 mt-5 border col-md-7 main-container"
+  >
+    <p class="mt-1 bg-dark title">Blank Collection Sheet Report</p>
+    <div class="form-group row">
+      <label class="col-md-3 col-form-label">Account Type </label>
+      <div class="col-md-6">
+        <select
+          class="form-control pt-0"
+          formControlName="AllAccDdl"
+          (change)="AccChange()"
+        >
+          <option value="0">-Select-</option>
+          <option
+            *ngFor="let item of pageLoadModel.AllAccountDropdown"
+            [value]="item.Id"
+          >
+            {{ item.Description }}
+          </option>
+        </select>
+      </div>
+    </div>
+
+    <div class="form-group row">
+      <label class="col-md-3 col-form-label">Group </label>
+      <div class="col-md-2">
+        <input
+          appOnlyNumber
+          type="text"
+          class="form-control"
+          id="GroupTypeInput"
+          formControlName="GroupTypeInput"
+          name="GroupTypeInput"
+          (change)="GroupInputCode()"
+        />
+      </div>
+      <div class="col-md-4">
+        <select
+          class="form-control pt-0"
+          formControlName="GroupDdl"
+          (change)="GroupDDlChange()"
+        >
+          <option value="0">-Select-</option>
+          <option
+            *ngFor="let item of pageLoadModel.AllGroupDropdown"
+            [value]="item.Id"
+          >
+            {{ item.Description }}
+          </option>
+        </select>
+      </div>
+    </div>
+
+    <div class="form-group row" *ngIf="RbButtonshow">
+      <label class="col-md-3 col-form-label">Period </label>
+
+      <div class="col-md-1">
+        <input
+          checked
+          type="radio"
+          value="1"
+          name="CustomerServiceRb"
+          formControlName="CustomerServiceRb"
+          (click)="rb1Checked()"
+        />
+      </div>
+
+      <label class="col-md-3 col-form-label">1-15 Days</label>
+
+      <div class="col-md-1">
+        <input
+          type="radio"
+          value="0"
+          name="CustomerServiceRb"
+          formControlName="CustomerServiceRb"
+          (click)="rb2Checked()"
+        />
+      </div>
+
+      <label class="col-md-3 col-form-label">16-31 Days</label>
+    </div>
+
+    
+<div class="buttons">
+  <button type="button" class="btn btn-info ml-2" (click)="getReportToken('CRV')">
+    Preview
+  </button>
+  <button type="button" class="btn btn-success ml-2" (click)="getReportToken('PDF')">
+    Print
+  </button>
+</div>
+  </form>
+</app-accounting-wrapper>

@@ -1,0 +1,384 @@
+<app-accounting-wrapper>
+  <form [formGroup]="setupForm" novalidate class="form-horizontal">
+    <div class="row">
+      <div class="col-xl-8 col-md-8 mx-auto">
+        <p class="bg-primary text-center text-light bg-secondary title">
+          Account Balance Transfer From..........
+        </p>
+        <div class="card">
+          <div class="card-body">
+            <div class="form-group row">
+              <label class="col-md-3 col-form-label"
+                >Member No:<span class="text-danger">*</span></label
+              >
+              <div class="form-group col-md-2">
+                <input
+                  type="text"
+                  class="form-control"
+                  (change)="onFromMemberChange(setupForm.value.FromMemberNo)"
+                  (keydown)="onEnterFromMemberNoHandler($event)"
+                  formControlName="FromMemberNo"
+                />
+              </div>
+
+              <div class="col-md-3 ml-3">
+                {{ fromMemberDetails.Member?.MemberName }}
+              </div>
+            </div>
+
+            <div class="form-group row">
+              <label class="col-md-3 col-form-label"
+                >A/C Type:<span class="text-danger">*</span></label
+              >
+              <div class="form-group col-md-2">
+                <input
+                  type="text"
+                  class="form-control"
+                  disabled
+                  formControlName="FromAccountTypeCode"
+                />
+              </div>
+              <div class="col-md-3">
+                <select
+                  id="FromAccountTypeId"
+                  formControlName="FromAccountTypeId"
+                  class="form-control pt-0"
+                  (change)="onFromTypeChange(setupForm.value.FromAccountTypeId)"
+                >
+                  <option value="">-Select-</option>
+                  <option
+                    *ngFor="let item of fromAccountTypeList"
+                    [value]="item.Id"
+                  >
+                    {{ item.Description }}
+                  </option>
+                </select>
+              </div>
+            </div>
+
+            <!-- <div class="form-group row">
+              <label class="col-md-3 col-form-label">Account No:</label>
+              <div class="form-group col-md-5">
+                <div class="form-control mt-0 pt-0">
+                  {{ fromMemberDetails.AccountNo }}
+                </div>
+              </div>
+            </div> -->
+
+            <div class="form-group row">
+              <label class="col-md-3 col-form-label">Account No:</label>
+              <div
+                *ngIf="fromMemberDetails?.AccList?.length <= 1"
+                class="form-group col-md-5"
+              >
+                <input
+                  type="text"
+                  class="form-control"
+                  id="FromAccountNo"
+                  formControlName="FromAccountNo"
+                  name="FromAccountNo"
+                  disabled
+                />
+              </div>
+
+              <div
+                *ngIf="fromMemberDetails?.AccList?.length > 1"
+                class="form-group col-md-5"
+              >
+                <select
+                  formControlName="FromAccountNo"
+                  class="form-control"
+                  (change)="AccountNoChangeHandler($event)"
+                >
+                  <option value="0">-Select-</option>
+                  <option
+                    *ngFor="let item of fromMemberDetails.AccList"
+                    [value]="item"
+                  >
+                    {{ item }}
+                  </option>
+                </select>
+              </div>
+            </div>
+
+            <div class="form-group row">
+              <label class="col-md-3 col-form-label">Balance:</label>
+              <div class="form-group col-md-5">
+                <div class="form-control mt-0 pt-0">
+                  {{ fromMemberDetails.Balance }}
+                </div>
+              </div>
+            </div>
+
+            <div
+              class="form-group row"
+              *ngIf="fromMemberDetails.AccHoldBalanceDr > 0"
+            >
+              <label class="col-md-3 col-form-label">Hold Balance Dr.:</label>
+              <div class="form-group col-md-5">
+                <div class="form-control mt-0 pt-0">
+                  {{ fromMemberDetails.AccHoldBalanceDr }}
+                </div>
+              </div>
+            </div>
+            <div
+              class="form-group row"
+              *ngIf="fromMemberDetails.AccHoldBalanceCr > 0"
+            >
+              <label class="col-md-3 col-form-label">Hold Balance Cr.:</label>
+              <div class="form-group col-md-5">
+                <div class="form-control mt-0 pt-0">
+                  {{ fromMemberDetails.AccHoldBalanceCr }}
+                </div>
+              </div>
+            </div>
+            <div
+              class="form-group row"
+              *ngIf="fromMemberDetails.LienAmount > 0"
+            >
+              <label class="col-md-3 col-form-label">Lien Amount:</label>
+              <div class="form-group col-md-5">
+                <div class="form-control mt-0 pt-0">
+                  {{ fromMemberDetails.LienAmount }}
+                </div>
+              </div>
+            </div>
+
+            <div
+              class="form-group row"
+              *ngIf="fromMemberDetails.LimitAmount > 0"
+            >
+              <label class="col-md-3 col-form-label">Limit Balance:</label>
+              <div class="form-group col-md-5">
+                <div class="form-control mt-0 pt-0">
+                  {{ fromMemberDetails.LimitAmount }}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-xl-8 col-md-8 mx-auto">
+        <p class="bg-primary text-center text-light bg-secondary title">
+          Account Balance Transfer To..............
+        </p>
+        <div class="card">
+          <!-- <div class="card-header bg-primary">
+                    <h6 class="card-title text-white mb-0">
+                        Account Balance Transfer To..............
+                      </h6>
+                </div> -->
+          <div class="card-body">
+            <div class="form-group row">
+              <label class="col-md-3 col-form-label"
+                >Member No:<span class="text-danger">*</span></label
+              >
+              <div class="form-group col-md-2">
+                <input
+                  type="text"
+                  class="form-control"
+                  (change)="onToMemberChange(setupForm.value.ToMemberNo)"
+                  formControlName="ToMemberNo"
+                  id="ToMemberNo"
+                />
+              </div>
+              <div class="col-md-3 mt-0 pt-0">
+                {{ toMemberDetails.Member?.MemberName }}
+              </div>
+            </div>
+
+            <div class="form-group row">
+              <label class="col-md-3 col-form-label"
+                >A/C Type:<span class="text-danger">*</span></label
+              >
+              <div class="form-group col-md-2">
+                <input
+                  type="text"
+                  class="form-control"
+                  disabled
+                  formControlName="ToAccountTypeCode"
+                />
+              </div>
+              <div class="col-md-3">
+                <select
+                  formControlName="ToAccountTypeId"
+                  id="ToAccountTypeId"
+                  class="form-control pt-0"
+                  (change)="onToTypeChange(setupForm.value.ToAccountTypeId)"
+                >
+                  <option value="">-Select-</option>
+                  <option
+                    *ngFor="let item of toAccountTypeList"
+                    [value]="item.Id"
+                  >
+                    {{ item.Description }}
+                  </option>
+                </select>
+              </div>
+            </div>
+
+            <!-- <div class="form-group row">
+              <label class="col-md-3 col-form-label">Account No:</label>
+              <div class="form-group col-md-5">
+                <div class="form-control mt-0 pt-0">
+                  {{ toMemberDetails.AccountNo }}
+                </div>
+              </div>
+            </div> -->
+
+            <div class="form-group row">
+              <label class="col-md-3 col-form-label">Account No:</label>
+              <div
+                *ngIf="toMemberDetails?.AccList?.length <= 1"
+                class="form-group col-md-5"
+              >
+                <input
+                  type="text"
+                  class="form-control"
+                  id="ToAccountNo"
+                  formControlName="ToAccountNo"
+                  name="ToAccountNo"
+                  disabled
+                />
+              </div>
+
+              <div
+                *ngIf="toMemberDetails?.AccList?.length > 1"
+                class="form-group col-md-5"
+              >
+                <select
+                  formControlName="ToAccountNo"
+                  class="form-control"
+                  (change)="ToAccountNoChangeHandler($event)"
+                >
+                  <option value="0">-Select-</option>
+                  <option
+                    *ngFor="let item of toMemberDetails.AccList"
+                    [value]="item"
+                  >
+                    {{ item }}
+                  </option>
+                </select>
+              </div>
+            </div>
+
+            <div class="form-group row">
+              <label class="col-md-3 col-form-label">Balance:</label>
+              <div class="form-group col-md-5">
+                <div class="form-control mt-0 pt-0">
+                  {{ toMemberDetails.Balance }}
+                </div>
+              </div>
+            </div>
+
+            <div class="form-group row">
+              <label class="col-md-3 col-form-label"
+                >Vch. No.: <span class="text-danger">*</span></label
+              >
+              <div class="form-group col-md-5">
+                <input
+                  type="text"
+                  class="form-control"
+                  formControlName="VoucherNo"
+                  id="VoucherNo"
+                  (keydown)="onEnterVoucherNoHandler($event)"
+                />
+              </div>
+            </div>
+
+            <div class="form-group row" *ngIf="toMemberDetails.ShowLoanPanel">
+              <label class="col-md-3 col-form-label">Interest Amount:</label>
+              <div class="form-group col-md-5">
+                <input
+                  appOnlyNumber
+                  type="text"
+                  class="form-control"
+                  (change)="
+                    calculateTransAmount(
+                      setupForm.value.InterestAmount,
+                      setupForm.value.PrincipleAmount
+                    )
+                  "
+                  formControlName="InterestAmount"
+                />
+              </div>
+            </div>
+
+            <div class="form-group row" *ngIf="toMemberDetails.ShowLoanPanel">
+              <label class="col-md-3 col-form-label">Principal Amount :</label>
+              <div class="form-group col-md-5">
+                <input
+                  appOnlyNumber
+                  type="text"
+                  class="form-control"
+                  (change)="
+                    calculateTransAmount(
+                      setupForm.value.InterestAmount,
+                      setupForm.value.PrincipleAmount
+                    )
+                  "
+                  formControlName="PrincipleAmount"
+                />
+              </div>
+            </div>
+
+            <div class="form-group row">
+              <label class="col-md-3 col-form-label"
+                >Transaction Amount :<span class="text-danger">*</span></label
+              >
+              <div class="form-group col-md-5">
+                <input
+                  appOnlyNumber
+                  type="text"
+                  class="form-control"
+                  formControlName="TransactionAmount"
+                  id="TransactionAmount"
+                  (keydown)="onEnterTransactionAmountHandler($event)"
+                />
+              </div>
+            </div>
+
+            <div class="form-group row">
+              <label class="col-md-3 col-form-label"
+                >From Description :<span class="text-danger">*</span></label
+              >
+              <div class="form-group col-md-5">
+                <input
+                  type="text"
+                  class="form-control"
+                  formControlName="FromDescription"
+                  id="FromDescription"
+                  (keydown)="onEnterFromDescriptionHandler($event)"
+                />
+              </div>
+            </div>
+
+            <div class="form-group row">
+              <label class="col-md-3 col-form-label"
+                >To Description :<span class="text-danger">*</span></label
+              >
+              <div class="form-group col-md-5">
+                <input
+                  type="text"
+                  class="form-control"
+                  formControlName="ToDescription"
+                  id="ToDescription"
+                />
+              </div>
+            </div>
+
+            <div class="col-md-6 mx-auto">
+              <button
+                type="button"
+                (click)="onSubmit()"
+                class="btn btn-success"
+              >
+                Transfer
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+</app-accounting-wrapper>

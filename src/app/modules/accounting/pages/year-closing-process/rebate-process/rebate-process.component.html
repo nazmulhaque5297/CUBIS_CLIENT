@@ -1,0 +1,214 @@
+<app-accounting-wrapper>
+  <form [formGroup]="setupForm" novalidate class="form-horizontal">
+    <div class="row">
+      <div class="col-xl-8 col-md-8">
+        <p class="bg-primary text-center text-light bg-secondary title">
+          Rebate Calculation
+        </p>
+        <div class="card">
+          <!-- <div class="card-header bg-primary">
+              <h4 class="card-title text-white mb-0">
+                Rebate Calculation
+              </h4>
+            </div> -->
+          <div class="card-body">
+            <div class="form-group row">
+              <label class="col-md-3 col-form-label">Branch:</label>
+              <div class="form-group col-md-2">
+                <input
+                  type="text"
+                  class="form-control"
+                  disabled
+                  formControlName="BranchCode"
+                />
+              </div>
+              <div class="col-md-5">
+                <select
+                  formControlName="BranchId"
+                  class="form-control pt-0"
+                  (change)="onBranchChange(setupForm.value.BranchId)"
+                >
+                  <option value="">All</option>
+                  <option *ngFor="let item of branchList" [value]="item.Id">
+                    {{ item.Description }}
+                  </option>
+                </select>
+              </div>
+            </div>
+            <div class="form-group row">
+              <label class="col-md-3 col-form-label"
+                >A/C Type:<span class="text-danger">*</span></label
+              >
+              <div class="form-group col-md-2">
+                <input
+                  type="text"
+                  class="form-control"
+                  disabled
+                  formControlName="AccountTypeCode"
+                />
+              </div>
+              <div class="col-md-5">
+                <select
+                  formControlName="AccountTypeId"
+                  class="form-control pt-0"
+                  (change)="onTypeChange(setupForm.value.AccountTypeId)"
+                >
+                  <option value="">-Select-</option>
+                  <option
+                    *ngFor="let item of accountTypeList"
+                    [value]="item.Id"
+                  >
+                    {{ item.Description }}
+                  </option>
+                </select>
+              </div>
+            </div>
+
+            <div class="form-group row">
+              <div class="col-md-3"></div>
+              <div class="col-md-7 cal-period">
+                <span *ngIf="interestDetailsData.CalculationPeriod != null"
+                  >Rebate {{ interestDetailsData.CalculationPeriod }}</span
+                >
+                <span
+                  class="regular-text"
+                  *ngIf="
+                    interestDetailsData.CalculationPeriod != null &&
+                    setupForm.value.DividendTypeId == 3
+                  "
+                  >REGULAR</span
+                >
+              </div>
+            </div>
+
+            <div class="form-group row">
+              <label class="col-md-3 col-form-label">GL Debit Code:</label>
+              <div class="form-group col-md-2">
+                <div class="mt-0 pt-0 form-control">
+                  {{ interestDetailsData.RebateGlDrCode }}
+                </div>
+              </div>
+              <div class="form-group col-md-5">
+                <div class="mt-0 pt-0 form-control">
+                  {{ interestDetailsData.RebateGlDrDesc }}
+                </div>
+              </div>
+            </div>
+
+            <div class="form-group row">
+              <label class="col-md-3 col-form-label">GL Credit Code:</label>
+              <div class="form-group col-md-2">
+                <div class="mt-0 pt-0 form-control">
+                  {{ interestDetailsData.RebateGlCrCode }}
+                </div>
+              </div>
+              <div class="form-group col-md-5">
+                <div class="mt-0 pt-0 form-control">
+                  {{ interestDetailsData.RebateGlCrDesc }}
+                </div>
+              </div>
+            </div>
+            <div class="form-group row">
+              <label class="col-md-3 col-form-label"
+                >Target Account Type:</label
+              >
+              <div class="form-group col-md-2">
+                <div class="mt-0 pt-0 form-control">
+                  {{ interestDetailsData.TargetAccType }}
+                </div>
+              </div>
+              <div class="form-group col-md-6"></div>
+            </div>
+
+            <div class="form-group row">
+              <label class="col-md-3 col-form-label">Input Voucher No.:</label>
+              <div class="form-group col-md-7">
+                <input
+                  maxlength="10"
+                  type="text"
+                  formControlName="VoucherNo"
+                  class="form-control mt-0 pt-0"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-xl-4 col-md-4 set-height">
+        <h5>Calculation Status</h5>
+        <table id="Data">
+          <tr>
+            <th>Branch</th>
+            <th>Cal Status</th>
+            <th>Date</th>
+            <th>IntPostFlag</th>
+          </tr>
+          <tr *ngFor="let n of calculationStatusList">
+            <td>{{ n.BranchNo }}</td>
+            <td>{{ n.CalStatus }}</td>
+            <td>{{ n.CalculationDate }}</td>
+            <td>{{ n.IntPostFlag }}</td>
+          </tr>
+        </table>
+      </div>
+    </div>
+
+    <div class="buttons mt-2">
+      <button type="button" (click)="onCalculation()" class="btn btn-success">
+        Calculation
+      </button>
+      <button
+        type="button"
+        (click)="setParameter1()"
+        class="btn btn-primary"
+        style="margin-left: 20px"
+      >
+        View
+      </button>
+      <button
+        type="button"
+        (click)="onPost()"
+        class="btn btn-info"
+        style="margin-left: 20px"
+      >
+        Post
+      </button>
+      <button
+        type="button"
+        (click)="onReversePost()"
+        class="btn btn-danger"
+        style="margin-left: 20px"
+      >
+        Post - Reverse
+      </button>
+      <button
+        type="button"
+        (click)="onVerifyList()"
+        class="btn btn-success"
+        style="margin-left: 20px"
+      >
+        Verify Calculation
+      </button>
+    </div>
+    <br />
+    <div class="row">
+      <div class="col-md-12 set-height">
+        <h5 class="text-center">List of Account Without Target Account</h5>
+        <table id="Data">
+          <tr>
+            <th>Branch</th>
+            <th>MemType</th>
+            <th>MemNo</th>
+            <th>AccNo</th>
+          </tr>
+          <tr *ngFor="let n of targetAccountList">
+            <td>{{ n.BranchNo }}</td>
+            <td>{{ n.MemType }}</td>
+            <td>{{ n.MemNo }}</td>
+            <td>{{ n.AccNo }}</td>
+          </tr>
+        </table>
+      </div>
+    </div>
+  </form>
+</app-accounting-wrapper>

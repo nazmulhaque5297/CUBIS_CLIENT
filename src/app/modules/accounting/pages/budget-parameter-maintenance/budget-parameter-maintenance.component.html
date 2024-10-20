@@ -1,0 +1,189 @@
+<app-accounting-wrapper>
+    <form [formGroup]='BudgetParameterForm'>
+        <div class="mx-auto border col-md-7">
+            <div class="bg-dark title row-md-12 d-flex">
+                <div class="col-md-9">Budget Parameter Maintenance</div>
+                <div class="col-md-3 d-flex">Budget Year: {{loadData.BudgetYear}}</div>
+            </div>
+            <div class="form-row ml-4  mt-2">
+                <label class="col-md-3" class="col-md-1">GL Code:</label>
+                <div class="form-group ml-3 pl-3 col-md-2 mt-0 pt-0">
+                    <input appOnlyNumberWithoutDecimal type="text" formControlName="GlCode" (change)="selectChangeHandler($event)" (keydown)="onEnterGlCodeHandler($event)"  class="form-control mt-0 pt-0">
+                </div>
+                <div class="form-group col-md-8">
+                    <select class="form-control  mt-0 pt-0" formControlName="GlCodeDesc" (change)="selectChangeHandler($event)" >
+                        <option value="0" class="mt-0 pt-0">-Select-</option>
+                        <option *ngFor="let item of loadData.AccTypeList" [value]="item.AccTypeCode"  class="mt-0 pt-0"> {{item.AccTypeDescription}}
+                        </option>
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div class="mx-auto mt-1 border col-md-7 p-0 fix-height">
+            <table id="Data">
+                <tr>
+                    <td>Budget Amount[DR.]</td>
+                    <td>
+                        <input appOnlyNumber type="text" class="form-control mt-0 pt-0" (change)="changeBgtAmtDr()" (keydown)="onEnterBgtAmtDrHandler($event)"  id="BgtAmtDr" formControlName="BgtAmtDr">
+                    </td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>Budget Amount[CR.]</td>
+                    <td>
+                        <input appOnlyNumber type="text" class="form-control mt-0 pt-0" (change)="changeBgtAmtCr()" id="BgtAmtCr" formControlName="BgtAmtCr">
+                    </td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>Yearly Forecast</td>
+                    <td>Debit</td>
+                    <td>Credit</td>
+                </tr>
+                <tr>
+                    <td>{{loadData.July}}</td>
+                    <td>
+                        <input type="text" class="form-control mt-0 pt-0" readonly formControlName="JulyDr">
+                    </td>
+                    <td>
+                        <input type="text" class="form-control mt-0 pt-0" readonly formControlName="JulyCr">
+                    </td>
+                </tr>
+                
+                <tr>
+                    <td>{{loadData.August}}</td>
+                    <td>
+                        <input type="text" class="form-control mt-0 pt-0" readonly formControlName="AugustDr">
+                    </td>
+                    <td>
+                        <input type="text" class="form-control mt-0 pt-0" readonly formControlName="AugustCr">
+                    </td>
+                </tr>
+                
+                <tr>
+                    <td>{{loadData.September}}</td>
+                    <td>
+                        <input type="text" class="form-control mt-0 pt-0" readonly formControlName="SeptemberDr">
+                    </td>
+                    <td>
+                        <input type="text" class="form-control mt-0 pt-0" readonly formControlName="SeptemberCr">
+                    </td>
+                </tr>
+                
+                <tr>
+                    <td>{{loadData.October}}</td>
+                    <td>
+                        <input type="text" class="form-control mt-0 pt-0" readonly formControlName="OctoberDr">
+                    </td>
+                    <td>
+                        <input type="text" class="form-control mt-0 pt-0" readonly formControlName="OctoberCr">
+                    </td>
+                </tr>
+                
+                <tr>
+                    <td>{{loadData.November}}</td>
+                    <td>
+                        <input type="text" class="form-control mt-0 pt-0" readonly formControlName="NovemberDr">
+                    </td>
+                    <td>
+                        <input type="text" class="form-control mt-0 pt-0" readonly formControlName="NovemberCr">
+                    </td>
+                </tr>
+                
+                <tr>
+                    <td>{{loadData.December}}</td>
+                    <td>
+                        <input type="text" class="form-control mt-0 pt-0" readonly formControlName="DecemberDr">
+                    </td>
+                    <td>
+                        <input type="text" class="form-control mt-0 pt-0" readonly formControlName="DecemberCr">
+                    </td>
+                </tr>
+                
+                <tr>
+                    <td>{{loadData.January}}</td>
+                    <td>
+                        <input type="text" class="form-control mt-0 pt-0" readonly formControlName="JanuaryDr">
+                    </td>
+                    <td>
+                        <input type="text" class="form-control mt-0 pt-0" readonly formControlName="JanuaryCr">
+                    </td>
+                </tr>
+                
+                <tr>
+                    <td>{{loadData.February}}</td>
+                    <td>
+                        <input type="text" class="form-control mt-0 pt-0" readonly formControlName="FebruaryDr">
+                    </td>
+                    <td>
+                        <input type="text" class="form-control mt-0 pt-0" readonly formControlName="FebruaryCr">
+                    </td>
+                </tr>
+                
+                <tr>
+                    <td>{{loadData.March}}</td>
+                    <td>
+                        <input type="text" class="form-control mt-0 pt-0" readonly formControlName="MarchDr">
+                    </td>
+                    <td>
+                        <input type="text" class="form-control mt-0 pt-0" readonly formControlName="MarchCr">
+                    </td>
+                </tr>
+                
+                <tr>
+                    <td>{{loadData.April}}</td>
+                    <td>
+                        <input type="text" class="form-control mt-0 pt-0" readonly formControlName="AprilDr">
+                    </td>
+                    <td>
+                        <input type="text" class="form-control mt-0 pt-0" readonly formControlName="AprilCr">
+                    </td>
+                </tr>
+                
+                <tr>
+                    <td>{{loadData.May}}</td>
+                    <td>
+                        <input type="text" class="form-control mt-0 pt-0" readonly formControlName="MayDr">
+                    </td>
+                    <td>
+                        <input type="text" class="form-control mt-0 pt-0" readonly formControlName="MayCr">
+                    </td>
+                </tr>
+                
+                <tr>
+                    <td>{{loadData.June}}</td>
+                    <td>
+                        <input type="text" class="form-control mt-0 pt-0" readonly formControlName="JuneDr">
+                    </td>
+                    <td>
+                        <input type="text" class="form-control mt-0 pt-0" readonly formControlName="JuneCr">
+                    </td>
+                </tr>
+                
+
+            </table>
+            
+            <div class="buttons mb-2">
+                <button *ngIf="submitBtn" type="button" (click)="submitData()" class="btn">Submit</button>
+                <button *ngIf="updateBtn" type="button" (click)="submitData()" class="btn ml-5">Update</button>
+                <!-- <button type="button" (click)="exitPage()" class="btn ml-5">Exit</button> -->
+            </div>
+        </div>
+    </form>
+    <div *ngIf="loadData.DataList.length != 0" class="mx-auto  col-md-7 set-height">
+        <table id="Data" class="col-md-12">
+            <tr>
+                <th>Year</th>
+                <th>GL Code</th>
+                <th>Amount</th>
+                <th>For</th>
+            </tr>
+            <tr *ngFor="let item of loadData.DataList">
+                <td class="text-center">{{item.BudgetYear}}</td>
+                <td class="text-center">{{item.GLCode}}</td>
+                <td class="text-center">{{item.Amount.toLocaleString('en-US', { minimumFractionDigits: 2 })}}</td>
+                <td class="text-center">{{item.For}}</td>
+            </tr>
+        </table>
+    </div>
+</app-accounting-wrapper>

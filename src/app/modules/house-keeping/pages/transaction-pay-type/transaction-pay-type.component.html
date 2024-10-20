@@ -1,0 +1,122 @@
+<app-house-keeping-wrapper>
+  <form
+    [formGroup]="TransactionPayTypeMaintenanceForm"
+    class="mx-auto mt-3 border col-md-6 main-container pb-3"
+  >
+    <p class="bg-dark title">Transaction Pay Type Maintenance</p>
+    <div class="form-row ml-2 mt-2">
+      <label class="col-md-3">Account Type Class:</label>
+      <div class="form-group col-md-6">
+        <select
+          (change)="selectChangeHandlerAccTypeCode($event)"
+          formControlName="selectAccTypeCode"
+          class="form-control mt-0 pt-0"
+        >
+          <option value="0" class="mt-0 pt-0" selected>-Select-</option>
+          <option
+            *ngFor="let item of dataAccountTypeCode"
+            [value]="item.Id"
+            class="mt-0 pt-0"
+          >
+            {{ item.Description }}
+          </option>
+        </select>
+      </div>
+    </div>
+    <div class="form-row ml-2">
+      <label class="col-md-3">Pay Type:</label>
+      <div class="form-group col-md-2 mt-0 pt-0">
+        <input
+          type="text"
+          (change)="changeSelectValue($event)"
+          class="form-control mt-0 pt-0"
+          id="PayTypeCode"
+          formControlName="PayTypeCode"
+          name="PayTypeCode"
+        />
+      </div>
+      <div class="form-group col-md-4">
+        <select
+          (change)="selectChangeHandler($event)"
+          class="form-control mt-0 pt-0"
+          formControlName="selectPayTypeCode"
+        >
+          <option *ngIf="showPayType" value="0" class="mt-0 pt-0" selected>
+            -Select-
+          </option>
+          <option
+            *ngFor="let item of dataTransactionPayType"
+            [value]="item.PayTypeCode"
+            class="mt-0 pt-0"
+          >
+            {{ item.PayTypeDescription }}
+          </option>
+        </select>
+      </div>
+    </div>
+    <div class="form-row ml-2">
+      <label for="inputDesc" class="col-md-3">Description:</label>
+      <div class="form-group col-md-6">
+        <input
+          type="text"
+          id="PayTypeDescription"
+          formControlName="PayTypeDescription"
+          class="form-control mt-0 pt-0"
+        />
+      </div>
+    </div>
+    <div class="form-row ml-2">
+      <label class="col-md-3">Pay Mode:</label>
+      <div class="form-group col-md-6">
+        <select formControlName="PayMode" class="form-control mt-0 pt-0">
+          <option value="" class="mt-0 pt-0">-Select-</option>
+          <option value="0" class="mt-0 pt-0">No</option>
+          <option value="1" class="mt-0 pt-0">Yes</option>
+        </select>
+      </div>
+    </div>
+    <div class="buttons col-md-6 mx-auto">
+      <button
+        *ngIf="showSubmit"
+        (click)="insertData()"
+        type="button"
+        class="btn btn-success"
+      >
+        Submit
+      </button>
+      <button
+        *ngIf="showUpdate"
+        (click)="updateData()"
+        type="button"
+        class="btn btn_1"
+      >
+        Update
+      </button>
+      <button
+        type="button"
+        (click)="getTableReportData()"
+        class="ml-5 btn btn-primary"
+      >
+        View
+      </button>
+    </div>
+  </form>
+
+  <div
+    *ngIf="dataTransactionPayShow.length != 0 && displayTabularData"
+    class="mx-auto set-height col-md-6"
+  >
+    <table id="Data">
+      <tr>
+        <th>Type Code</th>
+        <th>Pay Code</th>
+        <th>Description</th>
+      </tr>
+      <tr *ngFor="let item of dataTransactionPayShow">
+        <td class="text-center">{{ item.AccTypeClass }}</td>
+        <td class="text-center">{{ item.PayTypeCode }}</td>
+        <td>{{ item.PayTypeDescription }}</td>
+      </tr>
+    </table>
+  </div>
+</app-house-keeping-wrapper>

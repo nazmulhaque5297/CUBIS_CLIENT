@@ -1,0 +1,75 @@
+<app-accounting-wrapper>
+  <form [formGroup]="AutoInstructionDepositProcessForm">
+    <div class="mx-auto border col-md-7">
+      <p class="bg-dark title">Auto Instruction Deposit Processing</p>
+      <div class="form-row">
+        <label class="col-md-2 col-form-label">Account Type:</label>
+        <div class="form-group col-md-7">
+          <select formControlName="SelectedAccountType" (change)="selectAccountTypeChangeHandler($event)"
+            class="form-control pt-0">
+            <option value="0">-Select-</option>
+            <option *ngFor="let item of accTypeList" [value]="item.Id">
+              {{ item.Description }}
+            </option>
+          </select>
+        </div>
+      </div>
+
+      <div class="form-row">
+        <label class="col-md-2 col-form-label">Voucher No:</label>
+        <div class="form-group col-md-7">
+          <input type="text" class="form-control" id="VoucherNo" formControlName="VoucherNo" name="VoucherNo"/>
+        </div>
+      </div>
+
+
+      <div class="buttons col-md-11">
+        <button *ngIf="accInfoList.ShowCalculateButton" type="button" class="btn btn-success" (click)="CalculateInstructionDepositList()">Calculate</button>
+        <button type="button" class="btn btn-info" (click)="VerifyCalculateInstructionDepositList()">Verify Calculation</button>
+        <button *ngIf="InstructionDepositList.length != 0 " type="button" class="btn btn-primary" (click)="PostDepositList()">Post</button>
+        <button *ngIf="accInfoList.ShowReverseButton" type="button" class="btn btn-danger" (click)="ReverseDepositList()">Reverse</button>
+        <button type="button" class="btn btn-primary" (click)="setParameter2()">Print</button>
+
+      </div>
+    </div>
+
+
+
+  </form>
+
+  <div *ngIf="InstructionDepositList.length != 0 " class="mx-auto mt-1 col-md-7 set-height">
+    <p class="mt-1 bg-dark title">Verify - Auto Instruction Claculation Sheet</p>
+    <table id="Data">
+      <tr>
+        <th>Member</th>
+        <th>A/c No.</th>
+        <th>Deposit Amt.</th>
+        <th>Penalty</th>
+        <th>Net Amount</th>
+        <th>Corr. A/c</th>
+        <th>Corr.A/c Bal.</th>
+        <th>Action</th>
+      </tr>
+      <tr *ngFor="let item of InstructionDepositList">
+        <td>{{item.MemNumber}}</td>
+        <td>{{item.AccNo}}</td>
+        <td>
+          <input type="number" class="form-control"  [(ngModel)]="item.AccTransDepAmt" />
+        </td>
+        <td>
+          <input type="number" class="form-control"  [(ngModel)]="item.AccTransPenaltyAmt" />
+        </td>
+        <td>{{item.AccNetTransAmt}}</td>
+        <td>{{item.AccCorrAccNo}}</td>
+        <td *ngIf="item.AccCorrAccBalance < 1" style="color: red;">{{item.AccCorrAccBalance}}</td>
+        <td *ngIf="item.AccCorrAccBalance >= 1">{{item.AccCorrAccBalance}}</td>
+        <td>
+          <span class="mdi mdi-pencil-box-outline action" (click)="UpdateItem(item)"></span>
+          <span class="mdi mdi-delete action" (click)="DeleteInstructionDepositAccount(item.Id)"></span>
+        </td>
+      </tr>
+    </table>
+  </div>
+
+
+</app-accounting-wrapper>

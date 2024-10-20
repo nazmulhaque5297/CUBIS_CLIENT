@@ -1,0 +1,196 @@
+<app-house-keeping-wrapper>
+    <form [formGroup]='DividendCalculationForm'>
+        <div class="mx-auto border col-md-7 main-container">
+            <p class="bg-dark title">
+                Standard Account - Dividend Calculation Parameter</p>
+            <div class="form-row ml-0 mt-2">
+                <label class="col-md-3" class="col-md-3 mr-1 pr-0">Account Type:<span class="text-danger">*</span>
+                </label>
+                <div class="form-group ml-4 pl-3 col-md-3 mt-0 pt-0">
+                    <input type="text" formControlName="AccType" class="form-control mt-0 pt-0" id="TrnCode"
+                        name="TrnCode" readonly>
+                </div>
+                <div class="form-group col-md-4">
+                    <select formControlName="AccType" (change)="selectChangeHandler($event)"
+                        class="form-control  mt-0 pt-0">
+                        <option value="0" class="mt-0 pt-0">-Select-</option>
+                        <option *ngFor="let item of dataList" [value]="item.AccTypeCode" class="mt-0 pt-0">
+                            {{item.AccTypeDescription}}
+                        </option>
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div class="mx-auto mt-2 border col-md-7 main-container">
+            <table id="Data">
+                <tr>
+                    <td>Interest Calculation Period</td>
+                    <td>
+                        <input type="radio" value="2" Checked="true" name="rbIntCalPeriod" readonly>
+                        <label class="ml-2">Yearly</label><br>
+                    </td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>Interest Calculation Method</td>
+                    <td>
+                        <input type="radio" value="3" name="rbIntCalMethod" Checked="true"
+                            formControlName="rbIntCalMethod">
+                        <label class="ml-2">Opening Balance (Each Months)</label>
+                    </td>
+                    <td>
+                        <input type="radio" value="10" name="rbIntCalMethod" formControlName="rbIntCalMethod">
+                        <label class="ml-2">Opening Balance (Beg.Fin.Year)</label><br>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Calculative Financial Year</td>
+                    <td>
+                        <input type="radio" value="1" name="rbFY" Checked="true" formControlName="rbFY">
+                        <label class="ml-2">Current Year</label>
+                    </td>
+                    <td>
+                        <input type="radio" value="2" name="rbFY" formControlName="rbFY">
+                        <label class="ml-2">Last Year</label><br>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Interest Type</td>
+                    <td>
+                        <input type="radio" value="1" name="rbInterestType" Checked="true"
+                            formControlName="rbInterestType" (change)="changeInterestType()">
+                        <label class="ml-2">Percentage</label>
+                    </td>
+                    <td>
+                        <input type="radio" value="2" name="rbInterestType" formControlName="rbInterestType"
+                            (change)="changeInterestType()">
+                        <label class="ml-2">Fixed</label><br>
+                    </td>
+                </tr>
+                <tr>
+                    <td *ngIf="!interestFixed">Interest Rate</td>
+                    <td *ngIf="interestFixed">Input Fixed Rate</td>
+                    <td>
+                        <input appOnlyNumber  type="text" (keydown)="onEnterPrmIntRateHandler($event)"  formControlName="PrmIntRate" class="form-control mt-0 pt-0">
+                    </td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>Product Divided By Share Value?</td>
+                    <td>
+                        <input type="radio" value="1" name="rbShareValue" Checked="true" formControlName="rbShareValue"
+                            (change)="changeShareShow()">
+                        <label class="ml-2">No</label>
+                    </td>
+                    <td>
+                        <input type="radio" value="2" name="rbShareValue" formControlName="rbShareValue"
+                            (change)="changeShareShow()">
+                        <label class="ml-2">Yes</label><br>
+                    </td>
+                </tr>
+                <tr *ngIf="showShare">
+                    <td>Share Value</td>
+                    <td>
+                        <input appOnlyNumber  type="text" id="PrmShareValue" (keydown)="onEnterPrmShareValueHandler($event)"  formControlName="PrmShareValue" class="form-control mt-0 pt-0">
+                    </td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>Minimum Balance for Dividend</td>
+                    <td>
+                        <input appOnlyNumber  type="text" id="PrmMinBalForInt" (keydown)="onEnterPrmMinBalForIntHandler($event)" formControlName="PrmMinBalForInt" class="form-control mt-0 pt-0">
+                    </td>
+                    <td></td>
+                </tr>
+
+                <tr>
+                    <td>Minimum Dividend Amount</td>
+                    <td>
+                        <input appOnlyNumber  type="text" id="PrmMinIntAmt" (keydown)="onPrmMinIntAmtHandler($event)" formControlName="PrmMinIntAmt" class="form-control mt-0 pt-0">
+                    </td>
+                    <td></td>
+                </tr>
+
+                <tr>
+                    <td>Last Account Open Date</td>
+                    <td>
+                        <input type="text" formControlName="PrmLastOpenDate" class="form-control mt-0 pt-0">
+                    </td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>Target Account Type</td>
+                    <td>
+                        <input type="text" formControlName="TargetAccType" class="form-control mt-0 pt-0" readonly>
+                    </td>
+                    <td>
+                        <select formControlName="TargetAccType" class="form-control  mt-0 pt-0"
+                            (change)="targetAccChange($event)">
+                            <option value="0" class="mt-0 pt-0">-Select-</option>
+                            <option *ngFor="let item of targetDataList" [value]="item.AccTypeCode" class="mt-0 pt-0">
+                                {{item.AccTypeDescription}}
+                            </option>
+                        </select>
+                    </td>
+                </tr>
+            </table>
+            <p class="mt-4 bg-dark title">
+                Share Protection Parameter</p>
+            <table id="Data">
+                <tr>
+                    <td>Deduct Account Type</td>
+                    <td>
+                        <input type="text" formControlName="ShareProtDeductAccType" class="form-control mt-0 pt-0"
+                            readonly>
+                    </td>
+                    <td>
+                        <select formControlName="ShareProtDeductAccType" class="form-control  mt-0 pt-0"
+                            (change)="shareProtDeductAccTypeChange($event)">
+                            <option value="0" class="mt-0 pt-0">-Select-</option>
+                            <option *ngFor="let item of targetDataList" [value]="item.AccTypeCode" class="mt-0 pt-0">
+                                {{item.AccTypeDescription}}
+                            </option>
+                        </select>
+                    </td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>Share Protection Minimum Balance</td>
+                    <td>
+                        <input appOnlyNumber  type="text" id="ShareProtMinBalance" (keydown)="onEnterShareProtMinBalanceHandler($event)"  formControlName="ShareProtMinBalance" class="form-control mt-0 pt-0">
+                    </td>
+                    <td></td>
+                    <td>Share Protection Maximum Balance</td>
+                    <td>
+                        <input appOnlyNumber  type="text" id="ShareProtMaxBalance" (keydown)="onEnterShareProtMaxBalanceHandler($event)" formControlName="ShareProtMaxBalance" class="form-control mt-0 pt-0">
+                    </td>
+                </tr>
+                <tr>
+                    <td>Share Protection Interest Rate</td>
+                    <td>
+                        <input appOnlyNumber type="text" id="ShareProtIntRate" (keydown)="onEnterShareProtIntRateHandler($event)" formControlName="ShareProtIntRate" class="form-control mt-0 pt-0">
+                    </td>
+                    <td></td>
+                    <td>Share Protection Fixed Amount</td>
+                    <td><input appOnlyNumber  type="text" id="ShareProtFixedAmt" (keydown)="onEnterShareProtFixedAmtHandler($event)" formControlName="ShareProtFixedAmt" class="form-control mt-0 pt-0"></td>
+                </tr>
+                <tr>
+                    <td>Share Protection GL Code</td>
+                    <td>
+                        <input appOnlyNumber  type="text" id="ShareProtGLCode" formControlName="ShareProtGLCode" (change)="changeShareProtectionCode()"
+                            class="form-control mt-0 pt-0">
+                    </td>
+                    <td><input type="text" formControlName="ShareProtGLDesc" class="form-control mt-0 pt-0" readonly>
+                    </td>
+                    <td></td>
+                    <td></td>
+                </tr>
+            </table>
+            <div class="buttons col-md-7 mt-3">
+                <button *ngIf="ShowSubmit" type="button" (click)="submitData()" class="btn btn-success">Submit</button>
+                <button *ngIf="!ShowSubmit" type="button" (click)="updateData()" class="btn btn-success">Update</button>
+            </div>
+        </div>
+    </form>
+</app-house-keeping-wrapper>

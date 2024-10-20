@@ -1,0 +1,323 @@
+<app-accounting-wrapper>
+  <form [formGroup]="loanDisbursementForm" class="form-horizontal">
+    <div class="row">
+      <div class="col-xl-8 col-md-8">
+        <p class="bg-primary text-center text-light bg-secondary title">
+          Loan Disbursement Transaction
+        </p>
+        <div class="card first__part">
+          <!-- <div class="card-header bg-primary">
+                <h4 class="card-title text-white mb-0">Loan Disbursement Transaction</h4>
+              </div> -->
+          <div class="card-body">
+            <div class="form-group row">
+              <label class="col-md-3 col-form-label">Application No.:</label>
+              <div class="col-md-2">
+                <input
+                  id="applicationNo"
+                  type="text"
+                  class="form-control"
+                  (change)="onApplicationChange()"
+                  (keydown)="onApplicationNoEvent($event)"
+                  [readonly]="isDisabled"
+                  formControlName="ApplicationNo"
+                  appOnlyNumber
+                />
+              </div>
+              <label class="col-md-2 col-form-label">Application Date:</label>
+              <div class="col-md-2">
+                <input
+                  type="text"
+                  class="form-control"
+                  [readonly]="isDisabled"
+                  readonly
+                  formControlName="ApplicationDate"
+                />
+              </div>
+            </div>
+            <div class="form-group row">
+              <label class="col-md-3 col-form-label"
+                >Member No. :<span class="text-danger">*</span></label
+              >
+              <div class="col-md-2">
+                <input
+                  id="MemberNo"
+                  type="text"
+                  class="form-control"
+                  [readonly]="isDisabled"
+                  formControlName="MemberNo"
+                  (change)="onMemberChange()"
+                  appOnlyNumber
+                />
+              </div>
+              <label class="col-md-4 col-form-label">{{
+                detailsData.MemberName
+              }}</label>
+            </div>
+            <div class="form-group row">
+              <label class="col-md-3 col-form-label"
+                >A/C Type:<span class="text-danger">*</span></label
+              >
+              <div class="col-md-2">
+                <input
+                  id="AccountTypeCode"
+                  type="text"
+                  class="form-control"
+                  [readonly]="isDisabled"
+                  formControlName="AccountTypeCode"
+                  (change)="
+                    onAccountTypeChange(
+                      loanDisbursementForm.value.AccountTypeCode
+                    )
+                  "
+                  appOnlyNumber
+                />
+              </div>
+              <div class="col-md-4">
+                <select
+                  class="form-control pt-0"
+                  [attr.disabled]="isDisabled ? '' : null"
+                  formControlName="AccountTypeId"
+                  (change)="
+                    onAccountTypeChange(
+                      loanDisbursementForm.value.AccountTypeId
+                    )
+                  "
+                >
+                  <option value="0">-Select-</option>
+                  <option
+                    *ngFor="let item of inputHelpData.AccountTypeList"
+                    [value]="item.Id"
+                  >
+                    {{ item.Description }}
+                  </option>
+                </select>
+              </div>
+            </div>
+
+            <div class="form-group row">
+              <label class="col-md-3 col-form-label">Account No.:</label>
+              <div class="col-md-2">
+                <input
+                  type="text"
+                  class="form-control"
+                  formControlName="AccountNo"
+                  disabled
+                />
+              </div>
+            </div>
+
+            <div *ngIf="!UserData?.AutoVchflag" class="form-group row">
+              <label class="col-md-3 col-form-label"
+                >Voucher No. :<span class="text-danger">*</span></label
+              >
+              <div class="col-md-2">
+                <input
+                  id="VoucherNo"
+                  type="text"
+                  class="form-control"
+                  formControlName="VoucherNo"
+                  (change)="OnVoucherNoChange()"
+                />
+              </div>
+            </div>
+
+            <div class="form-group row">
+              <label class="col-md-3 col-form-label">Transaction Type:</label>
+              <div class="col-md-2">
+                <input
+                  id="TransactionTypeCode"
+                  type="text"
+                  class="form-control"
+                  [readonly]="isDisabled"
+                  formControlName="TransactionTypeCode"
+                  (change)="
+                    onTransTypeChange(
+                      loanDisbursementForm.value.TransactionTypeCode
+                    )
+                  "
+                  appOnlyNumber
+                />
+              </div>
+              <div class="col-md-4">
+                <select
+                  class="form-control pt-0"
+                  [attr.disabled]="isDisabled ? '' : null"
+                  formControlName="TransactionTypeId"
+                  (change)="
+                    onTransTypeChange(
+                      loanDisbursementForm.value.TransactionTypeId
+                    )
+                  "
+                >
+                  <option value="0">-Select-</option>
+                  <option
+                    *ngFor="let item of inputHelpData.TransactionTypeList"
+                    [value]="item.Id"
+                  >
+                    {{ item.Description }}
+                  </option>
+                </select>
+              </div>
+            </div>
+
+            <div
+              class="form-group row"
+              *ngIf="loanDisbursementForm.value.TransactionTypeId == 48"
+            >
+              <label class="col-md-3 col-form-label">Bank Chq. No. :</label>
+              <div class="col-md-2">
+                <input
+                  id="BankChequeNo"
+                  type="text"
+                  class="form-control"
+                  formControlName="BankChequeNo"
+                  (change)="onChequeHandler()"
+                />
+              </div>
+            </div>
+
+            <div
+              class="form-group row"
+              *ngIf="loanDisbursementForm.value.TransactionTypeId == 48"
+            >
+              <label class="col-md-3 col-form-label">GL Bank Code:</label>
+              <div class="col-md-2">
+                <input
+                  id="BankCode"
+                  type="text"
+                  class="form-control"
+                  formControlName="BankCode"
+                  (change)="onBankChange(loanDisbursementForm.value.BankCode)"
+                />
+              </div>
+              <div class="col-md-6">
+                <select
+                  class="form-control pt-0"
+                  formControlName="BankId"
+                  (change)="onBankChange(loanDisbursementForm.value.BankId)"
+                >
+                  <option value="0">-Select-</option>
+                  <option
+                    *ngFor="let item of inputHelpData.BankList"
+                    [value]="item.Id"
+                  >
+                    {{ item.Description }}
+                  </option>
+                </select>
+              </div>
+            </div>
+
+            <div class="row d-block topSection f-ss-14px">
+              <div class="d-flex deposit-account-list-header">
+                <div class="col-md-2">GL Code</div>
+                <div class="col-md-4">Name of Account Head</div>
+                <div class="col-md-4">Description</div>
+                <div class="col-md-2">Amount</div>
+              </div>
+
+              <div
+                style="margin-bottom: 10px"
+                formArrayName="Transactions"
+                *ngFor="
+                  let item of loanDisbursementForm.get('Transactions')[
+                    'controls'
+                  ];
+                  let i = index
+                "
+              >
+                <div class="row" [formGroupName]="i">
+                  <div class="col-md-2">
+                    <input
+                      class="form-control"
+                      formControlName="GLAccNo"
+                      disabled
+                    />
+                  </div>
+                  <div class="col-md-4">
+                    <input
+                      class="form-control"
+                      readonly
+                      formControlName="GLAccDesc"
+                    />
+                  </div>
+                  <div class="col-md-4">
+                    <input
+                      id="{{ 'TypeDes' + i }}"
+                      class="form-control"
+                      formControlName="PayTypeDes"
+                      (change)="onItemChange(i, item)"
+                      (keydown)="onItemEnterChange($event, i, item)"
+                    />
+                  </div>
+                  <div class="col-md-2">
+                    <input
+                      id="TrnAmount"
+                      class="form-control"
+                      type="text"
+                      formControlName="TrnAmount"
+                      (change)="onItemChange(i, item)"
+                      onfocus="this.select()" 
+                      appOnlyNumber
+                      (keydown)="onAmountEnterHandler($event, i, item)"
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="card" style="margin-top: 30px">
+          <div class="card-body">
+            <div class="form-group row">
+              <label class="col-md-3 col-form-label">Total Amount :</label>
+              <div class="col-md-2">
+                <div class="col-form-label">
+                  <input
+                    type="text"
+                    class="form-control"
+                    disabled
+                    formControlName="TotalAmount"
+                  />
+                </div>
+              </div>
+            </div>
+            <div class="form-group row">
+              <div class="col-md-6 mx-auto btns">
+                <button
+                  id="update"
+                  type="button"
+                  class="btn btn-success btn_1"
+                  (click)="onCreate()"
+                >
+                  Disbursement
+                </button>
+                <button
+                type="button"
+                class="btn btn-info ml-5"
+                (click)="onCancel()"
+              >
+                Refresh
+              </button>
+              </div>
+            
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-xl-4 col-md-4">
+        <p class="bg-primary text-center text-light bg-secondary title">
+          A/C Information
+        </p>
+        <div class="card">
+          <!-- <div class="card-header bg-primary">
+                <h4 class="card-title text-white mb-0">A/C Information</h4>
+              </div> -->
+          <app-loan-disbursement-account-details
+            [aData]="accountDetailsData"
+          ></app-loan-disbursement-account-details>
+        </div>
+      </div>
+    </div>
+  </form>
+</app-accounting-wrapper>

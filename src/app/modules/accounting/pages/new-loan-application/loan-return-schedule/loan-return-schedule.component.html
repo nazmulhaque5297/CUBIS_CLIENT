@@ -1,0 +1,99 @@
+<!-- [formGroup]='propertyGuarantorInfoForm'
+[formGroup]="LoanReturnScheduleForm"-->
+<app-accounting-wrapper>
+  <form class="mx-auto col-md-10">
+    <div class="mx-auto border col-md-10">
+      <p class="bg-primary text-center text-light bg-secondary title">
+        Loan Payment Schedule
+      </p>
+      <div class="form-row mt-2">
+        <label class="col-md-2">Member No:</label>
+        <div class="form-group col-md-4">
+          <input
+            type="text"
+            class="form-control"
+            id="MemberNo"
+            value="{{ loanDataForHelp.LoanMemberNo }}"
+            name="MemberNo"
+            disabled
+          />
+        </div>
+        <div class="form-group col-md-4 mt-0 pl-2 ml-2">
+          <label class="pl-2 ml-2 mt-0 pt-0">{{
+            loanDataForHelp.LoanMemberName
+          }}</label>
+        </div>
+      </div>
+      <div class="form-row">
+        <label class="col-md-2">Loan A/C Type:</label>
+        <div class="form-group col-md-4">
+          <input
+            type="text"
+            class="form-control"
+            id="LoanAccountType"
+            value="{{ loanDataForHelp.LoanAccountTypeTitle }}"
+            name="LoanAccountType"
+            disabled
+          />
+        </div>
+      </div>
+      <div class="form-row">
+        <label class="col-md-2">Application Date:</label>
+        <div class="form-group col-md-4">
+          <input
+            type="text"
+            value="{{ loanDataForHelp.LoanApplicationDate }}"
+            class="form-control desc-input"
+            id="ApplicationDate"
+            disabled
+          />
+        </div>
+      </div>
+      <div class="form-row">
+        <label class="mt-1 col-md-2" *ngIf="loanDataForHelp.LoanGracePeriod"
+          >Grace Month:</label
+        >
+        <div
+          class="form-group col-md-4"
+          *ngIf="loanDataForHelp.LoanGracePeriod"
+        >
+          <input
+            type="text"
+            value="{{ loanDataForHelp.LoanGracePeriod }}"
+            class="form-control desc-input"
+            id="ApplicationDate"
+            disabled
+          />
+        </div>
+      </div>
+    </div>
+
+    <div class="mx-auto col-md-10 set-height border">
+      <table id="Data" class="col-md-12">
+        <tr>
+          <th>Srl. No</th>
+          <th>Date</th>
+          <th>Installment Amt</th>
+          <th>Loan Amount</th>
+          <th>Interest Amount</th>
+          <th>Loan Payable Amt</th>
+        </tr>
+
+        <tr *ngFor="let item of dataList">
+          <td class="text-center">{{ item.ID }}</td>
+          <td class="text-center">{{ item.LoanMthDate }}</td>
+          <td class="text-center">{{ item.InstlAmt }}</td>
+          <td class="text-center">{{ item.LoanAmt }}</td>
+          <td class="text-center">{{ item.IntAmt }}</td>
+          <td class="text-center">{{ item.LoanPayable }}</td>
+        </tr>
+      </table>
+    </div>
+    <div class="buttons col-md-7">
+      <!-- <button type="button" class="btn" (click)="closeThisPage()">Exit</button> -->
+      <button type="button" class="btn ml-3" (click)="getReportToken()">
+        Print
+      </button>
+    </div>
+  </form>
+</app-accounting-wrapper>

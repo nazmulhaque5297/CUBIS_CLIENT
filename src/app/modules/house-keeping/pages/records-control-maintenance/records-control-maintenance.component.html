@@ -1,0 +1,87 @@
+<app-house-keeping-wrapper>
+  <form
+    [formGroup]="RecordsControlForm"
+    class="mx-auto border col-md-6 main-container"
+  >
+    <p class="bg-dark title">Record Control Maintenance</p>
+    <div class="form-row">
+      <label>GL Cash Code:<span class="text-danger">*</span></label>
+      <div class="form-group col-md-4 marginLeft__9">
+        <input
+          type="text"
+          (change)="changeSelectValue($event)"
+          class="form-control"
+          id="GlCashCode"
+          formControlName="GLCashCode"
+          name="GlCashCode"
+        />
+      </div>
+      <div class="form-group col-md-4">
+        <select
+          formControlName="selectedOptionCode"
+          (change)="selectChangeHandler($event)"
+          id="select"
+          class="form-control pt-0"
+        >
+          <option value="0">-Select-</option>
+          <option *ngFor="let item of glcashcodelist" [value]="item.Id">
+            {{ item.Description }}
+          </option>
+        </select>
+      </div>
+    </div>
+    <div class="form-row">
+      <label>Record Type:<span class="text-danger">*</span></label>
+      <div class="form-group col-md-8 marginLeft__20">
+        <input
+          type="text"
+          (change)="changeRecordValue($event)"
+          class="form-control"
+          id="RecType"
+          formControlName="RecType"
+          name="RecType"
+        />
+      </div>
+    </div>
+    <div class="form-row">
+      <label>Last Record No:</label>
+      <div class="form-group col-md-8">
+        <input
+          type="text"
+          class="form-control"
+          id="RecLastNo"
+          formControlName="RecLastNo"
+          name="RecLastNo"
+        />
+      </div>
+    </div>
+    <div class="buttons col-md-11">
+      <button type="button" (click)="InsertData()" class="btn btn-success ml-3">
+        Submit
+      </button>
+      <button type="button" (click)="UpdateData()" class="btn btn-info">
+        Update
+      </button>
+      <button type="button" (click)="getAllData()" class="btn btn_1">
+        View
+      </button>
+    </div>
+  </form>
+  <div
+    *ngIf="dataList.length != 0 && displayTabularData"
+    class="mx-auto set-height col-md-6"
+  >
+    <table id="Data">
+      <tr>
+        <th>Cash Code</th>
+        <th>Rec Type</th>
+        <th>Last Records No.</th>
+      </tr>
+      <tr *ngFor="let item of dataList">
+        <td>{{ item.GLCashCode }}</td>
+        <td>{{ item.RecType }}</td>
+        <td>{{ item.RecLastNo }}</td>
+      </tr>
+    </table>
+  </div>
+</app-house-keeping-wrapper>

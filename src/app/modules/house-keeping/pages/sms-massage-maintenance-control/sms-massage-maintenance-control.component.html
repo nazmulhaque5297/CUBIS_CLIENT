@@ -1,0 +1,109 @@
+<app-house-keeping-wrapper>
+  <form
+    [formGroup]="SmsDdlForm"
+    novalidate
+    class="mx-auto border col-md-6 main-container"
+  >
+    <p class="bg-dark title">SMS Massage Maintenance Control</p>
+    <div class="form-group row" *ngIf="IsBangla">
+      <label for="lblMsg2" class="col-sm-5 col-form-label"
+        >Ctrl + Alt + V</label
+      >
+    </div>
+    <div class="form-group row">
+      <label for="select" class="col-sm-3 col-form-label"
+        >Function Option <span class="text-danger">*</span>:</label
+      >
+      <div class="col-sm-7">
+        <select
+          class="form-control pt-0"
+          formControlName="SelectedOptionCode"
+          (change)="onChangeFunctionName()"
+        >
+          <option value="0">-Select-</option>
+          <option
+            *ngFor="let item of GetInputHelpData.FunctionOptionDropDown"
+            [value]="item.Id"
+          >
+            {{ item.Description }}
+          </option>
+        </select>
+      </div>
+    </div>
+    <div class="form-group row">
+      <label for="lblMsg1" class="col-sm-3 col-form-label"
+        >Text Message-1 :</label
+      >
+      <div class="col-sm-7">
+        <input
+          type="text"
+          class="form-control"
+          (keydown)="onEntertextMessage1Handler($event)"
+          id="textMessage1"
+          formControlName="TextMessage1"
+          maxlength="51"
+        />
+      </div>
+    </div>
+    <div class="form-group row">
+      <label for="lblMsg2" class="col-sm-3 col-form-label"></label>
+      <div class="col-sm-7">
+        <input
+          type="text"
+          class="form-control"
+          id="TextMessage2"
+          formControlName="TextMessage2"
+          readonly
+        />
+      </div>
+    </div>
+    <div class="form-group row">
+      <label for="lblMsg3" class="col-sm-3 col-form-label"></label>
+      <div class="col-sm-7">
+        <input
+          type="text"
+          class="form-control"
+          id="TextMessage3"
+          formControlName="TextMessage3"
+          readonly
+        />
+      </div>
+    </div>
+    <div class="form-group row">
+      <label for="lblMsg4" class="col-sm-3 col-form-label"
+        >Text Message-2 :</label
+      >
+      <div class="col-sm-7">
+        <input
+          type="text"
+          class="form-control"
+          id="TextMessage4"
+          formControlName="TextMessage4"
+          (keydown)="onEnterTextMessage2Handler($event)"
+          maxlength="51"
+        />
+      </div>
+    </div>
+    <div class="form-group row" *ngIf="text3Status">
+      <label for="lblMsg5" class="col-sm-3 col-form-label"
+        >Text Message-3 :</label
+      >
+      <div class="col-sm-7">
+        <input
+          type="text"
+          class="form-control"
+          id="TextMessage5"
+          formControlName="TextMessage5"
+          maxlength="51"
+        />
+      </div>
+    </div>
+
+    <div class="buttons col-md-4">
+      <button type="button" class="btn btn-success ml-4" (click)="updateData()">
+        Update
+      </button>
+      <!-- <button type="button" class="btn" (click)="exitPage()">Exit</button> -->
+    </div>
+  </form>
+</app-house-keeping-wrapper>

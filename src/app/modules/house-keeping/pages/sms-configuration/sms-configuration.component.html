@@ -1,0 +1,87 @@
+<app-house-keeping-wrapper>
+  <form
+    [formGroup]="SMSConfigurationForm"
+    novalidate
+    class="mx-auto border col-md-8 main-container pb-2"
+  >
+    <p class="bg-dark title">SMS Configuration Maintenance</p>
+    <div class="form-row">
+      <label for="inputProCode" class="col-md-2"
+        >SMS Gateway URL:<span class="text-danger">*</span></label
+      >
+      <div class="form-group col-md-7">
+        <input
+          type="text"
+          class="form-control"
+          id="gatewayURL"
+          formControlName="gatewayURL"
+          name="gatewayURL"
+          required
+          (keydown)="onEntergatewayURLHandler($event)"
+        />
+      </div>
+    </div>
+    <div class="form-row">
+      <label for="inputDesc" class="col-md-2"
+        >Sender ID:<span class="text-danger">*</span></label
+      >
+      <div class="form-group col-md-7">
+        <input
+          type="text"
+          formControlName="senderID"
+          class="form-control"
+          id="senderID"
+          required
+          (keydown)="onEntersenderIDHandler($event)"
+        />
+      </div>
+    </div>
+    <div class="form-row">
+      <label for="inputDesc" class="col-md-2"
+        >API Key:<span class="text-danger">*</span></label
+      >
+      <div class="form-group col-md-7">
+        <input
+          type="text"
+          formControlName="apiKey"
+          class="form-control"
+          id="apiKey"
+          required
+          (keydown)="onEnterapiKeyIDHandler($event)"
+        />
+      </div>
+    </div>
+    <div class="form-row">
+      <label for="inputDesc" class="col-md-2"
+        >Secret Key:<span class="text-danger">*</span></label
+      >
+      <div class="form-group col-md-7">
+        <input
+          type="text"
+          formControlName="secretKey"
+          class="form-control"
+          id="secretKey"
+          required
+        />
+      </div>
+    </div>
+    <div class="buttons">
+      <button
+        type="button"
+        class="btn btn-success"
+        (click)="save()"
+        *ngIf="buttontextsubmit"
+      >
+        Submit
+      </button>
+      <button
+        type="button"
+        class="btn btn-success"
+        (click)="update()"
+        *ngIf="buttontextupdate"
+      >
+        Update
+      </button>
+    </div>
+  </form>
+</app-house-keeping-wrapper>

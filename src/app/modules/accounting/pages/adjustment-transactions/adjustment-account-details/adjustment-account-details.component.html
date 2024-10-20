@@ -1,0 +1,117 @@
+<div class="card-body">
+    <div class="form-group row">
+        <label class="col-md-6 col-form-label">Account No. :</label>
+        <div class="col-md-6">
+           <div class="col-form-label">{{aData.AccountNo}}</div>
+        </div>
+    </div>
+    <div class="form-group row">
+        <label class="col-md-6 col-form-label">Ledger Balance :</label>
+        <div class="col-md-6">
+           <div class="col-form-label">{{aData.LadgerBalance}}</div>
+        </div>
+    </div>
+    <div class="form-group row">
+        <label class="col-md-6 col-form-label">Open Date :</label>
+        <div class="col-md-6">
+           <div class="col-form-label">{{aData.OpenDate}}</div>
+        </div>
+    </div>
+    <div class="form-group row" *ngIf="vData?.AccTypeClass == 1 || vData?.AccTypeClass == 2">
+        <label class="col-md-6 col-form-label">Last Transaction Date :</label>
+        <div class="col-md-6">
+           <div class="col-form-label">{{aData.LastTrnDate}}</div>
+        </div>
+    </div>
+    <div class="form-group row" *ngIf="vData?.AccTypeClass == 1">
+        <label class="col-md-6 col-form-label">Lien Amount :</label>
+        <div class="col-md-6">
+           <div class="col-form-label">{{aData.LienAmt}}</div>
+        </div>
+    </div>
+    <div class="form-group row" *ngIf="vData?.AccTypeClass == 2 || vData?.AccTypeClass == 3 || vData?.AccTypeClass == 4 || vData?.AccTypeClass == 5">
+        <label class="col-md-6 col-form-label">Maturity Date :</label>
+        <div class="col-md-6">
+           <div class="col-form-label">{{aData.MatruityDate}}</div>
+        </div>
+    </div>
+    <div class="form-group row" *ngIf="vData?.AccTypeClass == 2 || vData?.AccTypeClass == 3 || vData?.AccTypeClass == 4 || vData?.AccTypeClass == 5">
+        <label class="col-md-6 col-form-label">Period(Month) :</label>
+        <div class="col-md-6">
+           <div class="col-form-label">{{aData.Period}}</div>
+        </div>
+    </div>
+    <div class="form-group row" *ngIf="vData?.AccTypeClass == 2">
+        <label class="col-md-6 col-form-label">Deposit Amt. :</label>
+        <div class="col-md-6">
+           <div class="col-form-label">{{aData.DepositAmount}}</div>
+        </div>
+    </div>
+    <div class="form-group row" *ngIf="vData?.AccTypeClass == 2">
+        <label class="col-md-6 col-form-label">Total Deposit Amt. :</label>
+        <div class="col-md-6">
+           <div class="col-form-label">{{aData.TotDepositAmount}}</div>
+        </div>
+    </div>
+    <div class="form-group row" *ngIf="vData?.AccTypeClass == 3 || vData?.AccTypeClass == 4 || vData?.AccTypeClass == 5">
+        <label class="col-md-6 col-form-label">Certificate No. :</label>
+        <div class="col-md-6">
+           <div class="col-form-label">{{aData.CertNo}}</div>
+        </div>
+    </div>
+    <div class="form-group row" *ngIf="vData?.AccTypeClass == 6 || vData?.AccTypeClass == 7">
+        <label class="col-md-6 col-form-label">Sanction Amount. :</label>
+        <div class="col-md-6">
+           <div class="col-form-label">{{aData.SancAmount}}</div>
+        </div>
+    </div>
+    <div class="form-group row" *ngIf="vData?.AccTypeClass == 6 || vData?.AccTypeClass == 7">
+        <label class="col-md-6 col-form-label">Interest Rate. :</label>
+        <div class="col-md-6">
+           <div class="col-form-label">{{aData.IntRate}}</div>
+        </div>
+    </div>
+    <div class="form-group row" *ngIf="vData?.AccTypeClass == 7">
+        <label class="col-md-6 col-form-label">Disbursement Amount :</label>
+        <div class="col-md-6">
+           <div class="col-form-label">{{aData.DisbursementAmount}}</div>
+        </div>
+    </div>
+    <div class="form-group row" *ngIf="vData?.AccTypeClass == 7">
+        <label class="col-md-6 col-form-label">Installment Amt. :</label>
+        <div class="col-md-6">
+           <div class="col-form-label">{{aData.InstlAmt}}</div>
+        </div>
+    </div>
+    <div class="form-group row" *ngIf="vData?.AccTypeClass == 7">
+        <label class="col-md-6 col-form-label">No. of Installment :</label>
+        <div class="col-md-6">
+           <div class="col-form-label">{{aData.NoInstl}}</div>
+        </div>
+    </div>
+    <div class="form-group row" *ngIf="vData?.AccTypeClass == 7">
+        <label class="col-md-6 col-form-label">Due Principal Amt :</label>
+        <div class="col-md-6">
+           <div class="col-form-label"></div>
+        </div>
+    </div>
+    <div class="form-group row" *ngIf="vData?.AccTypeClass == 7">
+        <label class="col-md-6 col-form-label">Due Interest Amt. :</label>
+        <div class="col-md-6">
+           <div class="col-form-label"></div>
+        </div>
+    </div>
+    <div class="form-group row">
+        <label class="col-md-6 col-form-label">&nbsp;</label>
+        <div class="col-md-6">
+           <div class="col-form-label"></div>
+        </div>
+    </div>
+    <div class="form-group row">
+        <label class="col-md-6 col-form-label">&nbsp;</label>
+        <div class="col-md-6">
+           <div class="col-form-label"></div>
+        </div>
+    </div>
+
+</div>

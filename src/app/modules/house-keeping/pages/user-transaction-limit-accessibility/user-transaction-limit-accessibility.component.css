@@ -1,0 +1,44 @@
+.title {
+  background: #6c757d !important;
+  color: #fff;
+  font-weight: 600;
+  padding: 2px;
+}
+label {
+  padding: 2px !important;
+}
+input {
+  box-shadow: none !important;
+}
+.buttons {
+  margin-top: 4px;
+  text-align: center;
+  margin-left: 28px;
+}
+.btn {
+  padding: 4px 30px !important;
+  transition: 0.7s ease-in;
+  /* background: #0069aa; */
+  color: #fff;
+  margin-left: 18px;
+  margin-bottom: 10px;
+}
+
+.btn_1 {
+  padding: 4px 30px !important;
+  transition: 0.7s ease-in;
+  background: #0069aa;
+  color: #fff;
+  margin-left: 18px;
+  margin-bottom: 10px;
+}
+
+.btn:focus {
+  outline: none !important;
+  box-shadow: none !important;
+}
+@media screen and (max-width: 570px) {
+  .buttons {
+    margin-left: 0px;
+  }
+}

@@ -1,0 +1,145 @@
+<app-accounting-wrapper>
+  <form
+    [formGroup]="ChequeBookReportByGroupForm"
+    class="mx-auto border col-md-7"
+  >
+    <p class="bg-dark title">Cheque Book Register</p>
+
+    <div class="form-group row">
+      <div class="col-md-1">
+        <input
+          [(ngModel)]="chbIsAllMemberStatus"
+          (ngModelChange)="checkIsAllMemberValue($event)"
+          class="form-check-input position-static ml-1 checkbox"
+          type="checkbox"
+          id="IsAllMemberCheckbox"
+          formControlName="IsAllMember"
+        />
+      </div>
+      <label
+        for="blankCheckbox"
+        class="col-md-3 col-form-label"
+        for="IsAllMemberCheckbox"
+        >All Member No :</label
+      >
+      <div class="col-md-3">
+        <input
+          type="text"
+          class="form-control"
+          id="MemNo"
+          formControlName="MemNo"
+          name="MemNo"
+          (focusout)="onChangeMemNo()"
+        />
+      </div>
+      <label class="col-md-3">{{ this.MemberName }}</label>
+    </div>
+
+    <div class="form-group row">
+      <div class="col-md-1 col-form-label"></div>
+      <label class="col-md-3 col-form-label">Account Type:</label>
+      <div class="col-md-3">
+        <input
+          type="text"
+          class="form-control"
+          id="CodeNumber"
+          formControlName="AccTypeCode"
+          name="CodeNumber"
+          (focusout)="onChangeAccTypeCode($event)"
+        />
+      </div>
+      <div class="col-md-5">
+        <select
+          class="form-control pt-0"
+          formControlName="AccType"
+          (change)="onChangeAccType($event)"
+        >
+          <option value="0">-Select-</option>
+          <option
+            *ngFor="let item of inputHelpData.AccountTypeList"
+            [value]="item.Id"
+          >
+            {{ item.Description }}
+          </option>
+        </select>
+      </div>
+    </div>
+
+    <div class="form-group row" *ngIf="AccNoShow">
+      <div class="col-md-1 col-form-label"></div>
+      <label class="col-md-3 col-form-label">Account No:</label>
+      <div class="col-md-3">
+        <input
+          type="text"
+          class="form-control"
+          id="AccNo"
+          formControlName="AccNumber"
+          name="AccNo"
+        />
+      </div>
+    </div>
+
+    <div class="form-group row">
+      <div class="col-md-1">
+        <input
+          [(ngModel)]="chbIsAllDateStatus"
+          class="form-check-input position-static ml-1 checkbox"
+          type="checkbox"
+          id="IsAllDateCheckbox"
+          formControlName="IsAllDate"
+        />
+      </div>
+      <label
+        for="blankCheckbox"
+        class="col-md-3 col-form-label"
+        for="IsAllDateCheckbox"
+        >All Issue From Date :</label
+      >
+      <div class="col-md-2">
+        <input
+          id="dateFormat"
+          type="text"
+          class="form-control"
+          bsDatepicker
+          formControlName="IssueFromDate"
+          [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY' }"
+          autocomplete="off"
+          (ngModelChange)="applicationDateChange()"
+        />
+      </div>
+
+      <label class="col-md-3 col-form-label">Issue To date:</label>
+      <div class="col-md-2">
+        <input
+          id="dateFormat"
+          type="text"
+          class="form-control"
+          bsDatepicker
+          formControlName="IssueToDate"
+          [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY' }"
+          autocomplete="off"
+          (ngModelChange)="applicationDateChange2()"
+        />
+      </div>
+    </div>
+
+    <div class="form-group row">
+      <div class="buttons">
+        <button
+          type="button"
+          class="btn btn-info ml-2"
+          (click)="getReportToken('CRV')"
+        >
+          Preview
+        </button>
+        <button
+          type="button"
+          class="btn btn-success ml-2"
+          (click)="getReportToken('PDF')"
+        >
+          Print
+        </button>
+      </div>
+    </div>
+  </form>
+</app-accounting-wrapper>

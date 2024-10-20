@@ -1,0 +1,26 @@
+<app-accounting-wrapper>
+  <form [formGroup]="memberTransferForm">
+    <div class="mx-auto border col-md-7">
+      <p class="bg-dark title">Transfer Member No.</p>
+      <div class="form-row  mx-auto">
+        <label class="col-md-2">Member No:<span class="text-danger">*</span></label>
+        <div class="form-group col-md-6">
+          <input
+            type="text"
+            formControlName="MemberNo"
+            class="form-control"
+          />
+        </div>
+        <div class="form-group col-md-3">
+          <button class="btn btn-success" (click)="btnSearchClick()">Search</button>
+        </div>
+      </div>
+      <div class="form-row ml-0 mt-2 mx-auto" *ngIf="btnProcess">
+        <label class="col-md-8">{{ transferMode }}</label>
+      </div>
+      <div class="form-row ml-0 mt-2 mx-auto" *ngIf="btnProcess">
+        <button class="btn btn-info" (click)="btnTransferClick()">Transfer</button>
+      </div>
+    </div>
+  </form>
+</app-accounting-wrapper>

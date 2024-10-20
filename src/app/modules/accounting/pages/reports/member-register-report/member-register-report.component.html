@@ -1,0 +1,341 @@
+<app-main-wrapper [module]="module">
+  <form [formGroup]="MemberRegisterReportForm" class="mx-auto border col-md-7">
+    <p class="bg-dark title">Member Register Report</p>
+
+    <div class="form-group row">
+      <div class="col-md-1">
+        <input
+          [(ngModel)]="chbIsAllMemberTypeStatus"
+          (ngModelChange)="checkIsAllMemberTypeValue($event)"
+          class="form-check-input ml-1 checkbox"
+          style="margin: 0.8rem"
+          type="checkbox"
+          id="IsAllMemberTypeCheckbox"
+          formControlName="IsAllMemberType"
+        />
+      </div>
+
+      <label class="col-md-3 col-form-label" for="IsAllMemberTypeCheckbox" >All -- Member Type :</label>
+
+      <div class="col-md-7">
+        <select
+          [attr.disabled]="
+            MemberRegisterReportForm.value.IsAllMemberType ? '' : null
+          "
+          class="form-control pt-0"
+          formControlName="MemberType"
+        >
+          <option value="0">-Select-</option>
+          <option
+            *ngFor="let item of inputHelpData.MemberTypeList"
+            [value]="item.Id"
+          >
+            {{ item.Description }}
+          </option>
+        </select>
+      </div>
+    </div>
+
+    <div class="form-group row">
+      <div class="col-md-1">
+        <input
+          [(ngModel)]="chbIsAllCollectorStatus"
+          (ngModelChange)="checkIsAllCollectorValue($event)"
+          class="form-check-input ml-1 checkbox"
+          style="margin: 0.8rem"
+          type="checkbox"
+          id="IsAllCollectorCheckbox"
+          formControlName="IsAllCollector"
+        />
+      </div>
+
+      <label class="col-md-3 col-form-label" for="IsAllCollectorCheckbox" >All -- Collector :</label>
+
+      <div class="col-md-7">
+        <select
+          [attr.disabled]="
+            MemberRegisterReportForm.value.IsAllCollector ? '' : null
+          "
+          class="form-control pt-0"
+          formControlName="Collector"
+        >
+          <option value="0">-Select-</option>
+          <option
+            *ngFor="let item of inputHelpData.CollectorList"
+            [value]="item.Id"
+          >
+            {{ item.Description }}
+          </option>
+        </select>
+      </div>
+    </div>
+
+    <div class="form-group row">
+      <div class="col-md-1">
+        <input
+          [(ngModel)]="chbIsAllGroupStatus"
+          (ngModelChange)="checkIsAllGroupValue($event)"
+          class="form-check-input ml-1 checkbox"
+          style="margin: 0.8rem"
+          type="checkbox"
+          id="IsAllGroup"
+          formControlName="IsAllGroup"
+        />
+      </div>
+
+      <label class="col-md-3 col-form-label" for="IsAllGroup" >All -- Group :</label>
+      <div class="col-md-7">
+        <select
+          [attr.disabled]="
+            MemberRegisterReportForm.value.IsAllGroup ? '' : null
+          "
+          class="form-control pt-0"
+          formControlName="Group"
+        >
+          <option value="0">-Select-</option>
+          <option
+            *ngFor="let item of inputHelpData.GroupList"
+            [value]="item.Id"
+          >
+            {{ item.Description }}
+          </option>
+        </select>
+      </div>
+    </div>
+
+    <div class="form-group row">
+      <div class="col-md-1">
+        <input
+          [(ngModel)]="chbIsAllGenderStatus"
+          (ngModelChange)="checkIsAllGenderValue($event)"
+          class="form-check-input ml-1 checkbox"
+          style="margin: 0.8rem"
+          type="checkbox"
+          id="IsAllGender"
+          formControlName="IsAllGender"
+        />
+      </div>
+
+      <label class="col-md-3 col-form-label" for="IsAllGender" >All -- Gender :</label>
+      <div class="col-md-7">
+        <select
+          [attr.disabled]="
+            MemberRegisterReportForm.value.IsAllGender ? '' : null
+          "
+          class="form-control pt-0"
+          formControlName="Gender"
+        >
+          <option value="0">-Select-</option>
+          <option
+            *ngFor="let item of inputHelpData.GenderList"
+            [value]="item.Id"
+          >
+            {{ item.Description }}
+          </option>
+        </select>
+      </div>
+    </div>
+
+    <div class="form-group row">
+      <div class="col-md-1">
+        <input
+          [(ngModel)]="chbIsAllReligionStatus"
+          (ngModelChange)="checkIsAllReligionValue($event)"
+          class="form-check-input ml-1 checkbox"
+          style="margin: 0.8rem"
+          type="checkbox"
+          id="IsAllReligion"
+          formControlName="IsAllReligion"
+        />
+      </div>
+
+      <label class="col-md-3 col-form-label" for="IsAllReligion" >All -- Religion :</label>
+      <div class="col-md-7">
+        <select
+          [attr.disabled]="
+            MemberRegisterReportForm.value.IsAllReligion ? '' : null
+          "
+          class="form-control pt-0"
+          formControlName="Religion"
+        >
+          <option value="0">-Select-</option>
+          <option
+            *ngFor="let item of inputHelpData.ReligionList"
+            [value]="item.Id"
+          >
+            {{ item.Description }}
+          </option>
+        </select>
+      </div>
+    </div>
+
+    <div class="form-group row">
+      <div class="col-md-1">
+        <input
+          [(ngModel)]="chbIsAllBloodGroupStatus"
+          (ngModelChange)="checkIsAllBloodGroupValue($event)"
+          class="form-check-input ml-1 checkbox"
+          style="margin: 0.8rem"
+          type="checkbox"
+          id="IsAllBloodGroup"
+          formControlName="IsAllBloodGroup"
+        />
+      </div>
+
+      <label class="col-md-3 col-form-label" for="IsAllBloodGroup" >All -- Blood Group :</label>
+      <div class="col-md-7">
+        <select
+          [attr.disabled]="
+            MemberRegisterReportForm.value.IsAllBloodGroup ? '' : null
+          "
+          class="form-control pt-0"
+          formControlName="BloodGroup"
+        >
+          <option value="0">-Select-</option>
+          <option
+            *ngFor="let item of inputHelpData.BloodGroupList"
+            [value]="item.Id"
+          >
+            {{ item.Description }}
+          </option>
+        </select>
+      </div>
+    </div>
+
+    <div class="form-group row">
+      <div class="col-md-1">
+        <input
+          [(ngModel)]="chbIsAllMobileStatus"
+          (ngModelChange)="checkIsAllMobileValue($event)"
+          class="form-check-input ml-1 checkbox"
+          style="margin: 0.8rem"
+          type="checkbox"
+          id="IsAllMobileCheckbox"
+          formControlName="IsAllMobile"
+        />
+      </div>
+
+      <label class="col-md-3 col-form-label" for="IsAllMobileCheckbox" >All -- Mobile No. :</label>
+
+      <div class="col-md-7">
+        <select
+          [attr.disabled]="
+            MemberRegisterReportForm.value.IsAllMobile ? '' : null
+          "
+          class="form-control pt-0"
+          formControlName="Mobile"
+        >
+          <option value="0">-Select-</option>
+          <option
+            *ngFor="let item of inputHelpData.MobileList"
+            [value]="item.Id"
+          >
+            {{ item.Description }}
+          </option>
+        </select>
+      </div>
+    </div>
+
+    <div class="form-group row">
+      <div class="col-md-1">
+        <input
+          [(ngModel)]="chbIsAllStatusStatus"
+          (ngModelChange)="checkIsAllStatusValue($event)"
+          class="form-check-input ml-1 checkbox"
+          style="margin: 0.8rem"
+          type="checkbox"
+          id="IsAllStatus"
+          formControlName="IsAllStatus"
+        />
+      </div>
+
+      <label class="col-md-3 col-form-label" for="IsAllStatus" >All -- Status :</label>
+      <div class="col-md-7">
+        <select
+          [attr.disabled]="
+            MemberRegisterReportForm.value.IsAllStatus ? '' : null
+          "
+          class="form-control pt-0"
+          formControlName="Status"
+        >
+          <option value="0">-Select-</option>
+          <option value="1">Active</option>
+          <option value="2">Transfered</option>
+          <option value="3">Close</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="form-group row">
+      <div class="col-md-1">
+        <input
+          [(ngModel)]="chbIsAllDateStatus"
+          (ngModelChange)="checkIsAllDateValue($event)"
+          class="form-check-input ml-1 checkbox"
+          style="margin: 0.8rem"
+          type="checkbox"
+          id="IsAllDate"
+          formControlName="IsAllDate"
+        />
+      </div>
+
+      <label class="col-md-3 col-form-label" for="IsAllDate" >All -- From Open Date :</label>
+      <div class="col-md-4">
+        <input
+          id="dateFormat"
+          type="text"
+          placeholder="DD/MM/YYYY"
+          class="form-control"
+          bsDatepicker
+          formControlName="FormOpenDate"
+          autocomplete="off"
+          [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY' }"
+          (ngModelChange)="applicationDateChange()"
+        />
+      </div>
+    </div>
+
+    <div class="form-group row">
+      <div class="col-md-1">
+        <input
+          [(ngModel)]="chbIsAllAgeStatus"
+          (ngModelChange)="checkIsAllAgeValue($event)"
+          class="form-check-input ml-1 checkbox"
+          style="margin: 0.8rem"
+          type="checkbox"
+          id="IsAllAge"
+          formControlName="IsAllAge"
+        />
+      </div>
+
+      <label class="col-md-3 col-form-label" for="IsAllAge" >All -- Age :</label>
+      <div class="col-md-4">
+        <input
+          appOnlyNumber
+          type="text"
+          class="form-control"
+          id="Age"
+          formControlName="Age"
+          name="Age"
+        />
+      </div>
+      <div class="col-md-3">
+        <select class="form-control" formControlName="AgeEqual">
+          <option value="0">-Select-</option>
+          <option value="1">Equal Age</option>
+          <option value="2">Less Age</option>
+          <option value="3">Greater Age</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="buttons">
+      <button type="button" class="btn btn-info ml-2" (click)="getReportToken('CRV')">
+        Preview
+      </button>
+      <button type="button" class="btn btn-success ml-2" (click)="getReportToken('PDF')">
+        Print
+      </button>
+    </div>
+  </form>
+</app-main-wrapper>

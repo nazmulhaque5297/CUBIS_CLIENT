@@ -1,0 +1,178 @@
+<app-accounting-wrapper>
+  <form [formGroup]="setupForm" novalidate class="form-horizontal">
+    <div class="row">
+      <div class="col-xl-8 col-md-8">
+        <p class="bg-primary text-center text-light bg-secondary title">
+          Service Charge
+        </p>
+        <div class="card">
+          <div class="card-body">
+            <div class="form-group row">
+              <label class="col-md-3 col-form-label">A/C Type:</label>
+              <div class="form-group col-md-2">
+                <input
+                  type="text"
+                  class="form-control"
+                  disabled
+                  formControlName="AccountTypeCode"
+                />
+              </div>
+              <div class="col-md-5">
+                <select
+                  formControlName="AccountTypeId"
+                  class="form-control pt-0"
+                  (change)="onTypeChange(setupForm.value.AccountTypeId)"
+                >
+                  <option value="">-Select-</option>
+                  <option
+                    *ngFor="let item of accountTypeList"
+                    [value]="item.Id"
+                  >
+                    {{ item.Description }}
+                  </option>
+                </select>
+              </div>
+            </div>
+
+            <div class="form-group row">
+              <label class="col-md-3 col-form-label"
+                >Service Charge Amount:</label
+              >
+              <div class="form-group col-md-2">
+                <div class="mt-0 pt-0 form-control">
+                  {{ interestDetailsData.PrmAccProcFees }}
+                </div>
+              </div>
+            </div>
+
+            <div class="form-group row">
+              <label class="col-md-3 col-form-label">GL Debit Code:</label>
+              <div class="form-group col-md-2">
+                <div class="mt-0 pt-0 form-control">
+                  {{ interestDetailsData.SCGlDebitCode }}
+                </div>
+              </div>
+              <div class="form-group col-md-5">
+                <div class="mt-0 pt-0 form-control">
+                  {{ interestDetailsData.SCGlDebitCodeDesc }}
+                </div>
+              </div>
+            </div>
+
+            <div class="form-group row">
+              <label class="col-md-3 col-form-label">GL Credit Code:</label>
+              <div class="form-group col-md-2">
+                <div class="mt-0 pt-0 form-control">
+                  {{ interestDetailsData.SCGlCreditCode }}
+                </div>
+              </div>
+              <div class="form-group col-md-5">
+                <div class="mt-0 pt-0 form-control">
+                  {{ interestDetailsData.SCGlCreditCodeDesc }}
+                </div>
+              </div>
+            </div>
+
+            <div class="form-group row">
+              <label class="col-md-3 col-form-label">Input Voucher No.:</label>
+              <div class="form-group col-md-7">
+                <input
+                  maxlength="10"
+                  type="text"
+                  formControlName="VoucherNo"
+                  class="form-control mt-0 pt-0"
+                />
+              </div>
+            </div>
+
+            <div class="form-group row">
+              <label class="col-md-3 col-form-label">GL Debit Code:</label>
+              <div class="form-group col-md-2">
+                <div class="mt-0 pt-0">
+                  {{ interestDetailsData.SCGlDebitCode }}
+                </div>
+              </div>
+              <div class="form-group col-md-6">
+                <div class="mt-0 pt-0">
+                  {{ interestDetailsData.SCGlDebitCodeDesc }}
+                </div>
+              </div>
+            </div>
+
+            <div class="form-group row">
+              <label class="col-md-3 col-form-label">GL Credit Code:</label>
+              <div class="form-group col-md-2">
+                <div class="mt-0 pt-0">
+                  {{ interestDetailsData.SCGlCreditCode }}
+                </div>
+              </div>
+              <div class="form-group col-md-6">
+                <div class="mt-0 pt-0">
+                  {{ interestDetailsData.SCGlCreditCodeDesc }}
+                </div>
+              </div>
+            </div>
+
+            <div class="form-group row">
+              <label class="col-md-3 col-form-label">Input Voucher No.:</label>
+              <div class="form-group col-md-7">
+                <input
+                  maxlength="10"
+                  type="text"
+                  formControlName="VoucherNo"
+                  class="form-control mt-0 pt-0"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-xl-4 col-md-4">
+        <table id="Data">
+          <tr>
+            <th>Branch</th>
+            <th>Cal Status</th>
+            <th>Date</th>
+            <th>IntPostFlag</th>
+          </tr>
+          <tr *ngFor="let n of calculationStatusList">
+            <td>{{ n.BranchNo }}</td>
+            <td>{{ n.CalStatus }}</td>
+            <td>{{ n.CalculationDate }}</td>
+            <td>{{ n.IntPostFlag }}</td>
+          </tr>
+        </table>
+      </div>
+    </div>
+
+    <div class="buttons mt-2">
+      <button type="button" (click)="onCalculation()" class="btn btn-success">
+        Calculation
+      </button>
+      <button
+        type="button"
+        (click)="getReportToken()"
+        class="btn btn-info"
+        style="margin-left: 20px"
+      >
+        View
+      </button>
+      <button
+        type="button"
+        (click)="onPost()"
+        class="btn btn-info"
+        style="margin-left: 20px"
+      >
+        Post
+      </button>
+      <button
+        type="button"
+        (click)="onReversePost()"
+        class="btn btn-danger"
+        style="margin-left: 20px"
+      >
+        Post - Reverse
+      </button>
+    </div>
+  </form>
+</app-accounting-wrapper>

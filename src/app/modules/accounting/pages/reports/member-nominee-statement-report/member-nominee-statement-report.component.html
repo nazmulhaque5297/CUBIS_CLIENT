@@ -1,0 +1,104 @@
+<app-accounting-wrapper>
+  <form
+    [formGroup]="MemberNomineeStatementForm"
+    class="mx-auto border col-md-7"
+  >
+    <p class="bg-dark title">Member Nominee Information Report</p>
+
+    <div class="form-group row">
+      <div class="col-md-1"></div>
+      <label class="col-md-3 col-form-label"
+        >Member No:<span class="text-danger">*</span></label
+      >
+
+      <div class="col-md-3">
+        <input
+          (change)="onChangeMemNo($event)"
+          type="text"
+          class="form-control"
+          id="MemNo"
+          formControlName="MemNo"
+          name="MemNo"
+        />
+      </div>
+
+      <div class="col-md-5">
+        <input
+          type="text"
+          formControlName="MemName"
+          class="form-control"
+          disabled="true"
+        />
+      </div>
+    </div>
+
+    <div class="form-group row">
+      <div class="col-md-1">
+        <input
+          [(ngModel)]="chbIsAllAccTypeStatus"
+          (ngModelChange)="checkIsAllAccTypeValue($event)"
+          class="form-check-input ml-1 checkbox"
+          style="margin: 0.8rem"
+          type="checkbox"
+          id="IsAllAccTypeCheckbox"
+          formControlName="IsAllAccType"
+        />
+      </div>
+      <!-- style="margin-left: 0.6rem" -->
+      <label class="col-md-3 col-form-label" for="IsAllAccTypeCheckbox"
+        >All - Account Type</label
+      >
+      <div class="col-md-3">
+        <input
+          appOnlyNumber
+          (change)="onChangeAccTypeCode($event)"
+          type="text"
+          class="form-control"
+          id="CodeNumber"
+          formControlName="AccTypeCode"
+          name="CodeNumber"
+          [attr.disabled]="
+            MemberNomineeStatementForm.value.IsAllAccType ? '' : null
+          "
+        />
+      </div>
+
+      <div class="col-md-5">
+        <select
+          [attr.disabled]="
+            MemberNomineeStatementForm.value.IsAllAccType ? '' : null
+          "
+          disabled="IsAccTypeDisabled"
+          class="form-control pt-0"
+          formControlName="AccType"
+          (change)="onChangeAccType($event)"
+        >
+          <option value="0">-Select-</option>
+          <option
+            *ngFor="let item of inputHelpData.accTransferAccountTypeList"
+            [value]="item.Id"
+          >
+            {{ item.Description }}
+          </option>
+        </select>
+      </div>
+    </div>
+
+    <div class="buttons">
+      <button
+        type="button"
+        class="btn btn-info ml-2"
+        (click)="getReportToken('CRV')"
+      >
+        Preview
+      </button>
+      <button
+        type="button"
+        class="btn btn-success ml-2"
+        (click)="getReportToken('PDF')"
+      >
+        Print
+      </button>
+    </div>
+  </form>
+</app-accounting-wrapper>

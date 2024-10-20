@@ -1,0 +1,7 @@
+.headerLogoText{
+  color: #fff;
+  font-size: 25px;
+}
+.dropdown-toggle::after{
+  display: none;
+}

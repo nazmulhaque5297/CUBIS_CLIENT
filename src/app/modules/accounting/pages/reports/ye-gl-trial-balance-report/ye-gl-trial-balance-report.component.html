@@ -1,0 +1,55 @@
+<app-accounting-wrapper>
+  <form [formGroup]="YEGLTrialBalanceForm" class="mx-auto border col-md-6">
+    <p class="bg-dark title">YE GL Trial Balance Report</p>
+
+    <div class="form-group row">
+      <label class="col-md-2 col-form-label">From Date </label>
+      <div class="col-md-7">
+        <input
+          id="dateFormat"
+          type="text"
+          class="form-control"
+          bsDatepicker
+          formControlName="IssueFromDate"
+          [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY' }"
+          autocomplete="off"
+          (ngModelChange)="applicationDateChange()"
+        />
+      </div>
+    </div>
+    <div class="form-group row">
+      <label class="col-md-2 col-form-label">To Date </label>
+      <div class="col-md-7">
+        <input
+          id="dateFormat"
+          type="text"
+          class="form-control"
+          bsDatepicker
+          formControlName="IssueToDate"
+          [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY' }"
+          autocomplete="off"
+          (ngModelChange)="applicationDateChange2()"
+        />
+      </div>
+    </div>
+
+    <div class="form-group row">
+      <div class="col-md-2">
+        <input
+          class="form-check-input ml-1 checkbox"
+          style="margin: 0.8rem"
+          type="checkbox"
+          id="showZeroChb"
+          formControlName="showZeroChb"
+        />
+      </div>
+      <label class="col-md-3 col-form-label">Show Zero ?</label>
+    </div>
+
+    <div class="buttons mb-2">
+      <button type="button" class="btn btn-success" (click)="getReportToken()">
+        Print
+      </button>
+    </div>
+  </form>
+</app-accounting-wrapper>

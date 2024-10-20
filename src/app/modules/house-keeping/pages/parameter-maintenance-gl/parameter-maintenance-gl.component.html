@@ -1,0 +1,267 @@
+<app-house-keeping-wrapper>
+  <form
+    [formGroup]="parameterMaintenanceGLControlForm"
+    class="mx-auto border col-md-6 main-container"
+  >
+    <p class="bg-dark title">Parameter Maintenance - General</p>
+    <div class="ml-1 form-row">
+      <label for="ColMaintenance" class="col-sm-5 col-form-label"
+        >Collector Maintenance :</label
+      >
+
+      <div class="form-group col-sm-3">
+        <select
+          formControlName="MemCollectorFlag"
+          class="form-control pt-0"
+          (change)="onGetIndexChangeDetails()"
+        >
+          <!-- <option value="0">-Select-</option> -->
+          <option
+            *ngFor="let item of inputHelpData.YesNoList"
+            [value]="item.Id"
+          >
+            {{ item.Description }}
+          </option>
+        </select>
+      </div>
+    </div>
+
+    <div class="ml-1 form-row">
+      <label for="GroupMaintenance" class="col-sm-5 col-form-label"
+        >Group Maintenance :</label
+      >
+
+      <div class="form-group col-sm-3">
+        <select
+          formControlName="MemGroupFlag"
+          class="form-control pt-0"
+          (change)="onGetIndexChangeDetails()"
+        >
+          <option
+            *ngFor="let item of inputHelpData.YesNoList"
+            [value]="item.Id"
+          >
+            {{ item.Description }}
+          </option>
+        </select>
+      </div>
+    </div>
+    <div class="ml-1 form-row">
+      <label for="OldAccNo" class="col-sm-5 col-form-label"
+        >Old Account No. :</label
+      >
+
+      <div class="form-group col-sm-3">
+        <select formControlName="OldAccNoFlag" class="form-control pt-0">
+          <option
+            *ngFor="let item of inputHelpData.YesNoList"
+            [value]="item.Id"
+          >
+            {{ item.Description }}
+          </option>
+        </select>
+      </div>
+    </div>
+    <div class="ml-1 form-row">
+      <label for="HOMemberApp" class="col-sm-5 col-form-label"
+        >H/O Member Application :</label
+      >
+
+      <div class="form-group col-sm-3">
+        <select formControlName="PrmMemApplication1" class="form-control pt-0">
+          <option
+            *ngFor="let item of inputHelpData.YesNoList"
+            [value]="item.Id"
+          >
+            {{ item.Description }}
+          </option>
+        </select>
+      </div>
+    </div>
+
+    <div class="ml-1 form-row">
+      <label for="OldAccNo" class="col-sm-5 col-form-label">
+        Manual AccNo. :</label
+      >
+
+      <div class="form-group col-sm-3">
+        <select formControlName="ManualAccNo" class="form-control pt-0">
+          <option
+            *ngFor="let item of inputHelpData.YesNoList"
+            [value]="item.Id"
+          >
+            {{ item.Description }}
+          </option>
+        </select>
+      </div>
+    </div>
+
+    <div class="ml-1 form-row">
+      <label for="BoothMemberApp" class="col-sm-5 col-form-label"
+        >Booth Member Application :</label
+      >
+
+      <div class="form-group col-sm-3">
+        <select formControlName="PrmMemApplication2" class="form-control pt-0">
+          <option
+            *ngFor="let item of inputHelpData.YesNoList"
+            [value]="item.Id"
+          >
+            {{ item.Description }}
+          </option>
+        </select>
+      </div>
+    </div>
+    <div class="ml-1 form-row">
+      <label for="HOLoanApp" class="col-sm-5 col-form-label"
+        >H/O Loan Application :</label
+      >
+
+      <div class="form-group col-sm-3">
+        <select formControlName="PrmLoanApplication1" class="form-control pt-0">
+          <option
+            *ngFor="let item of inputHelpData.YesNoList"
+            [value]="item.Id"
+          >
+            {{ item.Description }}
+          </option>
+        </select>
+      </div>
+    </div>
+    <div class="ml-1 form-row">
+      <label for="BoothLoanApp" class="col-sm-5 col-form-label"
+        >Booth Loan Application :</label
+      >
+
+      <div class="form-group col-sm-3">
+        <select formControlName="PrmLoanApplication2" class="form-control pt-0">
+          <option
+            *ngFor="let item of inputHelpData.YesNoList"
+            [value]="item.Id"
+          >
+            {{ item.Description }}
+          </option>
+        </select>
+      </div>
+    </div>
+    <div class="ml-1 form-row">
+      <label for="CorrAccType" class="col-sm-5 col-form-label"
+        >Trf. Corr. Account Type :</label
+      >
+
+      <div class="form-group col-sm-3">
+        <select formControlName="PrmCorrAccType" class="form-control pt-0">
+          <option value="0">-Select-</option>
+          <option
+            *ngFor="let item of inputHelpData.CorrAccountTypeList"
+            [value]="item.Id"
+          >
+            {{ item.Description }}
+          </option>
+        </select>
+      </div>
+    </div>
+    <div class="ml-1 form-row">
+      <label for="SmsFontType" class="col-sm-5 col-form-label"
+        >SMS Service Font Type :</label
+      >
+
+      <div class="form-group col-sm-3">
+        <select formControlName="PrmSMSFont" class="form-control pt-0">
+          <option
+            *ngFor="let item of inputHelpData.SMSFontTypeList"
+            [value]="item.Id"
+          >
+            {{ item.Description }}
+          </option>
+        </select>
+      </div>
+    </div>
+    <div class="ml-1 form-row">
+      <label for="CsAutoVch" class="col-sm-5 col-form-label"
+        >CS Auto Vch. Control By :</label
+      >
+
+      <div class="form-group col-sm-3">
+        <select
+          formControlName="PrmCSAutoVchCtrl"
+          class="form-control pt-0"
+          disabled="inputHelpData.ShowCSAutoVch === 'false'? 'true':'false'"
+          (change)="onGetIndexChangeDetails()"
+        >
+          <option
+            *ngFor="let item of inputHelpData.CSAutoVchList"
+            [value]="item.Id"
+          >
+            {{ item.Description }}
+          </option>
+        </select>
+      </div>
+    </div>
+    <div class="ml-1 form-row">
+      <label for="GLAutoVch" class="col-sm-5 col-form-label"
+        >GL Auto Vch. Control By :</label
+      >
+
+      <div class="form-group col-sm-3">
+        <select
+          formControlName="PrmGLAutoVchCtrl"
+          class="form-control pt-0"
+          disabled="inputHelpData.ShowCSAutoVch === 'false'? 'true':'false'"
+        >
+          <option
+            *ngFor="let item of inputHelpData.GLAutoVchList"
+            [value]="item.Id"
+          >
+            {{ item.Description }}
+          </option>
+        </select>
+      </div>
+    </div>
+    <div class="ml-1 form-row">
+      <label for="InzCsAutoVch" class="col-sm-5 col-form-label"
+        >Initialized CS Auto Vch. No. :</label
+      >
+
+      <div class="form-group col-sm-3">
+        <select
+          formControlName="PrmAutoVchInitializedCS"
+          class="form-control pt-0"
+          disabled="inputHelpData.ShowCSAutoVch === 'false'? 'true':'false'"
+        >
+          <option
+            *ngFor="let item of inputHelpData.InitializedAutoVchCSGLList"
+            [value]="item.Id"
+          >
+            {{ item.Description }}
+          </option>
+        </select>
+      </div>
+    </div>
+    <div class="ml-1 form-row">
+      <label for="InzGLAutoVch" class="col-sm-5 col-form-label"
+        >Initialized GL Auto Vch. No. :</label
+      >
+
+      <div class="form-group col-sm-3">
+        <select
+          formControlName="PrmAutoVchInitializedGL"
+          class="form-control pt-0"
+          disabled="inputHelpData.ShowCSAutoVch === 'false'? 'true':'false'"
+        >
+          <option
+            *ngFor="let item of inputHelpData.InitializedAutoVchCSGLList"
+            [value]="item.Id"
+          >
+            {{ item.Description }}
+          </option>
+        </select>
+      </div>
+    </div>
+    <div class="buttons col-md-3">
+      <button type="button" class="btn btn-success" (click)="onUpdate()">
+        Update
+      </button>
+    </div>
+  </form>
+</app-house-keeping-wrapper>

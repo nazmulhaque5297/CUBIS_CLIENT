@@ -1,0 +1,17 @@
+.title {
+  background: #6C757D !important;
+  color: #fff;
+  font-weight: 600;
+  padding: 2px;
+}
+
+.img__show img {
+  height: 280px;
+  width: 400px;
+}
+.btn {
+  padding: 4px 30px !important;
+  transition: 0.7s ease-in;
+  /* background: #0069aa; */
+  color: #fff;
+}

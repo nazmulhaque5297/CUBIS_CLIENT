@@ -1,0 +1,100 @@
+<app-accounting-wrapper>
+  <form [formGroup]="DistrictCodeForm" class="mx-auto border col-md-6 pb-3">
+    <p class="bg-dark title">District Code Maintenance</p>
+    <div class="form-row">
+      <label class="col-md-3">Division Code:</label>
+      <div class="form-group col-md-2">
+        <input
+          type="text"
+          class="form-control"
+          id="DivisionCode"
+          formControlName="DivisionCode"
+          name="DivisionCode"
+          (change)="changeSelectValue($event)"
+        />
+      </div>
+      <div class="form-group col-md-4">
+        <select
+          formControlName="DivisionDescription"
+          (change)="selectChangeHandler($event)"
+          class="form-control pt-0"
+        >
+          <option *ngFor="let item of divisionList" [value]="item.DivisionCode">
+            {{ item.DivisionDescription }}
+          </option>
+        </select>
+      </div>
+    </div>
+
+    <div class="form-row">
+      <label class="col-md-3">District Code:</label>
+      <div class="form-group col-md-6">
+        <select
+          formControlName="DistrictCode"
+          class="form-control pt-0"
+          (change)="viewDescription()"
+        >
+          <option value="0">-Select-</option>
+          <option *ngFor="let item of districtList" [value]="item.DistrictCode">
+            {{ item.DestrictDiscription }}
+          </option>
+        </select>
+      </div>
+    </div>
+    <div class="form-row">
+      <label class="col-md-3" for="inputDesc"
+        >Description: <span class="text-danger">*</span></label
+      >
+      <div class="form-group col-md-6">
+        <input
+          type="text"
+          formControlName="DistrictDescription"
+          class="form-control"
+          id="inputDesc"
+        />
+      </div>
+      <div
+        *ngIf="
+          DistrictCodeForm.controls['DistrictDescription'].invalid &&
+          DistrictCodeForm.controls['DistrictDescription'].touched
+        "
+        class="text-danger ml-5"
+      >
+        Required*
+      </div>
+    </div>
+    <div class="form-row">
+      <label for="inputDesc" class="col-md-3">Description - Bangla:</label>
+      <div class="form-group col-md-6">
+        <input
+          type="text"
+          formControlName="DistDescriptionBang"
+          class="form-control"
+          id="inputDesc"
+        />
+      </div>
+    </div>
+    <div class="buttons col-md-7 mx-auto">
+      <button type="button" class="btn_1 btn ml-4" (click)="saveOrUpdate()">
+        {{ submitButtonText }}
+      </button>
+      <button class="ml-3 btn" (click)="viewDetails()">View</button>
+    </div>
+  </form>
+  <div *ngIf="viewTableData.length != 0" class="mx-auto set-height col-md-6">
+    <table id="Data">
+      <tr>
+        <th>Divi Code</th>
+        <th>Dist Code</th>
+        <th>Description</th>
+        <th>Description-Bangla</th>
+      </tr>
+      <tr *ngFor="let item of viewTableData">
+        <td class="text-center">{{ item.DivisionCode }}</td>
+        <td class="text-center">{{ item.DistrictCode }}</td>
+        <td>{{ item.DestrictDiscription }}</td>
+        <td>{{ item.DistDescriptionBang }}</td>
+      </tr>
+    </table>
+  </div>
+</app-accounting-wrapper>

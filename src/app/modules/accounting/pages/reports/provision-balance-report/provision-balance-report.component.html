@@ -1,0 +1,68 @@
+<app-accounting-wrapper>
+  <form [formGroup]="ProvisionBalanceForm" class="mx-auto border col-md-7 pb-2">
+    <p class="bg-dark title">CS Provision Balance Report</p>
+    <div class="form-group row">
+      <label class="col-md-3 col-form-label"
+        >Account Type:<span class="text-danger">*</span></label
+      >
+      <div class="col-md-3">
+        <input
+          (focusout)="onChangeAccTypeCode($event)"
+          type="text"
+          class="form-control"
+          id="CodeNumber"
+          formControlName="AccTypeCode"
+          name="CodeNumber"
+        />
+      </div>
+
+      <div class="col-md-6">
+        <select
+          class="form-control pt-0"
+          formControlName="AccType"
+          (change)="onChangeAccType($event)"
+        >
+          <option value="0">-Select-</option>
+          <option
+            *ngFor="let item of inputHelpData.pmSlabAccountTypeList"
+            [value]="item.Id"
+          >
+            {{ item.Description }}
+          </option>
+        </select>
+      </div>
+    </div>
+
+    <div class="form-group row">
+      <label for="ZeroBalanceCheckbox" class="col-md-3 col-form-label"
+        >Show with Zero Balance :</label
+      >
+      <div class="col-md-3">
+        <input
+          [(ngModel)]="chbShowZeroBalance"
+          class="form-check-input position-static ml-1 checkbox"
+          type="checkbox"
+          id="ZeroBalanceCheckbox"
+          formControlName="ShowZeroBalance"
+        />
+      </div>
+    </div>
+
+    <div class="buttons">
+      <button
+        type="button"
+        class="btn btn-info ml-2"
+        (click)="getReportToken('CRV')"
+      >
+        Preview
+      </button>
+      <button
+        type="button"
+        class="btn btn-success ml-2"
+        (click)="getReportToken('PDF')"
+      >
+        Print
+      </button>
+    </div>
+  </form>
+</app-accounting-wrapper>

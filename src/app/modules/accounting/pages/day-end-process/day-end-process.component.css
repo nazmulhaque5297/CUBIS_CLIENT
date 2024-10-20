@@ -1,0 +1,89 @@
+.card-body {
+  padding-top: 2px !important;
+  padding-bottom: 0px !important;
+}
+.card {
+  border: none !important;
+}
+
+#Data {
+  font-family: Arial, Helvetica, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+.set-height {
+  height: 310px;
+  overflow-x: auto;
+  padding: 0px !important;
+}
+
+#Data td,
+#Data th {
+  border: 0px solid #ddd;
+  padding: 8px;
+}
+
+#Data tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
+
+#Data tr:hover {
+  background-color: #ddd;
+}
+
+#Data th {
+  padding-top: 12px;
+  padding-bottom: 12px;
+  text-align: left;
+  background-color: #0069aa;
+  color: white;
+  text-align: center;
+}
+
+.modal_alert {
+  background-color: #e9e9e9;
+  height: 500px;
+  width: 500px;
+  position: absolute;
+  top: 20%;
+  left: 20%;
+}
+.set__height {
+  height: 250px;
+  overflow-y: scroll;
+}
+
+#Data {
+  font-family: Arial, Helvetica, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+.set-height {
+  height: 310px;
+  overflow-x: auto;
+}
+
+#Data td,
+#Data th {
+  border: 1px solid #ddd;
+  padding: 8px;
+}
+
+#Data tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
+
+#Data tr:hover {
+  background-color: #ddd;
+}
+
+#Data th {
+  padding-top: 12px;
+  padding-bottom: 12px;
+  text-align: left;
+  background-color: #0069aa;
+  color: white;
+  text-align: center;
+}

@@ -1,0 +1,58 @@
+<app-house-keeping-wrapper>
+  <form
+    [formGroup]="UserInitializeControlForm"
+    class="mx-auto border col-md-6 main-container pb-3"
+  >
+    <p class="bg-dark title">User Initialize</p>
+    <div class="form-row">
+      <label>ID No.</label>
+      <div class="form-group col-md-4">
+        <input
+          type="text"
+          class="form-control"
+          id="ID Nummber"
+          formControlName="IDNumber"
+          name="IDNumber"
+          (change)="onUserNameChange(UserInitializeControlForm.value.IDNumber)"
+        />
+      </div>
+      <div class="form-group col-md-6">
+        <select formControlName="selectedOptionCode" (change)="onUserNameChange(UserInitializeControlForm.value.selectedOptionCode)" class="form-control pt-1">
+          <option value="0">-Select-</option>
+          <option *ngFor="let item of userNameIdList" [value]="item.Id">
+            {{ item.Description }}
+          </option>
+        </select>
+      </div>
+    </div>
+
+    <div class="buttons">
+      <button type="button" class="ml-5 btn btn-success" (click)="onUnlockUser(UserInitializeControlForm.value.IDNumber)">Remove User Lock</button>
+    </div>
+
+    <div class="row" style="margin-top: 30px;">
+      <div class="col-md-12">
+        <table class="table">
+            <tr style="background-color: #DDDDDD">
+              <td>IdsNo</td>
+              <td>IdsName</td>
+              <td>IdsLogInFlag</td>
+              <td>IdsLogInTable</td>
+              
+            </tr>
+            <tr
+              *ngFor="let item of lockedUserList; let i = index"
+            >
+              <td>{{ item.IdsNo }}</td>
+              <td>{{ item.IdsName }}</td>
+              <td>{{ item.IdsLogInFlag }}</td>
+              <td>{{ item.IdsLogInTable }}</td>
+              
+            </tr>
+          </table>
+
+      </div>
+  </div>
+
+  </form>
+</app-house-keeping-wrapper>

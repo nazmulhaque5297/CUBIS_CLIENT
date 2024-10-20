@@ -1,0 +1,72 @@
+<app-accounting-wrapper>
+  <form [formGroup]="YEReverseTrnForm">
+    <div class="mx-auto border col-md-7">
+      <div class="bg-dark title">GL Year End Reverse Transaction</div>
+      <table id="Data" class="mt-3">
+        <tr>
+          <td class="ml-2 pl-4">Transaction Date:</td>
+          <td>
+            <input
+              type="text"
+              formControlName="CtrlTrnDate"
+              class="form-control mt-0 pt-0"
+              readonly
+            />
+          </td>
+        </tr>
+        <tr>
+          <td class="ml-2 pl-4">Voucher No:</td>
+          <td>
+            <input
+              type="text"
+              formControlName="VoucherNo"
+              class="form-control mt-0 pt-0"
+            />
+          </td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>
+            <button
+              type="button"
+              (click)="onSearch()"
+              *ngIf="!showDelete"
+              [disabled]="!searchBtnDis"
+              class="btn btn-success"
+            >
+              Search
+            </button>
+            <button
+              type="button"
+              (click)="onDelete()"
+              *ngIf="showDelete"
+              class="btn btn-danger"
+            >
+              Reverse
+            </button>
+          </td>
+        </tr>
+      </table>
+    </div>
+  </form>
+  <div *ngIf="DataList.length != 0" class="mx-auto col-md-7 set-height">
+    <table id="Data" class="col-md-12">
+      <tr>
+        <th>Vch. No</th>
+        <th>GL Code</th>
+        <th>GL Code Name</th>
+        <th>Description</th>
+        <th>Debit</th>
+        <th>Credit</th>
+      </tr>
+      <tr *ngFor="let item of DataList">
+        <td class="text-center">{{ item.VchNo }}</td>
+        <td class="text-center">{{ item.GLAccNo }}</td>
+        <td class="text-center">{{ item.GLAccDesc }}</td>
+        <td class="text-center">{{ item.TrnDesc }}</td>
+        <td class="text-center">{{ item.GLDebitAmt }}</td>
+        <td class="text-center">{{ item.GLCreditAmt }}</td>
+      </tr>
+    </table>
+  </div>
+</app-accounting-wrapper>

@@ -1,0 +1,248 @@
+<app-main-wrapper [module]="module">
+  <form [formGroup]="AccountStatementForm" class="mx-auto border col-md-7 pb-2">
+    <p class="bg-dark title">Member Account Statement</p>
+
+    <div class="form-group row">
+      <label class="col-md-3 col-form-label"
+        >Account Type:<span class="text-danger">*</span></label
+      >
+      <div class="col-md-3">
+        <input
+          appOnlyNumber
+          (change)="onChangeAccTypeCode($event)"
+          (keydown)="onEnterAccTypeCodeHandler($event)"
+          type="text"
+          class="form-control"
+          id="CodeNumber"
+          formControlName="AccTypeCode"
+          name="CodeNumber"
+        />
+      </div>
+
+      <div class="col-md-6">
+        <select
+          class="form-control pt-0"
+          formControlName="AccType"
+          (change)="onChangeAccType($event)"
+        >
+          <option value="0">-Select-</option>
+          <option
+            *ngFor="let item of inputHelpData.accTransferAccountTypeList"
+            [value]="item.Id"
+          >
+            {{ item.Description }}
+          </option>
+        </select>
+      </div>
+    </div>
+
+    <div class="form-group row">
+      <label class="col-md-3 col-form-label"
+        >Old A/c No:<span class="text-danger">*</span></label
+      >
+
+      <div class="col-md-3">
+        <input
+          type="text"
+          class="form-control"
+          id="OldAcNo"
+          formControlName="OldAcNo"
+          name="OldAcNo"
+          (focusout)="onChangeOldAcNo($event)"
+          (keydown)="onEnterOldAcNoHandler($event)"
+        />
+      </div>
+    </div>
+
+    <div class="form-group row">
+      <label class="col-md-3 col-form-label"
+        >Member No:<span class="text-danger">*</span></label
+      >
+
+      <div class="col-md-3">
+        <input
+          (change)="onChangeMemNo($event)"
+          type="text"
+          class="form-control"
+          id="MemNo"
+          formControlName="MemNo"
+          name="MemNo"
+          (keydown)="onEnterMember($event)"
+        />
+      </div>
+
+      <div class="col-md-6">
+        <input
+          type="text"
+          formControlName="MemName"
+          class="form-control"
+          disabled="true"
+        />
+      </div>
+    </div>
+
+    <div class="form-group row">
+      <label class="col-md-3 col-form-label"
+        >Account No:<span class="text-danger">*</span></label
+      >
+
+      <div class="col-md-9">
+        <input
+          type="text"
+          formControlName="AccNo"
+          class="form-control"
+          id="accNo"
+          (focusout)="onChangeAcNo($event)"
+          (keydown)="onChangeAccNo($event)"
+        />
+      </div>
+
+      <!-- <div class="col-md-9">
+        <select class="form-control" formControlName="AccNo">
+          <option value="0">-Select-</option>
+          <option
+            *ngFor="let item of inputHelpAccNoDetails.AccountNoList"
+            [value]="item.Description"
+          >
+            {{ item.Description }}
+          </option>
+        </select>
+      </div> -->
+    </div>
+
+    <div class="form-group row">
+      <label class="col-md-3 col-form-label">From date:</label>
+      <div class="col-md-3">
+        <input
+          id="dateFormat1"
+          type="text"
+          class="form-control"
+          bsDatepicker
+          formControlName="IssueFromDate"
+          [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY' }"
+          autocomplete="off"
+          (ngModelChange)="applicationDateChange()"
+          (keydown)="applicationDateChangeEnter($event)"
+        />
+      </div>
+
+      <label class="col-md-2 col-form-label">Balance:</label>
+
+      <div class="col-md-4">
+        <input
+          type="text"
+          class="form-control"
+          id="Balance"
+          formControlName="Balance"
+          name="Balance"
+          disabled="true"
+        />
+      </div>
+    </div>
+
+    <div class="form-group row">
+      <label class="col-md-3 col-form-label">To date:</label>
+      <div class="col-md-3">
+        <input
+          id="dateFormat"
+          type="text"
+          class="form-control"
+          bsDatepicker
+          formControlName="IssueToDate"
+          [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY' }"
+          autocomplete="off"
+          (ngModelChange)="applicationDateChange2()"
+          (keydown)="applicationDateEnter($event)"
+        />
+      </div>
+
+      <label class="col-md-2 col-form-label">Status:</label>
+
+      <div class="col-md-4">
+        <input
+          type="text"
+          class="form-control"
+          id="Status"
+          formControlName="Status"
+          name="Status"
+          disabled="true"
+        />
+      </div>
+    </div>
+
+    <div class="form-group row">
+      <label for="IsActiveOrClosedText" class="col-sm-3 col-form-label">{{
+        IsActiveOrClosedText
+      }}</label>
+      <div class="col-md-3">
+        <input
+          [(ngModel)]="chbIsActiveAccStatus"
+          (ngModelChange)="isActiveAccClick($event)"
+          class="form-check-input position-static ml-1 checkbox"
+          type="checkbox"
+          id="IsActiveOrClosedText"
+          formControlName="IsActiveAcc"
+        />
+      </div>
+    </div>
+
+    <div class="form-group row">
+      <label for="showPenaltyText" class="col-sm-3 col-form-label">{{
+        showPenaltyText
+      }}</label>
+      <div class="col-md-3">
+        <input
+          class="form-check-input position-static ml-1 checkbox"
+          type="checkbox"
+          id="showPenaltyText"
+          formControlName="ShowPenalty"
+        />
+      </div>
+    </div>
+
+    <div class="form-group row col-md-6 mx-auto">
+      
+      <button type="button" class="btn btn-info ml-2" (click)="getReportToken('CRV')">
+        Preview
+      </button>
+      <button type="button" class="btn btn-success ml-2" (click)="getReportToken('PDF')">
+        Print
+      </button>
+    </div>
+  </form>
+
+  <div
+    *ngIf="accInfoDetails.length > 1 && displayTabularData"
+    class="mx-auto col-md-7 set-height"
+  >
+    <table id="Data">
+      <tr>
+        <th>Acc Type</th>
+        <th>Acc Title</th>
+        <th>A/c No.</th>
+        <th>Old A/c</th>
+        <th>GL Code</th>
+        <th>Status</th>
+        <th>Date</th>
+        <th>Select</th>
+      </tr>
+      <tr *ngFor="let item of accInfoDetails">
+        <td>{{ item.AccType }}</td>
+        <td>{{ item.AccTypeDescription }}</td>
+        <td>{{ item.AccNo }}</td>
+        <td>{{ item.AccOldNumber }}</td>
+        <td>{{ item.AccProductGLCode }}</td>
+        <td>{{ item.AccStatusDescription }}</td>
+        <td>{{ item.AccStatusDate }}</td>
+        <td>
+          <button value="{{ item.AccNo }}" (click)="bindSelectedAccNo($event)">
+            Select
+          </button>
+        </td>
+      </tr>
+    </table>
+  </div>
+
+  <!-- <div class="holds-the-iframe">
+  </div> -->
+</app-main-wrapper>

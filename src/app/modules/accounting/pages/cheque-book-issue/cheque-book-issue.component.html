@@ -1,0 +1,185 @@
+<app-main-wrapper [module]="module">
+  <form [formGroup]="ChequeBookIssueForm" class="mx-auto border col-md-7 pb-3">
+    <p class="bg-dark title">Cheque Book Issue</p>
+    <div class="form-row mx-auto">
+      <label for="AccType" class="col-md-3">Account Type:</label>
+      <div class="form-group col-md-2">
+        <input
+          type="text"
+          class="form-control"
+          id="AccType"
+          formControlName="AccType"
+          name="AccType"
+          (focusout)="changeSelectValue($event)"
+          (keydown)="onEnterAccTypeHandler($event)"
+        />
+      </div>
+      <div class="form-group col-md-4">
+        <select
+          formControlName="selectedOptionCode"
+          (change)="selectChangeHandler($event)"
+          class="form-control pt-0"
+        >
+          <option value="0">-Select-</option>
+          <option *ngFor="let item of dataList" [value]="item.AccTypeCode">
+            {{ item.AccTypeDescription }}
+          </option>
+        </select>
+      </div>
+    </div>
+
+    <div class="form-row">
+      <label for="OldAccNO" class="col-md-3">Old A/c No. :</label>
+      <div class="pl-2 form-group col-md-6">
+        <input
+          type="text"
+          formControlName="OldAccNO"
+          class="form-control"
+          id="OldAccNO"
+          (focusout)="changeOldAccNo()"
+          (keydown)="onEnterOldAccNOHandler($event)"
+        />
+      </div>
+    </div>
+    <div class="form-row">
+      <label for="MemNo" class="col-md-3">Member No:</label>
+      <div class="pl-2 form-group col-md-6">
+        <input
+          type="text"
+          formControlName="MemNo"
+          class="form-control"
+          id="MemNo"
+          (focusout)="GetMemInformation()"
+          (keydown)="onEnterMemNoHandler($event)"
+        />
+      </div>
+      <label *ngFor="let item of memInfoList">{{ item.MemName }}</label>
+    </div>
+    <div class="form-row">
+      <label for="AccNo" class="col-md-3">Account No:</label>
+      <div class="pl-2 form-group col-md-6">
+        <input
+          type="text"
+          formControlName="AccNo"
+          (keydown)="onEnterAccNoHandler($event)"
+          class="form-control"
+          id="AccNo"
+        />
+      </div>
+    </div>
+    <div class="form-row">
+      <label for="ChkPre" class="col-md-3">Cheque Prefix:</label>
+      <div class="pl-2 form-group col-md-6">
+        <input
+          type="text"
+          formControlName="ChkPre"
+          (keydown)="onEnterChkPreHandler($event)"
+          class="form-control"
+          id="ChkPre"
+        />
+      </div>
+    </div>
+    <div class="form-row">
+      <label for="NoOfPages" class="col-md-3">Number Of Pages :</label>
+      <div class="pl-2 form-group col-md-6">
+        <input
+          type="text"
+          formControlName="NoOfPages"
+          (keydown)="onEnterNoOfPagesHandler($event)"
+          class="form-control"
+          id="NoOfPages"
+        />
+      </div>
+    </div>
+    <div class="form-row">
+      <label for="BeginNo" class="col-md-3">Beginning No:</label>
+      <div class="pl-2 form-group col-md-6">
+        <input
+          appOnlyNumber
+          type="text"
+          formControlName="BeginNo"
+          class="form-control"
+          id="BeginNo"
+          (focusout)="BeginNoChk()"
+          (keydown)="onEnterBeginNoHandler($event)"
+        />
+      </div>
+    </div>
+    <div class="form-row">
+      <label for="EndNo" class="col-md-3">Ending No :</label>
+      <div class="pl-2 form-group col-md-6">
+        <input
+          appOnlyNumber
+          type="text"
+          formControlName="EndNo"
+          (keydown)="onEnterEndNoHandler($event)"
+          class="form-control"
+          id="EndNo"
+        />
+      </div>
+    </div>
+    <div class="form-row">
+      <label for="dateFormat" class="col-md-3">Issue Date :</label>
+      <div class="pl-2 form-group col-md-6">
+        <input
+          id="dateFormat"
+          type="text"
+          placeholder="DD/MM/YYYY"
+          class="form-control"
+          bsDatepicker
+          formControlName="IssuDt"
+          autocomplete="off"
+          [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY' }"
+        />
+      </div>
+    </div>
+    <div class="col-md-7 mx-auto submit">
+      <button
+        type="button"
+        class="btn btn_1 mt-3 ml-4"
+        (click)="PreviousChqBook()"
+      >
+        Submit
+      </button>
+      <button
+        type="button"
+        *ngIf="showViewbtn"
+        class="btn mt-3 ml-5"
+        (click)="chequeInformation()"
+      >
+        View
+      </button>
+    </div>
+  </form>
+  <div *ngIf="showModal" class="modal_alert py-5">
+    <p class="text-center">
+      Cheque Book/Leaf Already Exit will be Stop ...... ?
+    </p>
+    <div class="col-md-5 mx-auto d-flex justify-content-between buttons pt-3">
+      <button class="btn btn-primary" value="1" (click)="CheckBtnState($event)">
+        No
+      </button>
+      <button class="btn btn-danger" value="0" (click)="CheckBtnState($event)">
+        Stop
+      </button>
+    </div>
+  </div>
+  <div *ngIf="chequeInfo.length != 0" class="mx-auto col-md-7 set-height">
+    <table id="Data">
+      <tr>
+        <th>Chq. Prefix</th>
+        <th>Chq.No.</th>
+        <th>Issue Date</th>
+        <th>Chq.Status</th>
+        <th>Status Date</th>
+      </tr>
+      <tr *ngFor="let item of chequeInfo">
+        <td>{{ item.ChqeFx }}</td>
+        <td>{{ item.ChqSlNo }}</td>
+        <td>{{ item.ChqBIssDt }}</td>
+        <td>{{ item.ChqPStatDesc }}</td>
+        <td>{{ item.ChqPDt }}</td>
+      </tr>
+    </table>
+  </div>
+</app-main-wrapper>

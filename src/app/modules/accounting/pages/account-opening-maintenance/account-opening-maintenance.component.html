@@ -1,0 +1,214 @@
+<app-accounting-wrapper>
+  <form [formGroup]="accountOpenForm">
+      <div class="col-md-8 mx-auto">
+        <p class="bg-primary text-center text-light bg-secondary title">Account Opening maintenance</p>
+        <div class="card ">
+          <div class="card-body">
+            <div class="form-group row">
+              <label class="col-md-3 col-form-label">A/C Type:<span class="text-danger">*</span></label>
+              <div class="col-md-2">
+                <input id="a/c_type" type="text" class="form-control" formControlName="AccountTypeCode" (change)="
+                      onAccountTypeChange(accountOpenForm.value.AccountTypeCode)
+                    "  />
+              </div>
+              <div class="col-md-3">
+                <select class="form-control pt-0" formControlName="AccountTypeId" (change)="
+                      onAccountTypeChange(accountOpenForm.value.AccountTypeId)
+                    ">
+                  <option value="0">-Select-</option>
+                  <option *ngFor="let item of inputHelpData.AccountTypeList" [value]="item.Id">
+                    {{ item.Description }}
+                  </option>
+                </select>
+              </div>
+            </div>
+
+            <div *ngIf="accountViewModel.ShowMemberNo" class="form-group row">
+              <label class="col-md-3 col-form-label">Member No:<span class="text-danger">*</span></label>
+              <div class="col-md-2">
+                <input id="MemberNo" type="number" class="form-control" formControlName="MemberNo"  (change)="onMemberChange(accountOpenForm.value.MemberNo)"/>
+              </div>
+              <div class="col-md-3">
+                <input type="text" class="form-control" disabled formControlName="MemberName" />
+              </div>
+            </div>
+
+            <div *ngIf="accountViewModel.ShowOpenDate" class="form-group row">
+              <label class="col-md-3 col-form-label">Open Date:</label>
+              <!-- <input type="text" class="form-control" disabled formControlName="OpenDate" /> -->
+              <div class="col-md-5">
+                <input id="dateFormat" type="text"
+                  placeholder="DD/MM/YYYY"
+                  class="form-control"
+                  bsDatepicker
+                  formControlName="OpenDate"
+                  [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY' }"
+                  autocomplete="off"
+                  (ngModelChange)="OnOpenDateHandler()"
+                  (keydown)="OnOpenDateEnterHandler($event)"
+                >
+            </div>
+            </div>
+
+            <div *ngIf="accountViewModel.ShowDepositAmount" class="form-group row">
+              <label class="col-md-3 col-form-label">Deposit Amount:</label>
+              <div class="col-md-5">
+                <input id="DepositAmount" type="number" class="form-control" formControlName="DepositAmount" (change)="changeDepositAmountHandler($event)" (keydown)="changeDepositAmountEnterHandler($event)"/>
+              </div>
+            </div>
+
+            <div *ngIf="accountViewModel.ShowFixedDepositAmount" class="form-group row">
+              <label class="col-md-3 col-form-label">Fixed Deposit:<span class="text-danger">*</span></label>
+              <div class="col-md-5">
+                <input id="FixedDeposit" type="number" class="form-control" formControlName="FixedDeposit" (focusout)="changeFixedDepositAmountHandler($event)" (keydown)="fixeddepositevent($event)"/>
+              </div>
+            </div>
+
+            <div *ngIf="accountViewModel.ShowPeriod" class="form-group row">
+              <label class="col-md-3 col-form-label">Period(Month):<span class="text-danger">*</span></label>
+              <div class="col-md-5">
+                <input id="Period" type="number" class="form-control" formControlName="Period" (focusout)="changePeriodHandler($event)" (keydown)="changePeriodEnterHandler($event)"/>
+              </div>
+            </div>
+
+            <div *ngIf="accountViewModel.ShowInterestRate" class="form-group row">
+              <label class="col-md-3 col-form-label">Interest Rate:</label>
+              <div class="col-md-5">
+                <input id="interestRate" type="text" class="form-control" formControlName="InterestRate" appOnlyNumber (keydown)="changeIntRtEvent($event)"/>
+              </div>
+            </div>
+
+            <div *ngIf="accountViewModel.ShowMatrutiyDate" class="form-group row">
+              <label class="col-md-3 col-form-label">Maturity Date:</label>
+              <div class="col-md-5">
+                <input type="text" class="form-control" formControlName="MaturityDate" readonly/>
+              </div>
+            </div>
+            <div *ngIf="accountViewModel.ShowMatrutiyAmount" class="form-group row">
+              <label class="col-md-3 col-form-label">Maturity Amount:</label>
+              <div class="col-md-5">
+                <input id="MaturityAmount" type="text" class="form-control" formControlName="MaturityAmount" appOnlyNumber (keydown)="maturityAmountchange($event)"/>
+              </div>
+            </div>
+            <div *ngIf="accountViewModel.ShowFixedMthInt" class="form-group row">
+              <label class="col-md-3 col-form-label">Interest Benefits:</label>
+              <div class="col-md-5">
+                <input id="InterestBenefits" type="number" class="form-control" formControlName="InterestBenefits" (keydown)="intbenifitevent($event)"/>
+              </div>
+            </div>
+
+            <div *ngIf="accountViewModel.ShowWithdrawalAC" class="form-group row">
+              <label class="col-md-3 col-form-label">WithdrawalA/C:</label>
+              <div class="col-md-5">
+                <select id="withdrawal" class="form-control pt-0" formControlName="WithdrawalAccountTypeId" (change)="onWithdrawalEnterEvent()" >
+                  <option value="0">-Select-</option>
+                  <option *ngFor="let item of inputHelpData.WithdrawalAccountTypeList" [value]="item.Id">
+                    {{ item.Description }}
+                  </option>
+                </select>
+              </div>
+            </div>
+
+            <div *ngIf="accountViewModel.ShowInterestCalculation" class="form-group row">
+              <label class="col-md-3 col-form-label">Interest Calculation:</label>
+              <div class="col-md-5">
+                <select id="InterestCalculationId" class="form-control pt-0" formControlName="InterestCalculationId" (keydown)="onInterestEnterEvent($event)" (change)="onInterestEnterEvent($event)">
+                  <option *ngFor="let item of inputHelpData.InterestCalculationTypeList" [value]="item.Id">
+                    {{ item.Description }}
+                  </option>
+                </select>
+              </div>
+            </div>
+
+            <div *ngIf="accountViewModel.ShowAutoRenewal" class="form-group row">
+              <label class="col-md-3 col-form-label">Auto Renewal:</label>
+              <div class="col-md-5">
+                <select id="AutoRenewalId" class="form-control pt-0" formControlName="AutoRenewalId" (change)="renewalEvent($event) " (keydown)="renewalEvent($event)">
+                  <option value="0">-Select-</option>
+                  <option *ngFor="let item of inputHelpData.AutoRenewalTypeList" [value]="item.Id">
+                    {{ item.Description }}
+                  </option>
+                </select>
+              </div>
+            </div>
+
+
+            <div *ngIf="accountViewModel.ShowSpInstruction" class="form-group row">
+              <label class="col-md-3 col-form-label">Special Instruction:</label>
+              <div class="col-md-5">
+                <input type="text" class="form-control" formControlName="SpecialInstruction" id="SpecialInstruction" (keydown)="onSpecialInsEnterEvent($event)"/>
+              </div>
+            </div>
+
+            <div *ngIf="accountViewModel.ShowContraInt" class="form-group row">
+              <label class="col-md-3 col-form-label">Contract Int:</label>
+              <div class="col-md-5">
+                <input id="contractInt" type="checkbox" class="form-control" formControlName="IsContractInt" (keydown)="contrintevent($event)"/>
+              </div>
+            </div>
+
+
+            <div *ngIf="accountViewModel.ShowCorrAccount" class="form-group row">
+              <label class="col-md-3 col-form-label">Corr. Account No.:</label>
+              <div class="col-md-2">
+                <input id="corrAccount" type="text" class="form-control" formControlName="CorrAccountNo" (focusout)="CorrAccChangeHandler($event)" (keypress)="keyPress($event)" (keydown)="onCorrAccEnterEvent($event)"/>
+              </div>
+              <div class="col-md-3">
+                <input type="text" class="form-control" disabled formControlName="CorrAccountDescriptipn" />
+              </div>
+            </div>
+
+            <div *ngIf="accountViewModel.ShowAutoTrfCorrAcc" class="form-group row">
+              <label class="col-md-3 col-form-label">Auto Trf. Corr. A/c:</label>
+              <div class="col-md-4">
+                <input id="autotrf" type="checkbox" class="form-control" formControlName="IsAutoTransCorrAccount" (keydown)="autotrafEnterEvent()"/>
+              </div>
+            </div>
+
+            <div *ngIf="accountViewModel.ShowOldAccNo" class="form-group row">
+              <label class="col-md-3 col-form-label">Old Account No:</label>
+              <div class="col-md-5">
+                <input id="oldaccno" type="text" class="form-control" formControlName="OldAccountNo" (keydown)="onOldAccEvent($event)"/>
+              </div>
+            </div>
+
+            <div *ngIf="accountViewModel.ShowSMSService" class="form-group row">
+              <label class="col-md-3 col-form-label">SMS Service:</label>
+              <div class="col-md-5">
+                <select id="smsService" class="form-control pt-0" formControlName="SmsService" (keydown)="smsserviceEnterEvent($event)" (change)="smsserviceEnterEvent($event)">
+                  <option *ngFor="let item of inputHelpData.SmsServiceList" [value]="item.Id">
+                    {{ item.Description }}
+                  </option>
+                </select>
+              </div>
+            </div>
+
+            <div *ngIf="accountViewModel.ShowShareStatus" class="form-group row">
+              <label class="col-md-3 col-form-label">Share Status</label>
+              <div class="col-md-5">
+                <select class="form-control pt-0" formControlName="ShareStatusId" id="shareStatus" (keydown)="shareStatusevent($event)" (change)="shareStatusevent($event)">
+                  <option *ngFor="let item of inputHelpData.ShareStatusList" [value]="item.Id" >
+                    {{ item.Description }}
+                  </option>
+                </select>
+              </div>
+            </div>
+
+            <div class="form-group row">
+              <div class="col-md-6 mx-auto">
+                <button id="submit" type="button" class="btn btn-success" (click)="onCreate()">Submit</button>
+                <button type="button" class="btn btn-primary ml-3" (click)="callNomineeModal($event)" *ngIf = "showNomiBtn">Nominee</button>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+      <div class="col-xl-4 col-md-4">
+
+      </div>
+
+
+  </form>
+</app-accounting-wrapper>

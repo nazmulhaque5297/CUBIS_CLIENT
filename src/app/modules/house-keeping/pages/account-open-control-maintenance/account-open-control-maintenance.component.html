@@ -1,0 +1,69 @@
+<app-house-keeping-wrapper>
+  <form
+    [formGroup]="AccountOpenControlForm"
+    class="mx-auto border col-md-6 main-container"
+  >
+    <p class="bg-dark title">Account Open Control Setup Maintenance</p>
+    <div class="form-row">
+      <label>Account Class :</label>
+      <div class="form-group col-md-5">
+        <input
+          type="text"
+          class="form-control"
+          id="AccClass"
+          formControlName="AccountTypeClass"
+          name="AccClass"
+          (change)="changeSelectValue($event)"
+        />
+      </div>
+      <div class="form-group col-md-5">
+        <select
+          formControlName="selectedOptionCode"
+          class="form-control pt-0"
+          (change)="selectChangeHandler($event)"
+        >
+          <option value="0">-Select-</option>
+          <option *ngFor="let item of dataList" [value]="item.AccountTypeClass">
+            {{ item.ClassDescription }}
+          </option>
+        </select>
+      </div>
+    </div>
+  </form>
+
+  <div class="mx-auto set-height border col-md-6">
+    <table id="Data">
+      <tr>
+        <th>Code</th>
+        <th>Description</th>
+        <th>Select</th>
+        <th>Read Only</th>
+      </tr>
+      <tr *ngFor="let item of infoList">
+        <td class="text-center">{{ item.RecordCode }}</td>
+        <td>{{ item.Description }}</td>
+        <td class="text-center">
+          <Input
+            type="checkbox"
+            class="checkBtnSize"
+            [checked]="item.RecordFlag"
+            (change)="RecordFlagCheckHandler(item)"
+          />
+        </td>
+        <td class="text-center">
+          <Input
+            type="checkbox"
+            class="checkBtnSize"
+            [checked]="item.FuncFlag"
+            (change)="FuncFlagCheckHandler(item)"
+          />
+        </td>
+      </tr>
+    </table>
+  </div>
+  <div class="col-md-6 mx-auto buttons">
+    <button type="button" class="btn btn-success" (click)="updateHandler()">
+      {{ submitButtonText }}
+    </button>
+  </div>
+</app-house-keeping-wrapper>

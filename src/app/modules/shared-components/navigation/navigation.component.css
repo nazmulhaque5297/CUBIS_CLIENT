@@ -1,0 +1,39 @@
+.headerLogoText {
+  color: #fff;
+  font-size: 20px;
+}
+.dropdown-toggle::after {
+  display: none;
+}
+.navigation-menu > li > a {
+  font-size: 12px;
+  padding: 25px 2px;
+}
+.navbar__main{
+  background-color: red !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  
+}
+.top__bar{
+  padding: 0!important;
+}
+@media screen and (min-width: 1030px) {
+  .navigation-menu > li > a {
+    font-size: 12px;
+    padding: 25px 8px;
+  }
+}
+@media screen and (min-width: 1500px) {
+  .navigation-menu > li > a {
+    font-size: 16px;
+    padding: 25px 15px;
+  }
+}
+
+
+.hamaramurzi{
+  min-height: 30px;
+  max-height: 380px;
+  overflow-y: auto;
+}

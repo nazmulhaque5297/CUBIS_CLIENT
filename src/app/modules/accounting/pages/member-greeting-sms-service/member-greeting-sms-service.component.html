@@ -1,0 +1,188 @@
+<app-accounting-wrapper>
+  <form [formGroup]="greetingSMSForm">
+    <div class="mx-auto border col-md-7">
+      <p class="bg-dark title">Member's Greeting SMS Service -</p>
+      <div>
+        <label>Compose Sms: [Valid Max. 160 Character's]</label>
+      </div>
+      <div>
+        <label>Sms Port :</label>
+      </div>
+      <div class="form-row ml-0 mt-2 col-md-11">
+        <input
+          type="checkbox"
+          class="ml-3 pl-5 mt-1"
+          checked
+          (change)="changeCheckCollector()"
+        />
+        <label class="col-md-3 pr-0">Collector Code:</label>
+        <div class="form-group col-md-8 d-flex mt-0 pt-0">
+          <input
+            type="text"
+            formControlName="CollectorCode"
+            appOnlyNumberWithoutDecimal
+            class="form-control mt-0 pt-0"
+            (focusout)="CollectorCodeChange()"
+          />
+          <select
+            class="form-control pt-0 ml-2 col-md-7"
+            formControlName="CollectorCodeDDL"
+            (change)="CollectorCodeDDLChange()"
+          >
+            <option value="0">-Select-</option>
+            <option
+              *ngFor="let item of pageLoadData.CollectorList"
+              [value]="item.Id"
+            >
+              {{ item.Description }}
+            </option>
+          </select>
+        </div>
+      </div>
+
+      <div class="form-row ml-0 mt-2 col-md-11">
+        <input
+          type="checkbox"
+          class="ml-3 pl-5 mt-1"
+          checked
+          (change)="changeCheckGroup()"
+        />
+        <label class="col-md-3 pr-0">Group Name:</label>
+        <div class="form-group col-md-8 d-flex mt-0 pt-0">
+          <input
+            type="text"
+            formControlName="GroupName"
+            appOnlyNumberWithoutDecimal
+            class="form-control mt-0 pt-0"
+            (focusout)="GroupCodeChange()"
+          />
+          <select
+            class="form-control pt-0 ml-2 col-md-7"
+            formControlName="GroupNameDDL"
+            (change)="GroupCodeDDLChange()"
+          >
+            <option value="0">-Select-</option>
+            <option
+              *ngFor="let item of pageLoadData.GroupNameList"
+              [value]="item.Id"
+            >
+              {{ item.Description }}
+            </option>
+          </select>
+        </div>
+      </div>
+
+      <div class="form-row ml-0 mt-2 col-md-12">
+        <div class="col-md-1 mt-2">
+          <input
+            checked
+            type="radio"
+            value="0"
+            name="GreetingsRb"
+            formControlName="GreetingsRb"
+          />
+        </div>
+
+        <label class="col-md-3 col-form-label">General Greetings</label>
+
+        <div class="col-md-1 mt-2">
+          <input
+            type="radio"
+            value="1"
+            name="GreetingsRb"
+            formControlName="GreetingsRb"
+          />
+        </div>
+
+        <label class="col-md-3 col-form-label">BirthDay Greetings</label>
+
+        <div class="col-md-1 mt-2">
+          <input
+            type="radio"
+            value="2"
+            name="GreetingsRb"
+            formControlName="GreetingsRb"
+          />
+        </div>
+
+        <label class="col-md-3 col-form-label">Anniversary Greetings</label>
+      </div>
+
+      <div class="form-row ml-0 mt-2 col-md-12">
+        <div class="col-md-3"></div>
+        <div class="col-md-8">
+          <textarea id="boxarea" formControlName="GreetingSMS"></textarea>
+        </div>
+      </div>
+
+      <div class="buttons mt-3 mb-2">
+        <button
+          type="button"
+          class="btn btn-success"
+          style="margin-left: 230px"
+          (click)="GenerateSms()"
+        >
+          Generate SMS
+        </button>
+        <button
+         type="button" 
+         class="btn btn-info" 
+         style="margin-left: 20px"
+         (click)="SaveSMS()"
+         >
+          Save SMS
+        </button>
+        <button
+         type="button" 
+         class="btn btn-success"
+         style="margin-left: 20px"
+         (click)="SendSMS()"
+         >
+          Send SMS
+        </button>
+      </div>
+    </div>
+  </form>
+
+  <span *ngIf="GridData?.length > 0">
+    <div class="mx-auto mt-1 col-md-7 set-height">
+      <table id="data">
+        <tr>
+          <th>Contact Information</th>
+          <th>Total Member :<span>{{GridData.length}}</span></th>
+          <th>Mark Member : <span>{{PhoneNumArr.length}}</span></th>
+        </tr>
+        <tr></tr>
+      </table>
+      <table id="Data">
+        <tr>
+          <th>Select</th>
+          <th>MemberNo</th>
+          <th>MemberName</th>
+          <th>MobileNo</th>
+          <th>SelectFlag</th>
+        </tr>
+        <tr *ngFor="let item of GridData; let i = index">
+          <td class="text-center">
+            <input type="checkbox" 
+              [checked] = "item.SelectFlag"
+            (change)="CheckMethod(item)"
+            />
+          </td>
+          <td>
+            {{ item.MemberNo }}
+          </td>
+          <td>
+            {{ item.MemberName }}
+          </td>
+          <td>
+            {{ item.MobileNo }}
+          </td>
+          <td>
+            {{ item.SelectFlag }}
+          </td>
+        </tr>
+      </table>
+    </div>
+  </span>
+</app-accounting-wrapper>

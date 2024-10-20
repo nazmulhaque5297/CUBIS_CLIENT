@@ -1,0 +1,93 @@
+<app-house-keeping-wrapper>
+  <form
+    [formGroup]="TransactionTypeForm"
+    novalidate
+    class="mx-auto mt-3 border col-md-6 main-container pb-3"
+  >
+    <p class="mt-1 bg-dark title">Transaction Type Code Maintenance</p>
+    <div class="form-row">
+      <label>Transaction Type:</label>
+      <div class="form-group col-md-3">
+        <input
+          type="text"
+          (change)="changeSelectValue($event)"
+          class="form-control"
+          id="TrnTypeCode"
+          formControlName="TrnTypeCode"
+          name="TrnTypeCode"
+        />
+      </div>
+      <div class="form-group col-md-4">
+        <select
+          formControlName="selectedOptionCode"
+          (change)="selectChangeHandler($event)"
+          class="form-control pt-0"
+        >
+          <option value="0">-Select-</option>
+          <option *ngFor="let item of dataList" [value]="item.TrnTypeCode">
+            {{ item.TrnTypeDescription }}
+          </option>
+        </select>
+      </div>
+    </div>
+    <div class="form-row">
+      <label for="inputDesc">Description:</label
+      ><span class="text-danger">*</span>
+      <div class="form-group col-md-7">
+        <input
+          type="text"
+          formControlName="TrnTypeDescription"
+          class="form-control desc-input"
+          id="TrnTypeDescription"
+          required
+        />
+        <div
+          *ngIf="
+            TransactionTypeForm.controls['TrnTypeDescription'].invalid &&
+            TransactionTypeForm.controls['TrnTypeDescription'].touched
+          "
+          class="text-danger ml-4"
+        >
+          Required*
+        </div>
+      </div>
+    </div>
+    <div class="buttons">
+      <button
+        *ngIf="submitOk"
+        type="button"
+        (click)="insertData()"
+        class="btn btn-success ml-1"
+      >
+        Submit
+      </button>
+      <button
+        *ngIf="updateOk"
+        type="button"
+        (click)="updateData()"
+        class="btn btn-success"
+      >
+        Update
+      </button>
+      <button (click)="getTableReportData()" class="ml-5 btn btn_1">
+        View
+      </button>
+    </div>
+  </form>
+
+  <div
+    *ngIf="dataList.length != 0 && displayTabularData"
+    class="mx-auto set-height col-md-6"
+  >
+    <table id="Data">
+      <tr>
+        <th>Code</th>
+        <th>Description</th>
+      </tr>
+      <tr *ngFor="let item of dataList">
+        <td class="text-center">{{ item.TrnTypeCode }}</td>
+        <td>{{ item.TrnTypeDescription }}</td>
+      </tr>
+    </table>
+  </div>
+</app-house-keeping-wrapper>

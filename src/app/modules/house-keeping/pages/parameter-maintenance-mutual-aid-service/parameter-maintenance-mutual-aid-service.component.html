@@ -1,0 +1,95 @@
+<app-house-keeping-wrapper>
+  <form
+    novalidate
+    [formGroup]="MutualAidServiceForm"
+    autocomplete="off"
+    class="mx-auto border col-md-7 main-container pb-2"
+  >
+    <p class="bg-dark title">Mutual Aid Service Parameter</p>
+    <div class="form-row mt-2">
+      <label class="col-md-4"
+        >Account Type: <span style="color: red">*</span></label
+      >
+      <div class="form-group col-md-2">
+        <input
+          type="text"
+          (change)="selectChangeHandler($event)"
+          formControlName="AccTypeCode"
+          class="form-control mt-0 pt-0"
+          id="TrnCode"
+          name="TrnCode"
+          required
+        />
+      </div>
+      <div class="form-group col-md-4">
+        <select
+          formControlName="AccType"
+          (change)="selectChangeHandler($event)"
+          class="form-control mt-0 pt-0"
+        >
+          <option value="0" class="mt-0 pt-0">-Select-</option>
+          <option
+            *ngFor="let item of dataList"
+            [value]="item.AccTypeCode"
+            class="mt-0 pt-0"
+          >
+            {{ item.AccTypeDescription }}
+          </option>
+        </select>
+      </div>
+    </div>
+    <div class="form-row mt-2">
+      <label class="col-md-4" for="inputDesc">Minimum Balance:</label>
+      <div class="form-group col-md-6">
+        <input
+          appOnlyNumber
+          maxlength="6"
+          formControlName="MutualAidMinBalance"
+          type="text"
+          class="form-control mt-0 pt-0"
+          id="inputDesc"
+          required
+          onfocus="this.select()"
+        />
+      </div>
+    </div>
+    <div class="form-row mt-2">
+      <label class="col-md-4" for="inputDesc">Maximum Balance:</label>
+      <div class="form-group col-md-6">
+        <input
+          appOnlyNumber
+          maxlength="6"
+          formControlName="MutualAidMaxBalance"
+          type="text"
+          class="form-control mt-0 pt-0"
+          id="inputDesc"
+          onfocus="this.select()"
+          required
+        />
+      </div>
+    </div>
+    <div class="form-row">
+      <label for="inputDesc" class="col-md-4"
+        >Fixed Amount(Per Thousand):</label
+      >
+      <div class="form-group col-md-6">
+        <input
+          appOnlyNumber
+          maxlength="6"
+          formControlName="MutualAidFixBalance"
+          type="text"
+          class="form-control mt-0 pt-0"
+          id="inputDesc"
+          required
+          onfocus="this.select()"
+        />
+      </div>
+    </div>
+    <div class="buttons col-md-4">
+      <button type="button" (click)="insertData()" class="btn btn-success">
+        Submit
+      </button>
+      <!-- <button type="button"(click)="exitPage()" class="ml-5 btn">Exit</button> -->
+    </div>
+  </form>
+</app-house-keeping-wrapper>

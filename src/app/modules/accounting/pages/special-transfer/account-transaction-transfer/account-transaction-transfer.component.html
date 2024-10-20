@@ -1,0 +1,187 @@
+<app-accounting-wrapper>
+  <form [formGroup]="accountTransferTrnForm">
+    <div class="mx-auto border col-md-6">
+      <p class="bg-dark title">Account Transaction Transfer</p>
+      <div class="form-row ml-0 mt-2 mx-auto">
+        <label class="col-md-3">Transaction Date:</label>
+        <div class="form-group ml-3 pl-3 col-md-4 mt-0 pt-0">
+          <!-- (change)="suretyMemberNoChange()" -->
+          <input
+            id="dateFormat"
+            type="text"
+            placeholder="DD/MM/YYYY"
+            class="form-control"
+            bsDatepicker
+            formControlName="TransactionDate"
+            [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY' }"
+            autocomplete="off"
+            (ngModelChange)="transactionDateChange()"
+          />
+        </div>
+      </div>
+      <div class="form-row ml-0 mt-2 mx-auto">
+        <label class="col-md-3"
+          >Vch.No.: <span class="text-danger">*</span></label
+        >
+        <div class="form-group ml-3 pl-3 col-md-4 mt-0 pt-0">
+          <!-- (change)="loanMemberNoChange()" -->
+          <input
+            type="text"
+            formControlName="VoucherNo"
+            (keydown)="onEnterVoucherNoHandler($event)"
+            class="form-control mt-0 pt-0"
+            required
+          />
+        </div>
+      </div>
+    </div>
+
+    <div class="mx-auto border col-md-6">
+      <p class="bg-dark title">Transfer From</p>
+      <div class="form-row ml-0 mt-2 mx-auto">
+        <label class="col-md-3"
+          >Member No:<span class="text-danger">*</span></label
+        >
+        <div class="form-group ml-3 pl-3 col-md-4 mt-0 pt-0">
+          <!-- (change)="suretyMemberNoChange()" -->
+          <input
+            type="text"
+            id="MemberNoFrom"
+            formControlName="MemberNoFrom"
+            (change)="fromMemNoChange()"
+            (keydown)="onEnterMemberNoFromHandler($event)"
+            appOnlyNumberWithoutDecimal
+            class="form-control mt-0 pt-0"
+            required
+          />
+        </div>
+        <label class="col-md-3 ml-2 pl-2">{{ fromMemNoName }}</label>
+      </div>
+      <div class="form-row ml-0 mt-2 mx-auto">
+        <label class="col-md-3">Account Type:</label>
+        <div class="form-group ml-3 pl-3 col-md-4 mt-0 pt-0">
+          <!-- (change)="suretyMemberNoChange()" -->
+          <input
+            type="text"
+            id="AccountTypeFrom"
+            formControlName="AccountTypeFrom"
+            (change)="fromAccTypeChange()"
+            appOnlyNumberWithoutDecimal
+            class="form-control mt-0 pt-0"
+          />
+        </div>
+        <label *ngIf="fromAccBalance != -1">{{ accTypeName }}</label>
+      </div>
+
+      <div class="form-row ml-0 mt-2 mx-auto">
+        <label class="col-md-3">Account No.:</label>
+        <div class="form-group ml-3 pl-3 col-md-4 mt-0 pt-0">
+          <!-- (change)="loanMemberNoChange()" -->
+          <select
+            formControlName="AccountNoFrom"
+            (change)="fromAccNoChange()"
+            class="form-control pt-0 mt-0"
+          >
+            <option value="0">-Select-</option>
+            <option *ngFor="let item of fromAccNoList" [value]="item">
+              {{ item }}
+            </option>
+          </select>
+        </div>
+        <label
+          >Balance Tk.
+          <span *ngIf="fromAccBalance != -1">
+            {{ fromAccBalance }}
+          </span></label
+        >
+      </div>
+
+      <div
+        *ngIf="accountTransferTrnForm.value.AccountNoFrom != 0"
+        class="mx-auto col-md-6 set-height"
+      >
+        <table id="Data">
+          <tr>
+            <th>TrnType</th>
+            <th>Trn Desc.</th>
+            <th>Debit</th>
+            <th>Credit</th>
+          </tr>
+          <tr *ngFor="let item of fromTransactionList">
+            <td class="text-left">{{ item.TrnType }}</td>
+            <td class="text-left">{{ item.TrnDesc }}</td>
+            <td class="text-left">{{ item.TrnDebit }}</td>
+            <td class="text-left">{{ item.TrnCredit }}</td>
+          </tr>
+        </table>
+      </div>
+    </div>
+
+    <div class="mx-auto border col-md-6 main-container">
+      <p class="mt-1 bg-dark title">Transfer To</p>
+      <div class="form-row ml-0 mt-2 mx-auto">
+        <label class="col-md-3"
+          >Member No:<span class="text-danger">*</span></label
+        >
+        <div class="form-group ml-3 pl-3 col-md-4 mt-0 pt-0">
+          <!-- (change)="suretyMemberNoChange()" -->
+          <input
+            type="text"
+            formControlName="MemberNoTo"
+            (change)="toMemNoChange()"
+            appOnlyNumberWithoutDecimal
+            class="form-control mt-0 pt-0"
+            required
+          />
+        </div>
+        <label class="col-md-3 ml-2 pl-2">{{ toMemNoName }}</label>
+      </div>
+      <div class="form-row ml-0 mt-2 mx-auto">
+        <label class="col-md-3">Account Type:</label>
+        <div class="form-group ml-3 pl-3 col-md-4 mt-0 pt-0">
+          <!-- (change)="suretyMemberNoChange()" -->
+          <input
+            type="text"
+            formControlName="AccountTypeTo"
+            readonly
+            appOnlyNumberWithoutDecimal
+            class="form-control mt-0 pt-0"
+          />
+        </div>
+        <label *ngIf="accountTransferTrnForm.value.MemberNoTo != ''">{{
+          accTypeName
+        }}</label>
+      </div>
+
+      <div class="form-row ml-0 mt-2 mx-auto">
+        <label class="col-md-3">Account No.:</label>
+        <div class="form-group ml-3 pl-3 col-md-4 mt-0 pt-0">
+          <!-- (change)="loanMemberNoChange()" -->
+          <select
+            formControlName="AccountNoTo"
+            (change)="toAccNoChange()"
+            class="form-control pt-0 mt-0"
+          >
+            <option value="0">-Select-</option>
+            <option *ngFor="let item of toAccNoList" [value]="item">
+              {{ item }}
+            </option>
+          </select>
+        </div>
+        <label
+          >Balance Tk.
+          <span *ngIf="toAccBalance != -1"> {{ toAccBalance }} </span></label
+        >
+      </div>
+    </div>
+
+    <div>
+      <div class="mx-auto col-md-8 main-container">
+        <div class="buttons col-md-4 mt-3 mx-auto">
+          <!-- (click)="btnUpdateClick()" -->
+          <button type="button" class="btn ml-5" (click)="transfer()">Transfer</button>
+        </div>
+      </div>
+    </div>
+  </form>
+</app-accounting-wrapper>

@@ -1,0 +1,137 @@
+<app-accounting-wrapper>
+  <form [formGroup]="OpenChartofAccountForm">
+    <div class="mx-auto border col-md-6 main-container pb-2">
+      <p class="title">Open Chart Of Account</p>
+      <div class="form-row header">
+        <input
+          type="radio"
+          value="1"
+          formControlName="rbtMethod1"
+          name="rbtMethod1"
+          class="mt-1 ml-2 ratio"
+          (click)="clickMain($event)"
+        />
+        <label for="main" class="ml-1">Main Head</label>
+        <input
+          type="radio"
+          value="2"
+          formControlName="rbtMethod1"
+          name="rbtMethod1"
+          class="mt-1 ml-2 ratio"
+          (click)="clickSub($event)"
+        />
+        <label for="sub" class="ml-1">SubHead</label>
+        <input
+          type="radio"
+          value="3"
+          formControlName="rbtMethod1"
+          name="rbtMethod1"
+          class="mt-1 ml-2 ratio"
+          (click)="clickdts($event)"
+        />
+        <label for="details" class="ml-1">Detail</label>
+      </div>
+      <div class="form-row mt-2">
+        <label class="col-md-5">Header :</label>
+        <div class="form-group col-md-4">
+          <select formControlName="header" class="form-control mt-0 pt-0"  (change)="selectChangeHandler()">
+            <option value="0">-Select-</option>
+            <option *ngFor="let item of dataList" [value]="item.GLHead">{{item.Description}}</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-row">
+        <label class="col-md-5">Main Head :</label>
+        <div class="form-group col-md-4">
+          <select formControlName="mainHeader" class="form-control mt-0 pt-0" (change)="selectHeaderChangeHandler()">
+            <option value="0">-Select-</option>
+            <option *ngFor="let item of mainHeadList" [value]="item.GLHead">{{item.Description}}</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-row">
+        <label class="col-md-5">Sub Head :</label>
+        <div class="form-group col-md-4">
+          <select formControlName="subHeader" class="form-control mt-0 pt-0" (change)="patchValue($event)">
+            <option value="0">-Select-</option>
+            <option *ngFor="let item of subHeadList" [value]="item.GLHead">{{item.Description}}</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-row" *ngIf="showHeader">
+        <label class="col-md-5">New Main Head Code :</label>
+        <div class="form-group col-md-4">
+          <input
+            type="text"
+            formControlName="newMainHead"
+            class="form-control"
+          />
+        </div>
+      </div>
+      <div class="form-row" *ngIf="showMainHeader">
+        <label class="col-md-5">New Sub Head Code :</label>
+        <div class="form-group col-md-4">
+          <input
+            type="text"
+            formControlName="newMainSubHead"
+            class="form-control"
+          />
+        </div>
+      </div>
+      <div class="form-row" *ngIf="showSubHeader">
+        <label class="col-md-5">New Detail Code :</label>
+        <div class="form-group col-md-4">
+          <input
+            type="text"
+            formControlName="newdetails"
+            class="form-control"
+          />
+        </div>
+      </div>
+      <div class="form-row" *ngIf="showHeader || showMainHeader || showSubHeader">
+        <label class="col-md-5">Description - English :</label>
+        <div class="form-group col-md-4">
+          <input type="text" formControlName="desc" class="form-control" />
+        </div>
+      </div>
+      <div class="form-row" *ngIf="showHeader || showMainHeader || showSubHeader">
+        <label class="col-md-5" >Description - Bangla :</label>
+        <div class="form-group col-md-4">
+          <input type="text" formControlName="descBeng" class="form-control" />
+        </div>
+      </div>
+      <div class="form-row" *ngIf="showSubHeader">
+        <label class="col-md-5">Transaction Mode :</label>
+        <div class="form-group col-md-4">
+          <select formControlName="TrnMode" class="form-control mt-0 pt-0">
+            <option value="0">G/L Code</option>
+            <option value="1">Non G/L Code</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-row mt-3" *ngIf="overDaft">
+        <label class="form-check-label col-md-5"> OverDraft A/c </label>
+        <div class="form-group col-md-4">
+          <input
+            class="form-check-input ml-1 msic"
+            type="checkbox"
+            formControlName="OverDaft"
+          />
+        </div>
+      </div>
+      <div class="form-row mt-3" *ngIf="showSubHeader">
+        <label class="form-check-label col-md-5"> Msic. A/C </label>
+        <div class="form-group col-md-4">
+          <input
+            class="form-check-input ml-1 msic"
+            type="checkbox"
+            formControlName="Msic"
+          />
+        </div>
+      </div>
+      <div class="mt-4">
+        <button type="button" *ngIf="showHeader || showSubHeader || showMainHeader" class="btn btn-success" (click)="submit()">Add</button>
+      </div>
+    </div>
+  </form>
+</app-accounting-wrapper>

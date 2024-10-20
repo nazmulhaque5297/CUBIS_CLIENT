@@ -1,0 +1,127 @@
+.ng-invalid.ng-dirty:not(form),
+.ng-invalid:not(form).form-submitted {
+  border: solid 2px red;
+}
+.title {
+  background: #6c757d !important;
+  color: #fff;
+  font-weight: 600;
+  padding: 2px;
+}
+.checkbox {
+  margin-top: 0px;
+}
+.transaction-limit {
+  color: red;
+  font-weight: bold;
+}
+.buttons {
+  margin-top: 4px;
+  margin-left: 320px;
+  margin-bottom: 10px;
+}
+.set-height {
+  padding: 0px !important;
+}
+.btn {
+  padding: 4px 30px !important;
+  transition: 0.7s ease-in;
+  /* background: #0069aa; */
+  color: #fff;
+}
+
+.btn:focus {
+  outline: none !important;
+  box-shadow: none !important;
+}
+#Data {
+  font-family: Arial, Helvetica, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+#Data td,
+#Data th {
+  border: 1px solid #ddd;
+  padding: 6px 0px;
+}
+
+#Data tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
+
+#Data tr:hover {
+  background-color: #ddd;
+}
+
+#Data th {
+  padding-top: 5px;
+  padding-bottom: 5px;
+  text-align: left;
+  background-color: #0069aa;
+  color: white;
+  text-align: center;
+}
+
+@media screen and (max-width: 1400px) {
+  .buttons {
+    margin-left: 400px;
+    margin-bottom: 10px;
+  }
+}
+@media screen and (max-width: 990px) {
+  .buttons {
+    margin-left: 192px;
+    margin-bottom: 10px;
+  }
+}
+@media screen and (max-width: 665px) {
+  .buttons {
+    margin-left: 100px;
+    margin-bottom: 10px;
+    max-width: 70%;
+  }
+}
+@media screen and (max-width: 520px) {
+  .buttons {
+    display: inline-block;
+  }
+  .btn {
+    margin-top: 10px;
+  }
+}
+.ml-5,
+.mx-5 {
+  margin-left: 13rem !important;
+  margin-top: 1rem !important;
+}
+.ml-1,
+.mx-1 {
+  margin-left: -2.75rem !important;
+}
+.ml-6 btn {
+  margin-left: 1rem !important;
+}
+button,
+input,
+optgroup,
+select,
+textarea {
+  margin: 5px;
+  font-family: inherit;
+  font-size: inherit;
+  line-height: inherit;
+}
+.btn[_ngcontent-vct-c190] {
+  padding: 4px 30px !important;
+  transition: 0.7s ease-in;
+  background: #0069aa;
+  color: #fff;
+  width: 6rem !important;
+}
+.buttons.col-md-9.ml-auto {
+  margin-left: 14rem !important;
+}
+button.btn.ml-3 {
+  width: 7rem !important;
+}

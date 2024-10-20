@@ -1,0 +1,33 @@
+.ng-invalid.ng-dirty:not(form),
+.ng-invalid:not(form).form-submitted {
+  border: solid 2px red;
+}
+
+.ratio {
+  width: 15px !important;
+  height: 15px !important;
+}
+.msic {
+  width: 25px !important;
+  height: 25px !important;
+}
+.title {
+  background: #6c757d !important;
+  color: #fff;
+  font-weight: 600;
+  padding: 2px;
+}
+
+.header {
+  border-bottom: 2px solid #ced4da;
+}
+.btn {
+  padding: 4px 35px !important;
+  transition: 0.7s ease-in;
+  color: #fff;
+}
+
+.btn:focus {
+  outline: none !important;
+  box-shadow: none !important;
+}

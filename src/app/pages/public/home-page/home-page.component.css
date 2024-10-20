@@ -1,0 +1,29 @@
+.menuList {
+    background: #458BC4;
+    background-repeat: no-repeat;
+    background-position: 0px;
+    border-radius: 10px;
+    transition: 0.7s;
+}
+
+.menuList:hover {
+    cursor: pointer;
+    transform: scale(1.1);
+}
+
+.menu {
+    margin-top: 13rem !important;
+}
+
+.menuList p {
+    color: #fff !important;
+    margin: 0 !important;
+}
+
+.menuList a {
+    text-decoration: none !important;
+}
+
+.menuList a:hover {
+    background: none !important;
+}

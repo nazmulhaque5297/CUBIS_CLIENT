@@ -1,0 +1,102 @@
+.main-container {
+    padding: 25px;
+}
+
+.title {
+  background: #6c757d !important;
+  color: #fff;
+  font-weight: 600;
+  padding: 2px;
+}
+
+input {
+    box-shadow: none !important;
+}
+.editable{
+  width: 60px;
+}
+
+.buttons {
+    margin-left: 139px;
+    margin-top:8px;
+}
+
+.btn {
+    padding: 4px 35px !important;
+    transition: 0.7s ease-in;
+    color: #fff;
+    margin-left: 10px;
+    margin-bottom: 10px;
+}
+
+.btn:focus {
+    outline: none !important;
+    box-shadow: none !important;
+}
+
+.btndelete {
+  padding: 8px 30px !important;
+  border-radius: 18px !important;
+  transition: 0.7s ease-in;
+  background: #fd2616;
+  color: #fff;
+  margin-left: 10px;
+  margin-bottom: 10px;
+}
+
+.btndelete:focus {
+  outline: none !important;
+  box-shadow: none !important;
+}
+
+.iframeStyle {
+  height: 1500px;
+  width: 100%;
+  z-index: 20;
+  position: relative;
+  margin-top: 50px;
+  border: 0;
+}
+.action{
+  cursor: pointer;
+}
+
+
+#Data {
+    font-family: Arial, Helvetica, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+  }
+
+  .set-height{
+    height: 360px;
+    overflow-x: auto;
+    padding: 0px !important;
+  }
+
+  #Data td, #Data th {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: center;
+  }
+
+  #Data tr:nth-child(even) {
+    background-color: #f2f2f2;
+  }
+
+  #Data tr:hover {
+    background-color: #ddd;
+  }
+
+  #Data th {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    text-align: left;
+    background-color: #0069AA;
+    color: white;
+    text-align: center;
+  }
+  .mdi{
+    font-size: 22px;
+    /* color: red; */
+  }

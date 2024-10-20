@@ -1,0 +1,55 @@
+.title{
+  margin: 0px !important;
+}
+#Data {
+  font-family: Arial, Helvetica, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+.set-height {
+  height: 310px;
+  overflow-x: auto;
+}
+
+#Data td,
+#Data th {
+  border: 1px solid #ddd;
+  padding: 8px;
+}
+
+#Data tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
+
+#Data tr:hover {
+  background-color: #ddd;
+}
+
+#Data th {
+  padding-top: 12px;
+  padding-bottom: 12px;
+  text-align: left;
+  background-color: #0069aa;
+  color: white;
+  text-align: center;
+}
+.modal_toogle{
+  background: #DFDFE4;
+  height: 160px;
+  position: absolute;
+  bottom: 50%;
+  left: 41%;
+  animation: zoom-in-zoom-out 1s ease;
+}
+@keyframes zoom-in-zoom-out {
+  0% {
+    transform: scale(1, 1);
+  }
+  50% {
+    transform: scale(1.5, 1.5);
+  }
+  100% {
+    transform: scale(1, 1);
+  }
+}

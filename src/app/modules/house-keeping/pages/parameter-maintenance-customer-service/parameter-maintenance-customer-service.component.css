@@ -1,0 +1,93 @@
+.title {
+  background: #6C757D !important;
+  color: #fff;
+  font-weight: 600;
+  padding: 2px;
+}
+  
+  input {
+    box-shadow: none !important;
+  }
+  .slab_btn{
+    transition: 0.7s;
+    border: none;
+    border-radius: 3px;
+  }
+  
+  
+  .desc-input {
+    margin-left: 30px !important;
+  }
+  
+  .buttons {
+    margin-top: 8px;
+    margin-left: 37%;
+  }
+  
+  .btn {
+    padding: 4px 30px !important;
+    transition: 0.7s ease-in;
+    background: #0069AA;
+    color: #fff;
+  }
+  .btn_1 {
+    padding: 4px 30px !important;
+    transition: 0.7s ease-in;
+    background: #28A745;
+    color: #fff;
+  }
+  .btn:focus {
+    outline: none !important;
+    box-shadow: none !important;
+  }
+  
+  #Data {
+    font-family: Arial, Helvetica, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+  }
+  
+  .set-height{
+    height: 310px;
+    overflow-x: auto;
+  }
+  
+  #Data td, #Data th {
+    border: 1px solid #ddd;
+    padding: 8px;
+  }
+  
+  #Data tr:nth-child(even) {
+    background-color: #f2f2f2;
+  }
+  
+  #Data tr:hover {
+    background-color: #ddd;
+  }
+  
+  #Data th {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    text-align: left;
+    background-color: #0069AA;
+    color: white;
+    text-align: center;
+  }
+  
+  @media screen and (max-width: 762px) {
+    .desc-input {
+      margin-left: 0px !important;
+    }
+    .buttons {
+      margin-left: 0px;
+    }
+  }
+
+::ng-deep .my-modal .modal-dialog { 
+    max-width: 60%;
+    width: 60%;
+}
+::ng-deep .my-modal2 .modal-dialog { 
+  max-width: 70%;
+  width: 70%;
+}

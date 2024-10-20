@@ -1,0 +1,179 @@
+<app-main-wrapper [module]="module">
+  <form [formGroup]="LoanReceivedForm" class="mx-auto border col-md-7">
+    <p class="bg-dark title">Loan Receivable Amount Reports</p>
+
+    <div class="form-group row">
+      <div class="col-md-1"></div>
+      <label class="col-md-3 col-form-label">Account Type</label>
+      <div class="col-md-3">
+        <input
+          appOnlyNumber
+          (focusout)="onChangeAccTypeCode($event)"
+          type="text"
+          class="form-control"
+          id="CodeNumber"
+          formControlName="AccTypeCode"
+          name="CodeNumber"
+        />
+      </div>
+
+      <div class="col-md-5">
+        <select
+          class="form-control pt-0"
+          formControlName="AccType"
+          (change)="onChangeAccType($event)"
+        >
+          <option value="0">-Select-</option>
+          <option
+            *ngFor="let item of inputHelpData.AccountTypeList"
+            [value]="item.Id"
+          >
+            {{ item.Description }}
+          </option>
+        </select>
+      </div>
+    </div>
+
+    <div class="form-group row">
+      <div class="col-md-1">
+        <input
+          [(ngModel)]="chbIsAllCollectorStatus"
+          (ngModelChange)="checkIsAllCollectorValue($event)"
+          class="form-check-input ml-1 checkbox"
+          style="margin: 0.8rem"
+          type="checkbox"
+          id="IsAllCollectorCheckbox"
+          formControlName="IsAllCollector"
+        />
+      </div>
+
+      <label class="col-md-3 col-form-label" for="IsAllCollectorCheckbox"
+        >All -- Collector</label
+      >
+      <!-- <label class="col-md-3 col-form-label">Collector :</label> -->
+      <!-- (focusout)="onChangeAccTypeCode($event)" -->
+      <div class="col-md-3">
+        <input
+          (focusout)="onChangeCollectorCode($event)"
+          type="text"
+          class="form-control"
+          id="CollectorCode"
+          formControlName="CollectorCode"
+          name="CollectorCode"
+          [attr.disabled]="LoanReceivedForm.value.IsAllCollector ? '' : null"
+        />
+      </div>
+
+      <div class="col-md-5">
+        <select
+          [attr.disabled]="LoanReceivedForm.value.IsAllCollector ? '' : null"
+          class="form-control pt-0"
+          formControlName="Collector"
+          (change)="onChangeCollector($event)"
+        >
+          <option value="0">-Select-</option>
+          <option
+            *ngFor="let item of inputHelpData.CollectorList"
+            [value]="item.Id"
+          >
+            {{ item.Description }}
+          </option>
+        </select>
+      </div>
+    </div>
+
+    <div class="form-group row">
+      <div class="col-md-1">
+        <input
+          [(ngModel)]="chbIsAllGroupStatus"
+          (ngModelChange)="checkIsAllGroupValue($event)"
+          class="form-check-input ml-1 checkbox"
+          style="margin: 0.8rem"
+          type="checkbox"
+          id="IsAllGroup"
+          formControlName="IsAllGroup"
+        />
+      </div>
+
+      <label class="col-md-3 col-form-label" for="IsAllGroup"
+        >All -- Group</label
+      >
+
+      <div class="col-md-3">
+        <input
+          appOnlyNumber
+          (focusout)="onChangeGroupCode($event)"
+          type="text"
+          class="form-control"
+          id="GroupCode"
+          formControlName="GroupCode"
+          name="GroupCode"
+          [attr.disabled]="LoanReceivedForm.value.IsAllGroup ? '' : null"
+        />
+      </div>
+      <div class="col-md-5">
+        <select
+          [attr.disabled]="LoanReceivedForm.value.IsAllGroup ? '' : null"
+          class="form-control pt-0"
+          formControlName="Group"
+          (change)="onChangeGroup($event)"
+        >
+          <option value="0">-Select-</option>
+          <option
+            *ngFor="let item of inputHelpData.GroupList"
+            [value]="item.Id"
+          >
+            {{ item.Description }}
+          </option>
+        </select>
+      </div>
+    </div>
+
+    <div class="form-group row">
+      <div class="col-md-4"></div>
+      <div class="col-md-4">
+        <input
+          type="radio"
+          class="form-check-input position-static ml-1 checkbox"
+          value="0"
+          name="rbDue"
+          id="rbDue1"
+          formControlName="rbDue"
+        />
+        <label class="col-md-10 col-form-label" for="rbDue1"
+          >Due Receivable Amount</label
+        >
+      </div>
+
+      <div class="col-md-4">
+        <input
+          type="radio"
+          value="1"
+          id="rbDue0"
+          name="rbDue"
+          formControlName="rbDue"
+        />
+        <label class="col-md-10 col-form-label" for="rbDue0"
+          >Current Receivable Amount</label
+        >
+      </div>
+    </div>
+
+    <div class="buttons">
+      <button
+        type="button"
+        class="btn btn-info ml-2"
+        (click)="getReportToken('CRV')"
+      >
+        Preview
+      </button>
+      <button
+        type="button"
+        class="btn btn-success ml-2"
+        (click)="getReportToken('PDF')"
+      >
+        Print
+      </button>
+    </div>
+  </form>
+</app-main-wrapper>

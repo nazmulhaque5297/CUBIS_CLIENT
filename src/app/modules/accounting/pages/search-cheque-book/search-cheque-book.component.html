@@ -1,0 +1,100 @@
+<app-accounting-wrapper>
+  <form [formGroup]="SearchChequeNumber" class="mx-auto border col-md-7 pb-3">
+    <p class="bg-dark title">Search Cheque Page</p>
+    <div class="form-row">
+      <label for="chequefx" class="col-md-3">Cheque Prefix:</label>
+      <div class="pl-2 form-group col-md-4">
+        <input
+          type="text"
+          formControlName="Chequefx"
+          (keydown)="onEnterChequefxHandler($event)"
+          class="form-control"
+          id="chequefx"
+        />
+      </div>
+    </div>
+    <div class="form-row">
+      <label for="ChequeNo" class="col-md-3">Cheque No:</label>
+      <div class="pl-2 form-group col-md-4">
+        <input
+          type="text"
+          formControlName="ChequeNo"
+          class="form-control"
+          id="ChequeNo"
+          (keypress)="keyPress($event)"
+        />
+      </div>
+    </div>
+    <div class="col-md-7 buttons">
+      <button type="button" class="btn" (click)="GetChequeInformation()">
+        Search
+      </button>
+    </div>
+
+    <div class="border mt-5">
+      <div class="form-row mx-auto mt-3 pl-3">
+        <label for="MemNo" class="col-md-3">Member No.:</label>
+        <div class="form-group col-md-3">
+          <input
+            type="text"
+            class="form-control"
+            id="MemNo"
+            formControlName="MemNo"
+            name="MemNo"
+          />
+        </div>
+        <div class="form-group col-md-4">
+          <input
+            type="text"
+            class="form-control"
+            id="MemName"
+            formControlName="MemName"
+            name="MemName"
+          />
+        </div>
+      </div>
+      <div class="form-row mx-auto pl-3">
+        <label for="AccNo" class="col-md-3">Account No. :</label>
+        <div class="form-group col-md-3">
+          <input
+            type="text"
+            class="form-control"
+            id="AccNo"
+            formControlName="AccNo"
+            name="AccNo"
+          />
+        </div>
+        <div class="form-group col-md-4">
+          <input
+            type="text"
+            class="form-control"
+            id="AccType"
+            formControlName="AccType"
+            name="AccType"
+          />
+        </div>
+      </div>
+      <div class="form-row mx-auto pl-3">
+        <label for="ChqSt" class="col-md-3">Chq Status :</label>
+        <div class="form-group col-md-3">
+          <input
+            type="text"
+            class="form-control"
+            id="ChqSt"
+            formControlName="ChqSt"
+            name="ChqSt"
+          />
+        </div>
+        <div class="form-group col-md-4">
+          <input
+            type="text"
+            class="form-control"
+            id="Chqdt"
+            formControlName="Chqdt"
+            name="Chqdt"
+          />
+        </div>
+      </div>
+    </div>
+  </form>
+</app-accounting-wrapper>

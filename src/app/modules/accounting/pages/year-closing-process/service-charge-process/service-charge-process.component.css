@@ -1,0 +1,97 @@
+.ng-invalid.ng-dirty:not(form),
+.ng-invalid:not(form).form-submitted {
+  border: solid 2px red;
+}
+.title {
+  background: #6c757d !important;
+  color: #fff;
+  font-weight: 600;
+  padding: 2px;
+  margin: 0px !important;
+}
+input {
+  box-shadow: none !important;
+}
+
+.desc-input {
+  margin-left: 30px !important;
+}
+
+.btn {
+  padding: 4px 30px !important;
+  transition: 0.7s ease-in;
+  color: #fff;
+}
+
+.btn:focus {
+  outline: none !important;
+  box-shadow: none !important;
+}
+
+.btn-verify {
+  padding: 3px 15px !important;
+  transition: 0.7s ease-in;
+  background: #53a653;
+  color: #fff;
+  border: none;
+}
+
+#Data {
+  font-family: Arial, Helvetica, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+.set-height {
+  height: 310px;
+  overflow-x: auto;
+  padding: 0px !important;
+}
+
+#Data td,
+#Data th {
+  border: 1px solid #ddd;
+  padding: 2px;
+  text-align: center;
+}
+
+#Data tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
+
+#Data th {
+  text-align: center;
+  background-color: #53a653;
+  color: white;
+  
+}
+
+.item-line {
+  border-bottom: 1px solid #ccc;
+  padding: 5px;
+  font-size: 16px;
+}
+.cal-period {
+  font-size: 16px;
+  font-weight: 800;
+  color: #0069aa;
+}
+.buttons{
+  margin-left: 300px;
+}
+
+.regular-text {
+  margin-left: 20px;
+  background-color: blue;
+  color: #fff;
+  padding: 5px;
+}
+
+@media screen and (max-width: 762px) {
+  .desc-input {
+    margin-left: 0px !important;
+  }
+  .buttons {
+    margin-left: 0px;
+  }
+}

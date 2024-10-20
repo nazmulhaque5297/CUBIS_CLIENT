@@ -1,0 +1,104 @@
+<app-accounting-wrapper>
+  <form
+    [formGroup]="LedgerBalanceReportForm"
+    class="mx-auto border col-md-7 pb-2"
+  >
+    <p class="bg-dark title">Product Ledger Balance Report</p>
+    <div class="form-group row">
+      <div class="col-md-1 col-form-label"></div>
+      <label class="col-md-3 col-form-label"> Report Head </label>
+      <div class="col-md-5">
+        <select
+          class="form-control pt-0"
+          formControlName="AllReportHeadDdl"
+          (change)="ReportDdlChange()"
+        >
+          <option value="0">-Select-</option>
+          <option
+            *ngFor="let item of pageLoadModel.AllReportHeadDropdown"
+            [value]="item.Id"
+          >
+            {{ item.Description }}
+          </option>
+        </select>
+      </div>
+    </div>
+
+    <div class="form-group row">
+      <div class="col-md-1 col-form-label">
+        <input
+          class="form-check-input ml-1 checkbox"
+          style="margin: 0.8rem"
+          type="checkbox"
+          id="GroupChb"
+          value="0"
+          formControlName="GroupChb"
+          (change)="ChbForGroupCode()"
+        />
+      </div>
+      <label class="col-md-3 col-form-label" for="GroupChb">All Group </label>
+      <div class="col-md-2">
+        <input
+          appOnlyNumber
+          type="text"
+          class="form-control"
+          id="AllGroupCodeInput"
+          formControlName="AllGroupCodeInput"
+          name="AllGroupCodeInput"
+          (focusout)="GroupCodeChange()"
+          [attr.disabled]="LedgerBalanceReportForm.value.GroupChb ? '' : null"
+        />
+      </div>
+      <div class="col-md-3">
+        <select
+          class="form-control pt-0"
+          formControlName="AllGroupDdl"
+          (change)="GroupDdlChange()"
+        >
+          <option value="0">-Select-</option>
+          <option
+            *ngFor="let item of pageLoadModel.AllGroupDropdown"
+            [value]="item.Id"
+          >
+            {{ item.Description }}
+          </option>
+        </select>
+      </div>
+    </div>
+
+    <div class="form-group row">
+      <div class="col-md-1 col-form-label"></div>
+
+      <label class="col-md-3 col-form-label">As On </label>
+      <div class="col-md-5">
+        <input
+          id="dateFormat"
+          type="text"
+          class="form-control"
+          bsDatepicker
+          formControlName="IssueFromDate"
+          [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY' }"
+          autocomplete="off"
+          (ngModelChange)="applicationDateChange()"
+        />
+      </div>
+    </div>
+
+    <div class="buttons">
+      <button
+        type="button"
+        class="btn btn-info ml-2"
+        (click)="getReportToken('CRV')"
+      >
+        Preview
+      </button>
+      <button
+        type="button"
+        class="btn btn-success ml-2"
+        (click)="getReportToken('PDF')"
+      >
+        Print
+      </button>
+    </div>
+  </form>
+</app-accounting-wrapper>

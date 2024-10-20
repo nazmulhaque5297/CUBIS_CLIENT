@@ -1,0 +1,19 @@
+.card{
+    border: none !important;
+}
+.title{
+    margin: 0px !important;
+}
+.card-body{
+    padding-top: 2px !important;
+}
+.btn{
+    background: #6DAD4F;
+    color: white;
+    padding: 4px 30px !important;
+}
+.btn_1{
+    color: white;
+    padding: 4px 30px !important;
+    background: #28A745;
+}

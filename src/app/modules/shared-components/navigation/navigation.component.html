@@ -1,0 +1,132 @@
+<!-- Navigation Bar-->
+<header id="topnav">
+  <!-- sub header -->
+
+  <div
+    class="row top__bar"
+    style="background-color: rgba(231, 227, 227, 0.966) !important"
+    [hidden]="!dataList"
+  >
+    <div class="col-3">
+      <p *ngIf="module != '2'" class="mb-0 text-black">Process Date : {{commonData?.FormatProcessDate}}</p>
+      <p *ngIf="module == '2'" class="mb-0 text-black">Process Date : {{commonData?.CurrentDate}}</p>
+    </div>
+    <div class="col-8 text-center">
+      <p class="mb-0 bold text-black fs-6" style="font-size: 18px">
+        {{commonData?.BranchName}}
+      </p>
+    </div>
+    <div class="dropdown notification-list col-1">
+      <a
+        class="mr-0 nav-link dropdown-toggle nav-user d-flex flex-row justify-content-end"
+        data-toggle="dropdown"
+        href="#"
+        role="button"
+        aria-haspopup="false"
+        aria-expanded="false"
+      >
+        <!-- <img src="assets/images/users/avatar-1.jpg" alt="user-image" class="rounded-circle"> -->
+        <span class="ml-2 pro-user-name d-none d-xl-inline-block text-black">
+          {{ dataList ? dataList?.IdsName : "" }}
+          <i class="mdi mdi-chevron-down"></i>
+        </span>
+      </a>
+      <div class="dropdown-menu dropdown-menu-right profile-dropdown">
+        <!-- item-->
+        <a href="javascript:void(0);" (click)="removeBackendToken()" [routerLink]="['/sign-in']" class="dropdown-item notify-item">
+          <i class="mdi mdi-logout-variant"></i>
+          <span>Logout</span>
+      </a>
+      </div>
+    </div>
+  </div>
+  <!-- sub header -->
+  <!-- Topbar Start -->
+  <div class="navbar-custom">
+    <div class="">
+      <ul class="float-right mb-0 list-unstyled topnav-menu">
+        <li class="dropdown notification-list">
+          <!-- Mobile menu toggle-->
+          <a class="navbar-toggle nav-link">
+            <div class="lines">
+              <span></span>
+              <span></span>
+              <span></span>
+            </div>
+          </a>
+          <!-- End mobile menu toggle-->
+        </li>
+        <!-- <li class="dropdown notification-list">
+          <a href="javascript:void(0);" class="nav-link right-bar-toggle">
+            <i class="mdi mdi-settings-outline noti-icon"></i>
+          </a>
+        </li> -->
+      </ul>
+
+      <!-- LOGO -->
+      <!-- <div class="logo-box">
+        <a href="/" class="text-center logo">
+          <span class="headerLogoText">CCULB</span>
+        </a>
+      </div> -->
+      <div id="navigation">
+        <!-- Navigation Menu-->
+        <ul class="navigation-menu">
+          <li>
+            <a href="/">CUBIS</a>
+          </li>
+          <li class="has-submenu ml-4" *ngFor="let menu of getMenuListParentById(0)">
+            <a [routerLink]="[createRouteName(menu.MenuName)]">
+              <i class="{{ menu.icon }}"></i>{{ menu.MenuName }}</a
+            >
+            <ul
+              class="submenu"
+              [hidden]="getMenuListParentByIdGetLength(menu.MenuNo) < 1"
+            >
+              <li
+                class="has-submenu"
+                *ngFor="let subMenu of getMenuListParentById(menu.MenuNo)"
+              >
+                <a [routerLink]="[createRouteName(subMenu.MenuName)]"
+                  >{{ subMenu.MenuName }}
+                  <div
+                    class="arrow-down"
+                    [hidden]="
+                      getMenuListParentByIdGetLength(subMenu.MenuNo) < 1
+                    "
+                  ></div
+                ></a>
+                <ul
+                  class="submenu"
+                  [hidden]="getMenuListParentByIdGetLength(subMenu.MenuNo) < 1"
+                >
+                <div class="hamaramurzi">
+                  <li
+                  *ngFor="
+                    let sub2Menu of getMenuListParentById(subMenu.MenuNo)
+                  "
+              
+                >
+                  <a [routerLink]="[createRouteName(sub2Menu.MenuName)]">{{
+                    sub2Menu.MenuName
+                  }}</a>
+                </li>
+                </div>
+          
+                </ul>
+              </li>
+            </ul>
+          </li>
+        </ul>
+        <!-- End navigation menu -->
+
+        <div class="clearfix"></div>
+      </div>
+      <!-- end #navigation -->
+
+      <div class="clearfix"></div>
+    </div>
+  </div>
+  <!-- end Topbar -->
+</header>
+<!-- End Navigation Bar-->

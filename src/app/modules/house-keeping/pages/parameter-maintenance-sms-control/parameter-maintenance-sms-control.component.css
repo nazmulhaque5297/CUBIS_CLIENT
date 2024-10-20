@@ -1,0 +1,100 @@
+.ng-invalid.ng-dirty:not(form),
+.ng-invalid:not(form).form-submitted {
+  border: solid 2px red;
+}
+
+.title {
+  background: #6c757d !important;
+  color: #fff;
+  font-weight: 600;
+  padding: 2px;
+}
+.set_height{
+  height: 570px;
+  overflow-y: auto;
+  padding: 0px !important;
+}
+
+input {
+  box-shadow: none !important;
+}
+
+.desc-input {
+  margin-left: 30px !important;
+}
+
+.buttons {
+  margin-top: 10px;
+  margin-left: 38px;
+}
+
+.btn {
+  padding: 4px 30px !important;
+  transition: 0.7s ease-in;
+  /* background: #0069aa; */
+  color: #fff;
+}
+
+.btn:focus {
+  outline: none !important;
+  box-shadow: none !important;
+}
+
+#Data {
+  font-family: Arial, Helvetica, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+}
+.oddNoNot {
+  background-color: gainsboro;
+  color: blue;
+}
+
+.oddNoSelect {
+  background-color: gainsboro;
+  color: green;
+}
+.evenNoNot {
+  background-color: khaki;
+  color: blue;
+}
+.evenNoSelect {
+  background-color: khaki;
+  color: green;
+}
+/* .set-height{
+      height: 310px;
+      overflow-x: auto;
+    } */
+
+#Data td,
+#Data th {
+  border: 1px solid #ddd;
+  padding: 6px 3px;
+}
+
+#Data tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
+
+#Data tr:hover {
+  background-color: #ddd;
+}
+
+#Data th {
+  padding-top: 5px;
+  padding-bottom: 5px;
+  text-align: left;
+  background-color: #0069aa;
+  color: white;
+  text-align: center;
+}
+
+@media screen and (max-width: 762px) {
+  .desc-input {
+    margin-left: 0px !important;
+  }
+  .buttons {
+    margin-left: 0px;
+  }
+}

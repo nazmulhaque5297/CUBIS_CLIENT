@@ -1,0 +1,51 @@
+<app-accounting-wrapper>
+    <form [formGroup]='ProfitLossAppropriationForm'>
+        <div class="mx-auto border col-md-5">
+            <p class="bg-dark title">Profit Loss Appropriation Maintenance</p>
+            <!-- <div class="mt-1 bg-dark title row-md-12 d-flex">
+                <p class="bg-dark title">Profit Loss Appropriation Transaction</p>
+            </div> -->
+            <div class="form-row">
+                <label class="col-md-3" class="col-md-2">Date:</label>
+                <div class="form-group ml-3 pl-3 col-md-8 mt-0 pt-0">
+                    <input  type="text" formControlName="Date" readonly class="form-control mt-0 pt-0">
+                </div>
+            </div>
+            <div *ngIf="showPost" class="form-row">
+                <label class="col-md-3" class="col-md-2">Voucher No:</label>
+                <div class="form-group ml-3 pl-3 col-md-8 mt-0 pt-0">
+                    <input  type="text" formControlName="VchNo" class="form-control mt-0 pt-0">
+                </div>
+            </div>
+        </div>
+        
+        <div>    
+            <div class="buttons mx-auto d-flex justify-content-center mt-3">
+                <button *ngIf="!showPost"  type="button" (click)="processClick()"  class="btn btn-success">Process</button>
+                <button *ngIf="showPost" type="button" (click)="getReportToken()" class="btn btn-success ml-5">Preview/Print</button>
+                <button *ngIf="showPost" type="button" (click)="postData()" class="btn btn-info ml-5">Post</button>
+                <!-- <button type="button" (click)="exitPage()" class="btn ml-5">Exit</button> -->
+            </div>
+        </div>
+    </form>
+    <div *ngIf="dataList.length != 0" class="mx-auto mt-1 mt-5 col-md-7 set-height">
+        <table id="Data">
+            <tr>
+                <th>Prov Code</th>
+                <th>Description</th>
+                <th>Exp Code</th>
+                <th>Description</th>
+                <th>Rate</th>
+                <th>Amount</th>
+            </tr>
+            <tr *ngFor="let item of dataList">
+                <td class="text-center">{{item.ProvCode}}</td>
+                <td class="text-center">{{item.ProvCodeDesc}}</td>
+                <td class="text-center">{{item.ExpCode}}</td>
+                <td class="text-center">{{item.ExpCodeDesc}}</td>
+                <td class="text-center">{{item.Rate}}</td>
+                <td class="text-center">{{item.Amount}}</td>
+            </tr>
+        </table>
+    </div>
+</app-accounting-wrapper>

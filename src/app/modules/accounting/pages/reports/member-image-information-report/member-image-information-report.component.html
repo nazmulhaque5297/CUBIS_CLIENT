@@ -1,0 +1,206 @@
+<app-accounting-wrapper>
+  <form [formGroup]="MemberImageInfoForm" class="mx-auto border col-md-9">
+    <p class="bg-dark title">Member Image Informations Report</p>
+    <div class="form-group row">
+      <div class="ml-1">
+        <input
+          checked
+          type="radio"
+          value="1"
+          id="ImageTypeRb1"
+          name="ImageTypeRb"
+          formControlName="ImageTypeRb"
+        />
+      </div>
+      <label class="col-md-2 col-form-label" for="ImageTypeRb1"
+        >Card Image</label
+      >
+
+      <div>
+        <input
+          type="radio"
+          value="2"
+          name="ImageTypeRb"
+          id="ImageTypeRb2"
+          formControlName="ImageTypeRb"
+        />
+      </div>
+
+      <label class="col-md-2 col-form-label" for="ImageTypeRb2"
+        >Picture Image</label
+      >
+
+      <div>
+        <input
+          checked
+          type="radio"
+          value="3"
+          name="ImageTypeRb"
+          id="ImageTypeRb3"
+          formControlName="ImageTypeRb"
+        />
+      </div>
+
+      <label class="col-md-2 col-form-label" for="ImageTypeRb3"
+        >Signature Image</label
+      >
+
+      <div>
+        <input
+          type="radio"
+          value="4"
+          name="ImageTypeRb"
+          id="ImageTypeRb4"
+          formControlName="ImageTypeRb"
+        />
+      </div>
+
+      <label class="col-md-3 col-form-label" for="ImageTypeRb4"
+        >Referance Picture Image</label
+      >
+    </div>
+    <div class="form-group row">
+      <div>
+        <input
+          class="form-check-input ml-1 checkbox"
+          style="margin: 0.8rem"
+          value="0"
+          type="checkbox"
+          id="IsAllMemberTypeChecked"
+          formControlName="IsAllMemberTypeChecked"
+          (change)="CheckAllMemberType()"
+        />
+      </div>
+      <label class="col-md-2 col-form-label ml-3" for="IsAllMemberTypeChecked"
+        >All Member Type :</label
+      >
+      <div class="col-md-2">
+        <select
+          class="form-control pt-0"
+          formControlName="AllMemberType"
+          (change)="AllMemberTypeDDL()"
+        >
+          <option value="0">-Select-</option>
+          <option
+            *ngFor="let item of pageLoadModel.AllMemberTypeDropdown"
+            [value]="item.Id"
+          >
+            {{ item.Description }}
+          </option>
+        </select>
+      </div>
+    </div>
+
+    <div class="form-group row">
+      <div>
+        <input
+          class="form-check-input ml-1 checkbox"
+          style="margin: 0.8rem"
+          type="checkbox"
+          id="IsAllCollectorTypeChecked"
+          value="0"
+          formControlName="IsAllCollectorTypeChecked"
+          (change)="CheckAllCollectorType()"
+        />
+      </div>
+      <label
+        class="col-md-2 col-form-label ml-3"
+        for="IsAllCollectorTypeChecked"
+        >All Collector :</label
+      >
+      <div class="col-md-2">
+        <select
+          class="form-control pt-0"
+          formControlName="AllCollectorType"
+          (change)="AllCollectorDDL()"
+        >
+          <option value="0">-Select-</option>
+          <option
+            *ngFor="let item of pageLoadModel.AllCollectorDropdown"
+            [value]="item.Id"
+          >
+            {{ item.Description }}
+          </option>
+        </select>
+      </div>
+    </div>
+
+    <div class="form-group row">
+      <div>
+        <input
+          class="form-check-input ml-1 checkbox"
+          style="margin: 0.8rem"
+          type="checkbox"
+          id="IsAllGroupChecked"
+          value="0"
+          formControlName="IsAllGroupChecked"
+          (change)="CheckAllGroupType()"
+        />
+      </div>
+      <label class="col-md-2 col-form-label ml-3" for="IsAllGroupChecked"
+        >All Group :</label
+      >
+      <div class="col-md-2">
+        <select
+          class="form-control pt-0"
+          formControlName="AllGroupType"
+          (change)="AllGroupDDL()"
+        >
+          <option value="0">-Select-</option>
+          <option
+            *ngFor="let item of pageLoadModel.AllGroupDropdown"
+            [value]="item.Id"
+          >
+            {{ item.Description }}
+          </option>
+        </select>
+      </div>
+    </div>
+
+    <div class="form-group row">
+      <div class="ml-1">
+        <input
+          checked
+          type="radio"
+          value="1"
+          id="WithImageRb1"
+          name="ImageTypeRb2"
+          formControlName="ImageTypeRb2"
+        />
+      </div>
+      <label class="col-md-2 col-form-label" for="WithImageRb1"
+        >With Image</label
+      >
+
+      <div>
+        <input
+          type="radio"
+          value="2"
+          id="WithoutImageRb2"
+          name="ImageTypeRb2"
+          formControlName="ImageTypeRb2"
+        />
+      </div>
+      <label class="col-md-2 col-form-label" for="WithoutImageRb2"
+        >Without Image</label
+      >
+    </div>
+
+    <div class="buttons">
+      <button
+        type="button"
+        class="btn btn-info ml-2"
+        (click)="getReportToken('CRV')"
+      >
+        Preview
+      </button>
+      <button
+        type="button"
+        class="btn btn-success ml-2"
+        (click)="getReportToken('PDF')"
+      >
+        Print
+      </button>
+    </div>
+  </form>
+</app-accounting-wrapper>

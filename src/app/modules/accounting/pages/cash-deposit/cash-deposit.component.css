@@ -1,0 +1,68 @@
+@import url("https://fonts.googleapis.com/css2?family=Passion+One&display=swap");
+.card-body {
+  padding-top: 2px !important;
+  padding-bottom: 0px !important;
+}
+.card-body {
+  padding-top: 2px !important;
+  padding-bottom: 0px !important;
+}
+.first__part {
+  border: none !important;
+}
+
+.btn .btn_1 {
+  padding: 4px 40px !important;
+  transition: 0.7s ease-in;
+  /* background: #6dad4f; */
+  color: #fff;
+}
+#Data {
+  font-family: Arial, Helvetica, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+}
+.iframeStyle {
+  height: 1500px;
+  width: 100%;
+  z-index: 20;
+  position: relative;
+  margin-top: 50px;
+  border: 0;
+}
+
+.holds-the-iframe {
+  background: url(src\assets\images\loader.gif) top center no-repeat;
+}
+
+.deposit-account-list-header {
+  color: White;
+  background-color: #000084;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+.gl-help-list-link {
+  color: blue;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.modal_alert {
+  background-color: #e9e9e9;
+  height: 200px;
+  width: 500px;
+  position: absolute;
+  top: 20%;
+  left: 20%;
+}
+
+.buttons button {
+  padding: 3px 25px;
+}
+.checkbox {
+  margin-left: 30px;
+}
+
+/* button.btn.btn-success {
+  margin-left: 41rem !important;
+} */

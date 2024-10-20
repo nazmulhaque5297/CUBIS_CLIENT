@@ -1,0 +1,52 @@
+<app-house-keeping-wrapper>
+  <form
+    [formGroup]="OthersACCashCollectionReportControlForm"
+    novalidate
+    class="mx-auto border col-md-6"
+  >
+    <p class="bg-dark title">Cash Collection Report Control</p>
+    <div class="form-group row">
+      <label for="select" class="col-sm-5 col-form-label"
+        >Report Columns:</label
+      >
+      <div class="col-sm-7">
+        <select formControlName="columns" id="select" class="form-control pt-0" (change)="GetExistingList($event)">
+          <option value="0">-Select-</option>
+          <option value="1">Column 1</option>
+          <option value="2">Column 2</option>
+          <option value="3">Column 3</option>
+        </select>
+      </div>
+    </div>
+    <div class="form-group row">
+      <label for="columnsName" class="col-sm-5 col-form-label"
+        >Columns Name :</label
+      >
+      <div class="col-sm-7">
+        <input
+          type="text"
+          class="form-control"
+          id="columnsName"
+          formControlName="columnsName"
+        />
+      </div>
+    </div>
+    <div class="mx-auto set-height col-md-12">
+      <table id="Data">
+        <tr>
+          <th>Select</th>
+          <th>PayType</th>
+          <th>PayTypeDes</th>
+        </tr>
+        <tr *ngFor="let item of dataList">
+          <td><input  type="checkbox" [checked]="item.permission" (change)="postAcctype(item)"/></td>
+          <td>{{ item.PayType }}</td>
+          <td>{{ item.PayTypeDes }}</td>
+        </tr>
+      </table>
+    </div>
+    <div class="buttons">
+      <button type="button" class="btn btn-success" (click)="submit()">Save</button>
+    </div>
+  </form>
+</app-house-keeping-wrapper>

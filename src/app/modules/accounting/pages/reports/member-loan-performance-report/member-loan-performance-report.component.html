@@ -1,0 +1,45 @@
+<app-main-wrapper [module]="module">
+  <form [formGroup]="LoanPerformanceReportForm" class="mx-auto border col-md-7">
+    <p class="bg-dark title">Member Loan Performance Report</p>
+    <div class="form-group row">
+      <label class="col-md-4 col-form-label"
+        >Member No:<span class="text-danger">*</span></label
+      >
+      <div class="col-md-3">
+        <input
+          (focusout)="onChangeMemNo($event)"
+          type="text"
+          class="form-control"
+          id="MemberNo"
+          formControlName="MemberNo"
+          name="MemberNo"
+        />
+      </div>
+      <div class="col-md-5">
+        <input
+          type="text"
+          formControlName="MemName"
+          class="form-control"
+          disabled="true"
+        />
+      </div>
+    </div>
+    <div class="buttons">
+      <button
+        type="button"
+        class="btn btn-info ml-2"
+        (click)="getReportToken('CRV')"
+      >
+        Preview
+      </button>
+      <button
+        type="button"
+        class="btn btn-success ml-2"
+        (click)="getReportToken('PDF')"
+      >
+        Print
+      </button>
+    </div>
+  </form>
+  <!-- class="holds-the-iframe" -->
+</app-main-wrapper>

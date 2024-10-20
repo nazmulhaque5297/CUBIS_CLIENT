@@ -1,0 +1,76 @@
+<app-accounting-wrapper [formGroup]="VerifyMemberSignatureCardForm">
+  <div class="mx-auto border col-md-7 pb-3">
+    <p class="bg-dark title">Verify Members Signature Card</p>
+
+    <div class="form-row">
+      <label for="AccountType" class="col-md-3">A/C Type:</label>
+      <div class="pl-2 form-group col-md-3">
+        <input
+          type="text"
+          formControlName="AccountType"
+          class="form-control"
+          id="AccountType"
+          (change)="accTypeChange()"
+          (keydown)="onEnterAccountTypeHandler($event)"
+        />
+      </div>
+      <select
+        formControlName="AccountType"
+        class="form-control col-md-5 mt-0 pt-0 pl-1"
+        (change)="accTypeChange()"
+      >
+        <option value="0" class="mt-0 pt-0 ml-0 pl-0">-Select-</option>
+        <option
+          *ngFor="let item of accountType"
+          [value]="item.Id"
+          class="mt-0 pt-0 ml-0 pl-0"
+        >
+          {{ item.Description }}
+        </option>
+      </select>
+    </div>
+
+    <div class="form-row">
+      <label for="OldAccountNo" class="col-md-3">Old A/C No:</label>
+      <div class="pl-2 form-group col-md-3">
+        <input
+          type="text"
+          formControlName="OldAccountNo"
+          class="form-control"
+          id="OldAccountNo"
+          (change)="oldAccNoChange()"
+          (keydown)="onEnterOldAccountNoHandler($event)"
+        />
+      </div>
+      <span *ngIf="showOld">
+        <label *ngFor="let item of memInfo">{{ item.MemName }}</label>
+      </span>
+    </div>
+
+    <div class="form-row">
+      <label for="MemNo" class="col-md-3">Member No:</label>
+      <div class="pl-2 form-group col-md-3">
+        <input
+          type="text"
+          formControlName="MemNo"
+          class="form-control"
+          id="MemNo"
+          (change)="GetMemInformation()"
+        />
+      </div>
+      <label *ngFor="let item of memInfo">{{ item.MemName }}</label>
+    </div>
+
+    <div class="img__show">
+      <img [src]="url" *ngIf="url" />
+      <div class="col-md-7 mx-auto mt-2">
+        <button type="button" class="btn ml-4" (click)="ngOnInit()">
+          Cancel
+        </button>
+        <!-- <button type="button" class="btnn my-3" (click)="exitPage()">
+          Exit
+        </button> -->
+      </div>
+    </div>
+  </div>
+</app-accounting-wrapper>

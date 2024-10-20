@@ -1,0 +1,60 @@
+<app-house-keeping-wrapper>
+    <form [formGroup]='setupForm' novalidate class="mx-auto border col-md-6 main-container pb-3">
+        <p class="bg-dark title">National Holiday Maintenance</p>
+        <div class="form-row">
+            <label for="inputDesc">Holiday Date:</label><span class="text-danger">*</span>
+            <div class="form-group col-md-8 ml-1">
+                <input type="text" 
+                id="dateFormat"
+                formControlName="HolidayDate" 
+                placeholder="DD/MM/YYYY" 
+                bsDatepicker 
+                [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY' }"
+                autocomplete="off"
+                (ngModelChange)="dateChecker()"
+                class="form-control desc-input">
+                
+            </div>
+        </div>
+        <div class="form-row">
+            <label>Holiday Type :</label><span class="text-danger">*</span>
+            <div class="form-group col-md-8 ml-1">
+                <select formControlName="HolType" class="form-control pt-0" required>
+                    <option value="">-Select-</option>
+                    <option *ngFor="let item of typeList" [value]="item.Id">{{item.Description}}
+                    </option>
+                </select>
+            </div>
+        </div>
+        <div class="form-row">
+            <label for="inputDesc">Holiday Note:</label><span class="text-danger">*</span>
+            <div class="form-group col-md-8">
+                <input  formControlName="HolNote" class="form-control desc-input" required> 
+            </div>
+        </div>
+        <div class="buttons">
+            <button type="button" (click)="SaveOrUpdate()" class="btn btn-success">Submit</button>
+            <button (click)="ViewList()" class="ml-5 btn btn_1">View</button>
+        </div>
+    </form>
+    
+    <div *ngIf="holidayList.length != 0 && ShowList" class="mx-auto set-height col-md-6">
+        <table id="Data">
+            <tr>
+                <th>Date</th>
+                <th>Type</th>
+                <th>Description</th>
+                <th>Note</th>
+                <th>Day</th>
+            </tr>
+            <tr *ngFor="let item of holidayList">
+                <td class="text-center">{{item.HolDateVw}}</td>
+                <td class="text-center">{{item.HolType}}</td>
+                <td>{{item.HolTypeDesc}}</td>
+                <td>{{item.HolNote}}</td>
+                <td>{{item.HolDayName}}</td>
+            </tr>
+        </table>
+    </div>
+
+    </app-house-keeping-wrapper>

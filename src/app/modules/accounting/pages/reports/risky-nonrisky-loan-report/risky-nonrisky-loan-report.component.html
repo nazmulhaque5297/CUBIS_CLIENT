@@ -1,0 +1,241 @@
+<app-main-wrapper [module]="module">
+  <form [formGroup]="RiskyAndNonRiskyLoanForm" class="mx-auto border col-md-7">
+    <p class="bg-dark title">Risky And Without Risky Loan Reports</p>
+
+    <div class="form-group row">
+      <label class="col-md-4 col-form-label">Account Type:</label>
+      <div class="col-md-3">
+        <input
+          appOnlyNumber
+          (focusout)="onChangeAccTypeCode($event)"
+          type="text"
+          class="form-control"
+          id="CodeNumber"
+          formControlName="AccTypeCode"
+          name="CodeNumber"
+        />
+      </div>
+
+      <div class="col-md-5">
+        <select
+          class="form-control pt-0"
+          formControlName="AccType"
+          (change)="onChangeAccType($event)"
+        >
+          <option value="0">-Select-</option>
+          <option
+            *ngFor="let item of inputHelpData.AccountTypeList"
+            [value]="item.Id"
+          >
+            {{ item.Description }}
+          </option>
+        </select>
+      </div>
+    </div>
+
+    <div class="form-group row">
+      <div class="col-md-1">
+        <input
+          [(ngModel)]="chbIsAllCollectorStatus"
+          (ngModelChange)="checkIsAllCollectorValue($event)"
+          class="form-check-input ml-1 checkbox"
+          style="margin: 0.8rem"
+          type="checkbox"
+          id="IsAllCollectorCheckbox"
+          formControlName="IsAllCollector"
+        />
+      </div>
+      <label class="col-md-3 col-form-label" for="IsAllCollectorCheckbox"
+        >All -- Collector</label
+      >
+      <!-- <label class="col-md-3 col-form-label">Collector :</label> -->
+      <!-- (focusout)="onChangeAccTypeCode($event)" -->
+      <div class="col-md-3">
+        <input
+          appOnlyNumber
+          (focusout)="onChangeCollectorCode($event)"
+          type="text"
+          class="form-control"
+          id="CollectorCode"
+          formControlName="CollectorCode"
+          name="CollectorCode"
+          [attr.disabled]="
+            RiskyAndNonRiskyLoanForm.value.IsAllCollector ? '' : null
+          "
+        />
+      </div>
+
+      <div class="col-md-5">
+        <select
+          [attr.disabled]="
+            RiskyAndNonRiskyLoanForm.value.IsAllCollector ? '' : null
+          "
+          class="form-control pt-0"
+          formControlName="Collector"
+          (change)="onChangeCollector($event)"
+        >
+          <option value="0">-Select-</option>
+          <option
+            *ngFor="let item of inputHelpData.CollectorList"
+            [value]="item.Id"
+          >
+            {{ item.Description }}
+          </option>
+        </select>
+      </div>
+    </div>
+
+    <div class="form-group row">
+      <div class="col-md-1">
+        <input
+          [(ngModel)]="chbIsAllGroupStatus"
+          (ngModelChange)="checkIsAllGroupValue($event)"
+          class="form-check-input ml-1 checkbox"
+          style="margin: 0.8rem"
+          type="checkbox"
+          id="IsAllGroup"
+          formControlName="IsAllGroup"
+        />
+      </div>
+      <label class="col-md-3 col-form-label" for="IsAllGroup"
+        >All -- Group</label
+      >
+      <!-- <label class="col-md-3 col-form-label">Group :</label> -->
+
+      <div class="col-md-3">
+        <input
+          appOnlyNumber
+          (focusout)="onChangeGroupCode($event)"
+          type="text"
+          class="form-control"
+          id="GroupCode"
+          formControlName="GroupCode"
+          name="GroupCode"
+          [attr.disabled]="
+            RiskyAndNonRiskyLoanForm.value.IsAllGroup ? '' : null
+          "
+        />
+      </div>
+      <div class="col-md-5">
+        <select
+          [attr.disabled]="
+            RiskyAndNonRiskyLoanForm.value.IsAllGroup ? '' : null
+          "
+          class="form-control pt-0"
+          formControlName="Group"
+          (change)="onChangeGroup($event)"
+        >
+          <option value="0">-Select-</option>
+          <option
+            *ngFor="let item of inputHelpData.GroupList"
+            [value]="item.Id"
+          >
+            {{ item.Description }}
+          </option>
+        </select>
+      </div>
+    </div>
+
+    <div class="form-group row">
+      <div class="col-md-1">
+        <input
+          type="radio"
+          class="form-check-input position-static ml-1 checkbox"
+          value="0"
+          name="rbtnExpiryDate"
+          id="rbtnExpiryDate0"
+          formControlName="rbtnExpiryDate"
+        />
+      </div>
+      <label class="col-md-3 col-form-label" for="rbtnExpiryDate0"
+        >By ExpiryDate</label
+      >
+
+      <div class="col-md-1">
+        <input
+          type="radio"
+          value="1"
+          name="rbtnExpiryDate"
+          id="rbtnExpiryDate1"
+          formControlName="rbtnExpiryDate"
+        />
+      </div>
+      <label class="col-md-3 col-form-label" for="rbtnExpiryDate1"
+        >By BetweenTransaction</label
+      >
+    </div>
+
+    <div class="form-group row">
+      <div class="col-md-1">
+        <input
+          type="radio"
+          class="form-check-input position-static ml-1 checkbox"
+          value="0"
+          name="rbWRisky"
+          id="rbWRisky0"
+          formControlName="rbWRisky"
+        />
+      </div>
+      <label class="col-md-3 col-form-label" for="rbWRisky0"
+        >Without Risky Loan</label
+      >
+
+      <div class="col-md-1">
+        <input
+          type="radio"
+          value="1"
+          name="rbWRisky"
+          id="rbWRisky1"
+          formControlName="rbWRisky"
+        />
+      </div>
+      <label class="col-md-3 col-form-label" for="rbWRisky1">Risky Loan</label>
+    </div>
+
+    <div class="form-group row">
+      <label class="col-md-4 col-form-label">From date:</label>
+      <div class="col-md-3">
+        <input
+          id="dateFormat"
+          type="text"
+          class="form-control"
+          bsDatepicker
+          formControlName="IssueFromDate"
+          [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY' }"
+          autocomplete="off"
+          (ngModelChange)="applicationDateChange()"
+        />
+      </div>
+      <label class="col-md-2 col-form-label">To date:</label>
+      <div class="col-md-3">
+        <input
+          id="dateFormat"
+          type="text"
+          class="form-control"
+          bsDatepicker
+          formControlName="IssueToDate"
+          [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY' }"
+          autocomplete="off"
+          (ngModelChange)="applicationDateChange2()"
+        />
+      </div>
+    </div>
+
+    <div class="buttons">
+      <button
+        type="button"
+        class="btn btn-info ml-2"
+        (click)="getReportToken('CRV')"
+      >
+        Preview
+      </button>
+      <button
+        type="button"
+        class="btn btn-success ml-2"
+        (click)="getReportToken('PDF')"
+      >
+        Print
+      </button>
+    </div>
+  </form>
+</app-main-wrapper>

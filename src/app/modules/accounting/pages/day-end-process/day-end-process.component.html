@@ -1,0 +1,119 @@
+<app-accounting-wrapper>
+  <form [formGroup]="dayEndProcessForm">
+    <div class="row">
+      <div class="col-xl-8 col-md-8">
+        <p class="bg-primary text-center text-light bg-secondary title">
+          Day End Process
+        </p>
+        <div class="card">
+          <!-- <div class="card-header bg-primary">
+            <h4 class="card-title text-white mb-0">
+                      Day End Process
+                    </h4>
+          </div> -->
+          <div class="card-body">
+            <div class="form-group row">
+              <label class="col-md-3 col-form-label">Today's Date:</label>
+              <div class="col-md-4">
+                <input
+                  type="text"
+                  disabled
+                  class="form-control"
+                  formControlName="ProcessDate"
+                />
+              </div>
+            </div>
+            <div class="form-group row">
+              <label class="col-md-3 col-form-label"
+                >Please Input 'END OF DAY':</label
+              >
+              <div class="col-md-4">
+                <input
+                  type="text"
+                  class="form-control"
+                  formControlName="EndOfDay"
+                />
+              </div>
+            </div>
+            <div class="form-group row">
+              <div class="buttons col-md-6 mx-auto">
+                <button
+                  type="button"
+                  class="btn btn-success"
+                  *ngIf="!dayEndProcessInputHelp.HasLoggedinUsers"
+                  (click)="onSubmit()"
+                >
+                  End Of Day
+                </button>
+              </div>
+            </div>
+
+            <div
+              *ngIf="dayEndProcessInputHelp.HasLoggedinUsers"
+              class="alert alert-danger text-danger alert-dismissible fade show"
+              role="alert"
+            >
+              <button
+                type="button"
+                class="close"
+                data-dismiss="alert"
+                aria-label="Close"
+              >
+                <span aria-hidden="true">&times;</span>
+              </button>
+              <strong>Oh!</strong> Can not Process Period End - System Not In
+              Single User.
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-8">
+        <table class="table">
+          <tr style="background-color: gray">
+            <td>IdsNo</td>
+            <td>IdsName</td>
+            <td>IdsLogInFlag</td>
+            <td>IdsLogInTable</td>
+          </tr>
+          <tr
+            *ngFor="let item of dayEndProcessInputHelp.UserList; let i = index"
+          >
+            <td>{{ item.IdsNo }}</td>
+            <td>{{ item.IdsName }}</td>
+            <td>{{ item.IdsLogInFlag }}</td>
+            <td>{{ item.IdsLogInTable }}</td>
+          </tr>
+        </table>
+      </div>
+    </div>
+
+    <div *ngIf="showModal" class="modal_alert p-5 border">
+      <p class="text-center">There are some errors in these voucher.</p>
+      <p class="text-center">Please fix them.</p>
+      <div class="set-height">
+        <table id="Data">
+          <tr style="background-color: #0069aa">
+            <td style="color: white">Voucher No</td>
+            <td style="color: white">User Id</td>
+          </tr>
+          <tr *ngFor="let item of wrongAccountNo; let i = index">
+            <td>{{ item.VoucherNo }}</td>
+            <td>{{ item.UserId }}</td>
+          </tr>
+        </table>
+        <span class="col-md-12">
+          <span class="col-md-4 ml-4"></span>
+          <span class="col-md-4 ml-4"></span>
+          <button
+            class="btn btn-primary mt-2 pl-3 ml-3 col-md-3"
+            (click)="clickOk()"
+          >
+            Okay
+          </button>
+        </span>
+      </div>
+    </div>
+  </form>
+</app-accounting-wrapper>

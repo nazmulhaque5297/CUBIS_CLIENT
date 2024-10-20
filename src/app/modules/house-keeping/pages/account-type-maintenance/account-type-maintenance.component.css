@@ -1,0 +1,22 @@
+.title{
+  margin: 0px !important;
+
+}
+.card-header {
+  padding-top: 5px;
+  padding-bottom: 5px;
+  text-align: left;
+  background-color: #0069aa;
+  color: white;
+}
+.btn {
+  padding: 4px 30px !important;
+  transition: 0.7s ease-in;
+  background: #0069aa;
+  color: #fff;
+}
+
+.btn:focus {
+  outline: none !important;
+  box-shadow: none !important;
+}

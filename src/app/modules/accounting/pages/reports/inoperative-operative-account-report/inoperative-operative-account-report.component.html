@@ -1,0 +1,201 @@
+<app-accounting-wrapper>
+  <form
+    [formGroup]="InoperativeOperativeForm"
+    class="mx-auto border col-md-9 pb-2"
+  >
+    <p class="bg-dark title">Inoperative/Operative Account Reports</p>
+
+    <div class="form-group row">
+      <div class="col-md-1">
+        <input
+          checked
+          type="radio"
+          value="1"
+          id="InoperativeRb1"
+          name="InoperativeRb"
+          formControlName="InoperativeRb"
+        />
+      </div>
+      <label class="col-md-3 col-form-label" for="InoperativeRb1" >Inoperative A/C </label>
+      <div class="col-md-1">
+        <input
+          checked
+          type="radio"
+          value="2"
+          id="InoperativeRb2"
+          name="InoperativeRb"
+          formControlName="InoperativeRb"
+        />
+      </div>
+      <label class="col-md-3 col-form-label" for="InoperativeRb2" >Operative A/C </label>
+    </div>
+
+    <div class="form-group row">
+      <div class="col-md-1 col-form-label"></div>
+      <label class="col-md-3 col-form-label">Account Type</label>
+      <div class="col-md-2">
+        <input
+          appOnlyNumber
+          type="text"
+          class="form-control"
+          id="AccNameInput"
+          formControlName="AccNameInput"
+          name="AccNameInput"
+          (focusout)="AccInput()"
+        />
+      </div>
+      <div class="col-md-4">
+        <select
+          class="form-control pt-0"
+          formControlName="AccountDdl"
+          (change)="AccDDLChange()"
+        >
+          <option value="0">-Select-</option>
+          <option
+            *ngFor="let item of pageLoadModel.AllAccountDropdown"
+            [value]="item.Id"
+          >
+            {{ item.Description }}
+          </option>
+        </select>
+      </div>
+    </div>
+
+    <div class="form-group row">
+      <div class="col-md-1 col-form-label">
+        <input
+          class="form-check-input ml-1 checkbox"
+          style="margin: 0.5rem"
+          type="checkbox"
+          id="CollectorChb"
+          value="0"
+          formControlName="CollectorChb"
+          (change)="CollectorChbChange()"
+        />
+      </div>
+      <label class="col-md-3 col-form-label" for="CollectorChb" >All Collector Code </label>
+      <div class="col-md-2">
+        <input
+          appOnlyNumber
+          type="text"
+          class="form-control"
+          id="CollectorCodeInput"
+          formControlName="CollectorCodeInput"
+          name="CollectorCodeInput"
+          (focusout)="CollectorCodeChange()"
+          [attr.disabled]="InoperativeOperativeForm.value.CollectorChb ? '' : null"
+        />
+      </div>
+      <div class="col-md-4">
+        <select
+          class="form-control pt-0"
+          formControlName="CollectorCodeDdl"
+          (change)="CollectorCodeDDLChange()"
+        >
+          <option value="0">-Select-</option>
+          <option
+            *ngFor="let item of pageLoadModel.AllCollectorDropdown"
+            [value]="item.Id"
+          >
+            {{ item.Description }}
+          </option>
+        </select>
+      </div>
+    </div>
+
+    <div class="form-group row">
+      <div class="col-md-1 col-form-label">
+        <input
+          class="form-check-input ml-1 checkbox"
+          style="margin: 0.5rem"
+          type="checkbox"
+          id="GroupChb"
+          value="0"
+          formControlName="GroupChb"
+          (change)="GroupDDlChb()"
+        />
+      </div>
+      <label class="col-md-3 col-form-label" for="GroupChb" >All Group Name</label>
+      <div class="col-md-2">
+        <input
+          appOnlyNumber
+          type="text"
+          class="form-control"
+          id="GroupTypeInput"
+          formControlName="GroupNameInput"
+          name="GroupNameInput"
+          (focusout)="GroupInputChange()"
+          [attr.disabled]="InoperativeOperativeForm.value.GroupChb ? '' : null"
+        />
+      </div>
+      <div class="col-md-4">
+        <select
+          class="form-control pt-0"
+          formControlName="AllGroupDdl"
+          (change)="GroupDDLOptChange()"
+        >
+          <option value="0">-Select-</option>
+          <option
+            *ngFor="let item of pageLoadModel.AllGroupDropdown"
+            [value]="item.Id"
+          >
+            {{ item.Description }}
+          </option>
+        </select>
+      </div>
+    </div>
+
+    <div class="form-group row">
+      <label class="col-md-4 col-form-label">From Date </label>
+      <div class="col-md-2">
+        <input
+          id="dateFormat"
+          type="text"
+          class="form-control"
+          bsDatepicker
+          formControlName="IssueFromDate"
+          [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY' }"
+          autocomplete="off"
+          (ngModelChange)="applicationDateChange()"
+        />
+      </div>
+      <label class="col-md-2 col-form-label">Till Date </label>
+      <div class="col-md-2">
+        <input
+          id="dateFormat"
+          type="text"
+          class="form-control"
+          bsDatepicker
+          formControlName="IssueToDate"
+          [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY' }"
+          autocomplete="off"
+          (ngModelChange)="applicationDateChange2()"
+        />
+      </div>
+    </div>
+    <div></div>
+
+    <div class="form-group row">
+      <div class="col-md-1 col-form-label">
+        <input
+          class="form-check-input ml-1 checkbox"
+          style="margin: 0.5rem"
+          type="checkbox"
+          id="OldAcWiseChb"
+          value="0"
+          formControlName="OldAcWiseChb"
+        />
+      </div>
+      <label class="col-md-3 col-form-label" for="OldAcWiseChb" >Old A/c No. Wise </label>
+    </div>
+
+    <div class="buttons">
+      <button type="button" class="btn btn-info ml-2" (click)="getReportToken('CRV')">
+        Preview
+      </button>
+      <button type="button" class="btn btn-success ml-2" (click)="getReportToken('PDF')">
+        Print
+      </button>
+    </div>
+  </form>
+</app-accounting-wrapper>

@@ -1,0 +1,39 @@
+<app-house-keeping-wrapper>
+  <form
+    [formGroup]="ResetPasswordControlForm"
+    class="mx-auto border col-md-6 main-container pb-3"
+  >
+    <p class="bg-dark title">Reset User Password</p>
+    <div class="form-row">
+      <label>ID No.</label>
+      <div class="form-group col-md-4">
+        <input
+          type="text"
+          class="form-control"
+          id="ID Nummber"
+          formControlName="IdsNo"
+          name="IDNumber"
+          (change)="changeSelectValue($event)"
+        />
+      </div>
+      <div class="form-group col-md-6">
+        <select
+          formControlName="selectedOptionCode"
+          (change)="selectChangeHandler($event)"
+          class="form-control pt-1"
+        >
+          <option value="0">-Select-</option>
+          <option *ngFor="let item of userlist" [value]="item.IdsNo">
+            {{ item.IdsName }}
+          </option>
+        </select>
+      </div>
+    </div>
+
+    <div class="buttons">
+      <button type="button" class="ml-5 btn" (click)="resetPassword()">
+        Reset Passward
+      </button>
+    </div>
+  </form>
+</app-house-keeping-wrapper>

@@ -1,0 +1,149 @@
+<div class="modal-header">
+    <h4 class="modal-title">{{  titleOftheSlab }}</h4>
+    <button type="button" class="close" (click)="activeModal.dismiss()" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+
+<form  [formGroup]='SlabMaintainLoanForm' class="mx-auto border mb-2 pb-2 col-md-12 main-container">
+    <div class="container col-md-12 border row  mx-auto first_row">
+        <div class="col-md-2 mt-2">
+            <label class="h6">Mem. Type</label>
+        </div>
+        <div *ngIf="slabMaintainLoadData.RecordVisible" class="mt-2 ml-3 pl-0">
+            <label class="h6">Deposit</label>
+        </div>
+        <div class="mt-2 ml-4 pl-0">
+            <label class="h6">Period(Mth)</label>
+        </div>
+        <div *ngIf="slabMaintainLoadData.PensionInterestRateVisible" class="mt-2 ml-3 pl-0">
+            <label class="h6">Int.Rate</label>
+        </div>
+        <div *ngIf="slabMaintainLoadData.BenefitAmountVisible" class="mt-2 ml-4 pl-0 pr-0 mr-0">
+            <label class="h6" *ngIf="slabMaintainLoadData.BonusAmountVisible">Maturity Amt</label>
+            <label class="h6" *ngIf="!slabMaintainLoadData.BonusAmountVisible">Benefit Amt</label>
+        </div>
+        <div *ngIf="slabMaintainLoadData.PenalAmountVisible" class="mt-2 ml-3 pl-0 pr-0 mr-0">
+            <label class="h6">Penal Amt</label>
+        </div>
+        <div *ngIf="slabMaintainLoadData.BonusAmountVisible" class="mt-2 ml-3 pl-0 pr-0 mr-0">
+            <label class="h6">Bonus Amt</label>
+        </div>
+        <div class="mt-2 ml-3 pl-0 pr-0 mr-0" hidden>
+            <label class="h6">Id</label>
+        </div>
+    </div>
+    <div class="container col-md-12 border row mb-3 pb-3 mx-auto second_part">
+        <div class="col-md-2 ">
+            <select formControlName="SlabFlag" class="form-control  mt-0 pt-0">
+                <option value="0" class="mt-0 pt-0">-Select-</option>
+                <option *ngFor="let item of memberTypeEnum" [value]="item.Id"  class="mt-0 pt-0"> {{item.Description}}
+                </option>
+            </select>
+        </div>
+        <div *ngIf="slabMaintainLoadData.RecordVisible" class="col-md-1  ml-0 pl-0 mr-0 pr-0">
+            <input formControlName="PensionRecord" type="text" class="form-control desc-input" >
+        </div>
+        <div class="col-md-1   pl-0 mr-0 pr-0">
+            <input formControlName="PeriodMonth" appOnlyNumber type="text" class="form-control desc-input" >
+        </div>
+        <div *ngIf="slabMaintainLoadData.PensionInterestRateVisible" class="col-md-1   pl-0 mr-0 pr-0">
+            <input formControlName="PensionInterestRate" appOnlyNumber type="text" class="form-control desc-input" >
+        </div>
+        <div *ngIf="slabMaintainLoadData.BenefitAmountVisible" class="col-md-1   pl-0 mr-0 pr-0">
+            <input formControlName="BenefitAmount" appOnlyNumber type="text" class="form-control desc-input" >
+        </div>
+        <div *ngIf="slabMaintainLoadData.PenalAmountVisible" class="col-md-1   pl-0 mr-0 pr-0">
+            <input formControlName="PenalAmount" appOnlyNumber type="text" class="form-control desc-input" >
+        </div>
+        <div *ngIf="slabMaintainLoadData.BonusAmountVisible" class="col-md-1  pl-0 mr-0 pr-0">
+            <input formControlName="BonusAmount" appOnlyNumber type="text" class="form-control desc-input" >
+        </div>
+        
+        <div class="col-md-1  pl-0 mr-0 pr-0" hidden>
+            <input formControlName="SlabId" appOnlyNumber type="text" class="form-control desc-input" >
+        </div>
+
+        <div *ngIf="!btnUpdate" class="col-md-1 ">
+            <button (click)="submitSlabData()" class="btn btn-primary">Submit</button>
+        </div>
+        <div *ngIf="btnUpdate" class="col-md-1 ">
+            <button (click)="updateSlabData()" class="btn btn-primary">Update</button>
+        </div>
+    </div>
+    <div class="border  col-md-12 main-container pt-2 pb-2">
+        <h4 class="ml-4">Premature Parameter  Maintenance</h4>
+        <div class="container  row  pr-0 mr-0 mx-auto">
+            <div class="col-md-3  ml-2">
+                <label class="h6">Month Below</label>
+            </div>
+            <div class="col-md-3 ml-2">
+                <label class="h6">Int.Rate</label>
+            </div>
+        </div>
+        <div class="container row mx-auto">
+            <div class="col-md-3  ml-1">
+                <input formControlName="MonthBelow"  appOnlyNumber type="text" class="form-control desc-input" >
+            </div>
+            <div class="col-md-3 ml-1">
+                <input formControlName="InterestRate" appOnlyNumber type="text" class="form-control desc-input" >
+            </div>
+            <div *ngIf="!btnUpdatePre" class="col-md-2 pt-0">
+                <button (click)="submitPrematureData()"  class="btn">Submit</button>
+            </div>
+            <div *ngIf="btnUpdatePre" class="col-md-1 pt-0">
+                <button (click)="updatePrematureData()"  class="btn ">Update</button>
+            </div>
+        </div>
+    </div>
+    <div *ngIf="dataList.length != 0" class="mx-auto mt-1 mt-5 col-md-12 set-height">
+        <table id="Data" class="col-md-12">
+            <tr>
+                <!-- <th>Id</th> -->
+                <th>A/C Type</th>
+                <th>Mem.Type</th>
+                <th>Deposit</th>
+                <th>Period(Mth)</th>
+                <th>BenefitAmt</th>
+                <th>Int.Rate</th>
+                <th>PenalAmt</th>
+                <th>BonusAmt</th>
+                <th>Action</th>
+            </tr>
+
+            <tr *ngFor="let item of dataList">
+                <td class="text-center" hidden>{{item.Id}}</td>
+                <td class="text-center">{{item.AtyAccType}}</td>
+                <td class="text-center">{{item.AtyFlag}}</td>
+                <td class="text-center">{{item.AtyRecords}}</td>
+                <td class="text-center">{{item.AtyPeriod}}</td>
+                <td class="text-center">{{item.AtyMatureAmt}}</td>
+                <td class="text-center">{{item.AtyIntRate}}</td>
+                <td class="text-center">{{item.AtyPenalAmt}}</td>
+                <td class="text-center">{{item.AtyBonusAmt}}</td>
+                <td class="text-center"><button (click)="setUpdateData(item)"  style='font-size:16px' class='mdi mdi-square-edit-outline'></button>
+                <button (click)="deleteSlabData(item)" type="button"  style='font-size:16px' class="mdi mdi-delete ml-0 pl-0" aria-label="Close"></button></td>
+            </tr>
+        </table>
+    </div>
+    <div *ngIf="dataList52.length != 0" class="mx-auto mt-1 mt-5 col-md-10 set-height">
+        <table id="Data" class="col-md-12">
+            <tr>
+                <th>A/C Type</th>
+                <th>Mem.Type</th>
+                <th>Period(Mth)</th>
+                <th>Int.Rate</th>
+            </tr>
+
+            <tr *ngFor="let item of dataList52">
+                <td class="text-center">{{item.AtyAccType}}</td>
+                <td class="text-center">{{item.AtyFlag}}</td>
+                <td class="text-center">{{item.AtyPeriod}}</td>
+                <td class="text-center">{{item.AtyIntRate}}</td>
+                <td class="text-center"><button (click)="setUpdateData52(item)"  style='font-size:16px' class='far mx-auto'>&#xf044;</button></td>
+                <td class="pl-0 ml-0"><button (click)="deleteSlabData(item)"  type="button" class="close ml-0 pl-0" aria-label="Close">&times;</button></td>
+            </tr>
+        </table>
+    </div>
+
+</form>

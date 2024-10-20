@@ -1,0 +1,31 @@
+.title {
+  background: #6c757d !important;
+  color: #fff;
+  font-weight: 600;
+  padding: 2px;
+}
+label {
+  padding: 2px !important;
+}
+input {
+  box-shadow: none !important;
+}
+.btn {
+  margin-top: 4px;
+  padding: 4px 30px !important;
+  transition: 0.7s ease-in;
+  /* background: #0069aa; */
+  color: #fff;
+}
+.btn_1 {
+  margin-top: 4px;
+  padding: 4px 30px !important;
+  transition: 0.7s ease-in;
+  background: #0069aa;
+  color: #fff;
+}
+
+.btn:focus {
+  outline: none !important;
+  box-shadow: none !important;
+}

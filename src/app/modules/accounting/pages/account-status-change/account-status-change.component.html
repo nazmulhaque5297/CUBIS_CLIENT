@@ -1,0 +1,223 @@
+<app-accounting-wrapper>
+  <form [formGroup]="AccountStatusChangeForm">
+    <div class="mx-auto border col-md-7">
+      <p class="bg-dark title">Account Status Change</p>
+      <div class="form-row">
+        <label class="col-md-2 col-form-label"
+          >Member No:<span class="text-danger">*</span></label
+        >
+        <div class="form-group col-md-4">
+          <input
+            (focusout)="changeMemberInfoHandler($event)"
+            (keydown)="onEnterMemberNoHandler($event)"
+            type="text"
+            class="form-control"
+            id="MemberNo"
+            formControlName="MemberNo"
+            name="MemberNo"
+          />
+        </div>
+        <div *ngIf="MemInfoList.length != 0" class="form-group col-md-4">
+          <p>{{ MemInfoList.MemberName }}</p>
+        </div>
+      </div>
+
+      <div class="form-row">
+        <label class="col-md-2 col-form-label" for="accountType"
+          >Account Type:</label
+        >
+        <div class="form-group col-md-4">
+          <input
+            type="text"
+            formControlName="AccountTypeId"
+            (change)="selectAccountTypeChangeHandler($event)"
+            (keydown)="onEnterAccountTypeIdHandler($event)"
+            class="form-control"
+            id="accountType"
+          />
+        </div>
+        <div class="form-group col-md-4">
+          <select
+            formControlName="SelectedAccountType"
+            (change)="selectAccountTypeChangeHandler($event)"
+            class="form-control pt-0"
+          >
+            <option value="0">-Select-</option>
+            <option *ngFor="let item of accTypeList" [value]="item.Id">
+              {{ item.Description }}
+            </option>
+          </select>
+        </div>
+      </div>
+
+      <div class="form-row">
+        <label class="col-md-2 col-form-label">Account No:</label>
+        
+        <!-- <div class="form-group col-md-4">
+          <input
+            type="text"
+            class="form-control"
+            id="AccountNo"
+            formControlName="AccountNo"
+            name="AccountNo"
+          />
+        </div> -->
+
+        <div class="form-group col-md-4">
+          
+          <select
+            formControlName="AccountNoSelectedSelectedChangeStatus"
+            id="AccountNoSelectedSelectedChangeStatus"
+            (change)="onAccountNoSelectedChangeStatus($event)"
+            class="form-control pt-0"
+          >
+            <option value="0">-Select-</option>
+            <option *ngFor="let item of AccountNos" [value]="item.AccountNo">
+              {{ item.AccountNo }}
+            </option>
+          </select>
+
+        </div>
+
+      </div>
+
+      <div class="form-row">
+        <label class="col-md-2 col-form-label" for="CurrentStatus"
+          >Current Status:</label
+        >
+        <div class="form-group col-md-4">
+          <input
+            type="text"
+            formControlName="CurrentStatus"
+            class="form-control"
+            id="CurrentStatus"
+            disabled
+          />
+        </div>
+        <label class="col-md-1 col-form-label" for="since">Since:</label>
+        <div class="form-group col-md-3">
+          <input
+            type="text"
+            formControlName="Since"
+            class="form-control"
+            id="since"
+            disabled
+          />
+        </div>
+      </div>
+
+      <div class="form-row">
+        <label class="col-md-2 col-form-label" for="CurrentReference"
+          >Current Reference:</label
+        >
+        <div class="form-group col-md-4">
+          <input
+            type="text"
+            formControlName="CurrentReference"
+            class="form-control"
+            id="CurrentReference"
+            disabled
+          />
+        </div>
+        <label class="col-md-1 col-form-label" for="Balance">Balance:</label>
+        <div class="form-group col-md-3">
+          <input
+            type="text"
+            formControlName="Balance"
+            class="form-control"
+            id="Balance"
+            disabled
+          />
+        </div>
+      </div>
+
+      <div class="form-row">
+        <label class="col-md-2 col-form-label" for="TotalLienAmount"
+          >Total Lien Amt.:</label
+        >
+        <div class="form-group col-md-4">
+          <input
+            type="text"
+            formControlName="TotalLienAmount"
+            class="form-control"
+            id="TotalLienAmount"
+            disabled
+          />
+        </div>
+      </div>
+    </div>
+    <div class="mx-auto mt-5 border col-md-7 pt-2 pb-2">
+      <div class="form-row">
+        <label class="col-md-2 col-form-label" for="ChangeStatus"
+          >Change Status:</label
+        >
+        <div class="form-group col-md-6">
+          <select
+            formControlName="SelectedChangeStatus"
+            id="SelectedChangeStatus"
+            (change)="onChangeSelectedChangeStatus()"
+            class="form-control pt-0"
+          >
+            <option value="0">-Select-</option>
+            <option *ngFor="let item of accStatusList" [value]="item.Id">
+              {{ item.Description }}
+            </option>
+          </select>
+        </div>
+      </div>
+      <div
+        class="form-row"
+        *ngIf="AccountStatusChangeForm.value.SelectedChangeStatus == 50"
+      >
+        <label class="col-md-2 col-form-label" for="LienAmount"
+          >Total Lien Amt.:</label
+        >
+        <div class="form-group col-md-4">
+          <input
+            type="number"
+            formControlName="LienAmount"
+            class="form-control"
+            id="LienAmount"
+          />
+        </div>
+      </div>
+      <div class="form-row">
+        <label class="col-md-2 col-form-label" for="CurrentStatus"
+          >Status Date:</label
+        >
+        <div class="col-md-6">
+          <input
+            id="dateFormat"
+            type="text"
+            placeholder="DD/MM/YYYY"
+            class="form-control"
+            bsDatepicker
+            formControlName="StatusDate"
+            [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY' }"
+            autocomplete="off"
+          />
+        </div>
+      </div>
+
+      <div class="form-row mt-1">
+        <label class="col-md-2 col-form-label" for="Reference"
+          >Reference:</label
+        >
+        <div class="form-group col-md-6">
+          <input
+            type="text"
+            formControlName="Reference"
+            class="form-control"
+            id="Reference"
+          />
+        </div>
+      </div>
+
+      <div class="buttons">
+        <button type="button" class="btn" (click)="UpdateAccountStatus()">
+          {{ updateButtonText }}
+        </button>
+      </div>
+    </div>
+  </form>
+</app-accounting-wrapper>

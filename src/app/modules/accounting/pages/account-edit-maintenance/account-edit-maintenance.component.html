@@ -1,0 +1,289 @@
+<app-accounting-wrapper>
+  <form [formGroup]="accountEditForm" class="form-horizontal">
+      <div class="col-md-8 mx-auto">
+        <p class="bg-primary text-center text-light bg-secondary title">Account Edit maintenance</p>
+        <div class="card">
+          <div class="card-body">
+            <div class="form-group row">
+              <label class="col-md-3 col-form-label">Member No:<span class="text-danger">*</span></label>
+              <div class="col-md-3">
+                <input type="number" class="form-control" formControlName="MemberNo"
+                  (change)="onMemberChange(accountEditForm.value.MemberNo)" />
+              </div>
+              <div class="col-md-4 ml-5">
+                <input type="text" class="form-control" disabled formControlName="MemberName" />
+              </div>
+            </div>
+
+            <div class="form-group row">
+              <label class="col-md-3 col-form-label">A/C Type:<span class="text-danger">*</span></label>
+              <div class="col-md-3">
+                <input type="number" class="form-control" id="AccountTypeCode" formControlName="AccountTypeCode" (change)="
+                        onAccountTypeChange(accountEditForm.value.AccountTypeCode)
+                      " />
+              </div>
+              <div class="col-md-4 ml-5">
+                <select class="form-control pt-0" formControlName="AccountTypeId" (change)="
+                        onAccountTypeChange(accountEditForm.value.AccountTypeId)
+                      ">
+                  <option value="0">-Select-</option>
+                  <option *ngFor="let item of inputHelpData.AccountTypeList" [value]="item.Id">
+                    {{ item.Description }}
+                  </option>
+                </select>
+              </div>
+            </div>
+
+            <div class="form-group row">
+              <label class="col-md-3 col-form-label">Account No:</label>
+              <div *ngIf="!accountViewModel.ShowAccountList" class="col-md-3">
+                <input type="number" class="form-control" formControlName="AccountNo" />
+              </div>
+              <div *ngIf="accountViewModel.ShowAccountList" class="col-md-3">
+                <select *ngIf="accountViewModel.ShowAccountList" class="form-control pt-1" formControlName="AccountNo"
+                  (change)="
+                        onAccountNumberChange($event)
+                      ">
+                  <option value="0">-Select-</option>
+                  <option *ngFor="let item of accountViewModel.AccountNoList" [value]="item.Description">
+                    {{ item.Description }}
+                  </option>
+                </select>
+              </div>
+              <label class=" col-form-label col-md-2 ml-5">Status:</label>
+              <div class="col-md-2">
+                <input type="text" class="form-control" disabled formControlName="Status" />
+              </div>
+            </div>
+
+            <div *ngIf="accountViewModel.ShowOpenDate" class="form-group row">
+              <label class="col-md-3 col-form-label">Open Date:</label>
+              <!-- <input type="text" class="form-control" disabled formControlName="OpenDate" /> -->
+              <div class="col-md-3">
+                <input id="dateFormat" type="text" placeholder="DD/MM/YYYY" class="form-control" bsDatepicker
+                  formControlName="OpenDate" [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY' }" autocomplete="off" [bsValue]="bsValue"
+                  [maxDate]="maxDate"  (ngModelChange)="dateChecker()">
+              </div>
+              <label class="col-form-label col-md-2 ml-5">Ledger Balance:</label>
+              <div class="col-md-2">
+                <input type="text" class="form-control" disabled formControlName="AccBalance" />
+              </div>
+            </div>
+
+            <div *ngIf="accountViewModel.ShowDepositAmount" class="form-group row">
+              <label class="col-md-3 col-form-label">Deposit Amount:</label>
+              <div class="col-md-3">
+                <input type="text" appOnlyNumber class="form-control" formControlName="DepositAmount"
+                  (focusout)="changeDepositAmountHandler($event)" />
+              </div>
+            </div>
+
+            <div *ngIf="accountViewModel.ShowFixedDepositAmount" class="form-group row">
+              <label class="col-md-3 col-form-label">Fixed Deposit:</label>
+              <div class="col-md-3">
+                <input type="text" class="form-control" formControlName="FixedDeposit"
+                  (focusout)="changeFixedDepositAmountHandler($event)" />
+              </div>
+            </div>
+
+            <div *ngIf="accountViewModel.ShowPeriod" class="form-group row">
+              <label class="col-md-3 col-form-label">Period(Month):</label>
+              <div class="col-md-3">
+                <input type="number" class="form-control" formControlName="Period"
+                  (focusout)="changePeriodHandler($event)" />
+              </div>
+            </div>
+
+            <div *ngIf="accountViewModel.ShowInterestRate" class="form-group row">
+              <label class="col-md-3 col-form-label">Interest Rate:</label>
+              <div class="col-md-3">
+                <input type="number" class="form-control" formControlName="InterestRate" />
+              </div>
+            </div>
+
+            <div *ngIf="accountViewModel.ShowMatrutiyDate" class="form-group row">
+              <label class="col-md-3 col-form-label">Maturity Date:</label>
+              <div class="col-md-3">
+                <input type="text" class="form-control" formControlName="MaturityDate" readonly/>
+              </div>
+            </div>
+            <div *ngIf="accountViewModel.ShowMatrutiyAmount" class="form-group row">
+              <label class="col-md-3 col-form-label">Maturity Amount:</label>
+              <div class="col-md-3">
+                <input type="number" class="form-control" formControlName="MaturityAmount" />
+              </div>
+            </div>
+            <div *ngIf="accountViewModel.ShowFixedMthInt" class="form-group row">
+              <label class="col-md-3 col-form-label">Interest Benefits:</label>
+              <div class="col-md-3">
+                <input type="number" class="form-control" formControlName="InterestBenefits" />
+              </div>
+              <label *ngIf="accountViewModel.ShowBenefitDate" class="col-form-label col-md-2 ml-5">Benefits Date:</label>
+              <div *ngIf="accountViewModel.ShowBenefitDate" class="col-md-2">
+                <input id="dateFormat" type="text" placeholder="DD/MM/YYYY" class="form-control" bsDatepicker
+                  formControlName="BenefitsDate" [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY' }" autocomplete="off" [bsValue]="bsValue"
+                  [maxDate]="maxDate"  
+                   >
+              </div>
+            </div>
+
+            <div *ngIf="accountViewModel.ShowWithdrawalAC" class="form-group row">
+              <label class="col-md-3 col-form-label">WithdrawalA/C:</label>
+              <div class="col-md-3">
+                <select class="form-control pt-0" formControlName="WithdrawalAccountTypeId">
+                  <option value="0">-Select-</option>
+                  <option *ngFor="let item of inputHelpData.WithdrawalAccountTypeList" [value]="item.Id">
+                    {{ item.Description }}
+                  </option>
+                </select>
+              </div>
+            </div>
+
+            <div *ngIf="accountViewModel.ShowInterestCalculation" class="form-group row">
+              <label class="col-md-3 col-form-label">Interest Calculation:</label>
+              <div class="col-md-3">
+                <select class="form-control pt-0" formControlName="InterestCalculationId">
+                  <option value="0">-Select-</option>
+                  <option *ngFor="let item of inputHelpData.InterestCalculationTypeList" [value]="item.Id">
+                    {{ item.Description }}
+                  </option>
+                </select>
+              </div>
+            </div>
+
+            <div *ngIf="accountViewModel.ShowAutoRenewal" class="form-group row">
+              <label class="col-md-3 col-form-label">Auto Renewal:</label>
+              <div class="col-md-3">
+                <select class="form-control pt-0" formControlName="AutoRenewalId">
+                  <option value="0">-Select-</option>
+                  <option *ngFor="let item of inputHelpData.AutoRenewalTypeList" [value]="item.Id">
+                    {{ item.Description }}
+                  </option>
+                </select>
+              </div>
+            </div>
+
+
+            <div *ngIf="accountViewModel.ShowSpInstruction" class="form-group row">
+              <label class="col-md-3 col-form-label">Special Instruction:</label>
+              <div class="col-md-3">
+                <input type="text" class="form-control" formControlName="SpecialInstruction" />
+              </div>
+            </div>
+
+            <div *ngIf="accountViewModel.ShowContraInt" class="form-group row">
+              <label class="col-md-3 col-form-label">Contract Int:</label>
+              <div class="col-md-3">
+                <input type="checkbox" class="form-control" formControlName="IsContractInt" />
+              </div>
+            </div>
+
+
+            <div *ngIf="accountViewModel.ShowCorrAccount" class="form-group row">
+              <label class="col-md-3 col-form-label">Corr. Account No.:</label>
+              <div class="col-md-3">
+                <input type="number" class="form-control" formControlName="CorrAccountNo" (focusout)="CorrAccChangeHandler($event)"/>
+              </div>
+              <div class="col-md-4 ml-5">
+                <input type="text" class="form-control" disabled formControlName="CorrAccountTitle" />
+              </div>
+            </div>
+
+            <div *ngIf="accountViewModel.ShowAutoTrfCorrAcc" class="form-group row">
+              <label class="col-md-3 col-form-label">Auto Trf. Corr. A/c:</label>
+              <div class="col-md-3">
+                <input type="checkbox" class="form-control" formControlName="IsAutoTransCorrAccount" />
+              </div>
+            </div>
+
+            <div *ngIf="accountViewModel.ShowOldAccNo" class="form-group row">
+              <label class="col-md-3 col-form-label">Old Account No:</label>
+              <div class="col-md-3">
+                <input type="text" class="form-control" formControlName="OldAccountNo" />
+              </div>
+            </div>
+
+            <div *ngIf="accountViewModel.ShowSMSService" class="form-group row">
+              <label class="col-md-3 col-form-label">SMS Service:</label>
+              <div class="col-md-3">
+                <select class="form-control pt-0" formControlName="SmsService">
+                  <option *ngFor="let item of inputHelpData.SmsServiceList" [value]="item.Id">
+                    {{ item.Description }}
+                  </option>
+                </select>
+              </div>
+            </div>
+
+            <div *ngIf="accountViewModel.ShowShareStatus" class="form-group row">
+              <label class="col-md-3 col-form-label">Share Status</label>
+              <div class="col-md-3">
+                <select class="form-control pt-0" formControlName="ShareStatusId">
+                  <option *ngFor="let item of inputHelpData.ShareStatusList" [value]="item.Id">
+                    {{ item.Description }}
+                  </option>
+                </select>
+              </div>
+            </div>
+
+            <div *ngIf="accountViewModel.ShowOriginalAmount" class="form-group row">
+              <label class="col-md-3 col-form-label">Orginal Amount:</label>
+              <div class="col-md-3">
+                <input type="text" class="form-control" formControlName="OriginalAmount" />
+              </div>
+            </div>
+
+            <div *ngIf="accountViewModel.ShowPrincipalAmount" class="form-group row">
+              <label class="col-md-3 col-form-label">Principal Amount:</label>
+              <div class="col-md-3">
+                <input type="text" class="form-control" formControlName="PrincipalAmount" />
+              </div>
+            </div>
+
+            <div *ngIf="accountViewModel.ShowAnniversaryDate" class="form-group row">
+              <label class="col-md-3 col-form-label" for="CurrentStatus">Anniversary Date:</label>
+              <div class="col-md-3">
+                <input id="dateFormat" type="text" placeholder="DD/MM/YYYY" class="form-control" bsDatepicker
+                  formControlName="AnniversaryDate" [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY' }" autocomplete="off">
+              </div>
+            </div>
+
+            <div *ngIf="accountViewModel.ShowLastRenewalDate" class="form-group row">
+              <label class="col-md-3 col-form-label" for="CurrentStatus">Last Renewal Date:</label>
+              <div class="col-md-3">
+                <input id="dateFormat" type="text" placeholder="DD/MM/YYYY" class="form-control" bsDatepicker
+                  formControlName="LastRenewalDate" [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY' }" autocomplete="off">
+              </div>
+            </div>
+
+            <div *ngIf="accountViewModel.ShowRenewalAmount" class="form-group row">
+              <label class="col-md-3 col-form-label">Renewal Amount:</label>
+              <div class="col-md-3">
+                <input type="text" class="form-control" formControlName="RenewalAmount" />
+              </div>
+            </div>
+
+            <div *ngIf="accountViewModel.ShowBenefitDate" class="form-group row">
+              <label class="col-md-3 col-form-label">No. of Benefit Paid:</label>
+              <div class="col-md-3">
+                <input type="text" class="form-control" formControlName="NoOfBenefit" />
+              </div>
+            </div>
+
+            <div class="form-group row">
+              <div class="col-md-6 mx-auto">
+                <button type="button" class="btn btn-success" (click)="onUpdate()">Update</button>
+                <button type="button" class="btn btn-primary ml-3" (click)="callNomineeModal($event)" *ngIf = "this.showNomiBtn">Nominee</button>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+      <div class="col-xl-4 col-md-4">
+
+      </div>
+ 
+
+  </form>
+</app-accounting-wrapper>

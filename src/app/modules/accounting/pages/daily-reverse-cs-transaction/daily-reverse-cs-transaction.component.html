@@ -1,0 +1,93 @@
+<app-main-wrapper [module]="module">
+
+  <form [formGroup]="DailyReverseCSTrnForm">
+    <div class="mx-auto border col-md-7 pb-2">
+      <div class="bg-dark title row-md-12 d-flex">
+        <div class="col-md-9">CS Daily Reverse Transaction</div>
+      </div>
+
+      <table id="Data" class="mt-3">
+        <tr>
+          <td class="ml-2 pl-4">Voucher No:</td>
+          <td>
+            <input
+              type="text"
+              id="voucherNoInput"
+              formControlName="VoucherNo"
+              class="form-control mt-0 pt-0"
+              (keydown)="onEnterAccTypeHandler($event)"
+            />
+          </td>
+          <td>
+            <button
+              type="button"
+              (click)="onSearch()"
+              [disabled]="showDelete"
+              class="btn_c btn btn-success"
+            >
+              Search
+            </button>
+          </td>
+        </tr>
+      </table>
+
+      <div class="buttons mx-auto d-flex justify-content-center mt-3 btns">
+        <button
+          id="reverseButton"
+          *ngIf="showDelete"
+          type="button"
+          (click)="onDelete()"
+          (keydown)="onDeleteEnterHandler($event)"
+          class="btn btn_1"
+        >
+          Reverse
+        </button>
+        <button
+          *ngIf="showDelete"
+          type="button"
+          (click)="cancelClick()"
+          class="btn btn_1 ml-5"
+        >
+          Cancel
+        </button>
+        <!-- <button type="button" (click)="exitPage()" class="btn ml-5">
+          Exit
+        </button> -->
+      </div>
+
+      <div *ngIf="showOk" class="mt-3 pt-3">
+        <div
+          class="border col-md-7 buttons justify-content-center mt-3 mx-auto d-flex"
+        >
+          <p class="mt-3">Day End Confirmation Done</p>
+          <button type="button" (click)="exitPage()" class="btn ml-5 mt-2 mb-2">
+            Ok
+          </button>
+        </div>
+      </div>
+    </div>
+  </form>
+  <div
+    *ngIf="ReverseTrnList.length != 0"
+    class="mx-auto mt-1 col-md-7 set-height"
+  >
+    <table id="Data" class="col-md-12">
+      <tr>
+        <th>Mem. No</th>
+        <th>GL Code</th>
+        <th>GL Code Name</th>
+        <th>AccNo</th>
+        <th>Description</th>
+        <th>Amount</th>
+      </tr>
+      <tr *ngFor="let item of ReverseTrnList">
+        <td class="text-center">{{ item.MemNo }}</td>
+        <td class="text-center">{{ item.GLAccNo }}</td>
+        <td class="text-center">{{ item.GLAccDesc }}</td>
+        <td class="text-center">{{ item.AccNo }}</td>
+        <td class="text-center">{{ item.TrnDesc }}</td>
+        <td class="text-center">{{ item.GLAmount }}</td>
+      </tr>
+    </table>
+  </div>
+</app-main-wrapper>

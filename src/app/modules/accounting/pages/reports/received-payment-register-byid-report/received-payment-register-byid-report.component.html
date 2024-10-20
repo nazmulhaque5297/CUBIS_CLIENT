@@ -1,0 +1,238 @@
+<app-accounting-wrapper>
+  <form
+    [formGroup]="ReceivedPaymentRegisterByUnitForm"
+    class="mx-auto border col-md-7"
+  >
+    <p class="bg-dark title">Id Wise Received and Payment Register</p>
+
+    <div class="form-group row" *ngIf="ShowWhenUserlvl40">
+      <div class="col-md-1">
+        <input
+          [(ngModel)]="chbIsAllBranchStatus"
+          (ngModelChange)="checkIsAllBranchValue($event)"
+          class="form-check-input ml-1 checkbox"
+          style="margin: 0.8rem"
+          type="checkbox"
+          id="IsAllBranchCheckbox"
+          formControlName="IsAllBranch"
+        />
+      </div>
+      <!-- style="margin-left: 0.6rem" -->
+      <label class="col-md-3 col-form-label" for="IsAllBranchCheckbox" >All - Unit Code</label>
+      <div class="col-md-3">
+        <input
+          (focusout)="onChangeBranchCode($event)"
+          type="text"
+          class="form-control"
+          id="BranchCodeNumber"
+          formControlName="BranchCode"
+          name="BranchCodeNumber"
+        />
+      </div>
+
+      <div class="col-md-5">
+        <select
+          [attr.disabled]="
+            ReceivedPaymentRegisterByUnitForm.value.IsAllBranch ? '' : null
+          "
+          class="form-control pt-0"
+          formControlName="Branch"
+          (change)="onChangeBranch($event)"
+        >
+          <option value="0">-Select-</option>
+          <option
+            *ngFor="let item of inputHelpData.branchList"
+            [value]="item.Id"
+          >
+            {{ item.Description }}
+          </option>
+        </select>
+      </div>
+    </div>
+
+    <div class="form-group row">
+      <div class="col-md-1">
+        <input
+          [(ngModel)]="chbIsAllTellerStatus"
+          (ngModelChange)="checkIsAllTellerValue($event)"
+          class="form-check-input ml-1 checkbox"
+          style="margin: 0.8rem"
+          type="checkbox"
+          id="IsAllTellerCheckbox"
+          formControlName="IsAllTeller"
+        />
+      </div>
+      <!-- style="margin-left: 0.6rem" -->
+      <label class="col-md-3 col-form-label" for="IsAllTellerCheckbox" >All - User Id.</label>
+      <div class="col-md-3">
+        <input
+          appOnlyNumber
+          (change)="onChangeTellerCode($event)"
+          type="text"
+          class="form-control"
+          id="CodeNumber"
+          formControlName="TellerCode"
+          name="CodeNumber"
+          [attr.disabled]="ReceivedPaymentRegisterByUnitForm.value.IsAllTeller ? '' : null"
+        />
+      </div>
+
+      <div class="col-md-5">
+        <select
+          [attr.disabled]="
+            ReceivedPaymentRegisterByUnitForm.value.IsAllTeller ? '' : null
+          "
+          class="form-control pt-0"
+          formControlName="Teller"
+          (change)="onChangeTeller($event)"
+        >
+          <option value="0">-Select-</option>
+          <option
+            *ngFor="let item of inputHelpData.cashDisbTellerList"
+            [value]="item.Id"
+          >
+            {{ item.Description }}
+          </option>
+        </select>
+      </div>
+    </div>
+
+    <div class="form-group row">
+      <div class="col-md-1">
+        <input
+          [(ngModel)]="chbIsAllTrnStatus"
+          (ngModelChange)="checkIsAllTrnValue($event)"
+          class="form-check-input ml-1 checkbox"
+          style="margin: 0.8rem"
+          type="checkbox"
+          id="IsAllTrnCheckbox"
+          formControlName="IsAllTrn"
+        />
+      </div>
+      <!-- style="margin-left: 0.6rem" -->
+      <label class="col-md-3 col-form-label" for="IsAllTrnCheckbox" >All - Trn.Type</label>
+      <div class="col-md-3">
+        <input
+          appOnlyNumber
+          (change)="onChangeTrnCode($event)"
+          type="text"
+          class="form-control"
+          id="TrnCodeNumber"
+          formControlName="TrnCode"
+          name="TrnCodeNumber"
+          [attr.disabled]="ReceivedPaymentRegisterByUnitForm.value.IsAllTrn ? '' : null"
+        />
+      </div>
+
+      <div class="col-md-5">
+        <select
+          [attr.disabled]="
+            ReceivedPaymentRegisterByUnitForm.value.IsAllTrn ? '' : null
+          "
+          disabled="IsTrnDisabled"
+          class="form-control pt-0"
+          formControlName="Trn"
+          (change)="onChangeTrn($event)"
+        >
+          <option value="0">-Select-</option>
+          <option
+            *ngFor="let item of inputHelpData.recAndPayRegTrnTypeList"
+            [value]="item.Id"
+          >
+            {{ item.Description }}
+          </option>
+        </select>
+      </div>
+    </div>
+
+    <div class="form-group row">
+      <label class="col-md-4 col-form-label">From date:</label>
+      <div class="col-md-3">
+        <input
+          id="dateFormat"
+          type="text"
+          class="form-control"
+          bsDatepicker
+          formControlName="IssueFromDate"
+          [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY' }"
+          autocomplete="off"
+          (ngModelChange)="applicationDateChange()"
+        />
+      </div>
+      <label class="col-md-2 col-form-label">To date:</label>
+      <div class="col-md-3">
+        <input
+          id="dateFormat"
+          type="text"
+          class="form-control"
+          bsDatepicker
+          formControlName="IssueToDate"
+          [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY' }"
+          autocomplete="off"
+          (ngModelChange)="applicationDateChange2()"
+        />
+      </div>
+    </div>
+
+    <div class="form-group row" *ngIf="ShowWhenUserlvlNot40">
+      <div class="col-md-4"></div>
+      <div class="col-md-3">
+        <input
+          type="radio"
+          class="form-check-input position-static ml-1 checkbox"
+          value="0"
+          id="rbConsolidated0"
+          name="rbConsolidated"
+          formControlName="rbConsolidated"
+        />
+        <label class="col-md-3 col-form-label" for="rbConsolidated0" >Consolidated </label>
+      </div>
+
+      <div class="col-md-3">
+        <input
+          type="radio"
+          value="1"
+          id="rbConsolidated1"
+          name="rbConsolidated"
+          formControlName="rbConsolidated"
+        />
+        <label class="col-md-3 col-form-label" for="rbConsolidated1" >DateWise</label>
+      </div>
+    </div>
+
+    <div class="form-group row" *ngIf="ShowWhenUserlvl40">
+      <div class="col-md-4"></div>
+      <div class="col-md-3">
+        <input
+          type="radio"
+          class="form-check-input position-static ml-1 checkbox"
+          value="0"
+          id="rbOptConsolidated0"
+          name="rbOptConsolidated"
+          formControlName="rbOptConsolidated"
+        />
+        <label class="col-md-3 col-form-label" for="rbOptConsolidated0" >Consolidated</label>
+      </div>
+
+      <div class="col-md-3">
+        <input
+          type="radio"
+          value="1"
+          id="rbOptConsolidated1"
+          name="rbOptConsolidated"
+          formControlName="rbOptConsolidated"
+        />
+        <label class="col-md-3 col-form-label" for="rbOptConsolidated1" >Details</label>
+      </div>
+    </div>
+
+    <div class="buttons">
+      <button type="button" class="btn btn-info ml-2" (click)="getReportToken('CRV')">
+        Preview
+      </button>
+      <button type="button" class="btn btn-success ml-2" (click)="getReportToken('PDF')">
+        Print
+      </button>
+    </div>
+  </form>
+</app-accounting-wrapper>

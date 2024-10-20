@@ -1,0 +1,394 @@
+<app-accounting-wrapper>
+  <form
+    [formGroup]="LedgerBalanceReportForm"
+    class="mx-auto border col-md-7 pb-2"
+  >
+    <p class="bg-dark title">Ledger Balance Reports</p>
+
+    <div class="form-group row">
+      <label class="col-md-4 col-form-label">Balance Date</label>
+      <div class="col-md-3">
+        <input
+          id="dateFormat"
+          type="text"
+          class="form-control"
+          bsDatepicker
+          formControlName="BalanceDate"
+          [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY' }"
+          autocomplete="off"
+          (ngModelChange)="applicationDateChange()"
+        />
+      </div>
+    </div>
+    <div class="form-group row">
+      <label class="col-md-4 col-form-label">A/C Type<span class="text-danger">*</span></label>
+      <div class="col-md-3">
+        <input
+        appOnlyNumber
+          (focusout)="onChangeAccTypeCode($event)"
+          type="text"
+          class="form-control"
+          id="AccTypeCode"
+          formControlName="AccTypeCode"
+          name="AccTypeCode"
+        />
+      </div>
+
+      <div class="col-md-5">
+        <select
+          class="form-control pt-0"
+          formControlName="AccType"
+          (change)="onChangeAccType($event)"
+        >
+          <option value="0">-Select-</option>
+          <option
+            *ngFor="let item of inputHelpData.accTransferAccountTypeList"
+            [value]="item.Id"
+          >
+            {{ item.Description }}
+          </option>
+        </select>
+      </div>
+    </div>
+
+    <div class="form-group row">
+      <div class="col-md-1">
+        <input
+          [(ngModel)]="chbIsAllCollectorStatus"
+          (ngModelChange)="checkIsAllCollectorValue($event)"
+          class="form-check-input ml-1 checkbox"
+          style="margin: 0.8rem"
+          type="checkbox"
+          id="IsAllCollector"
+          formControlName="IsAllCollector"
+        />
+      </div>
+
+      <label class="col-md-3 col-form-label" for="IsAllCollector" >All Collector Code</label>
+      <div class="col-md-3">
+        <input
+        appOnlyNumber
+          (focusout)="onChangeCollectorCode($event)"
+          type="text"
+          class="form-control"
+          id="CollectorCode"
+          formControlName="CollectorCode"
+          name="CollectorCode"
+          [attr.disabled]="LedgerBalanceReportForm.value.IsAllCollector ? '' : null"
+        />
+      </div>
+
+      <div class="col-md-5">
+        <select
+          [attr.disabled]="LedgerBalanceReportForm.value.IsAllCollector ? '' : null"
+          class="form-control pt-0"
+          formControlName="Collector"
+          (change)="onChangeCollector($event)"
+        >
+          <option value="0">-Select-</option>
+          <option
+            *ngFor="let item of inputHelpData.CollectorList"
+            [value]="item.Id"
+          >
+            {{ item.Description }}
+          </option>
+        </select>
+      </div>
+    </div>
+
+    <div class="form-group row">
+      <div class="col-md-1">
+        <input
+          [(ngModel)]="chbIsAllGroupStatus"
+          (ngModelChange)="checkIsAllGroupValue($event)"
+          class="form-check-input ml-1 checkbox"
+          style="margin: 0.8rem"
+          type="checkbox"
+          id="IsAllGroup"
+          formControlName="IsAllGroup"
+        />
+      </div>
+
+      <label class="col-md-3 col-form-label" for="IsAllGroup" >All Group Name</label>
+      <div class="col-md-3">
+        <input
+        appOnlyNumber
+          (focusout)="onChangeGroupCode($event)"
+          type="text"
+          class="form-control"
+          id="GroupCode"
+          formControlName="GroupCode"
+          name="GroupCode"
+          [attr.disabled]="LedgerBalanceReportForm.value.IsAllGroup ? '' : null"
+        />
+      </div>
+
+      <div class="col-md-5">
+        <select
+          [attr.disabled]="LedgerBalanceReportForm.value.IsAllGroup ? '' : null"
+          class="form-control pt-0"
+          formControlName="Group"
+          (change)="onChangeGroup($event)"
+        >
+          <option value="0">-Select-</option>
+          <option
+            *ngFor="let item of inputHelpData.GroupList"
+            [value]="item.Id"
+          >
+            {{ item.Description }}
+          </option>
+        </select>
+      </div>
+    </div>
+
+    <div class="form-group row">
+      <div class="col-md-1">
+        <input
+          [(ngModel)]="chbIsAllAccStatusStatus"
+          (ngModelChange)="checkIsAllAccStatusValue($event)"
+          class="form-check-input ml-1 checkbox"
+          style="margin: 0.8rem"
+          type="checkbox"
+          id="IsAllAccStatusCheckbox"
+          formControlName="IsAllAccStatus"
+        />
+      </div>
+
+      <label class="col-md-3 col-form-label" for="IsAllAccStatusCheckbox" >All A/C. Status</label>
+      <div class="col-md-8">
+        <select
+          [attr.disabled]="LedgerBalanceReportForm.value.IsAllAccStatus ? '' : null"
+          class="form-control pt-0"
+          formControlName="AccStatus"
+        >
+          <option value="0">-Select-</option>
+          <option
+            *ngFor="let item of inputHelpData.AccountStatusList"
+            [value]="item.Id"
+          >
+            {{ item.Description }}
+          </option>
+        </select>
+      </div>
+    </div>
+
+    <div class="form-group row">
+      <div class="col-md-1">
+        <input
+          [(ngModel)]="chbIsAllMemberStatusStatus"
+          (ngModelChange)="checkIsAllMemberStatusValue($event)"
+          class="form-check-input ml-1 checkbox"
+          style="margin: 0.8rem"
+          type="checkbox"
+          id="IsAllMemberStatusCheckbox"
+          formControlName="IsAllMemberStatus"
+        />
+      </div>
+
+      <label class="col-md-3 col-form-label" for="IsAllMemberStatusCheckbox" >All Member Status</label>
+      <div class="col-md-8">
+        <select
+          [attr.disabled]="LedgerBalanceReportForm.value.IsAllMemberStatus ? '' : null"
+          disabled="IsMemberStatusDisabled"
+          class="form-control pt-0"
+          formControlName="MemberStatus"
+        >
+          <option value="0">-Select-</option>
+          <option
+            *ngFor="let item of inputHelpData.MemberStatusList"
+            [value]="item.Id"
+          >
+            {{ item.Description }}
+          </option>
+        </select>
+      </div>
+    </div>
+
+    <div class="form-group row">
+      <div class="col-md-1">
+        <input
+          [(ngModel)]="chbIsAllGenderStatus"
+          (ngModelChange)="checkIsAllGenderValue($event)"
+          class="form-check-input ml-1 checkbox"
+          style="margin: 0.8rem"
+          type="checkbox"
+          id="IsAllGenderCheckbox"
+          formControlName="IsAllGender"
+        />
+      </div>
+
+      <label class="col-md-3 col-form-label" for="IsAllGenderCheckbox" >All Gender</label>
+      <div class="col-md-8">
+        <select
+          [attr.disabled]="LedgerBalanceReportForm.value.IsAllGender ? '' : null"
+          class="form-control pt-0"
+          formControlName="Gender"
+        >
+          <option value="0">-Select-</option>
+          <option
+            *ngFor="let item of inputHelpData.loanDisbGenderList"
+            [value]="item.Id"
+          >
+            {{ item.Description }}
+          </option>
+        </select>
+      </div>
+    </div>
+
+    <div class="form-group row">
+      <div class="col-md-1">
+        <input
+          [(ngModel)]="chbIsAllBalanceStatus"
+          (ngModelChange)="checkIsAllBalanceValue($event)"
+          class="form-check-input ml-1 checkbox"
+          style="margin: 0.8rem"
+          type="checkbox"
+          id="IsAllBalanceCheckbox"
+          formControlName="IsAllBalance"
+        />
+      </div>
+
+      <label class="col-md-3 col-form-label" for="IsAllBalanceCheckbox" >All Balance</label>
+      <div class="col-md-8">
+        <select
+          [attr.disabled]="LedgerBalanceReportForm.value.IsAllBalance ? '' : null"
+          disabled="IsBalanceDisabled"
+          class="form-control pt-0"
+          formControlName="Balance"
+          (change)="onChangeBalanceType($event)"
+        >
+          <option value="0">-Select-</option>
+          <option
+            *ngFor="let item of inputHelpData.BalanceTypeList"
+            [value]="item.Id"
+          >
+            {{ item.Description }}
+          </option>
+        </select>
+      </div>
+    </div>
+
+    <div *ngIf="showFromTillBalance" class="form-group row">
+      <label class="col-md-4 col-form-label">From Balance</label>
+      <div class="col-md-3">
+        <input
+          type="text"
+          class="form-control"
+          id="FromBalance"
+          formControlName="FromBalance"
+          name="FromBalance"
+        />
+      </div>
+      <label class="col-md-2 col-form-label">Till Balance</label>
+
+      <div class="col-md-3">
+        <input
+          type="text"
+          class="form-control"
+          id="TillBalance"
+          formControlName="TillBalance"
+          name="TillBalance"
+        />
+      </div>
+    </div>
+    <div *ngIf="showFromTillBalance" class="form-group row">
+      <div class="col-md-9"></div>
+      <div class="col-md-3">
+        <button
+          [ngClass]="{ 'btn btn-success': toggle, 'btn-danger': !toggle }"
+          (click)="getAmountSign()"
+        >
+          {{ amountSignText }}
+        </button>
+      </div>
+    </div>
+    <div class="form-group row">
+      <div class="col-md-1">
+        <input
+          [(ngModel)]="chbIsAllOldAccNoStatus"
+          (ngModelChange)="checkIsAllOldAccNoValue($event)"
+          class="form-check-input ml-1 checkbox"
+          style="margin: 0.8rem"
+          type="checkbox"
+          id="IsAllOldAccNo"
+          formControlName="IsAllOldAccNo"
+        />
+      </div>
+
+      <label class="col-md-3 col-form-label" for="IsAllOldAccNo" >All Old A/C</label>
+      <div class="col-md-3">
+        <input
+          disabled="IsOldAccNoFromDisabled"
+          type="text"
+          class="form-control"
+          id="OldAccNo"
+          formControlName="OldAccNoFrom"
+          name="OldAccNoFrom"
+          [attr.disabled]="LedgerBalanceReportForm.value.IsAllOldAccNo ? '' : null"
+        />
+      </div>
+      <label class="col-md-2 col-form-label">To</label>
+
+      <div class="col-md-3">
+        <input
+          disabled="IsOldAccNoToDisabled"
+          type="text"
+          class="form-control"
+          id="OldAccNoTo"
+          formControlName="OldAccNoTo"
+          name="OldAccNoTo"
+          [attr.disabled]="LedgerBalanceReportForm.value.IsAllOldAccNo ? '' : null"
+        />
+      </div>
+    </div>
+
+    <div class="form-group row">
+      
+      <div class="col-md-3">
+        <input
+          type="radio"
+          class="form-check-input position-static ml-1 checkbox"
+          value="1"
+          name="rbOldAccNoWise"
+          id="rbOldAccNoWise1"
+          formControlName="rbOldAccNoWise"
+        />
+        <label class="col-md-10 col-form-label" for="rbOldAccNoWise1" >OldA/c.No Wise</label>
+      </div>
+      <div class="col-md-1"></div>
+      <div class="col-md-3">
+        <input
+          type="radio"
+          value="0"
+          name="rbOldAccNoWise"
+          id="rbOldAccNoWise0"
+          formControlName="rbOldAccNoWise"
+        />
+        <label class="col-md-10 col-form-label" for="rbOldAccNoWise0" >Group Wise</label>
+      </div>
+
+      <div class="col-md-3">
+        <input
+          type="radio"
+          value="2"
+          name="rbOldAccNoWise"
+          formControlName="rbOldAccNoWise"
+          id="rbOldAccNoWise2"
+        />
+        <label class="col-md-10 col-form-label" for="rbOldAccNoWise2" >Member Wise</label>
+      </div>
+
+
+    </div>
+
+    <div class="buttons">
+      <button type="button" class="btn btn-info ml-2" (click)="getReportToken('CRV')">
+        Preview
+      </button>
+      <button type="button" class="btn btn-success ml-2" (click)="getReportToken('PDF')">
+        Print
+      </button>
+    </div>
+  </form>
+
+</app-accounting-wrapper>

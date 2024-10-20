@@ -1,0 +1,407 @@
+<app-accounting-wrapper>
+  <form [formGroup]="FinalAccountsReportForm" class="mx-auto border col-md-8">
+    <p class="bg-dark title">GL Final Accounts Report</p>
+
+    <div class="form-group row">
+      <label class="col-md-4 col-form-label">From date:</label>
+      <div class="col-md-3">
+        <input
+          id="dateFormat"
+          type="text"
+          class="form-control"
+          (ngModelChange)="applicationDateChange()"
+          bsDatepicker
+          formControlName="IssueFromDate"
+          [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY' }"
+          autocomplete="off"
+        />
+      </div>
+      <label class="col-md-2 col-form-label">To date:</label>
+      <div class="col-md-3">
+        <input
+          id="dateFormat"
+          type="text"
+          class="form-control"
+          (ngModelChange)="applicationDateChange2()"
+          bsDatepicker
+          formControlName="IssueToDate"
+          [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY' }"
+          autocomplete="off"
+        />
+      </div>
+    </div>
+
+    <div class="form-group row">
+      <div class="col-md-1">
+        <input
+          type="radio"
+          value="1"
+          name="rbLayer"
+          id="rbLayer1"
+          formControlName="rbLayer"
+          (change)="onChangeLayer($event)"
+        />
+      </div>
+
+      <label class="col-md-2 col-form-label" for="rbLayer1" >1st Layer</label>
+
+      <div class="col-md-1">
+        <input
+          type="radio"
+          value="2"
+          name="rbLayer"
+          id="rbLayer2"
+          formControlName="rbLayer"
+          (change)="onChangeLayer($event)"
+        />
+      </div>
+
+      <label class="col-md-2 col-form-label" for="rbLayer2" >2nd Layer</label>
+
+      <div class="col-md-1">
+        <input
+          type="radio"
+          value="3"
+          name="rbLayer"
+          id="rbLayer3"
+          formControlName="rbLayer"
+          (change)="onChangeLayer($event)"
+        />
+      </div>
+
+      <label class="col-md-2 col-form-label" for="rbLayer3" >3rd Layer</label>
+
+      <div class="col-md-1">
+        <input
+          type="radio"
+          value="4"
+          name="rbLayer"
+          id="rbLayer4"
+          formControlName="rbLayer"
+          (change)="onChangeLayer($event)"
+        />
+      </div>
+
+      <label class="col-md-2 col-form-label" for="rbLayer4" >4th Layer</label>
+    </div>
+
+    <div class="form-group row">
+      <div class="col-md-1">
+        <input
+          checked
+          type="radio"
+          value="0"
+          name="rbLanguage"
+          formControlName="rbLanguage"
+          id="rbLanguage0"
+        />
+      </div>
+
+      <label class="col-md-3 col-form-label" for="rbLanguage0" >English Mode</label>
+
+      <div class="col-md-1">
+        <input
+          type="radio"
+          value="1"
+          name="rbLanguage"
+          formControlName="rbLanguage"
+          id="rbLanguage1"
+        />
+      </div>
+
+      <label class="col-md-3 col-form-label" for="rbLanguage1" >Bangla Mode</label>
+    </div>
+
+    <div class="form-group row">
+      <label for="chbShowZero" class="col-sm-3 col-form-label"
+        >Show Zero ?</label
+      >
+      <div class="col-md-3">
+        <input
+          class="form-check-input position-static ml-1 checkbox"
+          type="checkbox"
+          id="chbShowZero"
+          formControlName="chbShowZero"
+        />
+      </div>
+    </div>
+
+    <div class="form-group row">
+      <div class="col-md-12">
+        <input
+          type="radio"
+          class="form-check-input position-static ml-1 checkbox"
+          value="1"
+          id="rbReportName1"
+          name="rbReportName"
+          formControlName="rbReportName"
+        />
+        <label class="col-md-8 col-form-label" for="rbReportName1" >Trial Balance</label>
+      </div>
+    </div>
+
+    <div class="form-group row">
+      <div class="col-md-12">
+        <input
+          type="radio"
+          class="form-check-input position-static ml-1 checkbox"
+          value="2"
+          id="rbReportName2"
+          name="rbReportName"
+          formControlName="rbReportName"
+        />
+        <label class="col-md-8 col-form-label" for="rbReportName2" > Income and Expenditure</label>
+      </div>
+    </div>
+
+    <div class="form-group row">
+      <div class="col-md-12">
+        <input
+          type="radio"
+          class="form-check-input position-static ml-1 checkbox"
+          value="3"
+          id="rbReportName3"
+          name="rbReportName"
+          formControlName="rbReportName"
+        />
+        <label class="col-md-8 col-form-label" for="rbReportName3" >Balance Sheet</label>
+      </div>
+    </div>
+
+    <div class="form-group row">
+      <div class="col-md-12">
+        <input
+          type="radio"
+          class="form-check-input position-static ml-1 checkbox"
+          value="4"
+          id="rbReportName4"
+          name="rbReportName"
+          formControlName="rbReportName"
+        />
+        <label class="col-md-8 col-form-label" for="rbReportName4"
+          >Trial Balance (Without Layer)</label
+        >
+      </div>
+    </div>
+
+    <!-- <div class="form-group row">
+      <div class="col-md-3">
+        <input
+          type="radio"
+          class="form-check-input position-static ml-1 checkbox"
+          value="1"
+          name="rbAccNoWise"
+          formControlName="rbAccNoWise"
+        />
+        <label class="col-md-2 col-form-label">AccNoWise</label>
+            </div>
+
+            <div class="col-md-3">
+                <input type="radio" value="2" name="rbAccNoWise" formControlName="rbAccNoWise" />
+                <label class="col-md-2 col-form-label">LoanAppSrl.Wise</label>
+            </div>
+        </div> -->
+
+    <div class="buttons mb-2">
+      <button type="button" class="btn btn-info" (click)="getReportToken('CRV')">
+        Preview
+      </button>
+      <button type="button" class="btn btn-success" (click)="getReportToken('PDF')">
+        Print
+      </button>
+      <button
+        *ngIf="showBackButton"
+        class="btn btn-info ml-3"
+        (click)="GoBack()"
+      >
+        Back
+      </button>
+      <button
+        *ngIf="showGridbutton"
+        class="btn btn-info ml-3"
+        (click)="ShowGrid()"
+      >
+        GridView
+      </button>
+    </div>
+  </form>
+
+  <!-- region selected items tables start -->
+  <div
+    *ngIf="selectedGrid1DataList.length != 0 && showGrid1selected"
+    class="mx-auto mt-1 mt-5 col-md-8 set-height2"
+  >
+    <table id="Data">
+      <tr>
+        <th>Code</th>
+        <th>Description</th>
+        <th>Opening Balance</th>
+        <th>Debit</th>
+        <th>Credit</th>
+        <th>Closing Balance</th>
+      </tr>
+      <tr *ngFor="let item of selectedGrid1DataList">
+        <td class="text-center">{{ item.GLAccNo }}</td>
+        <td class="text-left">{{ item.GLAccDesc }}</td>
+        <td class="text-right">{{ item.GLOpBal }}</td>
+        <td class="text-right">{{ item.GLDrSum }}</td>
+        <td class="text-right">{{ item.GLCrSum }}</td>
+        <td class="text-right">{{ item.GLClBal }}</td>
+      </tr>
+    </table>
+  </div>
+
+  <div
+    *ngIf="selectedGrid2DataList.length != 0 && showGrid2selected"
+    class="mx-auto mt-1 mt-5 col-md-8 set-height2"
+  >
+    <table id="Data">
+      <tr>
+        <th>Code</th>
+        <th>Description</th>
+        <th>Opening Balance</th>
+        <th>Debit</th>
+        <th>Credit</th>
+        <th>Closing Balance</th>
+      </tr>
+      <tr *ngFor="let item of selectedGrid2DataList">
+        <td class="text-center">{{ item.GLAccNo }}</td>
+        <td class="text-left">{{ item.GLAccDesc }}</td>
+        <td class="text-right">{{ item.GLOpBal }}</td>
+        <td class="text-right">{{ item.GLDrSum }}</td>
+        <td class="text-right">{{ item.GLCrSum }}</td>
+        <td class="text-right">{{ item.GLClBal }}</td>
+      </tr>
+    </table>
+  </div>
+
+  <div
+    *ngIf="selectedGrid3DataList.length != 0 && showGrid3selected"
+    class="mx-auto mt-1 mt-5 col-md-8 set-height2"
+  >
+    <table id="Data">
+      <tr>
+        <th>Code</th>
+        <th>Description</th>
+        <th>Opening Balance</th>
+        <th>Debit</th>
+        <th>Credit</th>
+        <th>Closing Balance</th>
+      </tr>
+      <tr *ngFor="let item of selectedGrid3DataList">
+        <td class="text-center">{{ item.GLAccNo }}</td>
+        <td class="text-left">{{ item.GLAccDesc }}</td>
+        <td class="text-right">{{ item.GLOpBal }}</td>
+        <td class="text-right">{{ item.GLDrSum }}</td>
+        <td class="text-right">{{ item.GLCrSum }}</td>
+        <td class="text-right">{{ item.GLClBal }}</td>
+      </tr>
+    </table>
+  </div>
+
+  <!-- region selected items tables end -->
+
+  <div
+    *ngIf="Grid1DataList.length != 0 && showGrid1"
+    class="mx-auto mt-1 mt-5 col-md-8 set-height"
+  >
+    <table id="Data">
+      <tr>
+        <th>Code</th>
+        <th>Description</th>
+        <th>Opening Balance</th>
+        <th>Debit</th>
+        <th>Credit</th>
+        <th>Closing Balance</th>
+        <th>Action</th>
+      </tr>
+      <tr *ngFor="let item of Grid1DataList">
+        <td class="text-center">{{ item.GLAccNo }}</td>
+        <td class="text-left">{{ item.GLAccDesc }}</td>
+        <td class="text-right">{{ item.GLOpBal }}</td>
+        <td class="text-right">{{ item.GLDrSum }}</td>
+        <td class="text-right">{{ item.GLCrSum }}</td>
+        <td class="text-right">{{ item.GLClBal }}</td>
+        <td><button (click)="ShowGrid2(item)">Select</button></td>
+      </tr>
+    </table>
+  </div>
+
+  <div
+    *ngIf="Grid2DataList.length != 0 && showGrid2"
+    class="mx-auto mt-1 mt-5 col-md-8 set-height"
+  >
+    <table id="Data">
+      <tr>
+        <th>Code</th>
+        <th>Description</th>
+        <th>Opening Balance</th>
+        <th>Debit</th>
+        <th>Credit</th>
+        <th>Closing Balance</th>
+        <th>Action</th>
+      </tr>
+      <tr *ngFor="let item of Grid2DataList">
+        <td class="text-center">{{ item.GLAccNo }}</td>
+        <td class="text-left">{{ item.GLAccDesc }}</td>
+        <td class="text-right">{{ item.GLOpBal }}</td>
+        <td class="text-right">{{ item.GLDrSum }}</td>
+        <td class="text-right">{{ item.GLCrSum }}</td>
+        <td class="text-right">{{ item.GLClBal }}</td>
+        <td><button (click)="ShowGrid3(item)">Select</button></td>
+      </tr>
+    </table>
+  </div>
+
+  <div
+    *ngIf="Grid3DataList.length != 0 && showGrid3"
+    class="mx-auto mt-1 mt-5 col-md-8 set-height"
+  >
+    <table id="Data">
+      <tr>
+        <th>Code</th>
+        <th>Description</th>
+        <th>Opening Balance</th>
+        <th>Debit</th>
+        <th>Credit</th>
+        <th>Closing Balance</th>
+        <th>Action</th>
+      </tr>
+      <tr *ngFor="let item of Grid3DataList">
+        <td class="text-center">{{ item.GLAccNo }}</td>
+        <td class="text-left">{{ item.GLAccDesc }}</td>
+        <td class="text-right">{{ item.GLOpBal }}</td>
+        <td class="text-right">{{ item.GLDrSum }}</td>
+        <td class="text-right">{{ item.GLCrSum }}</td>
+        <td class="text-right">{{ item.GLClBal }}</td>
+        <td><button (click)="ShowGrid4(item)">Statement</button></td>
+      </tr>
+    </table>
+  </div>
+
+  <div
+    *ngIf="Grid4DataList.length != 0 && showGrid4"
+    class="mx-auto mt-1 mt-5 col-md-8 set-height"
+  >
+    <table id="Data">
+      <tr>
+        <th>TrnDate</th>
+        <th>Vch.No.</th>
+        <th>Description</th>
+        <th>Debit</th>
+        <th>Credit</th>
+        <th>Balance</th>
+      </tr>
+      <tr *ngFor="let item of Grid4DataList">
+        <td class="text-center">{{ item.TrnDate }}</td>
+        <td class="text-left">{{ item.VchNo }}</td>
+        <td class="text-left">{{ item.TrnDesc }}</td>
+        <td class="text-right">{{ item.GLDebitAmt }}</td>
+        <td class="text-right">{{ item.GLCreditAmt }}</td>
+        <td class="text-right">{{ item.GLClosingBal }}</td>
+      </tr>
+    </table>
+  </div>
+
+  <!-- class="holds-the-iframe" -->
+</app-accounting-wrapper>

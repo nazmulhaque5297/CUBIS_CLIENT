@@ -1,0 +1,164 @@
+<app-accounting-wrapper>
+  <form [formGroup]="suretyRefundForm">
+    <div class="mx-auto border col-md-8">
+      <p class="bg-dark title">Loan Surety Refund</p>
+      <div class="form-row ml-0 mt-2 mx-auto">
+        <span class="col-md-2"></span>
+        <label class="col-md-2 ml-3 pl-5 pr-0"
+          >Surety Member:<span class="text-danger">*</span></label
+        >
+        <div class="form-group ml-3 pl-3 col-md-3 mt-0 pt-0">
+          <input
+            type="text"
+            formControlName="SuretyMemberNo"
+            (change)="suretyMemberNoChange()"
+            (keydown)="onEnterSuretyMemberNoHandler($event)"
+            appOnlyNumberWithoutDecimal
+            class="form-control mt-0 pt-0"
+          />
+        </div>
+        <div class="form-group col-md-4">
+          <label> {{ suretyMemberName }} </label>
+        </div>
+      </div>
+      <div class="form-row ml-0 mt-2 mx-auto">
+        <span class="col-md-2"></span>
+        <label class="col-md-2 ml-3 pl-5 pr-0"
+          >Loan Member:<span class="text-danger">*</span></label
+        >
+        <div class="form-group ml-3 pl-3 col-md-3 mt-0 pt-0">
+          <input
+            type="text"
+            id="LoanMemberNo"
+            formControlName="LoanMemberNo"
+            (change)="loanMemberNoChange()"
+            (keydown)="onEnterLoanMemberNoHandler($event)"
+            appOnlyNumberWithoutDecimal
+            class="form-control mt-0 pt-0"
+          />
+        </div>
+        <div class="form-group col-md-4">
+          <label> {{ loanMemberName }} </label>
+        </div>
+      </div>
+      <div class="buttons col-md-4 mt-3 mx-auto mb-2">
+        <button type="button" class="btn ml-5" (click)="submitBtnClick()">
+          Submit
+        </button>
+      </div>
+    </div>
+    <div class="mx-auto mt-2 col-md-8 fixed_padding">
+      <p class="mt-1 bg-dark title col-md-12 pb-0 mb-0">
+        Loan Member Information
+      </p>
+      <table id="Data" class="mt-0 pt-0 col-md-12 mx-auto" style="padding: 0px">
+        <tr>
+          <td>Loan Application No:</td>
+          <td>
+            <input
+              type="text"
+              formControlName="LoanApplicationNo"
+              readonly
+              class="form-control mt-0 pt-0"
+            />
+          </td>
+        </tr>
+        <tr>
+          <td>Outstanding Balance:</td>
+          <td>
+            <input
+              type="text"
+              formControlName="OutstandingBalance"
+              readonly
+              class="form-control mt-0 pt-0"
+            />
+          </td>
+        </tr>
+      </table>
+
+      <p class="mt-3 bg-dark title pb-0 mb-0">Surety Member Information</p>
+
+      <table id="Data" class="mt-0 pt-0">
+        <tr>
+          <td>Surety Release Amount:</td>
+          <td>
+            <input
+              type="text"
+              formControlName="SuretyReleaseAmount"
+              readonly
+              class="form-control mt-0 pt-0"
+            />
+          </td>
+          <td>Corresponding Account No.:</td>
+          <td>
+            <input
+              type="text"
+              formControlName="CorrespondingAccNo"
+              readonly
+              class="form-control mt-0 pt-0"
+            />
+          </td>
+        </tr>
+        <tr>
+          <td>Interest Amount:</td>
+          <td>
+            <input
+              type="text"
+              formControlName="InterestAmount"
+              id="InterestAmount"
+              (change)="CalculateTotalTransactionAmount()"
+              (keydown)="onEnterInterestAmountHandler($event)"
+              appOnlyNumber
+              class="form-control mt-0 pt-0"
+            />
+          </td>
+          <td>Corresponding Balance:</td>
+          <td>
+            <input
+              type="text"
+              formControlName="CorrespondingBalance"
+              readonly
+              class="form-control mt-0 pt-0"
+            />
+          </td>
+        </tr>
+        <tr>
+          <td>Total Transaction Amount:</td>
+          <td>
+            <input
+              type="text"
+              formControlName="TotalTransactionAmt"
+              readonly
+              class="form-control mt-0 pt-0"
+            />
+          </td>
+          <td>Input Voucher No.:</td>
+          <td>
+            <input
+              type="text"
+              formControlName="InputVoucherNo"
+              id="InputVoucherNo"
+              class="form-control mt-0 pt-0"
+            />
+          </td>
+        </tr>
+      </table>
+      <div class="mx-auto mt-5 col-md-7 m-0 p-0">
+        <table class="col-md-12 mx-auto mt-0">
+          <tr>
+            <td class="text-center">
+              {{ showMessage }}
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="mx-auto col-md-8 main-container">
+        <div class="buttons col-md-4 mt-3 mx-auto">
+          <button type="button" class="btn ml-5" (click)="btnUpdateClick()">
+            Update
+          </button>
+        </div>
+      </div>
+    </div>
+  </form>
+</app-accounting-wrapper>

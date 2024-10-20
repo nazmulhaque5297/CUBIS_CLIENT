@@ -1,0 +1,82 @@
+<app-accounting-wrapper>
+  <form [formGroup]="GLBudgetReportForm" class="mx-auto border col-md-7">
+    <p class="mt-1 bg-dark title">GL Budget Report</p>
+
+    <div class="form-group row">
+      <label class="col-md-3 col-form-label">As On Month Of : </label>
+      <div class="col-md-3">
+        <select class="form-control pt-0" formControlName="MonthControl">
+          <option value="0">-Select-</option>
+          <option
+            *ngFor="let item of GetInputHelpData.AllMonthDropDown"
+            [value]="item.Id"
+          >
+            {{ item.Description }}
+          </option>
+        </select>
+      </div>
+      <span class="col-md-1"></span>
+      <label class="col-md-2 col-form-label">Year : </label>
+      <div class="col-md-3">
+        <input
+          id="dateFormat"
+          type="text"
+          class="form-control"
+          formControlName="YearControl"
+        />
+      </div>
+    </div>
+
+    <div col-md-12 class="gap"></div>
+    <p class="mt-1 bg-dark title">Reports Name Option</p>
+
+    <div class="form-group row">
+      <div class="col-md-12">
+        <input
+          type="radio"
+          class="form-check-input position-static ml-1 checkbox"
+          value="1"
+          id="rbReportName1"
+          name="rbReportName"
+          formControlName="rbReportName"
+        />
+        <label class="col-md-8 col-form-label" for="rbReportName1"
+          >Assets and Liabilities</label
+        >
+      </div>
+    </div>
+
+    <div class="form-group row">
+      <div class="col-md-12">
+        <input
+          type="radio"
+          class="form-check-input position-static ml-1 checkbox"
+          value="2"
+          id="rbReportName2"
+          name="rbReportName"
+          formControlName="rbReportName"
+        />
+        <label class="col-md-8 col-form-label" for="rbReportName2"
+          >IncomeAssets and Expenditure</label
+        >
+      </div>
+    </div>
+
+    <div class="buttons">
+      <button
+        type="button"
+        class="btn btn-info ml-2"
+        (click)="getReportToken('CRV')"
+      >
+        Preview
+      </button>
+      <button
+        type="button"
+        class="btn btn-success ml-2"
+        (click)="getReportToken('PDF')"
+      >
+        Print
+      </button>
+    </div>
+  </form>
+</app-accounting-wrapper>

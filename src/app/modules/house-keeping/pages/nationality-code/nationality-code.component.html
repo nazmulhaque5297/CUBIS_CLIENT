@@ -1,0 +1,79 @@
+<app-house-keeping-wrapper>
+  <form
+    [formGroup]="NationalityCodeForm"
+    novalidate
+    class="mx-auto border col-md-6 main-container pb-3"
+  >
+    <p class="bg-dark title">Nationality Code Maintenance</p>
+    <div class="form-row">
+      <label>Nationality Code:</label>
+      <div class="form-group col-md-3">
+        <input
+          appOnlyNumberWithoutDecimal
+          type="text"
+          (change)="changeSelectValue($event)"
+          class="form-control"
+          id="nationalitycode"
+          formControlName="NationalityCode"
+          name="nationalityCode"
+        />
+      </div>
+      <div class="form-group col-md-4">
+        <select
+          formControlName="selectedOptionCode"
+          (change)="selectChangeHandler($event)"
+          class="form-control pt-0"
+        >
+          <option *ngFor="let item of dataList" [value]="item.NationalityCode">
+            {{ item.NationalityDescription }}
+          </option>
+        </select>
+      </div>
+    </div>
+    <div class="form-row">
+      <label for="inputDesc">Description:</label
+      ><span class="text-danger">*</span>
+      <div class="form-group col-md-7">
+        <input
+          type="text"
+          formControlName="NationalityDescription"
+          class="form-control desc-input"
+          id="NationalityDescription"
+        />
+        <div
+          *ngIf="
+            NationalityCodeForm.controls['NationalityDescription'].invalid &&
+            NationalityCodeForm.controls['NationalityDescription'].touched
+          "
+          class="text-danger ml-4"
+        >
+          Required*
+        </div>
+      </div>
+    </div>
+    <div class="buttons">
+      <button type="button" (click)="saveOrUpdate()" class="btn btn-success">
+        {{ submitButtonText }}
+      </button>
+      <button (click)="getTableReportData()" class="ml-5 btn btn_1">
+        View
+      </button>
+    </div>
+  </form>
+
+  <div
+    *ngIf="dataList.length != 0 && displayTabularData"
+    class="mx-auto set-height col-md-6"
+  >
+    <table id="Data">
+      <tr>
+        <th>Code</th>
+        <th>Description</th>
+      </tr>
+      <tr *ngFor="let item of dataList">
+        <td class="text-center">{{ item.NationalityCode }}</td>
+        <td>{{ item.NationalityDescription }}</td>
+      </tr>
+    </table>
+  </div>
+</app-house-keeping-wrapper>

@@ -1,0 +1,201 @@
+<app-main-wrapper [module]="module">
+    <form [formGroup]='grneralJournalTransactionForm'>
+        <div class="mx-auto border col-md-10 ">
+            <div class="bg-dark title row-md-12 d-flex">
+                <div class="col-md-9 ml-0 pl-0">General Journal Transaction</div>
+            </div>
+
+            <div class="form-row ml-2 mt-2">
+                <label class="col-md-2">Transaction Type:</label>
+                <div class="form-group col-md-2 ml-2 mt-0 pt-0">
+                    <input type="text" formControlName="TransactionType" id="TransactionTypeSet" onClick="this.setSelectionRange(0, this.value.length)" onfocus="this.select()" (change)="changeTrnType($event)" class="form-control mt-0 pt-0" required>
+                </div>
+                <div class="form-group col-md-4">
+                    <select formControlName="TransactionType" (change)="changeTrnType($event)" class="form-control  mt-0 pt-0">
+                        <option value="0" class="mt-0 pt-0">-Select-</option>
+                        <option  *ngFor="let item of TransactionTypeEnum" [value]="item.Id" class="mt-0 pt-0">{{item.Description}}
+                        </option>
+                    </select>
+                </div>
+                <div *ngIf="showCash" class="form-group col-md-3 ml-2 mt-0 pt-0">
+                    <input type="text" formControlName="GLCashCodeDesc"  class="form-control mt-0 pt-0" readonly>
+                </div>
+                <div class="col-md-3" *ngIf="ctrlVoucherFlag==1 && module=='1'">
+                  <button type="button" (click)="voucherTransactionChange()"  class="btn ml-5 mb-2">Edit Vch. Transaction</button>
+                </div>
+            </div>
+
+            <div *ngIf="showBank" class="form-row ml-2 mt-2">
+                <label class="col-md-2">Bank Type:</label>
+                <div class="form-group col-md-2 ml-2 mt-0 pt-0">
+                    <input (change)="changeBankCode($event)" type="text" formControlName="BankType" class="form-control mt-0 pt-0">
+                </div>
+                <div class="form-group col-md-4">
+
+                    <select (change)="changeBankCode($event)" formControlName="BankType"  class="form-control  mt-0 pt-0">
+                        <option value="0" class="mt-0 pt-0">-Select-</option>
+                        <option  *ngFor="let item of GLBankCodeDropDown" [value]="item.GLAccNo" class="mt-0 pt-0">{{item.GLAccDesc}}
+                        </option>
+                    </select>
+                </div>
+            </div>
+            <div *ngIf="showBank" class="form-row ml-2 mt-2">
+              <label class="col-md-2">Cheque No:</label>
+              <div class="form-group col-md-2 ml-2 mt-0 pt-0">
+                  <input type="text" formControlName="ChequeNo" class="form-control mt-0 pt-0">
+              </div>
+              <label class="ml-2">Description:</label>
+              <div class="form-group col-md-3 ml-3 mt-0 pt-0">
+                  <input type="text" formControlName="ChequeDescription" class="form-control mt-0 pt-0 ml-1">
+              </div>
+            </div>
+
+            <div class="form-row ml-2 mt-2">
+                <label *ngIf="showVoucher" class="col-md-2">Voucher No:</label>
+                <div *ngIf="showVoucher" class="form-group col-md-2 ml-2 mt-0 pt-0">
+                    <input type="text" id="VoucherNoSet" formControlName="VoucherNo" (change)="checkVoucher($event)" class="form-control mt-0 pt-0" required>
+                </div>
+                <div class="form-group col-md-4">
+                  <input list="glDropDown" name="GlDropDown" id="GlDropDown"  formControlName="GLCodeDropDown" placeholder="-Select-" class="form-control  mt-0 pt-0 scroll" (change)="selectChangeHandler($event)"/>
+                    <datalist  id="glDropDown">
+                        <option  *ngFor="let item of GLCodeDropDown"  class="mt-0 pt-0 form-control">{{item.GLAccDescAll}}
+                        </option>
+                    </datalist>
+                </div>
+                <input type="checkbox" (change)="duplicateChange()" class="ml-3 mt-2 pt-3">
+                <label class="pt-1 ml-2">Duplicate GL Code</label>
+            </div>
+
+            <div class="d-flex deposit-account-list-header">
+              <div class="col-md-2">GL Code</div>
+              <div class="col-md-4 ml-0 pl-1">Name Of Account Head</div>
+              <div class="col-md-2">Description</div>
+              <div class="col-md-2">Debit</div>
+              <div class="col-md-2">Credit</div>
+            </div>
+
+              <div
+                style="margin-bottom: 10px"
+                formArrayName="VoucherList"
+                *ngFor="
+                  let item of grneralJournalTransactionForm.get('VoucherList')[
+                    'controls'
+                  ];
+                  let i = index
+                "
+              >
+                <div class="row" [formGroupName]="i">
+                  <div class="col-md-2">
+                    <input
+                      class="form-control"
+                      formControlName="GLAccNo"
+                      id="{{ 'GLAccNoSet' + i }}"
+                      (change)="GlAccNoChangeHandler($event,i,item)"
+                      (keydown)="onEnterGLAccNoHandler($event,i,item)" 
+                    />
+                  </div>
+                  <div class="col-md-4">
+                    <input
+                      class="form-control"
+                      readonly
+                      formControlName="GLAccDesc"
+                    />
+                  </div>
+                  <div class="col-md-2">
+                    <input
+                      class="form-control"
+                      type="text"
+                      id="{{ 'TrnDescSet' + i }}"
+                      formControlName="TrnDesc"
+                      (change)="onChangeDesc(i, item)"
+                    />
+                  </div>
+                  <div class="col-md-2">
+                    <input
+                      class="form-control"
+                      type="text"
+                      id="{{ 'GLDebitAmtSet' + i }}"
+                      formControlName="GLDebitAmt"
+                      onClick="this.setSelectionRange(0, this.value.length)"
+                      appOnlyNumber
+                      onfocus="this.select()"
+                      (change)="onChangeDebit(i, item)"
+                      (keydown)="onEnterGLDebitAmtHandler($event,i,item)" 
+                    />
+                  </div>
+                  <div class="col-md-2">
+                    <input
+                      class="form-control"
+                      type="text"
+                      id="{{ 'GLCreditAmtSet' + i }}"
+                      formControlName="GLCreditAmt"
+                      onClick="this.setSelectionRange(0, this.value.length)"
+                      appOnlyNumber
+                      onfocus="this.select()"
+                      (change)="onChangeCredit(i, item)"
+                    />
+                  </div>
+
+                </div>
+              </div>
+        </div>
+        <div class="mx-auto mt-1 mt-5  col-md-10">
+          <div class="d-flex ">
+            <div class="col-md-2 btns">
+              <button type="button" id="btnUpdate" (click)="allUpdate()"  class="btn btn_1 ml-5">Update</button>
+            </div>
+            <div class="col-md-2 ml-0 pl-1">
+              <button type="button" (click)="cancelPage()" class="btn ml-5">Cancel</button>
+            </div>
+            <div class="col-md-2 ml-0 pl-1">
+              <!-- <button type="button" (click)="exitPage()" class="btn ml-5">Exit</button> -->
+            </div>
+            <div class="col-md-2 mt-2">Total Amount: </div>
+            <div class="col-md-2">
+              <input *ngIf="grneralJournalTransactionForm.value.TransactionType!=3 && grneralJournalTransactionForm.value.TotalDebitAmount!=0" type="text" formControlName="TotalDebitAmount" class="form-control mt-1 pt-0" required readonly>
+              <input *ngIf="grneralJournalTransactionForm.value.TransactionType!=3 && grneralJournalTransactionForm.value.TotalCreditAmount!=0" type="text" formControlName="TotalCreditAmount" class="form-control mt-1 pt-0" required readonly>
+              <input *ngIf="grneralJournalTransactionForm.value.TransactionType==3" type="text" formControlName="TotalDebitAmount" class="form-control mt-1 pt-0" required readonly>
+            </div>
+            <div class="col-md-2">
+              <input *ngIf="grneralJournalTransactionForm.value.TransactionType!=3 && grneralJournalTransactionForm.value.TotalDebitAmount!=0" type="text" formControlName="TotalDebitAmount" class="form-control mt-1 pt-0" required readonly>
+              <input *ngIf="grneralJournalTransactionForm.value.TransactionType!=3 && grneralJournalTransactionForm.value.TotalCreditAmount!=0" type="text" formControlName="TotalCreditAmount" class="form-control mt-1 pt-0" required readonly>
+              <input *ngIf="grneralJournalTransactionForm.value.TransactionType==3" type="text" formControlName="TotalCreditAmount" class="form-control mt-1 pt-0" required readonly>
+            </div>
+          </div>
+        </div>
+
+        <div *ngIf= "showEdit" class="modal_alert py-5">
+          <p class="text-center">Voucher Already Exist</p>
+          <p class="text-center">Wish to Edit Voucher Information ?</p>
+          <div class="col-md-6 mx-auto d-flex justify-content-between buttons">
+            <button class="btn btn-primary" (click)="modalYes()">Yes</button>
+            <button class="btn btn-danger" (click)="modalNo()">No</button>
+          </div>
+        </div>
+
+        <div *ngIf="TransactionGridViewInfo.length != 0" class="mx-auto mt-1 mt-5 col-md-10 set-height">
+          <table id="Data">
+              <tr>
+                  <th>Vch.No.</th>
+                  <th>GL Code</th>
+                  <th class="text-left">Name of Account Head</th>
+                  <th class="text-left">Description</th>
+                  <th class="text-right">Debit</th>
+                  <th class="text-right">Credit</th>
+                  <th>Trn.Type</th>
+              </tr>
+              <tr *ngFor="let item of TransactionGridViewInfo">
+                  <td class="text-center">{{item.VchNo}}</td>
+                  <td class="text-center">{{item.GLAccNo}}</td>
+                  <td>{{item.GLAccDesc}}</td>
+                  <td>{{item.TrnDesc}}</td>
+                  <td class="text-right">{{item.GLDebitAmt.toLocaleString('en-US', { minimumFractionDigits: 2 })}}</td>
+                  <td class="text-right">{{item.GLCreditAmt.toLocaleString('en-US', { minimumFractionDigits: 2 })}}</td>
+                  <td class="text-center">{{item.TrnTypeDes}}</td>
+              </tr>
+          </table>
+        </div>
+
+    </form>
+
+  </app-main-wrapper>

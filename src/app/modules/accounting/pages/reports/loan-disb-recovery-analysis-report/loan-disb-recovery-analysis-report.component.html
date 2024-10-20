@@ -1,0 +1,164 @@
+<app-accounting-wrapper>
+  <form
+    [formGroup]="LoanDisbRecoveryAnalysisForm"
+    class="mx-auto border col-md-7 pb-2"
+  >
+    <p class="bg-dark title">Loan Disbursement & Recovery Analysis Report</p>
+
+    <div class="form-group row">
+      <div class="col-md-1">
+        <input
+          checked
+          type="radio"
+          value="0"
+          name="AccountServiceRb"
+          formControlName="AccountServiceRb"
+          (click)="AccRbSelect()"
+        />
+      </div>
+
+      <label class="col-md-3 col-form-label">Loan Recovery Report</label>
+    </div>
+
+    <div class="form-group row">
+      <div class="col-md-1">
+        <input
+          type="radio"
+          value="1"
+          name="AccountServiceRb"
+          formControlName="AccountServiceRb"
+          (click)="LoanRbSelect()"
+        />
+      </div>
+
+      <label class="col-md-5 col-form-label"
+        >Weekly Loan Disburse and Recovered</label
+      >
+    </div>
+
+    <div class="form-group row">
+      <div class="col-md-1">
+        <input
+          [(ngModel)]="chbIsAllCollectorStatus"
+          (ngModelChange)="checkIsAllCollectorValue($event)"
+          class="form-check-input ml-1 checkbox"
+          style="margin: 0.8rem"
+          type="checkbox"
+          id="IsAllCollector"
+          formControlName="IsAllCollector"
+        />
+      </div>
+
+      <label class="col-md-3 col-form-label">All Collector Code</label>
+      <div class="col-md-3">
+        <input
+          appOnlyNumber
+          (focusout)="onChangeCollectorCode($event)"
+          type="text"
+          class="form-control"
+          id="CollectorCode"
+          formControlName="CollectorCode"
+          name="CollectorCode"
+        />
+      </div>
+
+      <div class="col-md-5">
+        <select
+          [attr.disabled]="
+            LoanDisbRecoveryAnalysisForm.value.IsAllCollector ? '' : null
+          "
+          disabled="IsCollectorDisabled"
+          class="form-control pt-0"
+          formControlName="Collector"
+          (change)="onChangeCollector($event)"
+        >
+          <option value="0">-Select-</option>
+          <option
+            *ngFor="let item of inputHelpData.CollectorList"
+            [value]="item.Id"
+          >
+            {{ item.Description }}
+          </option>
+        </select>
+      </div>
+    </div>
+
+    <div class="form-group row" *ngIf="LoanAccShow">
+      <label class="col-md-4 col-form-label">From date:</label>
+      <div class="col-md-3">
+        <input
+          id="dateFormat"
+          type="text"
+          class="form-control"
+          bsDatepicker
+          formControlName="IssueFromDate1"
+          [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY' }"
+          autocomplete="off"
+          (ngModelChange)="applicationDateChange()"
+        />
+      </div>
+      <label class="col-md-2 col-form-label">To date:</label>
+      <div class="col-md-3">
+        <input
+          id="dateFormat"
+          type="text"
+          class="form-control"
+          bsDatepicker
+          formControlName="IssueToDate1"
+          [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY' }"
+          autocomplete="off"
+          (ngModelChange)="applicationDateChange2()"
+        />
+      </div>
+    </div>
+
+    <div class="form-group row" *ngIf="LoanAccShow2">
+      <label class="col-md-4 col-form-label">As On Date </label>
+      <div class="col-md-3">
+        <input
+          id="dateFormat"
+          type="text"
+          class="form-control"
+          bsDatepicker
+          formControlName="IssueFromDate"
+          [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY' }"
+          autocomplete="off"
+          (ngModelChange)="asGoOnDateChange()"
+        />
+      </div>
+    </div>
+
+    <div class="buttons">
+      <button
+        type="button"
+        class="btn btn-info ml-2"
+        (click)="getReportToken('CRV')"
+      >
+        Preview
+      </button>
+      <button
+        type="button"
+        class="btn btn-success ml-2"
+        (click)="getReportToken('PDF')"
+      >
+        Print
+      </button>
+    </div>
+  </form>
+  <!-- grid table start *ngIf="AccTypeGridInfo.length != 0 && gridCheck" -->
+  <div class="mx-auto col-md-7 set-height">
+    <table id="Data">
+      <tr>
+        <th>Select</th>
+        <th>A/c Type</th>
+        <th>A/c Title</th>
+      </tr>
+      <tr *ngFor="let item of inputHelpData.loanDisbAccountTypeList">
+        <td><input type="checkbox" (change)="selectedItemList(item)" /></td>
+        <td>{{ item.Id }}</td>
+        <td>{{ item.Description }}</td>
+      </tr>
+    </table>
+  </div>
+  <!-- grid table end -->
+</app-accounting-wrapper>

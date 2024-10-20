@@ -1,0 +1,294 @@
+<app-accounting-wrapper>
+  <form [formGroup]="AutoManualTransferForm">
+    <div class="mx-auto border col-md-9">
+      <p class="bg-dark title">Manual Auto Transaction</p>
+      <div class="form-row">
+        <label class="col-md-1 col-form-label">Branch:</label>
+        <div class="col-md-2">
+          <input
+            type="text"
+            class="form-control"
+            formControlName="BranchId"
+            disabled
+          />
+        </div>
+        <div class="form-group col-md-7">
+          <select formControlName="BranchNo" class="form-control pt-0" disabled>
+            <option value="0">-Select-</option>
+            <option
+              *ngFor="let item of inputHelpData.BranchList"
+              [value]="item.Id"
+            >
+              {{ item.Description }}
+            </option>
+          </select>
+        </div>
+        <div class="form-group col-md-2">
+          <button type="button" class="rbtn">Refresh Data</button>
+        </div>
+      </div>
+
+      <div class="form-row">
+        <label class="col-md-1 col-form-label">Account Type:</label>
+        <div class="col-md-2">
+          <input
+            type="text"
+            class="form-control"
+            formControlName="AccountTypeCode"
+            disabled
+          />
+        </div>
+        <div class="form-group col-md-3">
+          <select
+            formControlName="AccountTypeId"
+            class="form-control pt-0"
+            (change)="
+              onAccountTypeChange(AutoManualTransferForm.value.AccountTypeId)
+            "
+          >
+            <option value="0">-Select-</option>
+            <option
+              *ngFor="let item of inputHelpData.AccountTypeList"
+              [value]="item.Id"
+            >
+              {{ item.Description }}
+            </option>
+          </select>
+        </div>
+        <label class="col-md-2 col-form-label">Upto Open Date:</label>
+        <div class="col-md-2">
+          <input
+            id="dateFormat"
+            type="text"
+            placeholder="DD/MM/YYYY"
+            class="form-control"
+            bsDatepicker
+            formControlName="OpenDate"
+            [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY' }"
+            autocomplete="off"
+          />
+        </div>
+      </div>
+
+      <div class="form-row">
+        <label class="col-md-1 col-form-label">Member:</label>
+        <div class="col-md-2">
+          <input
+            maxlength="6"
+            type="text"
+            class="form-control"
+            formControlName="MemberNo"
+            id="MemberNo"
+            (change)="onMemberChange($event)"
+          />
+        </div>
+        <div class="form-group col-md-3">
+          {{ MemberDetails?.MemName }}
+        </div>
+        <label class="col-md-2 col-form-label">Amount Type:</label>
+        <div class="col-md-2">
+          <select formControlName="AmountTypeId" class="form-control pt-0">
+            <option
+              *ngFor="let item of inputHelpData.AmountTypeList"
+              [value]="item.Id"
+            >
+              {{ item.Description }}
+            </option>
+          </select>
+        </div>
+        <div class="checkbox">
+          <input
+            id="checkbox0"
+            type="checkbox"
+            formControlName="OrderByOldAccNo"
+          />
+          <label for="checkbox0">Order by Old A/C No.</label>
+        </div>
+      </div>
+
+      <div class="form-row">
+        <label class="col-md-1 col-form-label">Account No:</label>
+        <div class="col-md-2">
+          <input
+            type="text"
+            class="form-control"
+            formControlName="AccountNo"
+            disabled
+          />
+        </div>
+        <div class="form-group col-md-3">
+          <select
+            id="SelectedAccountNo"
+            formControlName="SelectedAccountNo"
+            class="form-control pt-0"
+            (change)="
+              onAccountNoChange(AutoManualTransferForm.value.SelectedAccountNo)
+            "
+          >
+            <option value="0">-Select-</option>
+            <option
+              *ngFor="let item of MemberDetails.AccList"
+              [value]="item.Description"
+            >
+              {{ item.Description }}
+            </option>
+          </select>
+        </div>
+      </div>
+
+      <div class="form-row">
+        <label class="col-md-1 col-form-label">Trn. Amount:</label>
+        <div class="col-md-2">
+          <input
+            type="text"
+            class="form-control"
+            (keydown)="onEnterTrnAmountHandler($event)"
+            id="TrnAmount"
+            formControlName="TrnAmount"
+          />
+        </div>
+      </div>
+
+      <div class="buttons col-md-11">
+        <button type="button" class="btn btn-success" (click)="Add()">
+          Add
+        </button>
+        <button
+          type="button"
+          class="btn btn-info ml-2"
+          (click)="AddAllMember()"
+        >
+          Add All Member
+        </button>
+        <button type="button" class="btn btn-info ml-2" (click)="Preview()">
+          Preview
+        </button>
+        <button
+          type="button"
+          class="btn btn-success ml-2"
+          (click)="UpdateMemberList()"
+        >
+          Update
+        </button>
+      </div>
+    </div>
+    <div class="mx-auto mt-1 border col-md-9 pt-1">
+      <div class="form-row">
+        <label class="col-md-2 col-form-label">Transaction:</label>
+        <div class="form-group col-md-6">
+          <select formControlName="TransactionId" class="form-control pt-0">
+            <option
+              *ngFor="let item of inputHelpData.DebitCreditList"
+              [value]="item.Id"
+            >
+              {{ item.Description }}
+            </option>
+          </select>
+        </div>
+        <label class="col-md-1 col-form-label">GL Code:</label>
+        <div class="col-md-2">
+          <input type="text" class="form-control" formControlName="GLCode" />
+        </div>
+      </div>
+
+      <div class="form-row">
+        <label class="col-md-2 col-form-label"
+          >{{
+            AutoManualTransferForm?.value?.TransactionId == 1
+              ? "Debit GL Code"
+              : "Credit GL Code"
+          }}:</label
+        >
+        <div class="col-md-3">
+          <input
+            type="text"
+            class="form-control"
+            (keydown)="onEnterDCCodeHandler($event)"
+            id="DCCode"
+            formControlName="DCCode"
+          />
+        </div>
+        <label class="col-md-4 col-form-label"
+          >Deduct Account Balance < Trn.Amount:</label
+        >
+        <div class="col-md-2">
+          <select formControlName="Deduct" class="form-control pt-0">
+            <option
+              *ngFor="let item of inputHelpData.ManualYesNoList"
+              [value]="item.Id"
+            >
+              {{ item.Description }}
+            </option>
+          </select>
+        </div>
+      </div>
+
+      <div class="form-row">
+        <label class="col-md-2 col-form-label">Input Voucher No:</label>
+        <div class="col-md-3">
+          <input
+            maxlength="10"
+            type="text"
+            class="form-control"
+            (keydown)="onEnterVoucherNoHandler($event)"
+            id="VoucherNo"
+            formControlName="VoucherNo"
+          />
+        </div>
+        <label class="col-md-4 col-form-label">Trn. Description:</label>
+        <div class="col-md-2">
+          <input
+            type="text"
+            class="form-control"
+            formControlName="TrnDescription"
+            id="TrnDescription"
+          />
+        </div>
+      </div>
+
+      <div class="buttons col-md-11">
+        <button type="button" class="btn btn-primary" (click)="Post()">
+          Post Transaction
+        </button>
+        <button type="button" class="btn btn-danger ml-2" (click)="Reverse()">
+          Post - Reverse
+        </button>
+      </div>
+    </div>
+  </form>
+
+  <div
+    *ngIf="manualMemberData?.MemberList?.length > 0"
+    class="mx-auto mt-1 col-md-9 set-height"
+  >
+    <table id="Data">
+      <tr>
+        <th>Option</th>
+        <th>Member No</th>
+        <th>Member Name</th>
+        <th>Old Account No</th>
+        <th>Account No</th>
+        <th>Trn Amount</th>
+      </tr>
+      <tr *ngFor="let item of manualMemberData.MemberList">
+        <td>
+          <span
+            class="mdi mdi-delete"
+            (click)="DeleteMemberAccount(item.AccNo)"
+          ></span>
+        </td>
+        <td>{{ item.MemNo }}</td>
+        <td>{{ item.MemName }}</td>
+        <td>{{ item.OldAccNo }}</td>
+        <td>{{ item.AccNo }}</td>
+        <td>
+          <input
+            type="number"
+            class="form-control"
+            [(ngModel)]="item.TrnAmount"
+          />
+        </td>
+      </tr>
+    </table>
+  </div>
+</app-accounting-wrapper>

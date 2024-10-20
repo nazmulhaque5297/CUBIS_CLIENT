@@ -1,0 +1,91 @@
+<app-accounting-wrapper>
+  <form [formGroup]="MemberStatusChangeForm">
+    <div class="mx-auto border col-md-7">
+      <p class="bg-dark title">Member Status Change</p>
+      <div class="form-row">
+        <label class="col-md-2 col-form-label"
+          >Member No:<span class="text-danger">*</span></label
+        >
+        <div class="form-group col-md-7">
+          <input
+            (change)="changeMemberInfoHandler($event)"
+            type="text"
+            class="form-control"
+            id="MemberNo"
+            formControlName="MemberNo"
+            name="MemberNo"
+          />
+        </div>
+      </div>
+
+      <div class="form-row">
+        <label class="col-md-2 col-form-label" for="CurrentStatus"
+          >Current Status:</label
+        >
+        <div class="form-group col-md-3">
+          <input
+            type="text"
+            formControlName="CurrentStatus"
+            class="form-control"
+            id="CurrentStatus"
+            disabled
+          />
+        </div>
+        <label class="col-md-1 col-form-label" for="since">Since:</label>
+        <div class="form-group col-md-3">
+          <input
+            type="text"
+            formControlName="Since"
+            class="form-control"
+            id="since"
+            disabled
+          />
+        </div>
+      </div>
+    </div>
+    <div class="mx-auto mt-3 border col-md-7 pt-2 pb-2">
+      <div class="form-row">
+        <label class="col-md-2 col-form-label" for="ChangeStatus"
+          >Change Status:</label
+        >
+        <div class="form-group col-md-7">
+          <select
+            formControlName="SelectedChangeStatus"
+            class="form-control pt-0"
+            (change)="statusChangeValidation()"
+          >
+            <option value="0">-Select-</option>
+            <option *ngFor="let item of memStatusList" [value]="item.Id">
+              {{ item.Description }}
+            </option>
+          </select>
+        </div>
+      </div>
+
+      <div class="form-row">
+        <label class="col-md-2 col-form-label" for="CurrentStatus"
+          >Status Date:</label
+        >
+        <div class="col-md-7">
+          <input
+            id="dateFormat"
+            type="text"
+            placeholder="DD/MM/YYYY"
+            class="form-control"
+            bsDatepicker
+            formControlName="StatusDate"
+            [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY' }"
+            autocomplete="off"
+            disabled
+          />
+        </div>
+      </div>
+
+      <div class="buttons">
+        <button type="button" class="btn ml-5" (click)="UpdateMemberStatus()">
+          {{ updateButtonText }}
+        </button>
+      </div>
+    </div>
+  </form>
+</app-accounting-wrapper>

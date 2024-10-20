@@ -1,0 +1,90 @@
+<app-accounting-wrapper>
+  <form
+    novalidate
+    [formGroup]="DivisionCodeForm"
+    class="mx-auto border col-md-6 pb-3"
+  >
+    <p class="bg-dark title">Division Code Maintenance</p>
+    <div class="form-row">
+      <label class="col-md-3">Division Code:</label>
+      <div class="form-group col-md-2">
+        <input
+          type="text"
+          (change)="changeSelectValue($event)"
+          class="form-control"
+          id="DivisionCode"
+          formControlName="DivisionCode"
+          name="DivisionCode"
+        />
+      </div>
+
+      <div class="form-group col-md-4">
+        <select
+          formControlName="selectedOptionCode"
+          (change)="selectChangeHandler($event)"
+          class="form-control pt-1"
+        >
+          <option *ngFor="let item of dataList" [value]="item.DivisionCode">
+            {{ item.DivisionDescription }}
+          </option>
+        </select>
+      </div>
+    </div>
+    <div class="form-row">
+      <label for="inputDesc" class="col-md-3"
+        >Description: <span class="text-danger">*</span></label
+      >
+      <div class="form-group col-md-6">
+        <input
+          type="text"
+          formControlName="DivisionDescription"
+          class="form-control desc-input"
+          id="inputDesc"
+        />
+      </div>
+      <div
+        *ngIf="
+          DivisionCodeForm.controls['DivisionDescription'].invalid &&
+          DivisionCodeForm.controls['DivisionDescription'].touched
+        "
+        class="text-danger ml-5"
+      >
+        Required*
+      </div>
+    </div>
+    <div class="form-row">
+      <label for="inputDesc" class="col-md-3">Description - Bangla:</label>
+      <div class="form-group col-md-6">
+        <input
+          type="text"
+          formControlName="DiviDescriptionBang"
+          class="form-control desc-input"
+          id="inputDesc"
+        />
+      </div>
+    </div>
+    <div class="buttons col-md-7 mx-auto">
+      <button type="button" (click)="saveOrUpdate()" class="btn btn_1 ml-4">
+        {{ submitButtonText }}
+      </button>
+      <button (click)="getTableReportData()" class="ml-2 btn">View</button>
+    </div>
+  </form>
+  <div
+    *ngIf="dataList.length != 0 && displayTabularData"
+    class="mx-auto set-height col-md-6 set-height"
+  >
+    <table id="Data">
+      <tr>
+        <th>Code</th>
+        <th>Description</th>
+        <th>Description-Bangla</th>
+      </tr>
+      <tr *ngFor="let item of dataList">
+        <td class="text-center">{{ item.DivisionCode }}</td>
+        <td>{{ item.DivisionDescription }}</td>
+        <td>{{ item.DiviDescriptionBang }}</td>
+      </tr>
+    </table>
+  </div>
+</app-accounting-wrapper>

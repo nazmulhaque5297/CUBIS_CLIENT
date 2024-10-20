@@ -1,0 +1,54 @@
+<form [formGroup]="allmeminfoForm" class="form-horizontal">
+  <div class="modal-header">
+    <h4 class="modal-title">Search Member Information</h4>
+    <button
+      type="button"
+      class="close"
+      (click)="activeModal.close(0)"
+      aria-label="Close"
+    >
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="form-row d-flex justify-content-center my-4">
+    <input
+      type="text"
+      class="form-control col-md-6 search__member"
+      placeholder="Search Member"
+      formControlName="searchMember"
+      onfocus="this.select()"
+    />
+    <button (click)="memberSearch()" class="ml-2 btn btn-success search__btn">
+      <img src="../../../../assets/images/search.png" alt="search" width="30" height="30" class="search__icon"/> Search
+    </button>
+  </div>
+  <div class="col-md-12 set-height border" *ngIf="showDataList.length !=0">
+    <table id="Data">
+      <tr>
+        <th>MemNo</th>
+        <th>Name</th>
+        <th>Father Name</th>
+        <th>Mother Name</th>
+        <th>Spouse Name</th>
+        <th>Mobile</th>
+        <th>Select</th>
+      </tr>
+      <tr *ngFor="let item of showDataList">
+        <td>{{ item.MemNo }}</td>
+        <td>{{ item.MemName }}</td>
+        <td>{{ item.MemFName }}</td>
+        <td>{{ item.MemMName }}</td>
+        <td>{{ item.MemSName }}</td>
+        <td>{{ item.MobileNo }}</td>
+        <td>
+          <button
+            class="btn btn-success"
+            (click)="activeModal.close(item.MemNo)"
+          >
+            Select
+          </button>
+        </td>
+      </tr>
+    </table>
+  </div>
+</form>

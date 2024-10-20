@@ -1,0 +1,101 @@
+<app-house-keeping-wrapper>
+  <form
+    [formGroup]="setupForm"
+    novalidate
+    class="mx-auto border main-container"
+  >
+    <p class="title">Transaction Control Maintenance</p>
+    <div class="form-row col-md-6 border mx-auto pt-4 pb-3">
+      
+        <label class="ml-3 col-md-3">Account Type Class :<span class="text-danger">*</span></label
+        >
+        <div class="form-group col-md-7">
+          <select
+            formControlName="AccountClassId"
+            class="form-control pt-0"
+            (change)="onAccountClassChange(setupForm.value.AccountClassId)"
+          >
+            <option value="0">-Select-</option>
+            <option *ngFor="let item of accountClassList" [value]="item.Id">
+              {{ item.Description }}
+            </option>
+          </select>
+        </div>
+      
+    </div>
+    <div class="form-row">
+      <div class="col-md-3 mx-auto" >
+        <button type="button" (click)="onUpdate()" class="btn btn-success ml-4">
+          Update
+        </button>
+      </div>
+    </div>
+
+    <div class="form-row table_data">
+      <div class="col-md-12">
+        <div class="row div-table-header">
+          <div class="col-md-2">Function</div>
+          <div class="col-md-3">Transaction Head</div>
+          <div class="col-md-1">GL Code Debit</div>
+          <div class="col-md-2">Dr.Flag</div>
+          <div class="col-md-1">GL Code Credit</div>
+          <div class="col-md-2">Cr.Flag</div>
+        </div>
+        <div
+          formArrayName="AccountItems"
+          *ngFor="
+            let item of setupForm.get('AccountItems')['controls'];
+            let i = index
+          "
+        >
+          <div class="row" [formGroupName]="i">
+            <div class="col-md-2">
+              <input
+                disabled
+                class="form-control formatting-text-box"
+                formControlName="FuncOptDesc"
+              />
+            </div>
+            <div class="col-md-3">
+              <input
+                disabled
+                class="form-control formatting-text-box"
+                formControlName="TrnRecDesc"
+              />
+            </div>
+            <div class="col-md-1">
+              <input
+                class="form-control formatting-text-box"
+                disabled
+                formControlName="GLAccNoDR"
+              />
+            </div>
+            <div class="col-md-2">
+              <select formControlName="GLAccDRFlag" class="form-control pt-0">
+                <option value="0">-Select-</option>
+                <option *ngFor="let f of transactionFlagList" [value]="f.Id">
+                  {{ f.Description }}
+                </option>
+              </select>
+            </div>
+            <div class="col-md-1">
+              <input
+                class="form-control formatting-text-box"
+                disabled
+                formControlName="GLAccNoCR"
+              />
+            </div>
+            <div class="col-md-2">
+              <select formControlName="GLAccCRFlag" class="form-control pt-0">
+                <option value="0">-Select-</option>
+                <option *ngFor="let f of transactionFlagList" [value]="f.Id">
+                  {{ f.Description }}
+                </option>
+              </select>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+</app-house-keeping-wrapper>

@@ -1,0 +1,36 @@
+.main-container {
+  padding: 25px;
+}
+
+.title {
+  background: #6c757d !important;
+  color: #fff;
+  font-weight: 600;
+  padding: 2px;
+}
+
+input {
+  box-shadow: none !important;
+}
+
+.desc-input {
+  margin-left: 33px !important;
+}
+
+.buttons {
+  margin-left: 148px;
+  margin-top: 8px;
+  margin-bottom: 5px;
+}
+
+.btn {
+  padding: 4px 35px !important;
+  transition: 0.7s ease-in;
+  /* background: #6DAD4F; */
+  color: #fff;
+}
+
+.btn:focus {
+  outline: none !important;
+  box-shadow: none !important;
+}

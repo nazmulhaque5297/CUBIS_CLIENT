@@ -1,0 +1,321 @@
+<app-house-keeping-wrapper>
+  <div class="col-xl-8 col-md-8 mx-auto">
+    <form [formGroup]='accountTypeForm' class="form-horizontal">
+      <p class="bg-primary text-center text-light bg-secondary title">Account Type Maintenance</p>
+      <div class="card">
+        <div class="card-body">
+
+          <div class="form-group row">
+            <label class="col-md-3 col-form-label">Account Type Code:</label>
+            <div class="col-md-4">
+              <input type="text" class="form-control" (change)="onGetDetails()"  formControlName="AccTypeCode" appOnlyNumber >
+              <input type="text" class="form-control" style="display:none;" formControlName="AccTypeClassDesc">
+            </div>
+            <div class="col-md-5">
+              <select class="form-control pt-0" formControlName="AccTypeCode" (change)="onGetDetails()">
+                <option value="0">-Select-</option>
+                <option *ngFor="let item of inputHelpData.AccountTypeList" [value]="item.Id">{{item.Description}}
+                </option>
+              </select>
+            </div>
+          </div>
+          <div class="form-group row">
+            <label class="col-md-3 col-form-label">Description:</label>
+            <div class="col-md-9">
+              <input type="text" (keydown)="onEnterAccTypeDescriptionHandler($event)"  formControlName="AccTypeDescription" id="AccTypeDescription" class="form-control">
+            </div>
+          </div>
+          <div class="form-group row">
+            <label class="col-md-3 col-form-label">Short Description:</label>
+            <div class="col-md-3">
+              <input type="text" (keydown)="onEnterAccTypeShortDescriptionHandler($event)" class="form-control" id="AccTypeShortDescription" formControlName="AccTypeShortDescription">
+            </div>
+          </div>
+          <div class="form-group row">
+            <label class="col-md-3 col-form-label">Account Type Class:</label>
+            <div class="col-md-3">
+              <select class="form-control pt-0" disabled formControlName="AccTypeClass">
+                <option value="0">-Select-</option>
+                <option *ngFor="let item of inputHelpData.AccountClassList" [value]="item.Id">{{item.Description}}
+                </option>
+              </select>
+            </div>
+            <label class="col-md-2 col-form-label">Account Flag:</label>
+            <div class="col-md-4">
+              <select class="form-control pt-0" formControlName="AccFlag">
+                <option value="0">-Select-</option>
+                <option *ngFor="let item of inputHelpData.AccountFlagList" [value]="item.Id">{{item.Description}}
+                </option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-group row">
+            <label class="col-md-3 col-form-label">Account Mode:</label>
+            <div class="col-md-3">
+              <select class="form-control pt-0" formControlName="AccTypeMode">
+                <option value="0">-Select-</option>
+                <option *ngFor="let item of inputHelpData.AccountModeList" [value]="item.Id">{{item.Description}}
+                </option>
+              </select>
+            </div>
+            <label class="col-md-2 col-form-label">Corr. A/c Type:</label>
+            <div class="col-md-4">
+              <select class="form-control pt-0" formControlName="AccCorrType">
+                <option value="0">-Select-</option>
+                <option *ngFor="let item of inputHelpData.CorrAccountTypeList" [value]="item.Id">{{item.Description}}
+                </option>
+              </select>
+            </div>
+          </div>
+          <div class="form-group row">
+            <label for="blankCheckbox" class="col-sm-3 col-form-label">Certificate No. :</label>
+            <div class="col-md-3">
+              <input class="form-check-input position-static ml-1 checkbox" type="checkbox" id="blankCheckbox"
+                formControlName="AccCertNo">
+            </div>
+
+            <label for="blankCheckbox" class="col-sm-3 col-form-label">Dividend A/c :</label>
+            <div class="col-md-3">
+              <input class="form-check-input position-static  checkbox" type="checkbox" id="blankCheckbox"
+                formControlName="AccDivident">
+            </div>
+          </div>
+
+          <div class="form-group row">
+            <label class="col-md-3 col-form-label">Deposit Rounding By:</label>
+            <div class="col-md-3">
+              <input type="text" class="form-control" id="AccDepRoundingBy" formControlName="AccDepRoundingBy">
+            </div>
+            <label class="col-md-2 col-form-label">Provision:</label>
+            <div class="col-md-4">
+              <select class="form-control pt-0" formControlName="AccProvisionMode">
+                <option *ngFor="let item of inputHelpData.ProvisionList" [value]="item.Id">{{item.Description}}
+                </option>
+              </select>
+            </div>
+
+          </div>
+          <div class="form-group row">
+            <!-- <label class="col-md-3 col-form-label" *ngIf="detailsData.ShowWeeklyDay">Payment Mode:</label>
+            <div class="col-md-3" *ngIf="detailsData.ShowWeeklyDay">
+              <select class="form-control pt-0" formControlName="AccWeeklyDay">
+                <option value="0">-Select-</option>
+                <option *ngFor="let item of inputHelpData.PaymentModeList" [value]="item.Id">{{item.Description}}
+                </option>
+              </select>
+            </div> -->
+
+            <label class="col-md-3 col-form-label" *ngIf="detailsData.ShowDepositMode">Payment Mode:</label>
+            <div class="col-md-3" *ngIf="detailsData.ShowDepositMode">
+              <select class="form-control pt-0" formControlName="AccDepositMode">
+                <option value="0">-Select-</option>
+                <option *ngFor="let item of inputHelpData.PaymentModeList" [value]="item.Id">{{item.Description}}
+                </option>
+              </select>
+            </div>
+
+            <label class="col-md-3 col-form-label">Expense Transaction:</label>
+            <div class="col-md-3">
+              <select class="form-control pt-0" formControlName="AccExpenseMode">
+                <option *ngFor="let item of inputHelpData.TransactionTypeList" [value]="item.Id">{{item.Description}}
+                </option>
+              </select>
+            </div>
+          </div>
+
+
+          <div  class="form-group row" *ngIf="detailsData.ShowWeeklyDay">
+            <label class="col-md-3 col-form-label"></label>
+          <div class="col-md-3" >
+            <select class="form-control pt-0" formControlName="AccWeeklyDay">
+              <option value="0">-Select-</option>
+              <option *ngFor="let item of detailsData.WeeklyModeList" [value]="item.Id">{{item.Description}}
+              </option>
+            </select>
+          </div>
+          </div>
+
+          <div class="form-group row" *ngIf="detailsData.ShowFineMode">
+            <label class="col-md-3 col-form-label">Fine Mode:</label>
+            <div class="col-md-3">
+              <select class="form-control pt-0" formControlName="AccFineMode">
+                <option *ngFor="let item of inputHelpData.FineModeList" [value]="item.Id">{{item.Description}}
+                </option>
+              </select>
+            </div>
+          </div>
+          <div class="form-group row">
+            <label for="blankCheckbox" class="col-sm-3 col-form-label">Member :</label>
+            <div class="col-md-3">
+              <input class="form-check-input position-static ml-1 checkbox" type="checkbox" id="blankCheckbox"
+                formControlName="AccessT1">
+            </div>
+          </div>
+          <div class="form-group row">
+            <label for="blankCheckbox" class="col-sm-3 col-form-label">Non Member :</label>
+            <div class="col-md-3">
+              <input class="form-check-input position-static ml-1 checkbox" type="checkbox" id="blankCheckbox"
+                formControlName="AccessT2">
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <div class="card">
+        <p class="bg-primary text-center text-light bg-secondary title">GL Code Setup Maintenance</p>
+        <div class="card-body">
+          <div class="form-group row">
+            <label class="col-md-4 col-form-label">Product GL Code :</label>
+            <div class="col-md-3">
+              <input type="text" class="form-control" (change)="onGetGlDetails(accountTypeForm.value.AccProductGLCode,1)" formControlName="AccProductGLCode">
+            </div>
+            <div class="col-md-5">
+              <div>{{detailsData.ProductGLDesc}}</div>
+            </div>
+          </div>
+
+          <div class="form-group row">
+            <label class="col-md-4 col-form-label">Provision GL Code :</label>
+            <div class="col-md-3">
+              <input type="text" class="form-control" (change)="onGetGlDetails(accountTypeForm.value.AccProvisionGLCode,2)" formControlName="AccProvisionGLCode">
+            </div>
+            <div class="col-md-5">
+              <div>{{detailsData.ProvisionGLDesc}}</div>
+            </div>
+          </div>
+
+          <div class="form-group row">
+            <label class="col-md-4 col-form-label">Interest GL Code :</label>
+            <div class="col-md-3">
+              <input type="text" class="form-control" (change)="onGetGlDetails(accountTypeForm.value.AccInterestGLCode,3)" formControlName="AccInterestGLCode">
+            </div>
+            <div class="col-md-5">
+              <div>{{detailsData.InterestGLDesc}}</div>
+            </div>
+          </div>
+
+          <div class="form-group row">
+            <label class="col-md-4 col-form-label">Excess Int. GL Code :</label>
+            <div class="col-md-3">
+              <input type="text" class="form-control" (change)="onGetGlDetails(accountTypeForm.value.AccExcessIntGLCode,4)" formControlName="AccExcessIntGLCode">
+            </div>
+            <div class="col-md-5">
+              <div>{{detailsData.ExcessIntGLDesc}}</div>
+            </div>
+          </div>
+
+          <div class="form-group row">
+            <label class="col-md-4 col-form-label">Expense GL Code :</label>
+            <div class="col-md-3">
+              <input type="text" class="form-control" (change)="onGetGlDetails(accountTypeForm.value.AccExpenseGLCode,5)" formControlName="AccExpenseGLCode">
+            </div>
+            <div class="col-md-5">
+              <div>{{detailsData.ExpenseGLDesc}}</div>
+            </div>
+          </div>
+
+          <div class="form-group row">
+            <label class="col-md-4 col-form-label">Loan Surety GL Code :</label>
+            <div class="col-md-3">
+              <input type="text" class="form-control" (change)="onGetGlDetails(accountTypeForm.value.AccSuretyGLCode,6)" formControlName="AccSuretyGLCode">
+            </div>
+            <div class="col-md-5">
+              <div>{{detailsData.AccSuretyGLDesc}}</div>
+            </div>
+          </div>
+
+          <div class="form-group row">
+            <label class="col-md-4 col-form-label">Loan Surety Int. GL Code :</label>
+            <div class="col-md-3">
+              <input type="text" class="form-control" (change)="onGetGlDetails(accountTypeForm.value.AccSuretyIntGLCode,7)" formControlName="AccSuretyIntGLCode">
+            </div>
+            <div class="col-md-5">
+              <div>{{detailsData.AccSuretyIntGLDesc}}</div>
+            </div>
+          </div>
+
+          <div class="form-group row">
+            <label class="col-md-4 col-form-label">Bonus GL Code :</label>
+            <div class="col-md-3">
+              <input type="text" class="form-control" (change)="onGetGlDetails(accountTypeForm.value.AccBonusGLCode,8)" formControlName="AccBonusGLCode">
+            </div>
+            <div class="col-md-5">
+              <div>{{detailsData.AccBonusGLDesc}}</div>
+            </div>
+          </div>
+
+          <div class="form-group row">
+            <label class="col-md-4 col-form-label">Fine GL Code :</label>
+            <div class="col-md-3">
+              <input type="text" class="form-control" (change)="onGetGlDetails(accountTypeForm.value.AccFineGLCode,9)" formControlName="AccFineGLCode">
+            </div>
+            <div class="col-md-5">
+              <div>{{detailsData.AccFineGLDesc}}</div>
+            </div>
+          </div>
+
+          <div class="form-group row">
+            <label class="col-md-4 col-form-label">Closing Fee GL Code :</label>
+            <div class="col-md-3">
+              <input type="text" class="form-control" (change)="onGetGlDetails(accountTypeForm.value.AccClosingFeeGLCode,10)" formControlName="AccClosingFeeGLCode">
+            </div>
+            <div class="col-md-5">
+              <div>{{detailsData.AccClosingFeeGLDesc}}</div>
+            </div>
+          </div>
+
+          <div class="form-group row">
+            <label class="col-md-4 col-form-label">Process Fee GL Code :</label>
+            <div class="col-md-3">
+              <input type="text" class="form-control" (change)="onGetGlDetails(accountTypeForm.value.AccProcessFeeGLCode,11)" formControlName="AccProcessFeeGLCode">
+            </div>
+            <div class="col-md-5">
+              <div>{{detailsData.AccProcessFeeGLDesc}}</div>
+            </div>
+          </div>
+
+          <div class="form-group row">
+            <label class="col-md-4 col-form-label">Auto Deposit Fee :</label>
+            <div class="col-md-3">
+              <input type="text" class="form-control" (change)="onGetGlDetails(accountTypeForm.value.AccDepositFeeGLCode,12)" formControlName="AccDepositFeeGLCode">
+            </div>
+            <div class="col-md-5">
+              <div>{{detailsData.AccDepositFeeGLDesc}}</div>
+            </div>
+          </div>
+
+          <div class="form-group row">
+            <div class="col-md-6"></div>
+            <div class="col-md-7">
+              <button type="button" class="btn " (click)="onUpdate()" *ngIf="detailsData.Details.AccTypeCode>0 && hasData">Update</button>
+              <button type="button" class="btn " (click)="onSubmit()" *ngIf="detailsData.Details.AccTypeCode>0 && !hasData && inputHelpData.ShowSubmitButton==true">Submit</button>
+              <button type="button" (click)="updateMiscellaneousAcc()" class="ml-2 btn ">MisellaneousA/c</button>
+              <button type="button" (click)="loadAllData()" class="ml-2 btn ">View</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+    <div *ngIf="dataList.length>=0" class="table-responsive ">
+      <table class="table table-bordered m-0">
+        <thead>
+          <tr>
+            <th>A/c Type</th>
+            <th>A/C Class</th>
+            <th>Description</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of dataList">
+            <td class="text-center">{{item.AccountTypeId}}</td>
+            <td>{{item.ClassDescription}}</td>
+            <td>{{item.TypeDescription}}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+  </div>
+</app-house-keeping-wrapper>
